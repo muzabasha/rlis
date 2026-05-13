@@ -10,8 +10,34 @@ import { allTopics, getTopicById, getUnitById } from '../data/courseData';
 
 // Lazy load topic modules
 const topicComponents: Record<string, React.LazyExoticComponent<() => JSX.Element>> = {
+    // Unit 1
     u1t1: lazy(() => import('../modules/unit1/Topic1_EarlyRootsAndNeed')),
-    // Additional topics will be added here as they are built
+    u1t2: lazy(() => import('../modules/unit1/Topic2_RLvsSLvsUL')),
+    u1t3: lazy(() => import('../modules/unit1/Topic3_ElementsAndEnvironments')),
+    u1t4: lazy(() => import('../modules/unit1/Topic4_WorkingAndExploration')),
+    u1t5: lazy(() => import('../modules/unit1/Topic5_TypesAdvantagesApplications')),
+    u1t6: lazy(() => import('../modules/unit1/Topic6_RLvsDLvsML')),
+
+    // Unit 2
+    u2t1: lazy(() => import('../modules/unit2/Topic1_MDPComponents')),
+    u2t2: lazy(() => import('../modules/unit2/Topic2_MarkovPropertyChains')),
+    u2t3: lazy(() => import('../modules/unit2/Topic3_RewardAndMRP')),
+    u2t4: lazy(() => import('../modules/unit2/Topic4_ValueFunctions')),
+    u2t5: lazy(() => import('../modules/unit2/Topic5_OptimalPolicy')),
+
+    // Unit 3
+    u3t1: lazy(() => import('../modules/unit3/Topic1_TypesOfPolicy')),
+    u3t2: lazy(() => import('../modules/unit3/Topic2_BellmanEquation')),
+    u3t3: lazy(() => import('../modules/unit3/Topic3_RecyclingRobot')),
+    u3t4: lazy(() => import('../modules/unit3/Topic4_QLearningOverview')),
+    u3t5: lazy(() => import('../modules/unit3/Topic5_QLearningCaseStudies')),
+
+    // Unit 4
+    u4t1: lazy(() => import('../modules/unit4/Topic1_IntelligentSystems')),
+    u4t2: lazy(() => import('../modules/unit4/Topic2_PEASAndAgents')),
+    u4t3: lazy(() => import('../modules/unit4/Topic3_EnvironmentTypes')),
+    u4t4: lazy(() => import('../modules/unit4/Topic4_MonteCarlo')),
+    u4t5: lazy(() => import('../modules/unit4/Topic5_MCPredictionControl')),
 };
 
 const difficultyConfig = {

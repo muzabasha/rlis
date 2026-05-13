@@ -72,6 +72,12 @@ export default function HomePage() {
                         Start Learning <ArrowRight size={18} />
                     </button>
                     <button
+                        onClick={() => window.open('https://scholar-sparkle-web.lovable.app/', '_blank')}
+                        className="btn-secondary flex items-center gap-2 bg-violet-50 text-violet-700 border-violet-200 dark:bg-violet-900/20 dark:text-violet-300 dark:border-violet-800"
+                    >
+                        <Users size={18} /> Teacher Portal
+                    </button>
+                    <button
                         onClick={() => navigate('/analytics')}
                         className="btn-secondary flex items-center gap-2"
                     >
@@ -101,10 +107,10 @@ export default function HomePage() {
                 className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12"
             >
                 {[
-                    { label: 'Units', value: '4', icon: BookOpen, color: 'text-blue-500' },
-                    { label: 'Topics', value: '24', icon: Target, color: 'text-violet-500' },
-                    { label: 'Virtual Labs', value: '24', icon: FlaskConical, color: 'text-emerald-500' },
-                    { label: 'Activities', value: '96', icon: Users, color: 'text-amber-500' },
+                    { label: 'Units', value: units.length.toString(), icon: BookOpen, color: 'text-blue-500' },
+                    { label: 'Topics', value: units.reduce((acc, u) => acc + u.topics.length, 0).toString(), icon: Target, color: 'text-violet-500' },
+                    { label: 'Virtual Labs', value: units.reduce((acc, u) => acc + u.topics.length, 0).toString(), icon: FlaskConical, color: 'text-emerald-500' },
+                    { label: 'Activities', value: (units.reduce((acc, u) => acc + u.topics.length, 0) * 4).toString(), icon: Users, color: 'text-amber-500' },
                 ].map(stat => (
                     <motion.div key={stat.label} variants={item} className="card p-5 text-center">
                         <stat.icon size={24} className={`${stat.color} mx-auto mb-2`} />
