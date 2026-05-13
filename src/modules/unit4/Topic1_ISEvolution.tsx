@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, Cpu, History } from 'lucide-react';
+import { MathBlock } from '../../components/topic/MathBlock';
+import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, Cpu, History, CheckCircle2, Clock, Target, AlertTriangle, TrendingUp, Briefcase } from 'lucide-react';
+import { RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 export default function Topic1_ISEvolution() {
     const [activeTab, setActiveTab] = useState<'story' | 'math' | 'activity' | 'questions' | 'lab' | 'insights'>('story');
@@ -32,7 +34,7 @@ export default function Topic1_ISEvolution() {
 
             <AnimatePresence mode="wait">
                 <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
-                    
+
                     {activeTab === 'story' && (
                         <SectionWrapper id="story" title="Section 1 — From Logic to Learning" icon={<Cpu size={20} className="text-blue-600" />} badge="History" badgeColor="bg-blue-100 text-blue-700" accentColor="border-blue-500">
                             <div className="story-block space-y-4">
