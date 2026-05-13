@@ -1,0 +1,220 @@
+import React, { lazy, Suspense } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import {
+    ChevronLeft, ChevronRight, CheckCircle2, Clock, Target,
+    BookOpen, Brain, GitBranch, Zap, Cpu, Award
+} from 'lucide-react';
+import { useApp } from '../context/AppContext';
+import { allTopics, getTopicById, getUnitById } from '../data/courseData';
+
+// Lazy load topic modules
+const topicComponents: Record<string, React.LazyExoticComponent<() => JSX.Element>> = {
+    u1t1: lazy(() => import('../modules/unit1/Topic1_EarlyRootsAndNeed')),
+    // Additional topics will be added here as they are built
+};
+
+const difficultyConfig = {
+    beginner: { label: 'Beginner', color: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300' },
+    intermediate: { label: 'Intermediate', color: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300' },
+    advanced: { label: 'Advanced', color: 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300' },
+};
+
+const unitIconMap: Record<string, React.ReactNode> = {
+    unit1: <Brain size={16} />,
+    unit2: <GitBranch size={16} />,
+    unit3: <Zap size={16} />,
+    unit4: <Cpu size={16} />,
+};
+
+function TopicSkeleton() {
+    return (
+        <div className="space-y-6 animate-pulse">
+            {[1, 2, 3].map(i => (
+                <div key={i} className="card p-6">
+                    <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded-lg w-1/3 mb-4" />
+                    <div className="space-y-2">
+                        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full" />
+                        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-5/6" />
+                        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-4/6" />
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+function ComingSoon({ topicTitle }: { topicTitle: string }) {
+    return (
+        <div className="card p-12 text-center">
+            <div className="text-6xl mb-4">🚧</div>
+            <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-3">
+                Content Coming Soon
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-md mx-auto">
+                <strong>{topicTitle}</strong> content is being prepared with full storytelling, math modelling,
+                activities, projects, virtual lab, and question bank.
+            </p>
+            <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 px-4 py-2 rounded-full text-sm font-semibold">
+                <BookOpen size={14} /> Start with Topic 1 to begin your journey
+            </div>
+        </div>
+    );
+}
+
+export default function TopicPage() {
+    const { topicId } = useParams<{ topicId: string }>();
+    const navigate = useNavigate();
+    const { markTopicComplete, getProgress } = useApp();
+
+    const topic = getTopicById(topicId ?? '');
+    const unit = topic ? getUnitById(topic.unitId) : null;
+    const progress = topic ? getProgress(topic.id) : undefined;
+
+    const topicIndex = allTopics.findIndex(t => t.id === topicId);
+    const prevTopic = topicIndex > 0 ? allTopics[topicIndex - 1] : null;
+    const nextTopic = topicIndex < allTopics.length - 1 ? allTopics[topicIndex + 1] : null;
+
+    if (!topic || !unit) {
+        return (
+            <div className="max-w-4xl mx-auto px-4 py-8">
+                <div className="card p-12 text-center">
+                    <div className="text-5xl mb-4">🔍</div>
+                    <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">Topic Not Found</h2>
+                    <button onClick={() => navigate('/')} className="btn-primary mt-4">Go Home</button>
+                </div>
+            </div>
+        );
+    }
+
+    const TopicComponent = topicComponents[topicId ?? ''];
+    const diffConfig = difficultyConfig[topic.difficulty];
+
+    return (
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
+            {/* Topic Header */}
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="card p-6 mb-6 border-l-4 border-primary-500"
+            >
+                {/* Breadcrumb */}
+                <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-3">
+                    <button onClick={() => navigate('/')} className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                        Home
+                    </button>
+                    <ChevronRight size={14} />
+                    <span className="flex items-center gap-1">
+                        {unitIconMap[unit.id]}
+                        Unit {unit.order}
+                    </span>
+                    <ChevronRight size={14} />
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">Topic {topic.order}</span>
+                </div>
+
+                <div className="flex items-start justify-between gap-4 flex-wrap">
+                    <div className="flex-1">
+                        <div className="flex items-center gap-2 flex-wrap mb-2">
+                            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                Unit {unit.order} · Topic {topic.order}
+                            </span>
+                            <span className={`section-tag text-xs ${diffConfig.color}`}>
+                                {diffConfig.label}
+                            </span>
+                            {progress?.completed && (
+                                <span className="section-tag text-xs bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300">
+                                    <CheckCircle2 size={12} /> Completed
+                                </span>
+                            )}
+                        </div>
+                        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-2">
+                            {topic.title}
+                        </h1>
+                        <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+                            <span className="flex items-center gap-1"><Clock size={14} /> {topic.duration}</span>
+                            <span className="flex items-center gap-1"><Target size={14} /> {topic.coMapping.join(', ')}</span>
+                        </div>
+                    </div>
+
+                    {/* Mark Complete Button */}
+                    {!progress?.completed && (
+                        <button
+                            onClick={() => markTopicComplete(topic.id)}
+                            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2 rounded-xl transition-all text-sm"
+                        >
+                            <CheckCircle2 size={16} /> Mark Complete
+                        </button>
+                    )}
+                </div>
+
+                {/* Prerequisites */}
+                {topic.prerequisites.length > 0 && (
+                    <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                        <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Prerequisites</div>
+                        <div className="flex gap-2 flex-wrap">
+                            {topic.prerequisites.map(prereqId => {
+                                const prereq = getTopicById(prereqId);
+                                const prereqDone = getProgress(prereqId)?.completed;
+                                return prereq ? (
+                                    <button
+                                        key={prereqId}
+                                        onClick={() => navigate(`/topic/${prereqId}`)}
+                                        className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-colors ${prereqDone
+                                                ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                                                : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600'
+                                            }`}
+                                    >
+                                        {prereqDone ? <CheckCircle2 size={11} /> : <div className="w-2 h-2 rounded-full bg-slate-400" />}
+                                        {prereq.title}
+                                    </button>
+                                ) : null;
+                            })}
+                        </div>
+                    </div>
+                )}
+            </motion.div>
+
+            {/* Topic Content */}
+            <Suspense fallback={<TopicSkeleton />}>
+                {TopicComponent ? (
+                    <TopicComponent />
+                ) : (
+                    <ComingSoon topicTitle={topic.title} />
+                )}
+            </Suspense>
+
+            {/* Navigation */}
+            <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                <div>
+                    {prevTopic && (
+                        <button
+                            onClick={() => navigate(`/topic/${prevTopic.id}`)}
+                            className="flex items-center gap-2 btn-secondary"
+                        >
+                            <ChevronLeft size={18} />
+                            <div className="text-left">
+                                <div className="text-xs text-slate-400">Previous</div>
+                                <div className="text-sm font-semibold truncate max-w-[180px]">{prevTopic.title}</div>
+                            </div>
+                        </button>
+                    )}
+                </div>
+
+                <div>
+                    {nextTopic && (
+                        <button
+                            onClick={() => navigate(`/topic/${nextTopic.id}`)}
+                            className="flex items-center gap-2 btn-primary"
+                        >
+                            <div className="text-right">
+                                <div className="text-xs text-primary-200">Next</div>
+                                <div className="text-sm font-semibold truncate max-w-[180px]">{nextTopic.title}</div>
+                            </div>
+                            <ChevronRight size={18} />
+                        </button>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}

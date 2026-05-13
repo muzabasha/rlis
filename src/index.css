@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #f8fafc;
+    --color-surface: #ffffff;
+    --color-border: #e2e8f0;
+    --color-text: #0f172a;
+    --color-text-muted: #64748b;
+    --color-primary: #2563eb;
+    --color-accent: #7c3aed;
+  }
+
+  .dark {
+    --color-bg: #0f172a;
+    --color-surface: #1e293b;
+    --color-border: #334155;
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+    --color-primary: #60a5fa;
+    --color-accent: #a78bfa;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+
+  h1 { @apply text-4xl; }
+  h2 { @apply text-3xl; }
+  h3 { @apply text-2xl; }
+  h4 { @apply text-xl; }
+
+  code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    @apply text-sm bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded;
+  }
+
+  pre code {
+    @apply bg-transparent p-0;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white dark:bg-slate-800 rounded-2xl shadow-card border border-slate-200 dark:border-slate-700;
+  }
+
+  .card-hover {
+    @apply hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold px-6 py-3 rounded-xl transition-all duration-200;
+  }
+
+  .section-tag {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold;
+  }
+
+  .tag-concept {
+    @apply bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300;
+  }
+
+  .tag-activity {
+    @apply bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300;
+  }
+
+  .tag-project {
+    @apply bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300;
+  }
+
+  .tag-math {
+    @apply bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300;
+  }
+
+  .tag-insight {
+    @apply bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300;
+  }
+
+  .tag-warning {
+    @apply bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300;
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-150 font-medium;
+  }
+
+  .sidebar-link.active {
+    @apply bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 font-semibold;
+  }
+
+  .math-block {
+    @apply bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-6 my-4 overflow-x-auto;
+  }
+
+  .story-block {
+    @apply bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-6;
+  }
+
+  .activity-block {
+    @apply bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border border-emerald-200 dark:border-emerald-800 rounded-2xl p-6;
+  }
+
+  .project-block {
+    @apply bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 border border-violet-200 dark:border-violet-800 rounded-2xl p-6;
+  }
+
+  .lab-block {
+    @apply bg-gradient-to-br from-cyan-50 to-sky-50 dark:from-cyan-900/20 dark:to-sky-900/20 border border-cyan-200 dark:border-cyan-800 rounded-2xl p-6;
+  }
+
+  .progress-bar {
+    @apply h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full transition-all duration-500;
+  }
+
+  .katex-display {
+    @apply my-4 overflow-x-auto;
+  }
+
+  .tooltip {
+    @apply absolute z-50 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-sm px-3 py-2 rounded-lg shadow-lg pointer-events-none;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #94a3b8;
+    border-radius: 3px;
+  }
+
+  .glass {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  .dark .glass {
+    background: rgba(15, 23, 42, 0.8);
+  }
+}
+
+/* KaTeX overrides for better readability */
+.katex {
+  font-size: 1.1em !important;
+}
+
+.katex-display > .katex {
+  font-size: 1.3em !important;
+}
+
+/* Mermaid diagram styles */
+.mermaid {
+  @apply flex justify-center my-4;
+}
+
+/* Custom scrollbar for sidebar */
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent;
+}
+
+/* Projector mode overrides */
+.projector-mode {
+  font-size: 22px !important;
+}
+
+.projector-mode h1 { font-size: 48px !important; }
+.projector-mode h2 { font-size: 40px !important; }
+.projector-mode h3 { font-size: 32px !important; }
