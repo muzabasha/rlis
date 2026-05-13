@@ -126,24 +126,20 @@ export default function Sidebar() {
                                         {unit.topics.map((topic, idx) => {
                                             const progress = getProgress(topic.id);
                                             const isActive = currentTopic === topic.id;
-                                            const isLocked = idx > 0 && !getProgress(unit.topics[idx - 1].id)?.completed && idx > 1;
+                                            const isLocked = false; // All topics unlocked
 
                                             return (
                                                 <button
                                                     key={topic.id}
-                                                    onClick={() => !isLocked && handleTopicClick(unit.id, topic.id)}
+                                                    onClick={() => handleTopicClick(unit.id, topic.id)}
                                                     className={`w-full flex items-start gap-2 px-3 py-2 rounded-lg text-left transition-all duration-150 ${isActive
                                                             ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
-                                                            : isLocked
-                                                                ? 'opacity-50 cursor-not-allowed'
-                                                                : 'hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
+                                                            : 'hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                                                         }`}
                                                 >
                                                     <div className="mt-0.5 flex-shrink-0">
                                                         {progress?.completed ? (
                                                             <CheckCircle2 size={14} className="text-emerald-500" />
-                                                        ) : isLocked ? (
-                                                            <Lock size={14} className="text-slate-400" />
                                                         ) : isActive ? (
                                                             <div className="w-3.5 h-3.5 rounded-full border-2 border-primary-500 bg-primary-100 dark:bg-primary-900" />
                                                         ) : (
