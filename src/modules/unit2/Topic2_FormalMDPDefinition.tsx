@@ -45,11 +45,59 @@ export default function Topic2_FormalMDPDefinition() {
                         </SectionWrapper>
                     )}
 
-                    {activeTab === 'math' && (
-                        <SectionWrapper id="math" title="Section 2 — The Transition Dynamics" icon={<Calculator size={20} className="text-red-600" />} badge="Math" badgeColor="bg-red-100 text-red-700" accentColor="border-red-500">
-                            <div className="space-y-6">
-                                <MathBlock formula="P(s' | s, a) = \mathbb{P}[S_{t+1} = s' | S_t = s, A_t = a]" label="State Transition Probability" explanation="The probability of landing in state s' given the current state is s and the action taken is a." />
-                                <MathBlock formula="R(s, a) = \mathbb{E}[R_{t+1} | S_t = s, A_t = a]" label="Expected Reward" explanation="The immediate reward expected after taking action a in state s." />
+                    {activeTab === 'activity' && (
+                        <SectionWrapper id="activity" title="Section 3 — MDP Builder" icon={<Users size={20} className="text-emerald-600" />} badge="Activity" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
+                            <div className="space-y-4">
+                                <p className="text-slate-600 dark:text-slate-400 font-medium">Define a 5-tuple for a simple game: Coin Flip.</p>
+                                <div className="grid grid-cols-1 gap-2">
+                                    {[
+                                        { tuple: 'S (States)', value: '{Start, Heads, Tails}' },
+                                        { tuple: 'A (Actions)', value: '{Flip}' },
+                                        { tuple: 'P (Transitions)', value: 'P(Heads|Start, Flip) = 0.5' },
+                                        { tuple: 'R (Rewards)', value: 'R(Heads) = +1, R(Tails) = -1' },
+                                        { tuple: 'γ (Discount)', value: '0.9 (Value tomorrow is worth 90% of today)' }
+                                    ].map(item => (
+                                        <div key={item.tuple} className="flex border-b border-slate-100 dark:border-slate-800 py-2">
+                                            <span className="w-32 font-bold text-xs text-primary-600">{item.tuple}</span>
+                                            <span className="text-xs text-slate-500">{item.value}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'questions' && (
+                        <SectionWrapper id="questions" title="Section 4 — Definition Quiz" icon={<HelpCircle size={20} className="text-violet-600" />} badge="Questions" badgeColor="bg-violet-100 text-violet-700" accentColor="border-violet-500">
+                            <div className="space-y-4">
+                                <div className="card p-4">
+                                    <div className="text-sm font-bold mb-1">What does the "finite" requirement mean in S and A?</div>
+                                    <p className="text-xs text-slate-500 italic">It means there is a countable number of states and actions, allowing us to represent them in matrices.</p>
+                                </div>
+                                <div className="card p-4">
+                                    <div className="text-sm font-bold mb-1">Why do we need the discount factor γ?</div>
+                                    <p className="text-xs text-slate-500 italic">To prevent infinite returns in continuing tasks and to represent the preference for immediate rewards.</p>
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'lab' && (
+                        <SectionWrapper id="lab" title="Section 5 — Tuple Explorer" icon={<FlaskConical size={20} className="text-purple-600" />} badge="Lab" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
+                            <div className="card p-8 text-center bg-slate-50 dark:bg-slate-900">
+                                <Calculator size={48} className="mx-auto text-slate-400 mb-4 opacity-50" />
+                                <h4 className="font-bold text-slate-600 mb-2">MDP Configuration Lab</h4>
+                                <p className="text-sm text-slate-500">Modify the P matrix and R vector of a 3-state MDP and see how the state values recalculate instantly.</p>
+                                <button className="btn-primary mt-4 py-2 px-6">Launch Matrix Lab</button>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'insights' && (
+                        <SectionWrapper id="insights" title="Section 6 — Strategic Insights" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Insights" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
+                            <div className="card p-4 bg-primary-50 dark:bg-primary-900/20 border-l-4 border-primary-500">
+                                <h4 className="font-bold text-sm mb-1">The Power of Generalization</h4>
+                                <p className="text-xs text-slate-600 dark:text-slate-400">The 5-tuple is so powerful because it can describe almost any sequential decision problem—from playing Atari to controlling a nuclear reactor.</p>
                             </div>
                         </SectionWrapper>
                     )}

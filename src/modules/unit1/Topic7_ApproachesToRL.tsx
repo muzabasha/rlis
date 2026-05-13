@@ -58,18 +58,57 @@ export default function Topic7_ApproachesToRL() {
                         </SectionWrapper>
                     )}
 
-                    {activeTab === 'questions' && (
-                        <SectionWrapper id="questions" title="Section 4 — Prep Questions" icon={<HelpCircle size={20} className="text-cyan-600" />} badge="Prep" badgeColor="bg-cyan-100 text-cyan-700" accentColor="border-cyan-500">
-                            <div className="space-y-3">
-                                {[
-                                    { q: 'What is a Model-Free approach?', a: 'An approach where the agent doesn\'t learn the transition probabilities of the environment; it learns from experience directly.' },
-                                    { q: 'Give an example of a Value-based algorithm.', a: 'Q-Learning and SARSA are classic examples.' }
-                                ].map((item, i) => (
-                                    <div key={i} className="card p-4">
-                                        <div className="font-bold text-sm mb-2">Q: {item.q}</div>
-                                        <div className="text-xs text-slate-500">{item.a}</div>
+                    {activeTab === 'math' && (
+                        <SectionWrapper id="math" title="Section 2 — The Optimization Target" icon={<Calculator size={20} className="text-red-600" />} badge="Math" badgeColor="bg-red-100 text-red-700" accentColor="border-red-500">
+                            <div className="space-y-6">
+                                <p className="text-slate-600 dark:text-slate-400 text-sm">Value-based methods aim to find the Optimal Value Function $V^*(s)$.</p>
+                                <div className="card p-6 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200">
+                                    <div className="text-center font-mono text-xl text-primary-600 mb-2">
+                                        V*(s) = maxₚ π(Gₜ | Sₜ = s)
                                     </div>
-                                ))}
+                                    <p className="text-[10px] text-slate-500 text-center italic">The maximum expected return achievable from state $s$ by any policy $\pi$.</p>
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'activity' && (
+                        <SectionWrapper id="activity" title="Section 3 — Match the Approach" icon={<Users size={20} className="text-emerald-600" />} badge="Activity" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
+                            <div className="space-y-4">
+                                <p className="text-slate-600 dark:text-slate-400 font-medium">Which approach fits best?</p>
+                                <div className="space-y-2">
+                                    {[
+                                        { scenario: 'The agent has a perfect map of the building.', approach: 'Model-Based' },
+                                        { scenario: 'The agent only knows which rooms are "good" or "bad".', approach: 'Value-Based' },
+                                        { scenario: 'The agent directly learns a set of instructions: "Turn left at blue door".', approach: 'Policy-Based' }
+                                    ].map(item => (
+                                        <div key={item.scenario} className="p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                                            <span className="text-xs">{item.scenario}</span>
+                                            <span className="text-[10px] font-bold text-primary-600">{item.approach}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'lab' && (
+                        <SectionWrapper id="lab" title="Section 5 — Algorithm Sandbox" icon={<FlaskConical size={20} className="text-purple-600" />} badge="Lab" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
+                            <div className="card p-8 text-center bg-slate-50 dark:bg-slate-900">
+                                <Target size={48} className="mx-auto text-slate-400 mb-4 opacity-50" />
+                                <h4 className="font-bold text-slate-600 mb-2">Policy vs Value Viewer</h4>
+                                <p className="text-sm text-slate-500">Switch between a Value-based and Policy-based agent in the same environment and compare how quickly they reach the goal.</p>
+                                <button className="btn-primary mt-4 py-2 px-6">Launch Comparison</button>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'insights' && (
+                        <SectionWrapper id="insights" title="Section 6 — Strategic Insights" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Insights" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
+                            <div className="space-y-4">
+                                <InfoCard type="warning" title="Sample Efficiency">
+                                    Model-based approaches are often more <strong>sample-efficient</strong> (they need less interaction with the environment) but can fail if the learned model is slightly inaccurate.
+                                </InfoCard>
                             </div>
                         </SectionWrapper>
                     )}

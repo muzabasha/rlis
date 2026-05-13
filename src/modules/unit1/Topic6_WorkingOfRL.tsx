@@ -66,11 +66,58 @@ export default function Topic6_WorkingOfRL() {
                         </SectionWrapper>
                     )}
 
-                    {activeTab === 'math' && (
-                        <SectionWrapper id="math" title="Section 2 — Formalizing the Loop" icon={<Calculator size={20} className="text-red-600" />} badge="Equations" badgeColor="bg-red-100 text-red-700" accentColor="border-red-500">
-                            <div className="space-y-6">
-                                <MathBlock formula="A_t = \pi(S_t)" label="Policy Function" explanation="The agent chooses an action based on the current state." />
-                                <MathBlock formula="S_{t+1}, R_{t+1} = \text{Env}(S_t, A_t)" label="Environment Response" explanation="The world gives back a new state and reward." />
+                    {activeTab === 'activity' && (
+                        <SectionWrapper id="activity" title="Section 3 — Trace the Loop" icon={<Users size={20} className="text-emerald-600" />} badge="Activity" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
+                            <div className="space-y-4">
+                                <p className="text-slate-600 dark:text-slate-400 font-medium">Scenario: A drone learning to land.</p>
+                                <div className="space-y-3">
+                                    {[
+                                        { step: '1. State', desc: 'Drone altitude is 10 meters.' },
+                                        { step: '2. Action', desc: 'Reduce throttle by 5%.' },
+                                        { step: '3. Next State', desc: 'Altitude becomes 8 meters.' },
+                                        { step: '4. Reward', desc: '+5 for smooth descent.' }
+                                    ].map(item => (
+                                        <div key={item.step} className="p-3 border border-slate-100 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-800 shadow-sm flex gap-4">
+                                            <span className="text-xs font-bold text-primary-600 w-20">{item.step}</span>
+                                            <span className="text-xs text-slate-500">{item.desc}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'questions' && (
+                        <SectionWrapper id="questions" title="Section 4 — Conceptual Review" icon={<HelpCircle size={20} className="text-violet-600" />} badge="Questions" badgeColor="bg-violet-100 text-violet-700" accentColor="border-violet-500">
+                            <div className="space-y-4">
+                                <div className="card p-4">
+                                    <div className="text-sm font-bold mb-1">Q: Does the agent see the environment response immediately?</div>
+                                    <p className="text-xs text-slate-500 italic">A: In most RL frameworks (MDPs), the state and reward are received at time t+1 immediately after action t.</p>
+                                </div>
+                                <div className="card p-4">
+                                    <div className="text-sm font-bold mb-1">Q: What is the "Agent" in the loop?</div>
+                                    <p className="text-xs text-slate-500 italic">A: The learner and decision-maker; the software entity implementing the RL algorithm.</p>
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'lab' && (
+                        <SectionWrapper id="lab" title="Section 5 — Loop Sandbox" icon={<FlaskConical size={20} className="text-purple-600" />} badge="Lab" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
+                            <div className="card p-8 text-center bg-slate-50 dark:bg-slate-900">
+                                <RefreshCw size={48} className="mx-auto text-slate-400 mb-4 opacity-50" />
+                                <h4 className="font-bold text-slate-600 mb-2">Cycle Time Explorer</h4>
+                                <p className="text-sm text-slate-500">Slow down the interaction loop to 1 frame per second to see exactly how states and rewards are passed back and forth.</p>
+                                <button className="btn-primary mt-4 py-2 px-6">Step Through Loop</button>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'insights' && (
+                        <SectionWrapper id="insights" title="Section 6 — Real World Context" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Insights" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
+                            <div className="card p-4 bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500">
+                                <h4 className="font-bold text-sm mb-1">Real-time Constraints</h4>
+                                <p className="text-xs text-slate-600 dark:text-slate-400">In industrial robotics, the loop must often run at 100Hz to 1000Hz. Any delay in the "Next State" signal can lead to unstable behavior and hardware damage.</p>
                             </div>
                         </SectionWrapper>
                     )}

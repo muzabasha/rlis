@@ -33,12 +33,12 @@ export default function Navbar() {
                         <div className="w-9 h-9 bg-gradient-to-br from-primary-500 to-violet-600 rounded-xl flex items-center justify-center shadow-sm">
                             <Brain size={20} className="text-white" />
                         </div>
-                        <div className="hidden sm:block">
-                            <div className="text-base font-bold text-slate-900 dark:text-white leading-tight">
+                        <div className="flex flex-col">
+                            <div className="text-sm font-bold text-slate-900 dark:text-white leading-tight">
                                 RL & Intelligent Systems
                             </div>
-                            <div className="text-xs text-slate-500 dark:text-slate-400 leading-tight">
-                                Interactive Learning Platform
+                            <div className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
+                                B24EHS511
                             </div>
                         </div>
                     </Link>

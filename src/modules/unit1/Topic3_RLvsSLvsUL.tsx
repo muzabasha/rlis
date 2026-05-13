@@ -76,6 +76,61 @@ export default function Topic3_RLvsSLvsUL() {
                             </div>
                         </SectionWrapper>
                     )}
+
+                    {activeTab === 'activity' && (
+                        <SectionWrapper id="activity" title="Section 3 — Paradigm Matcher" icon={<Users size={20} className="text-emerald-600" />} badge="Activity" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
+                            <div className="space-y-4">
+                                <p className="text-slate-600 dark:text-slate-400">Match the task to its paradigm:</p>
+                                <div className="space-y-3">
+                                    {[
+                                        { task: 'Recognizing handwritten digits', type: 'Supervised' },
+                                        { task: 'Grouping similar customers', type: 'Unsupervised' },
+                                        { task: 'Winning a game of Chess', type: 'Reinforcement' }
+                                    ].map(item => (
+                                        <div key={item.task} className="p-3 border-2 border-slate-100 dark:border-slate-800 rounded-xl flex justify-between items-center bg-white dark:bg-slate-800 shadow-sm">
+                                            <span className="text-xs font-medium">{item.task}</span>
+                                            <span className="text-[10px] font-bold px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded-full">{item.type}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'questions' && (
+                        <SectionWrapper id="questions" title="Section 4 — Conceptual Review" icon={<HelpCircle size={20} className="text-cyan-600" />} badge="Questions" badgeColor="bg-cyan-100 text-cyan-700" accentColor="border-cyan-500">
+                            <div className="space-y-4">
+                                <div className="card p-4">
+                                    <div className="text-sm font-bold mb-1">What is the primary difference in feedback?</div>
+                                    <p className="text-xs text-slate-500 italic">In Supervised, feedback is "Here is the right answer". In RL, it is "How good was that answer?".</p>
+                                </div>
+                                <div className="card p-4">
+                                    <div className="text-sm font-bold mb-1">Which paradigm is best for exploration?</div>
+                                    <p className="text-xs text-slate-500 italic">Reinforcement Learning, because the agent must actively explore to find rewards.</p>
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'lab' && (
+                        <SectionWrapper id="lab" title="Section 5 — Classifier vs Agent Lab" icon={<FlaskConical size={20} className="text-purple-600" />} badge="Lab" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
+                            <div className="card p-8 text-center bg-slate-50 dark:bg-slate-900">
+                                <ArrowRightLeft size={48} className="mx-auto text-slate-400 mb-4 opacity-50" />
+                                <h4 className="font-bold text-slate-600 mb-2">Switch the Paradigm</h4>
+                                <p className="text-sm text-slate-500">Toggle between a Supervised Classifier and an RL Agent to see how their learning curves differ.</p>
+                                <button className="btn-primary mt-4 py-2 px-6">Compare Models</button>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'insights' && (
+                        <SectionWrapper id="insights" title="Section 6 — Real World Context" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Insights" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
+                            <div className="card p-4 bg-primary-50 dark:bg-primary-900/20 border-l-4 border-primary-500">
+                                <h4 className="font-bold text-sm mb-2">Hybrid Systems</h4>
+                                <p className="text-xs text-slate-600 dark:text-slate-400">Most modern AI systems (like ChatGPT) are hybrids. They use Supervised Learning for initial training and Reinforcement Learning from Human Feedback (RLHF) for fine-tuning.</p>
+                            </div>
+                        </SectionWrapper>
+                    )}
                 </motion.div>
             </AnimatePresence>
         </div>

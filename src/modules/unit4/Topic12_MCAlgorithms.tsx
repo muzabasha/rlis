@@ -54,10 +54,59 @@ export default function Topic12_MCAlgorithms() {
                         </SectionWrapper>
                     )}
 
-                    {activeTab === 'math' && (
-                        <SectionWrapper id="math" title="Section 2 — The Averaging Rule" icon={<Calculator size={20} className="text-red-600" />} badge="Math" badgeColor="bg-red-100 text-red-700" accentColor="border-red-500">
-                            <div className="space-y-6">
-                                <MathBlock formula="V(s) \approx \frac{\sum \text{Returns starting from } s}{\text{Number of visits to } s}" label="Monte Carlo Estimation" explanation="The value of a state is simply the average of the returns observed after visiting that state." />
+                    {activeTab === 'activity' && (
+                        <SectionWrapper id="activity" title="Section 3 — First vs Every Visit" icon={<Users size={20} className="text-emerald-600" />} badge="Activity" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
+                            <div className="space-y-4">
+                                <p className="text-slate-600 dark:text-slate-400 font-medium">Episode Trace: S1 → S2 → S1 → S3 (End)</p>
+                                <div className="card p-4 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200">
+                                    <div className="flex justify-between items-center px-4">
+                                        <div className="text-center">
+                                            <div className="text-[10px] font-bold text-primary-600">First-Visit</div>
+                                            <div className="text-xs">S1 counted ONCE</div>
+                                        </div>
+                                        <div className="h-8 w-px bg-slate-300" />
+                                        <div className="text-center">
+                                            <div className="text-[10px] font-bold text-emerald-600">Every-Visit</div>
+                                            <div className="text-xs">S1 counted TWICE</div>
+                                        </div>
+                                    </div>
+                                    <p className="text-[10px] text-center text-slate-500 mt-4 italic">Which one is more computationally expensive? (Every-Visit)</p>
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'questions' && (
+                        <SectionWrapper id="questions" title="Section 4 — Algorithm Quiz" icon={<HelpCircle size={20} className="text-violet-600" />} badge="Questions" badgeColor="bg-violet-100 text-violet-700" accentColor="border-violet-500">
+                            <div className="space-y-4">
+                                <div className="card p-4">
+                                    <div className="text-sm font-bold mb-1">Q: Does MC Prediction require a model of the environment?</div>
+                                    <p className="text-xs text-slate-500 italic">A: No, it only requires experience—sample sequences of states, actions, and rewards.</p>
+                                </div>
+                                <div className="card p-4">
+                                    <div className="text-sm font-bold mb-1">Q: What is the main disadvantage of MC?</div>
+                                    <p className="text-xs text-slate-500 italic">A: It can only be applied to episodic tasks (tasks that eventually end).</p>
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'lab' && (
+                        <SectionWrapper id="lab" title="Section 5 — Simulation Lab" icon={<FlaskConical size={20} className="text-purple-600" />} badge="Lab" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
+                            <div className="card p-8 text-center bg-slate-50 dark:bg-slate-900">
+                                <Calculator size={48} className="mx-auto text-slate-400 mb-4 opacity-50" />
+                                <h4 className="font-bold text-slate-600 mb-2">MC Statistics Tracker</h4>
+                                <p className="text-sm text-slate-500">Generate 1000 random episodes and watch how the running average of the state values settles towards the true value.</p>
+                                <button className="btn-primary mt-4 py-2 px-6">Generate Episodes</button>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'insights' && (
+                        <SectionWrapper id="insights" title="Section 6 — Strategic Insights" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Insights" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
+                            <div className="card p-4 bg-primary-50 dark:bg-primary-900/20 border-l-4 border-primary-500">
+                                <h4 className="font-bold text-sm mb-1">Law of Large Numbers</h4>
+                                <p className="text-xs text-slate-600 dark:text-slate-400">Monte Carlo methods are a direct application of the Law of Large Numbers. The more samples we have, the closer our estimate becomes to the mathematical expectation.</p>
                             </div>
                         </SectionWrapper>
                     )}

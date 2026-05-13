@@ -33,27 +33,70 @@ export default function Topic1_MDPKeyComponents() {
             <AnimatePresence mode="wait">
                 <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
                     
-                    {activeTab === 'story' && (
-                        <SectionWrapper id="story" title="Section 1 — The Anatomy of a Decision" icon={<Box size={20} className="text-violet-600" />} badge="MDP" badgeColor="bg-violet-100 text-violet-700" accentColor="border-violet-500">
-                            <div className="story-block space-y-6">
-                                <p className="text-slate-600 dark:text-slate-400">The Markov Decision Process (MDP) is the standard mathematical framework for modeling reinforcement learning problems. It has four essential components.</p>
-                                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                                    {[
-                                        { name: 'States (S)', desc: 'The world\'s current situation.' },
-                                        { name: 'Actions (A)', desc: 'What the agent can do.' },
-                                        { name: 'Rewards (R)', desc: 'The feedback received.' },
-                                        { name: 'Transitions (P)', desc: 'How states change.' }
-                                    ].map(comp => (
-                                        <div key={comp.name} className="card p-4 text-center">
-                                            <div className="font-bold text-sm text-primary-600 mb-1">{comp.name}</div>
-                                            <p className="text-[10px] text-slate-500">{comp.desc}</p>
-                                        </div>
-                                    ))}
+                    {activeTab === 'math' && (
+                        <SectionWrapper id="math" title="Section 2 — The Transition Dynamics" icon={<Calculator size={20} className="text-red-600" />} badge="Math" badgeColor="bg-red-100 text-red-700" accentColor="border-red-500">
+                            <div className="space-y-6">
+                                <p className="text-slate-600 dark:text-slate-400 text-sm">The transition function $P$ defines the probability of landing in state $s'$ after taking action $a$ in state $s$.</p>
+                                <div className="card p-6 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200">
+                                    <div className="text-center font-mono text-xl text-primary-600 mb-2">
+                                        P(s' | s, a) = Pr {'{'} Sₜ₊₁ = s' | Sₜ = s, Aₜ = a {'}'}
+                                    </div>
+                                    <p className="text-[10px] text-slate-500 text-center italic">This function captures the environment's dynamics.</p>
                                 </div>
-                                <InfoCard type="definition" title="MDP Tuple">
-                                    An MDP is typically defined as a tuple ⟨S, A, P, R, γ⟩.
-                                </InfoCard>
                             </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'activity' && (
+                        <SectionWrapper id="activity" title="Section 3 — MDP Builder" icon={<Users size={20} className="text-emerald-600" />} badge="Activity" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
+                            <div className="space-y-4">
+                                <p className="text-slate-600 dark:text-slate-400">Identify MDP components for a simple Gridworld:</p>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="card p-4">
+                                        <div className="text-xs font-bold text-violet-600 mb-2">States</div>
+                                        <p className="text-[10px] text-slate-500">Each grid cell (e.g., (1,1), (1,2)) is a state.</p>
+                                    </div>
+                                    <div className="card p-4">
+                                        <div className="text-xs font-bold text-emerald-600 mb-2">Actions</div>
+                                        <p className="text-[10px] text-slate-500">Up, Down, Left, Right.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'questions' && (
+                        <SectionWrapper id="questions" title="Section 4 — Assessment" icon={<HelpCircle size={20} className="text-cyan-600" />} badge="Questions" badgeColor="bg-cyan-100 text-cyan-700" accentColor="border-cyan-500">
+                            <div className="space-y-3">
+                                {[
+                                    { q: 'What does the "Markov" in MDP mean?', a: 'The future depends only on the current state, not the past history.' },
+                                    { q: 'What is the role of γ (gamma) in the MDP tuple?', a: 'It is the discount factor that determines the importance of future rewards.' }
+                                ].map((item, i) => (
+                                    <div key={i} className="card p-4">
+                                        <div className="font-bold text-sm mb-2">Q: {item.q}</div>
+                                        <div className="text-xs text-slate-500">A: {item.a}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'lab' && (
+                        <SectionWrapper id="lab" title="Section 5 — MDP Visualizer" icon={<FlaskConical size={20} className="text-purple-600" />} badge="Lab" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
+                            <div className="card p-8 text-center bg-slate-50 dark:bg-slate-900">
+                                <GitBranch size={48} className="mx-auto text-slate-400 mb-4 opacity-50" />
+                                <h4 className="font-bold text-slate-600 mb-2">State Transition Lab</h4>
+                                <p className="text-sm text-slate-500">Manually trigger actions and observe how the agent moves through the state space based on transition probabilities.</p>
+                                <button className="btn-primary mt-4 py-2 px-6">Start Lab</button>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'insights' && (
+                        <SectionWrapper id="insights" title="Section 6 — Strategic Insights" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Insights" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
+                            <InfoCard type="tip" title="Everything is an MDP">
+                                Almost any reinforcement learning problem can be formulated as an MDP. If you can define the states, actions, and rewards, you can use MDP solvers to find the best policy.
+                            </InfoCard>
                         </SectionWrapper>
                     )}
                 </motion.div>

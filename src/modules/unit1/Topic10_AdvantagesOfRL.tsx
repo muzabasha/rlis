@@ -33,29 +33,71 @@ export default function Topic10_AdvantagesOfRL() {
             <AnimatePresence mode="wait">
                 <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
                     
-                    {activeTab === 'story' && (
-                        <SectionWrapper id="story" title="Section 1 — The Superpowers of RL" icon={<TrendingUp size={20} className="text-emerald-600" />} badge="Benefits" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
-                            <div className="story-block space-y-6">
-                                <p className="text-slate-600 dark:text-slate-400">Why choose RL over other methods? Because it can solve problems that are too complex for humans to script or for supervised data to cover.</p>
-                                <div className="grid sm:grid-cols-2 gap-4">
-                                    <div className="card p-4">
-                                        <div className="flex items-center gap-2 mb-2 text-emerald-600">
-                                            <ShieldCheck size={16} />
-                                            <span className="font-bold text-sm">Autonomous Improvement</span>
-                                        </div>
-                                        <p className="text-xs text-slate-500">The agent improves by itself through experience, without needing human-labeled examples.</p>
+                    {activeTab === 'math' && (
+                        <SectionWrapper id="math" title="Section 2 — Cumulative Gain" icon={<Calculator size={20} className="text-red-600" />} badge="Math" badgeColor="bg-red-100 text-red-700" accentColor="border-red-500">
+                            <div className="space-y-6">
+                                <p className="text-slate-600 dark:text-slate-400 text-sm">The primary mathematical advantage is the ability to optimize the **Cumulative Return** $G_t$.</p>
+                                <div className="card p-6 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200">
+                                    <div className="text-center font-mono text-xl text-primary-600 mb-2">
+                                        Gₜ = Rₜ₊₁ + γRₜ₊₂ + γ²Rₜ₊₃ + ...
                                     </div>
-                                    <div className="card p-4">
-                                        <div className="flex items-center gap-2 mb-2 text-emerald-600">
-                                            <ShieldCheck size={16} />
-                                            <span className="font-bold text-sm">Long-term Optimization</span>
-                                        </div>
-                                        <p className="text-xs text-slate-500">It doesn't just look for immediate gain; it maximizes the total reward over time.</p>
-                                    </div>
+                                    <p className="text-[10px] text-slate-500 text-center italic">RL allows us to quantify the value of delayed gratification.</p>
                                 </div>
-                                <InfoCard type="success" title="Adaptive Nature">
-                                    RL agents can adapt to environments that change over time, making them perfect for dynamic systems like stock markets or industrial robots.
-                                </InfoCard>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'activity' && (
+                        <SectionWrapper id="activity" title="Section 3 — RL vs Rules" icon={<Users size={20} className="text-emerald-600" />} badge="Activity" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
+                            <div className="space-y-4">
+                                <p className="text-slate-600 dark:text-slate-400 font-medium">Which problem needs RL?</p>
+                                <div className="space-y-2">
+                                    {[
+                                        { task: 'Sorting emails by date', type: 'Rule-Based' },
+                                        { task: 'Flying a drone in high winds', type: 'Reinforcement Learning' },
+                                        { task: 'Identifying cats in photos', type: 'Supervised Learning' }
+                                    ].map(item => (
+                                        <div key={item.task} className="flex justify-between items-center p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
+                                            <span className="text-sm">{item.task}</span>
+                                            <span className="text-[10px] font-bold text-primary-600">{item.type}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'questions' && (
+                        <SectionWrapper id="questions" title="Section 4 — Advantage Quiz" icon={<HelpCircle size={20} className="text-violet-600" />} badge="Questions" badgeColor="bg-violet-100 text-violet-700" accentColor="border-violet-500">
+                            <div className="space-y-4">
+                                <div className="card p-4">
+                                    <div className="text-sm font-bold mb-1">Q: What is the biggest advantage of RL over Supervised Learning?</div>
+                                    <p className="text-xs text-slate-500 italic">A: RL doesn't need "correct" labels for every situation; it only needs a reward signal, allowing it to discover new strategies humans might not know.</p>
+                                </div>
+                                <div className="card p-4">
+                                    <div className="text-sm font-bold mb-1">Q: How does RL handle uncertainty?</div>
+                                    <p className="text-xs text-slate-500 italic">A: By modeling the environment stochastically and using exploration to reduce uncertainty over time.</p>
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'lab' && (
+                        <SectionWrapper id="lab" title="Section 5 — Performance Lab" icon={<FlaskConical size={20} className="text-purple-600" />} badge="Lab" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
+                            <div className="card p-8 text-center bg-slate-50 dark:bg-slate-900">
+                                <TrendingUp size={48} className="mx-auto text-slate-400 mb-4 opacity-50" />
+                                <h4 className="font-bold text-slate-600 mb-2">Learning Curve Visualizer</h4>
+                                <p className="text-sm text-slate-500">See how an RL agent starts by failing completely and gradually builds a robust strategy. Compare this to a fixed "Rule-based" agent that never improves.</p>
+                                <button className="btn-primary mt-4 py-2 px-6">Launch Visualizer</button>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'insights' && (
+                        <SectionWrapper id="insights" title="Section 6 — Strategic Insights" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Insights" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
+                            <div className="card p-4 bg-primary-50 dark:bg-primary-900/20 border-l-4 border-primary-500">
+                                <h4 className="font-bold text-sm mb-1">Human-Level Performance</h4>
+                                <p className="text-xs text-slate-600 dark:text-slate-400">The ultimate advantage of RL is its potential to achieve <strong>superhuman</strong> performance by exploring millions of variations of a task—something a human coder could never manually script.</p>
                             </div>
                         </SectionWrapper>
                     )}

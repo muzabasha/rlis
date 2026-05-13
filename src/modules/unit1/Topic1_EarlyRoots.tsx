@@ -56,18 +56,59 @@ export default function Topic1_EarlyRoots() {
                     )}
 
                     {/* Other tabs with relevant content... */}
+                    {activeTab === 'activity' && (
+                        <SectionWrapper id="activity" title="Section 3 — Trial & Error Simulation" icon={<Users size={20} className="text-emerald-600" />} badge="Activity" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
+                            <div className="space-y-4">
+                                <p className="text-slate-600 dark:text-slate-400">Try to predict the cat's behavior in the puzzle box over multiple trials.</p>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="card p-4 bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200">
+                                        <h4 className="font-bold text-xs mb-2">Trial 1</h4>
+                                        <p className="text-[10px] text-slate-500 italic">"Cat meows, scratches at walls, pushes randomly..."</p>
+                                    </div>
+                                    <div className="card p-4 bg-primary-50 dark:bg-primary-900/20 border-2 border-primary-200">
+                                        <h4 className="font-bold text-xs mb-2">Trial 50</h4>
+                                        <p className="text-[10px] text-primary-600 italic">"Cat immediately pulls the loop and escapes."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
                     {activeTab === 'questions' && (
-                        <SectionWrapper id="questions" title="Section 4 — 2-Mark Questions" icon={<HelpCircle size={20} className="text-cyan-600" />} badge="Prep" badgeColor="bg-cyan-100 text-cyan-700" accentColor="border-cyan-500">
+                        <SectionWrapper id="questions" title="Section 4 — Assessment" icon={<HelpCircle size={20} className="text-cyan-600" />} badge="Questions" badgeColor="bg-cyan-100 text-cyan-700" accentColor="border-cyan-500">
                             <div className="space-y-3">
                                 {[
-                                    { q: 'Who proposed the Law of Effect?', a: 'Edward Thorndike in 1898.' },
-                                    { q: 'What are the two main threads of RL history?', a: 'Trial-and-error learning (Psychology) and Optimal Control (Mathematics).' }
+                                    { q: 'What is the "Law of Effect"?', a: 'Actions followed by pleasant consequences are more likely to be repeated.' },
+                                    { q: 'Who is considered the pioneer of trial-and-error learning?', a: 'Edward Thorndike.' },
+                                    { q: 'Name the three main historical threads of RL.', a: 'Trial-and-error, Optimal Control, and Temporal-Difference learning.' }
                                 ].map((item, i) => (
                                     <div key={i} className="card p-4">
                                         <div className="font-bold text-sm mb-2">Q: {item.q}</div>
-                                        <div className="text-xs text-slate-500">{item.a}</div>
+                                        <div className="text-xs text-slate-500">A: {item.a}</div>
                                     </div>
                                 ))}
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'lab' && (
+                        <SectionWrapper id="lab" title="Section 5 — Virtual Puzzle Box" icon={<FlaskConical size={20} className="text-purple-600" />} badge="Lab" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
+                            <div className="card p-8 text-center bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-300">
+                                <FlaskConical size={48} className="mx-auto text-slate-400 mb-4 opacity-50" />
+                                <h4 className="font-bold text-slate-600 mb-2">Interactive Simulation</h4>
+                                <p className="text-sm text-slate-500">Experience Thorndike's experiment by adjusting the "Reward Probability" and observing the learning curve.</p>
+                                <button className="btn-primary mt-4 py-2 px-6">Launch Lab</button>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
+                    {activeTab === 'insights' && (
+                        <SectionWrapper id="insights" title="Section 6 — Real-World Impact" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Insights" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
+                            <div className="space-y-4">
+                                <p className="text-slate-600 dark:text-slate-400 font-medium">Why do the roots matter today?</p>
+                                <InfoCard type="tip" title="From Cats to AlphaGo">
+                                    The same principles of <strong>Trial and Error</strong> and <strong>Reward Maximization</strong> that Thorndike observed in cats are exactly what powered DeepMind\'s AlphaGo to beat world champions.
+                                </InfoCard>
                             </div>
                         </SectionWrapper>
                     )}
