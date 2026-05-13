@@ -45,7 +45,7 @@ export default function Topic11_ApplicationsOfRL() {
                                 <p className="text-slate-600 dark:text-slate-400 text-sm">In applications, we often measure the **Reward Density** to see how well the agent is learning.</p>
                                 <div className="card p-6 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200">
                                     <div className="text-center font-mono text-xl text-primary-600 mb-2">
-                                        ρ = \frac{1}{T} \sum_{t=1}^{T} R_t
+                                        {'ρ = \\frac{1}{T} \\sum_{t=1}^{T} R_t'}
                                     </div>
                                     <p className="text-[10px] text-slate-500 text-center italic">The average reward per time step over a period $T$.</p>
                                 </div>

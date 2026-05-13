@@ -33,13 +33,25 @@ export default function Topic1_ISEvolution() {
             <AnimatePresence mode="wait">
                 <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
                     
+                    {activeTab === 'story' && (
+                        <SectionWrapper id="story" title="Section 1 — From Logic to Learning" icon={<Cpu size={20} className="text-blue-600" />} badge="History" badgeColor="bg-blue-100 text-blue-700" accentColor="border-blue-500">
+                            <div className="story-block space-y-4">
+                                <p className="text-slate-600 dark:text-slate-400">In the early days, we thought intelligence was just logic. If you could write down all the rules of chess, the machine would be intelligent. But real life is messy. You can't write rules for walking or seeing.</p>
+                                <p className="text-slate-600 dark:text-slate-400">The evolution of Intelligent Systems is the story of moving from **fixed rules** to **adaptive learning**. Today, agents don't just follow instructions; they discover how to solve problems through experience.</p>
+                                <InfoCard type="definition" title="Intelligent Agent">
+                                    An autonomous entity which observes through sensors and acts upon an environment using actuators and directs its activity towards achieving goals.
+                                </InfoCard>
+                            </div>
+                        </SectionWrapper>
+                    )}
+
                     {activeTab === 'math' && (
                         <SectionWrapper id="math" title="Section 2 — Modeling Intelligence" icon={<Calculator size={20} className="text-red-600" />} badge="Math" badgeColor="bg-red-100 text-red-700" accentColor="border-red-500">
                             <div className="space-y-6">
                                 <p className="text-slate-600 dark:text-slate-400 text-sm">We can model the "Intelligence" of a system using the **Intelligence Quotient (IQ)** or more formally via performance metrics.</p>
                                 <div className="card p-6 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200">
                                     <div className="text-center font-mono text-xl text-primary-600 mb-2">
-                                        I(S) = \int_{\mu \in \text{Env}} P(S, \mu) \cdot 2^{-K(\mu)} d\mu
+                                        {'I(S) = \\int_{\\mu \\in \\text{Env}} P(S, \\mu) \\cdot 2^{-K(\\mu)} d\\mu'}
                                     </div>
                                     <p className="text-[10px] text-slate-500 text-center italic">Legg-Hutter Universal Intelligence: Intelligence is the capability of an agent to achieve goals in a wide range of environments.</p>
                                 </div>

@@ -29,7 +29,9 @@ export default function Topic2_QLearningIntro() {
                     );
                 })}
             </div>
-
+            <AnimatePresence mode="wait">
+                <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+                    
                     {activeTab === 'story' && (
                         <SectionWrapper id="story" title="Section 1 — The Student and the Maze" icon={<Zap size={20} className="text-blue-600" />} badge="Q-Learning" badgeColor="bg-blue-100 text-blue-700" accentColor="border-blue-500">
                             <div className="story-block space-y-4">
