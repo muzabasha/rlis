@@ -143,15 +143,15 @@ const QA_DATA = [
 export default function Topic1_EarlyRoots() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Origins of RL" 
-                subtitle="From Psychology to Computer Science" 
-                icon={<History className="text-blue-600" size={24} />} 
-                badge="Storytelling" 
-                badgeColor="bg-blue-100 text-blue-700" 
+            <SectionWrapper
+                id="story"
+                title="1. The Origins of RL"
+                subtitle="From Psychology to Computer Science"
+                icon={<History className="text-blue-600" size={24} />}
+                badge="Storytelling"
+                badgeColor="bg-blue-100 text-blue-700"
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
@@ -184,44 +184,81 @@ export default function Topic1_EarlyRoots() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. The Feedback Loop" 
-                subtitle="The Core Cycle" 
-                icon={<Calculator className="text-primary-600" size={24} />} 
-                badge="Math Modelling" 
-                badgeColor="bg-primary-100 text-primary-700" 
+            <SectionWrapper
+                id="math"
+                title="2. The Feedback Loop"
+                subtitle="The Core Cycle"
+                icon={<Calculator className="text-primary-600" size={24} />}
+                badge="Math Modelling"
+                badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">
+                <div className="space-y-6">
+                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         The early mathematical roots come from Optimal Control and Dynamic Programming (Bellman, 1950s).
+                        Every RL algorithm is built on this single interaction equation.
                     </p>
-                    <MathBlock 
-                        formula="S_t, A_t \rightarrow R_{t+1}, S_{t+1}" 
-                        label="The Core Cycle" 
-                        explanation="At time t, an agent in state S takes action A, resulting in reward R and a new state S at t+1." 
-                    />
-                    
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: 'S_t', meaning: 'The state of the environment at time step t.' },
-                            { symbol: 'A_t', meaning: 'The action taken by the agent at time step t.' },
-                            { symbol: 'R_{t+1}', meaning: 'The reward received after taking action A_t.' },
-                            { symbol: 'S_{t+1}', meaning: 'The new state of the environment.' }
+
+                    <MathBlock
+                        formula="S_t,\; A_t \;\xrightarrow{\text{environment}}\; R_{t+1},\; S_{t+1}"
+                        label="The RL Interaction Cycle"
+                        accent="blue"
+                        explanation="At each discrete time step t, the agent observes state S_t, selects action A_t, and the environment responds with reward R_{t+1} and new state S_{t+1}."
+                        interpretation="This is the heartbeat of every RL system. The agent and environment exchange information in a closed loop — the agent acts, the world reacts, and the agent learns from that reaction. This cycle repeats until the episode ends or the agent converges to an optimal policy."
+                        motivation="Without a formal notation for this cycle, we cannot write algorithms. This equation is the foundation on which Q-learning, policy gradients, and all modern RL algorithms are built."
+                        terms={[
+                            { term: 'S_t', name: 'State at time t', meaning: 'A complete description of the environment at time step t. Must satisfy the Markov property — the future depends only on the present state, not the history.', range: '\\mathcal{S}', example: 'In a grid world: (row=2, col=3). In Atari: last 4 frames of pixels.' },
+                            { term: 'A_t', name: 'Action at time t', meaning: 'The decision made by the agent in state S_t. Can be discrete (left/right/up/down) or continuous (force, torque).', range: '\\mathcal{A}(S_t)', example: 'In chess: move knight to e5. In robotics: apply 3.2 N·m torque.' },
+                            { term: 'R_{t+1}', name: 'Reward at t+1', meaning: 'A scalar feedback signal from the environment indicating how good action A_t was in state S_t. Can be positive, negative, or zero.', range: '\\mathbb{R}', example: '+10 for reaching goal, −1 for hitting wall, −0.1 per step (time penalty).' },
+                            { term: 'S_{t+1}', name: 'Next State', meaning: 'The new state of the environment after the agent took action A_t. Determined by the environment\'s transition dynamics P(s\'|s,a).', range: '\\mathcal{S}', example: 'After moving right in (2,3): new state is (2,4).' },
                         ]}
+                        numericalExample={{
+                            setup: 'A robot in a 5×5 grid. Current state S_t = (0,0). Action A_t = "move right".',
+                            steps: [
+                                'Environment checks: is (0,1) a wall? No.',
+                                'Environment checks: is (0,1) the goal? No.',
+                                'R_{t+1} = −0.1  (step penalty to encourage efficiency)',
+                                'S_{t+1} = (0,1)  (robot moved right successfully)',
+                            ],
+                            result: 'Agent receives R_{t+1} = −0.1 and observes S_{t+1} = (0,1). Updates its Q-table entry Q((0,0), right).',
+                        }}
+                    />
+
+                    <MathBlock
+                        formula="G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}"
+                        label="The Discounted Return"
+                        accent="violet"
+                        explanation="G_t is the total discounted reward the agent accumulates from time step t onwards. This is what the agent ultimately tries to maximise."
+                        interpretation="The agent doesn't just care about the next reward — it cares about the sum of ALL future rewards. But future rewards are discounted by γ^k, meaning a reward k steps away is worth only γ^k of its face value. This models the real-world intuition that a reward now is worth more than the same reward later (time value of money)."
+                        motivation="Without G_t, we cannot define what 'good behaviour' means over time. A greedy agent that only maximises R_{t+1} will sacrifice long-term success for short-term gain — like a chess player who captures a pawn but loses the queen."
+                        terms={[
+                            { term: 'G_t', name: 'Return (Cumulative Reward)', meaning: 'Total discounted reward from time t to the end of the episode (or infinity for continuing tasks). This is the quantity the agent maximises.', range: '\\mathbb{R}', example: 'If rewards are [1, 2, 3] with γ=0.9: G_0 = 1 + 0.9×2 + 0.81×3 = 5.23' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Controls how much the agent values future rewards relative to immediate ones. γ=0 → myopic (only now). γ→1 → far-sighted (all futures equal). Must be < 1 for infinite-horizon tasks to ensure G_t is finite.', range: '[0,\\,1)', example: 'γ=0.9: reward 10 steps away is worth 0.9^{10} ≈ 0.35 of face value.' },
+                            { term: '\\gamma^k', name: 'Discount at step k', meaning: 'The discount applied to a reward k steps in the future. Decays exponentially, ensuring distant rewards have diminishing influence.', range: '(0,\\,1]', example: 'k=5, γ=0.9: γ^5 = 0.59. So a reward of 10 five steps away is worth 5.9 now.' },
+                            { term: 'R_{t+k+1}', name: 'Future Reward', meaning: 'The reward received k+1 steps after time t. Summed over all future steps to form the return.', range: '\\mathbb{R}', example: 'R_{t+3} is the reward 3 steps from now.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Rewards over 4 steps: R₁=2, R₂=0, R₃=5, R₄=1. Discount γ=0.9. Calculate G₁.',
+                            steps: [
+                                'G₁ = R₂ + γ·R₃ + γ²·R₄',
+                                'G₁ = 0  + 0.9×5 + 0.81×1',
+                                'G₁ = 0  + 4.5   + 0.81',
+                                'G₁ = 5.31',
+                            ],
+                            result: 'G₁ = 5.31. Even though R₂=0 (no immediate reward), the agent still has high return because it anticipates the +5 reward at step 3.',
+                        }}
                     />
                 </div>
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: Trial & Error Simulation" 
-                subtitle="Predicting Behavior" 
-                icon={<Users className="text-emerald-600" size={24} />} 
-                badge="Activity" 
-                badgeColor="bg-emerald-100 text-emerald-700" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: Trial & Error Simulation"
+                subtitle="Predicting Behavior"
+                icon={<Users className="text-emerald-600" size={24} />}
+                badge="Activity"
+                badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
                 <div className="space-y-6">
@@ -242,13 +279,13 @@ export default function Topic1_EarlyRoots() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: Samuel's Checkers" 
-                subtitle="The First Learning Program" 
-                icon={<Briefcase className="text-indigo-600" size={24} />} 
-                badge="PBL" 
-                badgeColor="bg-indigo-100 text-indigo-700" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: Samuel's Checkers"
+                subtitle="The First Learning Program"
+                icon={<Briefcase className="text-indigo-600" size={24} />}
+                badge="PBL"
+                badgeColor="bg-indigo-100 text-indigo-700"
                 accentColor="border-indigo-500"
             >
                 <div className="space-y-6">
@@ -275,13 +312,13 @@ export default function Topic1_EarlyRoots() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Quick Check" 
-                subtitle="Historical Context" 
-                icon={<HelpCircle className="text-purple-600" size={24} />} 
-                badge="Questions" 
-                badgeColor="bg-purple-100 text-purple-700" 
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
+                subtitle="Historical Context"
+                icon={<HelpCircle className="text-purple-600" size={24} />}
+                badge="Questions"
+                badgeColor="bg-purple-100 text-purple-700"
                 accentColor="border-purple-500"
             >
                 <div className="grid gap-4">
@@ -295,13 +332,13 @@ export default function Topic1_EarlyRoots() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: Puzzle Box" 
-                subtitle="Experience the Law of Effect" 
-                icon={<FlaskConical className="text-cyan-600" size={24} />} 
-                badge="Virtual Lab" 
-                badgeColor="bg-cyan-100 text-cyan-700" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: Puzzle Box"
+                subtitle="Experience the Law of Effect"
+                icon={<FlaskConical className="text-cyan-600" size={24} />}
+                badge="Virtual Lab"
+                badgeColor="bg-cyan-100 text-cyan-700"
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">

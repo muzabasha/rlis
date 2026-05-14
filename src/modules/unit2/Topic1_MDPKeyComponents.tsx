@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
-    GitBranch, Box, Target, Zap, TrendingUp, 
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
+    GitBranch, Box, Target, Zap, TrendingUp,
     Clock, Briefcase, Users2, Layout,
     Compass, Map, Award, Move, MousePointer2, Layers
 } from 'lucide-react';
@@ -18,8 +18,8 @@ import {
 function GridworldExplorer() {
     const [selectedCell, setSelectedCell] = useState<{ x: number, y: number } | null>(null);
     const size = 4;
-    
-    const grid = Array.from({ length: size }, (_, y) => 
+
+    const grid = Array.from({ length: size }, (_, y) =>
         Array.from({ length: size }, (_, x) => ({ x, y, id: y * size + x }))
     );
 
@@ -59,7 +59,7 @@ function GridworldExplorer() {
                 <div className="flex-1 space-y-4 w-full">
                     <AnimatePresence mode="wait">
                         {selectedCell ? (
-                            <motion.div 
+                            <motion.div
                                 key="info"
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
@@ -107,11 +107,11 @@ function GridworldExplorer() {
 export default function Topic1_MDPKeyComponents() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Gridworld Navigator" 
+            <SectionWrapper
+                id="story"
+                title="1. The Gridworld Navigator"
                 subtitle="Life as a Sequential Decision Process"
                 icon={<Compass className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -151,50 +151,72 @@ export default function Topic1_MDPKeyComponents() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. The 5-Tuple Formalization" 
+            <SectionWrapper
+                id="math"
+                title="2. The 5-Tuple Formalization"
                 subtitle="The Heart of MDP"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="p-8 bg-slate-900 rounded-[2.5rem] text-white">
-                        <h5 className="text-primary-400 font-bold mb-6 flex items-center gap-2 text-xl">
-                            <Layers size={20} /> The MDP Tuple: (S, A, P, R, γ)
-                        </h5>
-                        <div className="grid sm:grid-cols-2 gap-8">
-                            <MathBlock 
-                                formula="P(s' | s, a) = \text{Pr}\{S_{t+1}=s' | S_t=s, A_t=a\}"
-                                label="Transition Probability"
-                                explanation="The chance of landing in state s' given we took action a in state s."
-                            />
-                            <MathBlock 
-                                formula="R(s, a) = \mathbb{E}[R_{t+1} | S_t=s, A_t=a]"
-                                label="Reward Function"
-                                explanation="The immediate reward received after performing action a in state s."
-                            />
-                        </div>
-                    </div>
-
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: 'S', meaning: 'The finite set of all possible states in the environment.' },
-                            { symbol: 'A', meaning: 'The finite set of all possible actions the agent can take.' },
-                            { symbol: 'P', meaning: 'State transition probability matrix.' },
-                            { symbol: 'R', meaning: 'Reward function (Immediate feedback).' },
-                            { symbol: '\gamma', meaning: 'Discount factor (Values between 0 and 1).' }
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\text{MDP} = \langle \mathcal{S},\;\mathcal{A},\;\mathcal{P},\;\mathcal{R},\;\gamma \rangle"
+                        label="MDP — The 5-Tuple Definition"
+                        accent="blue"
+                        explanation="A Markov Decision Process is completely specified by these five components. Every RL problem — from game playing to robot control — is an instance of this tuple."
+                        interpretation="The 5-tuple is the 'blueprint' of any RL problem. Once you define all five components, you have a complete mathematical specification that any RL algorithm can solve. The power of this formulation is its generality — the same algorithms (Q-learning, policy gradient) work for any MDP regardless of the domain."
+                        motivation="Without this formal definition, we cannot prove properties like the existence of an optimal policy, convergence of algorithms, or the Bellman optimality principle. The 5-tuple is the foundation on which all of RL theory is built."
+                        terms={[
+                            { term: '\\mathcal{S}', name: 'State Space', meaning: 'The complete set of all possible situations the environment can be in. Must be defined so that the Markov property holds — the current state contains all information needed for future decisions.', range: 'Finite or \\mathbb{R}^n', example: 'Grid world: 𝒮={0,...,24} (25 cells). Robot arm: 𝒮=ℝ⁶ (joint angles and velocities).' },
+                            { term: '\\mathcal{A}', name: 'Action Space', meaning: 'The complete set of decisions the agent can make. May depend on the current state (e.g., cannot move through walls).', range: 'Finite or \\mathbb{R}^m', example: 'Grid: 𝒜={up,down,left,right}. Continuous control: 𝒜=ℝ² (force vector).' },
+                            { term: '\\mathcal{P}', name: 'Transition Dynamics', meaning: 'The function P(s\'|s,a) giving the probability of transitioning to state s\' when taking action a in state s. Completely defines how the environment responds to actions.', range: '[0,1]', example: 'P(right|(2,3),right)=0.8, P(up|(2,3),right)=0.1, P(down|(2,3),right)=0.1.' },
+                            { term: '\\mathcal{R}', name: 'Reward Function', meaning: 'R(s,a) or R(s,a,s\') — the immediate scalar feedback the agent receives. The most critical design choice in any RL application.', range: '\\mathbb{R}', example: 'R(goal_state,any)=+100, R(obstacle,any)=−50, R(other,any)=−1.' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Controls the time horizon of the agent\'s planning. γ close to 1 = long-term planning; γ close to 0 = myopic. Must be < 1 for infinite-horizon MDPs to ensure finite returns.', range: '[0,1)', example: 'γ=0.99 for energy management (plan months ahead). γ=0.9 for game playing.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Lunar Lander MDP. Define the 5-tuple:',
+                            steps: [
+                                '𝒮 = [x, y, vx, vy, angle, angular_vel, leg1_contact, leg2_contact] ∈ ℝ⁸',
+                                '𝒜 = {do_nothing, fire_left, fire_main, fire_right} — 4 discrete actions',
+                                'P: physics simulation (deterministic in OpenAI Gym)',
+                                'R: +100 to +140 for landing, −100 for crash, −0.3 per fuel unit used',
+                                'γ = 0.99 (need to plan the entire descent trajectory)',
+                            ],
+                            result: 'Complete MDP specification. Any RL algorithm (PPO, DQN, SAC) can now be applied to find the optimal landing policy.',
+                        }}
+                    />
+
+                    <MathBlock
+                        formula="\mathcal{P}(s' \mid s, a) = \Pr(S_{t+1}=s' \mid S_t=s,\, A_t=a), \quad \sum_{s'\in\mathcal{S}}\mathcal{P}(s'\mid s,a) = 1"
+                        label="Transition Probability — Stochastic Dynamics"
+                        accent="violet"
+                        explanation="P(s'|s,a) is the probability of the environment transitioning to state s' when the agent takes action a in state s. The sum over all possible next states must equal 1 (probability axiom)."
+                        interpretation="This function is the 'physics engine' of the MDP. In a deterministic environment, P=1 for exactly one s' and 0 for all others. In a stochastic environment (slippery floor, noisy sensors), the probability is spread across multiple next states. Model-based RL algorithms learn this function; model-free algorithms bypass it by learning directly from samples."
+                        motivation="The transition function determines how hard the RL problem is. Deterministic environments are easier (no uncertainty). Stochastic environments require the agent to reason about expected values, making the problem harder but more realistic."
+                        terms={[
+                            { term: "\\mathcal{P}(s'\\mid s,a)", name: 'Transition Probability', meaning: 'Probability of landing in state s\' after taking action a in state s.', range: '[0,1]', example: 'P(right|(2,3),right)=0.8 — 80% chance of moving right as intended.' },
+                            { term: '\\sum_{s\'} \\mathcal{P}(s\'\\mid s,a)=1', name: 'Probability Axiom', meaning: 'The probabilities over all possible next states must sum to 1. This is a hard constraint — the environment must transition to SOME state.', range: '\\{1\\}', example: '0.8+0.1+0.1=1.0 ✓ for the slippery floor example.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Recycling robot. State: High battery. Action: Search. Transition probabilities:',
+                            steps: [
+                                'P(High | High, Search) = 0.7  → stays at high battery',
+                                'P(Low  | High, Search) = 0.3  → battery drains',
+                                'Sum = 0.7 + 0.3 = 1.0 ✓',
+                                'Expected reward: E[R|High,Search] = 0.7×4 + 0.3×4 = 4.0 cans',
+                            ],
+                            result: 'Searching from High battery: 70% chance of staying High, 30% chance of draining to Low. Expected reward = 4 cans regardless of outcome.',
+                        }}
                     />
                 </div>
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: Define the MDP" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: Define the MDP"
                 subtitle="Mapping Real Systems"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -234,9 +256,9 @@ export default function Topic1_MDPKeyComponents() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: The Lunar Lander MDP" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: The Lunar Lander MDP"
                 subtitle="Defining Mission Components"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -277,9 +299,9 @@ export default function Topic1_MDPKeyComponents() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
                 subtitle="Essential MDP Knowledge"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -301,9 +323,9 @@ export default function Topic1_MDPKeyComponents() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: The Gridworld Explorer" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: The Gridworld Explorer"
                 subtitle="Interactive MDP Inspection"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

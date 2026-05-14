@@ -3,13 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
-    ArrowRightLeft, Target, Zap, TrendingUp, Clock, Briefcase, 
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
+    ArrowRightLeft, Target, Zap, TrendingUp, Clock, Briefcase,
     Users2, Layout, Database, Network, Share2, Compass, CheckCircle2, XCircle, Layers
 } from 'lucide-react';
-import { 
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
+import {
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, Cell, PieChart, Pie
 } from 'recharts';
 
@@ -67,7 +67,7 @@ function ParadigmSwitcherLab() {
                 </div>
                 <div className="flex bg-white dark:bg-slate-800 p-1.5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
                     {(['SL', 'UL', 'RL'] as const).map(p => (
-                        <button 
+                        <button
                             key={p}
                             onClick={() => setParadigm(p)}
                             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${paradigm === p ? 'bg-primary-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-50'}`}
@@ -80,7 +80,7 @@ function ParadigmSwitcherLab() {
 
             <div className="grid lg:grid-cols-2 gap-8 items-center">
                 <AnimatePresence mode="wait">
-                    <motion.div 
+                    <motion.div
                         key={paradigm}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -109,7 +109,7 @@ function ParadigmSwitcherLab() {
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                             <XAxis dataKey="name" tick={{ fontSize: 10, fontWeight: 700, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                             <YAxis domain={[0, 100]} hide />
-                            <Tooltip 
+                            <Tooltip
                                 contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)' }}
                             />
                             <Bar dataKey={paradigm} radius={[10, 10, 10, 10]} animationDuration={1000}>
@@ -130,11 +130,11 @@ function ParadigmSwitcherLab() {
 export default function Topic3_RLvsSLvsUL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Three Teachers" 
+            <SectionWrapper
+                id="story"
+                title="1. The Three Teachers"
                 subtitle="Classifying the Learning Styles"
                 icon={<ArrowRightLeft className="text-violet-600" size={24} />}
                 badge="Storytelling"
@@ -182,65 +182,88 @@ export default function Topic3_RLvsSLvsUL() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. Mapping the Paradigms" 
+            <SectionWrapper
+                id="math"
+                title="2. Mapping the Paradigms"
                 subtitle="The Data vs. The Trajectory"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="\mathcal{D} = \{(x_i, y_i)\}_{i=1}^n"
-                                label="Supervised Dataset"
-                                explanation="A fixed set of input-output pairs. Static and pre-labeled."
-                            />
-                            <MathBlock 
-                                formula="\tau = (s_0, a_0, r_1, s_1, a_1, r_2, \dots)"
-                                label="RL Trajectory"
-                                explanation="A sequence of states, actions, and rewards. Dynamic and self-generated."
-                            />
-                        </div>
-                        <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white flex items-center justify-center">
-                            <div className="space-y-6 w-full">
-                                <h5 className="font-bold text-primary-400 flex items-center gap-2 text-sm"><Layers size={16} /> Objective Contrast</h5>
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-center text-xs">
-                                        <span>SL: Min Error</span>
-                                        <div className="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden"><div className="w-[90%] h-full bg-blue-500" /></div>
-                                    </div>
-                                    <div className="flex justify-between items-center text-xs">
-                                        <span>UL: Max Similarity</span>
-                                        <div className="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden"><div className="w-[70%] h-full bg-emerald-500" /></div>
-                                    </div>
-                                    <div className="flex justify-between items-center text-xs">
-                                        <span>RL: Max Reward</span>
-                                        <div className="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden"><div className="w-[95%] h-full bg-amber-500" /></div>
-                                    </div>
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\mathcal{D}_{\text{SL}} = \{(x_i,\, y_i)\}_{i=1}^{n}, \quad \hat{\theta} = \arg\min_{\theta}\frac{1}{n}\sum_{i=1}^{n}\mathcal{L}(f_\theta(x_i),\, y_i)"
+                        label="Supervised Learning — Empirical Risk Minimisation"
+                        accent="blue"
+                        explanation="SL learns a function f_θ by minimising the average loss over n labeled examples. The dataset is fixed and provided upfront."
+                        interpretation="In SL, a human expert has already labeled every training example. The algorithm's job is purely to find parameters θ that minimise prediction error. There is no exploration, no sequential decision-making, and no reward signal — just input-output pairs."
+                        motivation="Understanding SL's objective helps contrast it with RL. SL minimises a loss; RL maximises a return. SL needs labels; RL needs interaction. This contrast clarifies exactly when to choose RL over SL."
+                        terms={[
+                            { term: '\\mathcal{D}_{\\text{SL}}', name: 'Supervised Dataset', meaning: 'A fixed collection of n labeled input-output pairs. Created by human annotation.', range: '\\{(x,y)\\}^n', example: '10,000 images each labeled "cat" or "dog".' },
+                            { term: 'x_i', name: 'Input Feature Vector', meaning: 'The raw input to the model — pixels, sensor readings, text tokens, etc.', range: '\\mathbb{R}^d', example: 'A 28×28 grayscale image flattened to 784 numbers.' },
+                            { term: 'y_i', name: 'Target Label', meaning: 'The correct output provided by a human annotator. This is the "answer key" that RL does NOT have.', range: '\\mathcal{Y}', example: '"cat" (class 0), "dog" (class 1), or a price like ₹450.' },
+                            { term: '\\mathcal{L}', name: 'Loss Function', meaning: 'Measures how wrong the prediction f_θ(x_i) is compared to the true label y_i.', range: '\\mathbb{R}^+', example: 'MSE: (y_i − f_θ(x_i))². Cross-entropy: −y_i log f_θ(x_i).' },
+                            { term: '\\hat{\\theta}', name: 'Optimal Parameters', meaning: 'The model weights that minimise average loss. Found by gradient descent.', range: '\\mathbb{R}^p', example: 'Weights of a neural network after training.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'SL regression: predict house price. 3 examples: (x₁=50m², y₁=₹20L), (x₂=80m², y₂=₹32L), (x₃=100m², y₃=₹40L). Model: f_θ(x)=θ·x.',
+                            steps: [
+                                'θ=0.4: predictions = [20, 32, 40]. MSE = 0. Perfect fit.',
+                                'θ=0.3: predictions = [15, 24, 30]. MSE = (25+64+100)/3 = 63.',
+                                'Gradient descent updates θ toward 0.4 to minimise MSE.',
+                            ],
+                            result: 'θ̂ = 0.4 minimises loss. No exploration needed — the answer was in the labels.',
+                        }}
+                    />
+
+                    <MathBlock
+                        formula="\tau = (s_0,\, a_0,\, r_1,\, s_1,\, a_1,\, r_2,\, s_2,\, \ldots,\, s_T)"
+                        label="RL Trajectory — Self-Generated Experience"
+                        accent="emerald"
+                        explanation="An RL trajectory is a sequence of states, actions, and rewards generated by the agent interacting with the environment. Unlike SL, this data is created dynamically during learning."
+                        interpretation="This is the fundamental data structure of RL. There are no pre-given labels — the agent generates its own training data by acting in the world. The quality of this data depends on the agent's current policy, which creates a chicken-and-egg problem that RL algorithms must solve."
+                        motivation="Contrasting τ with 𝒟_SL makes the key difference crystal clear: SL has a fixed dataset with answers; RL has a dynamic trajectory with only reward signals. This is why RL can solve problems where no labeled data exists."
+                        terms={[
+                            { term: '\\tau', name: 'Trajectory', meaning: 'A complete sequence of interactions from episode start (s₀) to end (s_T). The raw experience from which the agent learns.', range: '(\\mathcal{S}\\times\\mathcal{A}\\times\\mathbb{R})^T', example: 'A full game of chess from opening to checkmate.' },
+                            { term: 's_t', name: 'State at step t', meaning: 'The environment\'s configuration at time t. Observed by the agent.', range: '\\mathcal{S}', example: 's₀=(0,0), s₁=(0,1), s₂=(1,1) in a grid.' },
+                            { term: 'a_t', name: 'Action at step t', meaning: 'The decision made by the agent in state s_t, according to its current policy π.', range: '\\mathcal{A}', example: 'a₀=right, a₁=down.' },
+                            { term: 'r_{t+1}', name: 'Reward at step t+1', meaning: 'Scalar feedback from the environment. This is the only "supervision signal" in RL — not a label, just a score.', range: '\\mathbb{R}', example: 'r₁=−0.1 (step cost), r_T=+10 (goal reached).' },
+                            { term: 'T', name: 'Episode Length', meaning: 'Number of steps until the terminal state. Can be fixed or variable.', range: '\\mathbb{Z}^+', example: 'T=200 for CartPole, T=∞ for continuing tasks.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Grid world 3×3. Agent starts at (0,0), goal at (2,2). γ=0.9.',
+                            steps: [
+                                'τ = ((0,0), right, −0.1, (0,1), down, −0.1, (1,1), right, −0.1, (1,2), down, +10, (2,2))',
+                                'G₀ = −0.1 + 0.9×(−0.1) + 0.81×(−0.1) + 0.729×10',
+                                'G₀ = −0.1 − 0.09 − 0.081 + 7.29 = 7.019',
+                            ],
+                            result: 'The trajectory τ gives G₀=7.019. No labels were needed — only the +10 reward at the goal.',
+                        }}
+                    />
+
+                    {/* Objective contrast panel */}
+                    <div className="grid sm:grid-cols-3 gap-4">
+                        {[
+                            { label: 'Supervised Learning', obj: '\\min_{\\theta}\\,\\mathcal{L}(f_\\theta(x),y)', color: 'border-blue-400 bg-blue-50 dark:bg-blue-900/20', badge: 'text-blue-700 dark:text-blue-300' },
+                            { label: 'Unsupervised Learning', obj: '\\min_{\\mu}\\sum_i\\|x_i-\\mu_{c(i)}\\|^2', color: 'border-violet-400 bg-violet-50 dark:bg-violet-900/20', badge: 'text-violet-700 dark:text-violet-300' },
+                            { label: 'Reinforcement Learning', obj: '\\max_{\\pi}\\,\\mathbb{E}[G_t]', color: 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/20', badge: 'text-emerald-700 dark:text-emerald-300' },
+                        ].map(p => (
+                            <div key={p.label} className={`rounded-2xl border-l-4 ${p.color} p-4`}>
+                                <p className={`text-xs font-bold uppercase tracking-wider mb-3 ${p.badge}`}>{p.label}</p>
+                                <div className="overflow-x-auto flex justify-center py-1">
+                                    <span className="text-sm"><MathBlock formula={p.obj} accent="blue" /></span>
                                 </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
-
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: 'x_i', meaning: 'The input feature vector (e.g., pixel data).' },
-                            { symbol: 'y_i', meaning: 'The target label (e.g., "Dog" or 1.0).' },
-                            { symbol: '\tau', meaning: 'Trajectory—the path taken by an RL agent.' },
-                            { symbol: 's, a, r', meaning: 'State, Action, and Reward respectively.' }
-                        ]}
-                    />
                 </div>
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: Paradigm Matcher" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: Paradigm Matcher"
                 subtitle="NEP 2020 Real-World Sorting"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -285,9 +308,9 @@ export default function Topic3_RLvsSLvsUL() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: RLHF in Chatbots" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: RLHF in Chatbots"
                 subtitle="Bridging the Gap"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -323,9 +346,9 @@ export default function Topic3_RLvsSLvsUL() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
                 subtitle="Conceptual Comparisons"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -347,9 +370,9 @@ export default function Topic3_RLvsSLvsUL() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: Paradigm Switcher" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: Paradigm Switcher"
                 subtitle="Compare AI Capabilities"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

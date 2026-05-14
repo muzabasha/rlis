@@ -1,10 +1,10 @@
 declare module 'react-katex' {
-    import { FC } from 'react';
+    import { FC, ReactNode } from 'react';
     interface MathProps {
         math: string;
         block?: boolean;
         errorColor?: string;
-        renderError?: (error: Error) => React.ReactNode;
+        renderError?: (error: Error) => ReactNode;
     }
     export const InlineMath: FC<MathProps>;
     export const BlockMath: FC<MathProps>;

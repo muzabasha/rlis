@@ -2,54 +2,356 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, GitBranch, Box } from 'lucide-react';
+import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import { 
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
+    Network, Eye, EyeOff, Gamepad2, Settings2, GitBranch, ShieldAlert, Zap
+} from 'lucide-react';
 
-export default function Topic5_MarkovModel() {
-    const [activeTab, setActiveTab] = useState<'story' | 'math' | 'activity' | 'questions' | 'lab' | 'insights'>('story');
+// ─── Interactive Components ──────────────────────────────────────────────────
 
-    const tabs = [
-        { id: 'story', label: 'Story', icon: BookOpen },
-        { id: 'math', label: 'Math', icon: Calculator },
-        { id: 'activity', label: 'Activity', icon: Users },
-        { id: 'questions', label: 'Questions', icon: HelpCircle },
-        { id: 'lab', label: 'Virtual Lab', icon: FlaskConical },
-        { id: 'insights', label: 'Insights', icon: Lightbulb },
-    ] as const;
+function ModelTaxonomyLab() {
+    const [control, setControl] = useState<'Autonomous' | 'Controlled'>('Autonomous');
+    const [observability, setObservability] = useState<'Fully Observable' | 'Partially Observable'>('Fully Observable');
+
+    const getModel = () => {
+        if (control === 'Autonomous' && observability === 'Fully Observable') return 'Markov Chain (MC)';
+        if (control === 'Autonomous' && observability === 'Partially Observable') return 'Hidden Markov Model (HMM)';
+        if (control === 'Controlled' && observability === 'Fully Observable') return 'Markov Decision Process (MDP)';
+        if (control === 'Controlled' && observability === 'Partially Observable') return 'Partially Observable MDP (POMDP)';
+        return '';
+    };
+
+    const modelDetails = {
+        'Markov Chain (MC)': {
+            icon: <Network size={32} className="text-emerald-500" />,
+            desc: "The system runs on its own, and you can see exactly what state it's in. Examples: Simple weather patterns, board games with no hidden cards.",
+            bg: "bg-emerald-50 dark:bg-emerald-900/20",
+            border: "border-emerald-200 dark:border-emerald-800",
+            color: "text-emerald-600"
+        },
+        'Hidden Markov Model (HMM)': {
+            icon: <EyeOff size={32} className="text-purple-500" />,
+            desc: "The system runs on its own, but you can only see indirect 'emissions' (clues) about the state. Examples: Speech recognition, DNA sequence analysis.",
+            bg: "bg-purple-50 dark:bg-purple-900/20",
+            border: "border-purple-200 dark:border-purple-800",
+            color: "text-purple-600"
+        },
+        'Markov Decision Process (MDP)': {
+            icon: <Gamepad2 size={32} className="text-blue-500" />,
+            desc: "You can control the transitions via actions, and you know exactly what state you are in. Examples: Chess, solving a Rubik's cube.",
+            bg: "bg-blue-50 dark:bg-blue-900/20",
+            border: "border-blue-200 dark:border-blue-800",
+            color: "text-blue-600"
+        },
+        'Partially Observable MDP (POMDP)': {
+            icon: <ShieldAlert size={32} className="text-amber-500" />,
+            desc: "You can take actions, but you aren't exactly sure what state you're in. Examples: Poker, autonomous driving with noisy sensors.",
+            bg: "bg-amber-50 dark:bg-amber-900/20",
+            border: "border-amber-200 dark:border-amber-800",
+            color: "text-amber-600"
+        }
+    };
+
+    const currentModel = getModel();
+    const details = modelDetails[currentModel as keyof typeof modelDetails];
 
     return (
-        <div className="space-y-4">
-            <div className="flex gap-2 flex-wrap">
-                {tabs.map(t => {
-                    const Icon = t.icon;
-                    return (
-                        <button key={t.id} onClick={() => setActiveTab(t.id)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === t.id ? 'bg-primary-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'}`}>
-                            <Icon size={14} />{t.label}
-                        </button>
-                    );
-                })}
-            </div>
+        <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-8">
+            <div className="flex flex-col md:flex-row gap-8">
+                {/* Control Panel */}
+                <div className="space-y-6 flex-1">
+                    <div>
+                        <h5 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">1. System Control</h5>
+                        <div className="flex gap-2">
+                            {(['Autonomous', 'Controlled'] as const).map(c => (
+                                <button key={c} onClick={() => setControl(c)}
+                                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all border ${control === c ? 'bg-primary-600 text-white border-primary-600 shadow-lg shadow-primary-500/20' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}`}>
+                                    {c}
+                                    <div className="text-[10px] font-normal opacity-70 mt-1">{c === 'Autonomous' ? 'No Actions' : 'Actions Available'}</div>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
 
-            <AnimatePresence mode="wait">
-                <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
-                    
-                    {activeTab === 'story' && (
-                        <SectionWrapper id="story" title="Section 1 — Modeling Randomness" icon={<GitBranch size={20} className="text-blue-600" />} badge="Concepts" badgeColor="bg-blue-100 text-blue-700" accentColor="border-blue-500">
-                            <div className="story-block space-y-4">
-                                <p className="text-slate-600 dark:text-slate-400">A **Markov Model** is a stochastic model used to model randomly changing systems. It assumes that future states depend only on the current state, not on the events that occurred before it.</p>
-                                <div className="card p-5 bg-blue-50/50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30">
-                                    <h4 className="font-bold text-sm mb-2">Real-World Use Cases</h4>
-                                    <ul className="text-xs space-y-2 list-disc pl-4 text-slate-500">
-                                        <li><strong>Weather Prediction:</strong> Sunny → Rainy transitions.</li>
-                                        <li><strong>NLP:</strong> Predicting the next word in a sentence (Bigram models).</li>
-                                        <li><strong>Stock Market:</strong> Modeling price movements as random walks.</li>
-                                    </ul>
-                                </div>
+                    <div>
+                        <h5 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">2. System Observability</h5>
+                        <div className="flex gap-2">
+                            {(['Fully Observable', 'Partially Observable'] as const).map(o => (
+                                <button key={o} onClick={() => setObservability(o)}
+                                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all border flex flex-col items-center ${observability === o ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-500/20' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}`}>
+                                    {o === 'Fully Observable' ? <Eye size={16} className="mb-1" /> : <EyeOff size={16} className="mb-1" />}
+                                    {o}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Result Display */}
+                <div className={`flex-1 p-8 rounded-3xl border-2 flex flex-col items-center justify-center text-center transition-colors duration-500 ${details.bg} ${details.border}`}>
+                    <AnimatePresence mode="wait">
+                        <motion.div 
+                            key={currentModel}
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.8, opacity: 0 }}
+                            className="flex flex-col items-center gap-4"
+                        >
+                            <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-xl">
+                                {details.icon}
                             </div>
-                        </SectionWrapper>
-                    )}
-                </motion.div>
-            </AnimatePresence>
+                            <h3 className={`text-2xl font-black ${details.color}`}>{currentModel}</h3>
+                            <p className="text-sm font-medium text-slate-700 dark:text-slate-300 max-w-sm">
+                                {details.desc}
+                            </p>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// ─── Main Topic Component ────────────────────────────────────────────────────
+
+export default function Topic5_MarkovModel() {
+    return (
+        <div className="max-w-4xl mx-auto pb-20 space-y-12">
+            
+            {/* SECTION 1: STORYTELLING */}
+            <SectionWrapper 
+                id="story" 
+                title="1. The Four Kingdoms of Markov" 
+                subtitle="Classifying Stochastic Systems"
+                icon={<BookOpen className="text-blue-600" size={24} />}
+                badge="Storytelling"
+                badgeColor="bg-blue-100 text-blue-700"
+                accentColor="border-blue-500"
+            >
+                <div className="space-y-6">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <GitBranch size={120} />
+                        </div>
+                        <h4 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2">
+                            🏰 The Taxonomy of Systems
+                        </h4>
+                        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
+                            <p>
+                                Not all systems are created equal. When scientists try to model random real-world environments, they ask themselves two critical questions:
+                            </p>
+                            <ul className="list-disc pl-6 space-y-2">
+                                <li><strong>Do we have control?</strong> Are we just watching the weather, or are we driving a car?</li>
+                                <li><strong>Can we see everything?</strong> Are we looking at a clear chessboard, or playing poker where cards are hidden?</li>
+                            </ul>
+                            <p>
+                                By answering these two questions, we divide the universe of random systems into <strong>Four Markov Models</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <InfoCard type="insight" title="The Umbrella Term">
+                            "Markov Model" is an umbrella term for models that rely on the Markov Property (the future depends only on the present).
+                        </InfoCard>
+                        <InfoCard type="tip" title="RL's Home">
+                            Reinforcement Learning almost exclusively lives in the "Controlled" side of the taxonomy (MDPs and POMDPs).
+                        </InfoCard>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 2: MATHEMATICAL MODELLING */}
+            <SectionWrapper 
+                id="math" 
+                title="2. Expanding the Tuple" 
+                subtitle="How Math Changes with Observability"
+                icon={<Calculator className="text-primary-600" size={24} />}
+                badge="Math Modelling"
+                badgeColor="bg-primary-100 text-primary-700"
+                accentColor="border-primary-500"
+            >
+                <div className="space-y-8">
+                    <div className="grid lg:grid-cols-2 gap-8">
+                        <div className="space-y-6">
+                            <MathBlock 
+                                formula="\langle S, P \rangle"
+                                label="Markov Chain"
+                                explanation="Just States (S) and Transition Probabilities (P). Autonomous and visible."
+                            />
+                            <MathBlock 
+                                formula="\langle S, P, Y, O \rangle"
+                                label="Hidden Markov Model (HMM)"
+                                explanation="Y = Set of Observations. O = Observation Probabilities (Emission matrix)."
+                            />
+                        </div>
+                        <div className="space-y-6">
+                            <MathBlock 
+                                formula="\langle S, A, P, R \rangle"
+                                label="Markov Decision Process"
+                                explanation="We add Actions (A) and Rewards (R) to give the agent control and goals."
+                            />
+                            <MathBlock 
+                                formula="\langle S, A, P, R, \Omega, O \rangle"
+                                label="POMDP"
+                                explanation="The most complex. We have Actions, Rewards, plus Observations (\Omega) and Observation Probabilities (O)."
+                            />
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 3: ACTIVITY BASED LEARNING */}
+            <SectionWrapper 
+                id="activity" 
+                title="3. Activity: Sort the System" 
+                subtitle="Real-world Classification"
+                icon={<Users className="text-emerald-600" size={24} />}
+                badge="Activity"
+                badgeColor="bg-emerald-100 text-emerald-700"
+                accentColor="border-emerald-500"
+            >
+                <div className="space-y-6">
+                    {/* Level 1 */}
+                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
+                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Blindfolded Maze</h4>
+                        </div>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            The teacher shows a maze. 
+                            <br/><br/>
+                            1. Walking through it normally = <strong>MDP</strong>. You choose actions, you see where you are.
+                            <br/>
+                            2. Walking through it blindfolded, only feeling the walls = <strong>POMDP</strong>. You choose actions, but you don't know exactly where you are!
+                        </p>
+                    </div>
+
+                    {/* Level 2 */}
+                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
+                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Student Task: Identify the Model</h4>
+                        </div>
+                        <div className="grid sm:grid-cols-3 gap-4">
+                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 text-center">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase">Stock Prices</span>
+                                <p className="text-sm font-bold text-purple-600 mt-2">HMM</p>
+                            </div>
+                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 text-center">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase">Tic-Tac-Toe</span>
+                                <p className="text-sm font-bold text-blue-600 mt-2">MDP</p>
+                            </div>
+                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 text-center">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase">Autonomous Drone</span>
+                                <p className="text-sm font-bold text-amber-600 mt-2">POMDP</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 4: PROJECT BASED LEARNING */}
+            <SectionWrapper 
+                id="project" 
+                title="4. Project: Speech Recognition" 
+                subtitle="The Power of HMMs"
+                icon={<BookOpen className="text-indigo-600" size={24} />}
+                badge="PBL"
+                badgeColor="bg-indigo-100 text-indigo-700"
+                accentColor="border-indigo-500"
+            >
+                <div className="space-y-6">
+                    <div className="card p-6 bg-indigo-50/30 dark:bg-indigo-900/10 border-none">
+                        <h5 className="font-bold mb-2 flex items-center gap-2"><Zap size={18} /> Siri's Ancestors</h5>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Before deep neural networks, early speech recognition systems (like early Siri/Dragon Dictation) were built entirely on <strong>Hidden Markov Models</strong>.
+                        </p>
+                    </div>
+
+                    <div className="p-6 bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h5 className="font-bold mb-4">How it works:</h5>
+                        <ul className="space-y-4 text-sm text-slate-600 dark:text-slate-400">
+                            <li className="flex gap-4">
+                                <span className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center font-bold text-indigo-500 shrink-0">1</span>
+                                <div>
+                                    <strong className="text-slate-800 dark:text-slate-200">The Hidden State:</strong> The actual word the person intended to say (e.g., "Apple"). We can't see their brain, so it's hidden!
+                                </div>
+                            </li>
+                            <li className="flex gap-4">
+                                <span className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center font-bold text-indigo-500 shrink-0">2</span>
+                                <div>
+                                    <strong className="text-slate-800 dark:text-slate-200">The Emission (Observation):</strong> The audio waves recorded by the microphone. This is what we <em>can</em> see.
+                                </div>
+                            </li>
+                            <li className="flex gap-4">
+                                <span className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center font-bold text-indigo-500 shrink-0">3</span>
+                                <div>
+                                    <strong className="text-slate-800 dark:text-slate-200">The Goal:</strong> Use the Viterbi Algorithm to find the most likely sequence of hidden states (words) that produced those audio waves.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
+            <SectionWrapper 
+                id="questions" 
+                title="5. Quick Check" 
+                subtitle="Taxonomy Definitions"
+                icon={<HelpCircle className="text-purple-600" size={24} />}
+                badge="Questions"
+                badgeColor="bg-purple-100 text-purple-700"
+                accentColor="border-purple-500"
+            >
+                <div className="grid gap-4">
+                    {[
+                        { q: 'What is the main difference between a Markov Chain and an MDP?', a: 'A Markov Chain is autonomous (transitions happen on their own), whereas an MDP adds "Actions" allowing an agent to control the transitions to maximize "Rewards".' },
+                        { q: 'What does "Hidden" mean in a Hidden Markov Model (HMM)?', a: 'It means the true state of the system cannot be observed directly; it can only be inferred through noisy observations or emissions.' },
+                        { q: 'Give a real-world example of a POMDP.', a: 'Self-driving cars. The car can take actions (steer, brake), but its sensors (cameras, LiDAR) are noisy, so it never has perfect knowledge of its exact state relative to everything else.' }
+                    ].map((item, i) => (
+                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
+                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
+                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
+                        </div>
+                    ))}
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
+            <SectionWrapper 
+                id="lab" 
+                title="6. Virtual Lab: Taxonomy Explorer" 
+                subtitle="Identify the Right Model"
+                icon={<FlaskConical className="text-cyan-600" size={24} />}
+                badge="Virtual Lab"
+                badgeColor="bg-cyan-100 text-cyan-700"
+                accentColor="border-cyan-500"
+            >
+                <div className="space-y-6">
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Adjust the parameters of <strong>Control</strong> and <strong>Observability</strong> to discover which mathematical framework is required to model your system.
+                    </p>
+                    <ModelTaxonomyLab />
+                </div>
+            </SectionWrapper>
+
+            {/* FEEDBACK SECTION */}
+            <div className="bg-primary-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-primary-500/20">
+                <div className="max-w-xl mx-auto space-y-2">
+                    <h3 className="text-3xl font-black italic">Taxonomy Mastered!</h3>
+                    <p className="text-primary-100">
+                        You know the difference between MC, HMM, MDP, and POMDP. Ready to look under the hood at the engine driving these models: The Markov Matrix?
+                    </p>
+                </div>
+                <div className="flex justify-center gap-4">
+                    <button className="px-10 py-4 bg-white text-primary-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+                        NEXT: MARKOV MATRIX
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

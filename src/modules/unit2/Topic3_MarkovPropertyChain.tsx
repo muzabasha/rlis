@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Zap, TrendingUp, Clock, Briefcase, Layout,
     Compass, Map, Award, Move, MousePointer2, Layers, GitBranch, Binary, Brain,
     CloudSun, RefreshCcw
@@ -18,7 +18,7 @@ import {
 function MarkovChainVisualizer() {
     const [state, setState] = useState<'Sunny' | 'Rainy'>('Sunny');
     const [history, setHistory] = useState<string[]>(['Sunny']);
-    
+
     const transitionMatrix = {
         'Sunny': { 'Sunny': 0.8, 'Rainy': 0.2 },
         'Rainy': { 'Sunny': 0.4, 'Rainy': 0.6 }
@@ -28,7 +28,7 @@ function MarkovChainVisualizer() {
         const rand = Math.random();
         const probabilities = transitionMatrix[state];
         let nextState: 'Sunny' | 'Rainy' = 'Sunny';
-        
+
         if (rand < probabilities['Sunny']) {
             nextState = 'Sunny';
         } else {
@@ -62,20 +62,20 @@ function MarkovChainVisualizer() {
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 {/* Visual Representation */}
                 <div className="relative h-48 bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 shadow-sm flex items-center justify-around overflow-hidden">
-                    <motion.div 
+                    <motion.div
                         animate={{ scale: state === 'Sunny' ? 1.2 : 1, opacity: state === 'Sunny' ? 1 : 0.4 }}
                         className={`p-6 rounded-2xl ${state === 'Sunny' ? 'bg-amber-100 text-amber-600 shadow-lg shadow-amber-500/20' : 'bg-slate-50 text-slate-400'}`}
                     >
                         <CloudSun size={32} />
                         <span className="block text-[10px] font-bold mt-2">SUNNY</span>
                     </motion.div>
-                    
+
                     <div className="flex flex-col gap-4 text-[10px] font-bold text-slate-300">
                         <div className="flex items-center gap-2">0.8 <TrendingUp size={10} className="rotate-90" /></div>
                         <div className="flex items-center gap-2"><TrendingUp size={10} className="-rotate-90" /> 0.4</div>
                     </div>
 
-                    <motion.div 
+                    <motion.div
                         animate={{ scale: state === 'Rainy' ? 1.2 : 1, opacity: state === 'Rainy' ? 1 : 0.4 }}
                         className={`p-6 rounded-2xl ${state === 'Rainy' ? 'bg-blue-100 text-blue-600 shadow-lg shadow-blue-500/20' : 'bg-slate-50 text-slate-400'}`}
                     >
@@ -86,7 +86,7 @@ function MarkovChainVisualizer() {
 
                 {/* Controls and History */}
                 <div className="space-y-4">
-                    <button 
+                    <button
                         onClick={nextStep}
                         className="w-full py-4 bg-primary-600 text-white rounded-2xl font-bold shadow-lg shadow-primary-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                     >
@@ -113,11 +113,11 @@ function MarkovChainVisualizer() {
 export default function Topic3_MarkovPropertyChain() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Forgetful Weather" 
+            <SectionWrapper
+                id="story"
+                title="1. The Forgetful Weather"
                 subtitle="The Core Assumption of RL"
                 icon={<Brain className="text-purple-600" size={24} />}
                 badge="Storytelling"
@@ -157,44 +157,73 @@ export default function Topic3_MarkovPropertyChain() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. The Markov Equation" 
+            <SectionWrapper
+                id="math"
+                title="2. The Markov Equation"
                 subtitle="Defining the Property Formally"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="p-8 bg-slate-900 rounded-[2.5rem] text-white">
-                        <h5 className="text-primary-400 font-bold mb-6 flex items-center gap-2 text-xl">
-                            <Layers size={20} /> The Markov Property
-                        </h5>
-                        <div className="grid sm:grid-cols-1 gap-8">
-                            <MathBlock 
-                                formula="\mathbb{P}[S_{t+1} | S_t] = \mathbb{P}[S_{t+1} | S_1, S_2, \dots, S_t]"
-                                label="Independence from History"
-                                explanation="The probability of the next state depends only on the current state, not the sequence that led to it."
-                            />
-                        </div>
-                    </div>
-
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: 'S_t', meaning: 'The state at the current time step.' },
-                            { symbol: 'S_{t+1}', meaning: 'The state at the next time step.' },
-                            { symbol: 'S_1, \dots, S_t', meaning: 'The entire history of states.' },
-                            { symbol: '\mathbb{P}', meaning: 'Probability distribution.' }
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\mathbb{P}\!\left[S_{t+1} \mid S_t\right] = \mathbb{P}\!\left[S_{t+1} \mid S_1,\, S_2,\, \ldots,\, S_t\right]"
+                        label="The Markov Property — Conditional Independence"
+                        accent="violet"
+                        explanation="The probability of the next state S_{t+1} depends only on the current state S_t, not on the entire history S_1,...,S_t. The present state is a sufficient statistic for the future."
+                        interpretation="This equation says: knowing the full history S_1,...,S_t gives you no more predictive power than knowing just S_t. The current state 'summarises' all relevant information from the past. This is the fundamental assumption that makes RL tractable — without it, the agent would need to store and process an ever-growing history."
+                        motivation="The Markov property is what allows us to define value functions V(s) that depend only on the current state. Without it, we would need V(s_1,...,s_t) — a function of the entire history — which is computationally infeasible."
+                        terms={[
+                            { term: 'S_{t+1}', name: 'Next State', meaning: 'The state the environment will be in at the next time step. This is what we are predicting.', range: '\\mathcal{S}', example: 'Tomorrow\'s weather.' },
+                            { term: 'S_t', name: 'Current State', meaning: 'The state at the present time step. Under the Markov property, this is all we need to predict S_{t+1}.', range: '\\mathcal{S}', example: 'Today\'s weather (Sunny/Rainy).' },
+                            { term: 'S_1,\\ldots,S_t', name: 'Full History', meaning: 'The complete sequence of past states. The Markov property says this provides no additional information beyond S_t alone.', range: '\\mathcal{S}^t', example: 'Weather for the past 100 days — irrelevant if we know today\'s weather.' },
+                            { term: '\\mathbb{P}[\\cdot\\mid\\cdot]', name: 'Conditional Probability', meaning: 'Probability of an event given some conditioning information. The Markov property says conditioning on S_t is equivalent to conditioning on the full history.', range: '[0,1]', example: 'P[Rain tomorrow | Sunny today] = P[Rain tomorrow | all past weather, Sunny today].' },
                         ]}
+                        numericalExample={{
+                            setup: 'Weather Markov Chain. Transition matrix: P(Sunny|Sunny)=0.8, P(Rainy|Sunny)=0.2, P(Sunny|Rainy)=0.4, P(Rainy|Rainy)=0.6.',
+                            steps: [
+                                'Today: Sunny. P(Sunny tomorrow) = 0.8 — regardless of past weather.',
+                                'History: [Rainy, Rainy, Sunny]. P(Sunny tomorrow) = 0.8 — same answer!',
+                                'History: [Sunny, Sunny, Sunny]. P(Sunny tomorrow) = 0.8 — still the same!',
+                                'The Markov property holds: only today\'s state matters.',
+                            ],
+                            result: 'P(Sunny tomorrow | Sunny today) = 0.8, regardless of the entire weather history. The Markov property is verified.',
+                        }}
                     />
+
+                    <MathBlock
+                        formula="\mathbf{P} = \begin{pmatrix} P_{11} & P_{12} & \cdots & P_{1n} \\ P_{21} & P_{22} & \cdots & P_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ P_{n1} & P_{n2} & \cdots & P_{nn} \end{pmatrix}, \quad \sum_{j=1}^{n} P_{ij} = 1 \;\forall i"
+                        label="Markov Transition Matrix"
+                        accent="blue"
+                        explanation="The complete transition dynamics of a Markov Chain encoded as an n×n matrix. Row i gives the probability distribution over next states when currently in state i. Every row must sum to 1."
+                        interpretation="The transition matrix P is the complete mathematical description of a Markov Chain. Multiplying the current state distribution μ_t by P gives the next distribution: μ_{t+1} = μ_t · P. Repeated multiplication P^n gives the n-step transition probabilities. As n→∞, the distribution converges to the stationary distribution π where π·P = π."
+                        motivation="The matrix form enables powerful analytical tools: eigenvalue analysis for stationary distributions, matrix powers for multi-step predictions, and linear algebra for policy evaluation. The Bellman equation for policy evaluation is a linear system that can be solved by matrix inversion."
+                        terms={[
+                            { term: 'P_{ij}', name: 'Matrix Entry (i,j)', meaning: 'Probability of transitioning from state i to state j in one step. Equivalent to P(s_j|s_i).', range: '[0,1]', example: 'P_{12}=0.2: 20% chance of going from state 1 to state 2.' },
+                            { term: '\\sum_j P_{ij}=1', name: 'Row-Stochastic Constraint', meaning: 'Each row must sum to 1 — the agent must transition to SOME state. This makes P a row-stochastic (or right-stochastic) matrix.', range: '\\{1\\}', example: 'Row 1: P_{11}+P_{12}=0.8+0.2=1.0 ✓' },
+                            { term: '\\mathbf{P}^n', name: 'n-Step Transition Matrix', meaning: 'The matrix power P^n gives the probability of transitioning from state i to state j in exactly n steps.', range: '[0,1]^{n\\times n}', example: 'P²_{ij} = probability of going from i to j in 2 steps.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Weather Markov Chain. P = [[0.8, 0.2], [0.4, 0.6]] (Sunny=0, Rainy=1).',
+                            steps: [
+                                'P¹ = [[0.8, 0.2], [0.4, 0.6]]  ← 1-step transitions',
+                                'P² = P×P = [[0.72, 0.28], [0.56, 0.44]]  ← 2-step transitions',
+                                'P^∞ → [[0.667, 0.333], [0.667, 0.333]]  ← stationary distribution',
+                                'Stationary: π = [0.667, 0.333] → 66.7% Sunny, 33.3% Rainy long-run',
+                            ],
+                            result: 'Regardless of starting state, the weather converges to 66.7% Sunny and 33.3% Rainy in the long run. This is the stationary distribution π where π·P = π.',
+                        }}
+                    />
+
+                    <MarkovChainVisualizer />
                 </div>
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: The Memory Test" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: The Memory Test"
                 subtitle="Identifying Markovian Systems"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -227,7 +256,7 @@ export default function Topic3_MarkovPropertyChain() {
                             <h4 className="font-bold text-primary-900 dark:text-primary-100">Interactive: State Augmentation</h4>
                         </div>
                         <p className="text-sm text-slate-600 dark:text-slate-400">
-                            "If a system is non-Markovian, how do we fix it?" 
+                            "If a system is non-Markovian, how do we fix it?"
                             <br /><strong>Solution:</strong> We include history in the current state (e.g., instead of just "Position", use "Position + Velocity").
                         </p>
                     </div>
@@ -235,9 +264,9 @@ export default function Topic3_MarkovPropertyChain() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: Next-Word Predictor" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: Next-Word Predictor"
                 subtitle="The Simplest Markov Model"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -266,9 +295,9 @@ export default function Topic3_MarkovPropertyChain() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
                 subtitle="Markov Concepts"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -290,9 +319,9 @@ export default function Topic3_MarkovPropertyChain() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: Markov Chain Visualizer" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: Markov Chain Visualizer"
                 subtitle="Experience State Transitions"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

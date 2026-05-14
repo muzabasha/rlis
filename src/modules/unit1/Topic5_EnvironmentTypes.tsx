@@ -3,13 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
-    Globe, Settings, Wind, Eye, EyeOff, Zap, Target, Clock, 
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
+    Globe, Settings, Wind, Eye, EyeOff, Zap, Target, Clock,
     Briefcase, ShieldAlert, Users2, Layout, Dice6, Map
 } from 'lucide-react';
-import { 
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, 
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, AreaChart, Area, Legend, BarChart, Bar,
     ScatterChart, Scatter, ZAxis
 } from 'recharts';
@@ -22,7 +22,7 @@ import {
 function EnvironmentTuner() {
     const [stochasticity, setStochasticity] = useState(0.2);
     const [observability, setObservability] = useState(0.8);
-    
+
     // Simulate a path with noise
     const generatePathData = (noise: number) => {
         return Array.from({ length: 10 }, (_, i) => ({
@@ -57,8 +57,8 @@ function EnvironmentTuner() {
                             <span className="font-medium flex items-center gap-2"><Dice6 size={14} /> Stochasticity (Noise)</span>
                             <span className="text-cyan-600 font-bold">{(stochasticity * 100).toFixed(0)}%</span>
                         </div>
-                        <input 
-                            type="range" min="0" max="1" step="0.1" value={stochasticity} 
+                        <input
+                            type="range" min="0" max="1" step="0.1" value={stochasticity}
                             onChange={(e) => setStochasticity(parseFloat(e.target.value))}
                             className="w-full accent-cyan-600"
                         />
@@ -71,13 +71,13 @@ function EnvironmentTuner() {
                     <div className="space-y-4">
                         <div className="flex justify-between text-sm">
                             <span className="font-medium flex items-center gap-2">
-                                {observability > 0.5 ? <Eye size={14} /> : <EyeOff size={14} />} 
+                                {observability > 0.5 ? <Eye size={14} /> : <EyeOff size={14} />}
                                 Observability
                             </span>
                             <span className="text-indigo-600 font-bold">{(observability * 100).toFixed(0)}%</span>
                         </div>
-                        <input 
-                            type="range" min="0" max="1" step="0.1" value={observability} 
+                        <input
+                            type="range" min="0" max="1" step="0.1" value={observability}
                             onChange={(e) => setObservability(parseFloat(e.target.value))}
                             className="w-full accent-indigo-600"
                         />
@@ -99,17 +99,17 @@ function EnvironmentTuner() {
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                                 <XAxis dataKey="step" hide />
                                 <YAxis hide domain={[0, 150]} />
-                                <Tooltip 
+                                <Tooltip
                                     contentStyle={{ borderRadius: '12px', border: 'none', fontSize: '10px' }}
                                 />
                                 <Line type="monotone" dataKey="ideal" stroke="#94a3b8" strokeDasharray="5 5" name="Intended Path" dot={false} />
-                                <Line 
-                                    type="monotone" 
-                                    dataKey="actual" 
-                                    stroke="#06b6d4" 
-                                    strokeWidth={3} 
-                                    name="Actual Path" 
-                                    dot={{ r: 4, fill: observability > 0.5 ? '#06b6d4' : '#e2e8f0' }} 
+                                <Line
+                                    type="monotone"
+                                    dataKey="actual"
+                                    stroke="#06b6d4"
+                                    strokeWidth={3}
+                                    name="Actual Path"
+                                    dot={{ r: 4, fill: observability > 0.5 ? '#06b6d4' : '#e2e8f0' }}
                                 />
                             </LineChart>
                         </ResponsiveContainer>
@@ -130,11 +130,11 @@ function EnvironmentTuner() {
 export default function Topic5_EnvironmentTypes() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Jungle vs The Zoo" 
+            <SectionWrapper
+                id="story"
+                title="1. The Jungle vs The Zoo"
                 subtitle="A Story of Two Habitats"
                 icon={<Wind className="text-cyan-600" size={24} />}
                 badge="Storytelling"
@@ -151,7 +151,7 @@ export default function Topic5_EnvironmentTypes() {
                         </h4>
                         <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
                             <p>
-                                Meet <strong>Jojo</strong>, the world's first RL monkey. Jojo grew up in a high-tech <strong>Zoo</strong>. 
+                                Meet <strong>Jojo</strong>, the world's first RL monkey. Jojo grew up in a high-tech <strong>Zoo</strong>.
                             </p>
                             <p>
                                 In the Zoo, everything is <strong>Deterministic</strong>. If Jojo presses a button, a banana drops exactly 2 seconds later. He sees the whole cage (<strong>Fully Observable</strong>), and nothing ever moves (<strong>Static</strong>). Learning here is easy.
@@ -177,42 +177,62 @@ export default function Topic5_EnvironmentTypes() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. Modelling Environment Dynamics" 
+            <SectionWrapper
+                id="math"
+                title="2. Modelling Environment Dynamics"
                 subtitle="The Rules of the Jungle"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div>
-                        <h4 className="text-lg font-bold text-slate-800 dark:text-white mb-2">Classifying the Complexity</h4>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            We use four major axes to classify every environment an RL agent encounters.
-                        </p>
-                    </div>
-
-                    <div className="grid sm:grid-cols-2 gap-4">
-                        {[
-                            { title: 'Stochasticity', math: 'P(s\'|s, a) < 1', desc: 'Outcomes are probabilistic.' },
-                            { title: 'Observability', math: 'O \subseteq S', desc: 'Agent sees only a subset of true state.' },
-                            { title: 'Continuity', math: 'S \in \mathbb{R}^n', desc: 'States or actions are infinite ranges.' },
-                            { title: 'Dynamism', math: '\frac{dE}{dt} \neq 0', desc: 'Environment changes while agent thinks.' }
-                        ].map(item => (
-                            <div key={item.title} className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
-                                <div className="text-primary-600 font-mono text-sm mb-1">{item.math}</div>
-                                <div className="font-bold text-slate-800 dark:text-white mb-1">{item.title}</div>
-                                <div className="text-xs text-slate-500">{item.desc}</div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <MathBlock 
-                        formula="P(s' | s, a) = \text{Probability of next state } s' \text{ given current state } s \text{ and action } a"
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\mathcal{P}(s' \mid s, a) = \Pr(S_{t+1}=s' \mid S_t=s,\, A_t=a)"
                         label="State Transition Probability"
-                        explanation="In a deterministic environment, this is always 1 for one specific s' and 0 for others. In stochastic worlds, it's a distribution."
+                        accent="blue"
+                        explanation="The probability that the environment moves to state s' when the agent takes action a in state s. This single function completely defines the environment's dynamics."
+                        interpretation="In a deterministic environment, P(s'|s,a)=1 for exactly one s' and 0 for all others. In a stochastic environment, the probability is spread across multiple next states. This function is the 'physics engine' of the MDP — it governs how the world responds to actions."
+                        motivation="Without P(s'|s,a), we cannot compute value functions analytically. Model-based RL algorithms learn this function; model-free algorithms bypass it entirely by learning from samples."
+                        terms={[
+                            { term: "\\mathcal{P}(s'\\mid s,a)", name: 'Transition Probability', meaning: 'Probability of landing in state s\' after taking action a in state s. Must sum to 1 over all s\'.', range: '[0,1]', example: 'Slippery floor: P(right|s,right)=0.8, P(up|s,right)=0.1, P(down|s,right)=0.1.' },
+                            { term: 'S_{t+1}', name: 'Next State', meaning: 'The state the environment transitions to after the action.', range: '\\mathcal{S}', example: 'After "move right" from (2,3): S_{t+1}=(2,4) with prob 0.8.' },
+                            { term: 'S_t=s', name: 'Current State', meaning: 'The state the agent is in when it takes the action.', range: '\\mathcal{S}', example: 'S_t=(2,3) — robot at row 2, column 3.' },
+                            { term: 'A_t=a', name: 'Action Taken', meaning: 'The action the agent chose in state s.', range: '\\mathcal{A}', example: 'A_t = "move right".' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Stochastic grid world. Action "right" from state (2,3). Transition probabilities:',
+                            steps: [
+                                'P((2,4)|(2,3),right) = 0.8  → intended direction',
+                                'P((1,3)|(2,3),right) = 0.1  → slipped up',
+                                'P((3,3)|(2,3),right) = 0.1  → slipped down',
+                                'Sum = 0.8+0.1+0.1 = 1.0 ✓',
+                            ],
+                            result: 'The agent intended to go right but has a 20% chance of slipping. RL must account for this stochasticity in its value estimates.',
+                        }}
+                    />
+
+                    <MathBlock
+                        formula="\mathcal{R}(s,a) = \mathbb{E}\!\left[R_{t+1} \mid S_t=s,\, A_t=a\right] = \sum_{s'}\mathcal{P}(s'\mid s,a)\cdot r(s,a,s')"
+                        label="Expected Reward Function"
+                        accent="emerald"
+                        explanation="The expected immediate reward for taking action a in state s, averaged over all possible next states weighted by their transition probabilities."
+                        interpretation="This function tells the agent how much reward to expect on average from each (state, action) pair. In deterministic environments, R(s,a) equals the single reward received. In stochastic environments, it is a weighted average over all possible outcomes."
+                        motivation="The reward function is the most critical design choice in RL. A poorly designed R(s,a) leads to reward hacking — the agent finds unintended ways to maximise reward while ignoring the actual goal."
+                        terms={[
+                            { term: '\\mathcal{R}(s,a)', name: 'Expected Reward', meaning: 'Average reward for taking action a in state s, over all possible next states.', range: '\\mathbb{R}', example: 'R(near_goal, move_right) = +9.5 (usually reaches goal).' },
+                            { term: 'r(s,a,s\')', name: 'Transition Reward', meaning: 'Reward received for the specific transition from s to s\' via action a.', range: '\\mathbb{R}', example: 'r((2,3),right,(2,4))=−0.1, r((2,3),right,goal)=+10.' },
+                            { term: '\\mathcal{P}(s\'\\mid s,a)', name: 'Transition Weight', meaning: 'Probability of reaching s\', used to weight the reward r(s,a,s\').', range: '[0,1]', example: 'P=0.8 for intended direction, 0.1 for each slip direction.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Action "right" from (2,3). Transitions: (2,4) with p=0.8, r=−0.1; (1,3) with p=0.1, r=−0.1; (3,3) with p=0.1, r=−0.1.',
+                            steps: [
+                                'R((2,3),right) = 0.8×(−0.1) + 0.1×(−0.1) + 0.1×(−0.1)',
+                                '              = −0.08 − 0.01 − 0.01',
+                                '              = −0.10',
+                            ],
+                            result: 'R((2,3),right) = −0.10. Every step costs 0.1 regardless of direction slipped — the step penalty is uniform here.',
+                        }}
                     />
 
                     <EnvironmentTuner />
@@ -220,9 +240,9 @@ export default function Topic5_EnvironmentTypes() {
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: Environment Scavenger Hunt" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: Environment Scavenger Hunt"
                 subtitle="Learning by Identifying"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -237,7 +257,7 @@ export default function Topic5_EnvironmentTypes() {
                             <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Invisible Board</h4>
                         </div>
                         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                            Teacher plays a game of Tic-Tac-Toe but keeps the board hidden from students, only announcing moves. 
+                            Teacher plays a game of Tic-Tac-Toe but keeps the board hidden from students, only announcing moves.
                         </p>
                         <div className="flex items-center gap-2 text-xs font-bold text-emerald-600 bg-white dark:bg-slate-800 p-2 rounded-lg inline-block">
                             <EyeOff size={14} /> This transforms a Fully Observable game into a Partially Observable one!
@@ -277,9 +297,9 @@ export default function Topic5_EnvironmentTypes() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: Drone Pilot AI" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: Drone Pilot AI"
                 subtitle="Mission: Underwater Cave Exploration"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -316,9 +336,9 @@ export default function Topic5_EnvironmentTypes() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Examination Focus" 
+            <SectionWrapper
+                id="questions"
+                title="5. Examination Focus"
                 subtitle="Common Interview & Board Questions"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -340,9 +360,9 @@ export default function Topic5_EnvironmentTypes() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: Environment Tuner" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: Environment Tuner"
                 subtitle="The Ultimate Sandbox"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

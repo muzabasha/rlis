@@ -3,15 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
-    GitMerge, Target, Database, Cpu, Zap, TrendingUp, 
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
+    GitMerge, Target, Database, Cpu, Zap, TrendingUp,
     Clock, Briefcase, ShieldAlert, Users2, Layout,
     ChevronRight, Info, BrainCircuit
 } from 'lucide-react';
-import { 
+import {
     Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-    ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, 
+    ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid,
     Tooltip, Legend
 } from 'recharts';
 
@@ -70,8 +70,8 @@ function ApproachComparisonChart() {
                             fill="#f59e0b"
                             fillOpacity={0.4}
                         />
-                        <Tooltip 
-                             contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
+                        <Tooltip
+                            contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
                         />
                     </RadarChart>
                 </ResponsiveContainer>
@@ -89,11 +89,11 @@ function ApproachComparisonChart() {
 export default function Topic7_ApproachesToRL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Three Strategists" 
+            <SectionWrapper
+                id="story"
+                title="1. The Three Strategists"
                 subtitle="Different Paths to the Same Goal"
                 icon={<GitMerge className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -144,52 +144,99 @@ export default function Topic7_ApproachesToRL() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. Mathematical Formalization" 
+            <SectionWrapper
+                id="math"
+                title="2. Mathematical Formalization"
                 subtitle="Equations for Every Strategist"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="Q(s, a) \approx \mathbb{E}[G_t | S_t=s, A_t=a]"
-                                label="Value-Based (Q-Learning)"
-                                explanation="We try to learn the Quality (Q) of taking action 'a' in state 's'."
-                            />
-                            <MathBlock 
-                                formula="\pi(a|s, \theta) = \mathbb{P}[A_t=a | S_t=s, \theta]"
-                                label="Policy-Based (REINFORCE)"
-                                explanation="We learn the probability distribution of actions directly."
-                            />
-                            <MathBlock 
-                                formula="\mathcal{P}(s', r | s, a) = \text{Model}(s, a)"
-                                label="Model-Based (Dyna-Q)"
-                                explanation="We learn a simulator that predicts the environment's response."
-                            />
-                        </div>
-                        <ApproachComparisonChart />
-                    </div>
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="Q(s,a) \approx \mathbb{E}\!\left[G_t \mid S_t=s,\,A_t=a\right]"
+                        label="Value-Based Approach — Action-Value Function Q(s,a)"
+                        accent="blue"
+                        explanation="Q(s,a) estimates the expected total discounted reward when taking action a in state s and then following the current policy. The agent acts greedily: always pick the action with the highest Q-value."
+                        interpretation="The Q-function is the 'price tag' on every (state, action) pair. A high Q(s,a) means taking action a in state s is expected to lead to a lot of future reward. Value-based methods like Q-learning and DQN learn this function and derive the policy implicitly as π(s)=argmax_a Q(s,a)."
+                        motivation="Value-based methods are stable and well-understood. They work best for discrete action spaces. The Q-function provides a complete ranking of all actions in every state, making policy extraction trivial."
+                        terms={[
+                            { term: 'Q(s,a)', name: 'Action-Value Function', meaning: 'Expected return when taking action a in state s, then following policy π. The core object learned by Q-learning and DQN.', range: '\\mathbb{R}', example: 'Q((2,3),right)=7.2 means going right from (2,3) is expected to yield 7.2 total reward.' },
+                            { term: '\\mathbb{E}[G_t\\mid S_t=s,A_t=a]', name: 'Conditional Expectation', meaning: 'Average return over all possible trajectories starting with action a in state s.', range: '\\mathbb{R}', example: 'If 80% of trajectories give G=9 and 20% give G=1: Q=0.8×9+0.2×1=7.4.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Q-table for a 2-state, 2-action problem. After training: Q(s₁,left)=3, Q(s₁,right)=8, Q(s₂,left)=5, Q(s₂,right)=2.',
+                            steps: [
+                                'In state s₁: argmax_a Q(s₁,a) = right (Q=8 > Q=3)',
+                                'In state s₂: argmax_a Q(s₂,a) = left  (Q=5 > Q=2)',
+                                'Greedy policy: π*(s₁)=right, π*(s₂)=left',
+                            ],
+                            result: 'The optimal policy is extracted directly from the Q-table by taking the argmax at each state. No separate policy network needed.',
+                        }}
+                    />
 
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: '\theta', meaning: 'Parameters of the policy (usually neural network weights).' },
-                            { symbol: 'Q(s, a)', meaning: 'Action-value function; estimated future reward.' },
-                            { symbol: '\pi', meaning: 'Policy function — the strategy itself.' },
-                            { symbol: '\mathcal{P}', meaning: 'Transition model — the simulator.' }
+                    <MathBlock
+                        formula="\pi_\theta(a \mid s) = \frac{\exp\!\left(\theta_a^\top \phi(s)\right)}{\sum_{a'}\exp\!\left(\theta_{a'}^\top \phi(s)\right)}"
+                        label="Policy-Based Approach — Softmax Policy"
+                        accent="violet"
+                        explanation="A parameterised stochastic policy that maps states to probability distributions over actions using a softmax function. Parameters θ are optimised directly by gradient ascent on expected return."
+                        interpretation="Instead of learning a value function and deriving the policy, policy-based methods directly parameterise π_θ and optimise θ. The softmax ensures all action probabilities are positive and sum to 1. This approach naturally handles continuous action spaces and stochastic optimal policies."
+                        motivation="Policy-based methods are essential when the action space is continuous (robot joints, steering angles) or when the optimal policy is stochastic (game theory, partially observable environments). Value-based methods cannot handle these cases directly."
+                        terms={[
+                            { term: '\\pi_\\theta(a\\mid s)', name: 'Parameterised Policy', meaning: 'Probability of taking action a in state s, controlled by parameters θ (neural network weights).', range: '[0,1]', example: 'π_θ(right|(2,3))=0.73, π_θ(up|(2,3))=0.18, π_θ(left|(2,3))=0.09.' },
+                            { term: '\\theta_a', name: 'Action Parameters', meaning: 'The weight vector for action a. Higher θ_a·φ(s) → higher probability of choosing a.', range: '\\mathbb{R}^d', example: 'θ_right = [0.5, 0.3, −0.1] for a 3-feature state.' },
+                            { term: '\\phi(s)', name: 'State Feature Vector', meaning: 'A vector representation of state s. Can be hand-crafted features or the output of a neural network.', range: '\\mathbb{R}^d', example: 'φ((2,3)) = [0.4, 0.6] (normalised row and column).' },
+                        ]}
+                        numericalExample={{
+                            setup: '2 actions: left, right. θ_left·φ(s)=1.0, θ_right·φ(s)=2.0.',
+                            steps: [
+                                'exp(1.0) = 2.718,  exp(2.0) = 7.389',
+                                'Sum = 2.718 + 7.389 = 10.107',
+                                'π(left|s)  = 2.718/10.107 = 0.269',
+                                'π(right|s) = 7.389/10.107 = 0.731',
+                            ],
+                            result: 'The agent takes "right" 73.1% of the time and "left" 26.9% — a stochastic policy that still favours the better action.',
+                        }}
+                    />
+
+                    <MathBlock
+                        formula="\hat{s}_{t+1},\,\hat{r}_{t+1} = \mathcal{M}_\phi(s_t,\,a_t)"
+                        label="Model-Based Approach — Learned Environment Model"
+                        accent="amber"
+                        explanation="A learned model M_φ predicts the next state and reward given the current state and action. The agent uses this model to plan (simulate future trajectories) without interacting with the real environment."
+                        interpretation="Model-based RL builds an internal simulator of the world. The agent can 'imagine' thousands of future trajectories in its head before taking a single real action. This dramatically improves sample efficiency — the agent learns more from less real experience."
+                        motivation="Real-world RL is expensive: each interaction with a physical robot costs time and money. A learned model allows the agent to practice in simulation, then transfer the learned policy to the real world."
+                        terms={[
+                            { term: '\\mathcal{M}_\\phi', name: 'Learned Model', meaning: 'A function (usually a neural network) that approximates the environment\'s transition and reward dynamics.', range: '\\mathcal{S}\\times\\mathcal{A}\\to\\mathcal{S}\\times\\mathbb{R}', example: 'A neural network trained on (s,a,s\',r) tuples from real experience.' },
+                            { term: '\\hat{s}_{t+1}', name: 'Predicted Next State', meaning: 'The model\'s prediction of where the environment will be after action a_t. May differ from the true S_{t+1}.', range: '\\mathcal{S}', example: 'Model predicts robot will be at (2,4) after moving right from (2,3).' },
+                            { term: '\\hat{r}_{t+1}', name: 'Predicted Reward', meaning: 'The model\'s prediction of the reward that will be received.', range: '\\mathbb{R}', example: 'Model predicts r=−0.1 for a step action.' },
                         ]}
                     />
+
+                    <div className="grid lg:grid-cols-2 gap-6">
+                        <ApproachComparisonChart />
+                        <div className="space-y-3">
+                            <h5 className="font-bold text-slate-800 dark:text-white text-sm">When to Use Each Approach</h5>
+                            {[
+                                { approach: 'Value-Based (Q-learning, DQN)', when: 'Discrete action spaces, stable environments, when interpretability matters.' },
+                                { approach: 'Policy-Based (REINFORCE, PPO)', when: 'Continuous actions, stochastic optimal policies, high-dimensional action spaces.' },
+                                { approach: 'Model-Based (Dyna-Q, AlphaZero)', when: 'Sample efficiency is critical, simulation is cheap, environment is learnable.' },
+                            ].map(p => (
+                                <div key={p.approach} className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200 dark:border-slate-700">
+                                    <p className="text-xs font-bold text-primary-600 dark:text-primary-400 mb-1">{p.approach}</p>
+                                    <p className="text-xs text-slate-600 dark:text-slate-400">{p.when}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: Strategy Swap" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: Strategy Swap"
                 subtitle="Thinking like a General"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="NEP 2020"
@@ -234,9 +281,9 @@ export default function Topic7_ApproachesToRL() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: Pendulum Battle" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: Pendulum Battle"
                 subtitle="Value vs Policy vs Model"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -275,9 +322,9 @@ export default function Topic7_ApproachesToRL() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Examination Focus" 
+            <SectionWrapper
+                id="questions"
+                title="5. Examination Focus"
                 subtitle="Targeting Core Concepts"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -299,9 +346,9 @@ export default function Topic7_ApproachesToRL() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: The Approach Sandbox" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: The Approach Sandbox"
                 subtitle="Visualizing Strategy Trade-offs"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

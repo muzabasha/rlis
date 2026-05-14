@@ -158,42 +158,53 @@ export default function Topic8_TypesOfRL() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock
-                                formula="Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma Q(s', a') - Q(s, a)]"
-                                label="On-Policy (SARSA)"
-                                explanation="We update based on the action a' that we actually took using our current policy."
-                            />
-                            <MathBlock
-                                formula="Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]"
-                                label="Off-Policy (Q-Learning)"
-                                explanation="We update based on the absolute BEST possible action, even if we didn't take it."
-                            />
-                        </div>
-                        <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                            <h4 className="font-bold text-primary-400 mb-4 flex items-center gap-2"><Info size={16} /> Key Differences</h4>
-                            <ul className="space-y-4">
-                                <li className="flex gap-3 text-xs leading-relaxed">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1 shrink-0" />
-                                    <span><strong>On-Policy:</strong> Conservative. It respects the explorer's mistakes (e.g., if you're exploring a cliff edge, it learns to be very careful).</span>
-                                </li>
-                                <li className="flex gap-3 text-xs leading-relaxed">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1 shrink-0" />
-                                    <span><strong>Off-Policy:</strong> Aggressive. It assumes you will act perfectly in the future, even if you are currently making mistakes.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <SymbolTable
-                        symbols={[
-                            { symbol: '\alpha', meaning: 'Learning rate (how much to trust new info)' },
-                            { symbol: '\gamma', meaning: 'Discount factor (importance of future rewards)' },
-                            { symbol: 'a\'', meaning: 'The next action taken' },
-                            { symbol: "\\max_{a'}", meaning: 'The best possible action regardless of current policy' }
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="Q(S_t,A_t) \leftarrow Q(S_t,A_t) + \alpha\!\underbrace{\bigl[R_{t+1} + \gamma\, Q(S_{t+1},A_{t+1}) - Q(S_t,A_t)\bigr]}_{\delta_t^{\text{SARSA}}}"
+                        label="SARSA — On-Policy TD Update"
+                        accent="emerald"
+                        explanation="SARSA updates Q(S_t,A_t) using the actual next action A_{t+1} that the agent took. The update target uses the Q-value of the action actually chosen by the current policy."
+                        interpretation="SARSA stands for State-Action-Reward-State-Action — the five quantities used in each update. Because it uses the actual next action A_{t+1} (which may be exploratory), SARSA learns the value of the policy being followed, including its exploration behaviour. This makes it conservative near dangerous states."
+                        motivation="SARSA is the correct choice when exploration itself has consequences — for example, a robot near a cliff. If the agent sometimes explores toward the cliff edge, SARSA learns to stay away from it. Q-learning would ignore this risk."
+                        terms={[
+                            { term: 'Q(S_t,A_t)', name: 'Current Q-estimate', meaning: 'Our current estimate of the expected return for taking action A_t in state S_t.', range: '\\mathbb{R}', example: 'Q((2,3),right) = 5.2 before update.' },
+                            { term: '\\alpha', name: 'Learning Rate', meaning: 'Controls how much the new experience overwrites the old estimate. α=1 means fully trust new data; α→0 means barely update.', range: '(0,1]', example: 'α=0.1: new estimate = 0.9×old + 0.1×new_target.' },
+                            { term: 'R_{t+1}', name: 'Immediate Reward', meaning: 'The reward received after taking action A_t in state S_t.', range: '\\mathbb{R}', example: 'R_{t+1} = −0.1 (step cost).' },
+                            { term: '\\gamma\\,Q(S_{t+1},A_{t+1})', name: 'Discounted Next Q', meaning: 'The discounted Q-value of the ACTUAL next action A_{t+1} chosen by the current policy. This is what makes SARSA on-policy.', range: '\\mathbb{R}', example: 'γ=0.9, Q(S_{t+1},A_{t+1})=6.0 → 0.9×6.0=5.4.' },
+                            { term: '\\delta_t^{\\text{SARSA}}', name: 'TD Error (SARSA)', meaning: 'The difference between the target [R+γQ(s\',a\')] and the current estimate Q(s,a). Drives the update — positive δ increases Q, negative δ decreases it.', range: '\\mathbb{R}', example: 'δ = (−0.1 + 5.4) − 5.2 = 0.1 → Q increases slightly.' },
                         ]}
+                        numericalExample={{
+                            setup: 'State s=(2,3), action a=right. Q(s,a)=5.2. After action: r=−0.1, s\'=(2,4), a\'=down (chosen by ε-greedy). Q(s\',a\')=6.0. α=0.1, γ=0.9.',
+                            steps: [
+                                'TD target = R + γ·Q(s\',a\') = −0.1 + 0.9×6.0 = 5.3',
+                                'TD error δ = 5.3 − 5.2 = 0.1',
+                                'Q(s,a) ← 5.2 + 0.1×0.1 = 5.21',
+                            ],
+                            result: 'Q((2,3),right) updated from 5.2 → 5.21. Small positive update because the actual next action was decent.',
+                        }}
+                    />
+
+                    <MathBlock
+                        formula="Q(S_t,A_t) \leftarrow Q(S_t,A_t) + \alpha\!\underbrace{\bigl[R_{t+1} + \gamma\max_{a'}Q(S_{t+1},a') - Q(S_t,A_t)\bigr]}_{\delta_t^{\text{Q-learning}}}"
+                        label="Q-Learning — Off-Policy TD Update"
+                        accent="blue"
+                        explanation="Q-learning updates using the MAXIMUM Q-value over all possible next actions, regardless of which action the agent actually took. This makes it off-policy — it learns the optimal policy even while following an exploratory behaviour policy."
+                        interpretation="The key difference from SARSA is max_a' Q(s',a') instead of Q(s',a'). Q-learning always assumes the agent will act optimally in the future, even if it is currently exploring randomly. This makes Q-learning more aggressive and allows it to learn from any experience, including demonstrations."
+                        motivation="Q-learning is the foundation of DQN and most modern deep RL. Its off-policy nature allows experience replay — storing past transitions and reusing them for multiple updates, dramatically improving sample efficiency."
+                        terms={[
+                            { term: '\\max_{a\'} Q(S_{t+1},a\')', name: 'Greedy Next Q', meaning: 'The highest Q-value achievable in the next state, over ALL possible actions. This is the off-policy target — it assumes optimal future behaviour.', range: '\\mathbb{R}', example: 'Q(s\',left)=4.0, Q(s\',right)=7.5, Q(s\',up)=3.2 → max=7.5.' },
+                            { term: '\\delta_t^{\\text{Q-learning}}', name: 'TD Error (Q-learning)', meaning: 'Difference between the optimal target [R+γ·max Q(s\',a\')] and current estimate. Larger than SARSA\'s δ when the greedy action is better than the chosen action.', range: '\\mathbb{R}', example: 'δ = (−0.1 + 0.9×7.5) − 5.2 = 1.45 → large positive update.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Same state as before: s=(2,3), a=right, r=−0.1, s\'=(2,4). Q-values at s\': left=4.0, right=7.5, up=3.2. Q(s,a)=5.2. α=0.1, γ=0.9.',
+                            steps: [
+                                'max_a\' Q(s\',a\') = max(4.0, 7.5, 3.2) = 7.5',
+                                'TD target = −0.1 + 0.9×7.5 = 6.65',
+                                'TD error δ = 6.65 − 5.2 = 1.45',
+                                'Q(s,a) ← 5.2 + 0.1×1.45 = 5.345',
+                            ],
+                            result: 'Q((2,3),right) updated from 5.2 → 5.345. Larger update than SARSA because Q-learning assumes optimal future behaviour (right=7.5 vs actual down=6.0).',
+                        }}
                     />
                 </div>
             </SectionWrapper>

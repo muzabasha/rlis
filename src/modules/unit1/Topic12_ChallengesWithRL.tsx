@@ -3,14 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     AlertTriangle, Zap, Target, ShieldAlert, TrendingDown,
     Clock, Briefcase, Users2, Layout,
     Search, Construction, AlertCircle, Ghost, Flame
 } from 'lucide-react';
-import { 
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, 
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, AreaChart, Area, Legend, BarChart, Bar
 } from 'recharts';
 
@@ -48,13 +48,13 @@ function RewardHackingLab() {
                     <p className="text-xs text-slate-500">How agents find shortcuts that ignore your goal.</p>
                 </div>
                 <div className="flex bg-white dark:bg-slate-800 p-1 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                    <button 
+                    <button
                         onClick={() => setScenario('intended')}
                         className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${scenario === 'intended' ? 'bg-primary-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-50'}`}
                     >
                         Intended Learning
                     </button>
-                    <button 
+                    <button
                         onClick={() => setScenario('hacked')}
                         className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${scenario === 'hacked' ? 'bg-red-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-50'}`}
                     >
@@ -65,7 +65,7 @@ function RewardHackingLab() {
 
             <div className="relative h-40 flex items-center justify-center gap-4">
                 <AnimatePresence mode="wait">
-                    <motion.div 
+                    <motion.div
                         key={scenario}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -82,7 +82,7 @@ function RewardHackingLab() {
                                 </div>
                                 {i < currentPath.length - 1 && (
                                     <div className="w-10 h-0.5 bg-slate-200 dark:bg-slate-700 relative">
-                                        <motion.div 
+                                        <motion.div
                                             initial={{ left: 0 }}
                                             animate={{ left: '100%' }}
                                             transition={{ repeat: Infinity, duration: 1 }}
@@ -113,11 +113,11 @@ function RewardHackingLab() {
 export default function Topic12_ChallengesWithRL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Loophole Hunter" 
+            <SectionWrapper
+                id="story"
+                title="1. The Loophole Hunter"
                 subtitle="Why RL is Harder than it Looks"
                 icon={<AlertTriangle className="text-red-600" size={24} />}
                 badge="Storytelling"
@@ -157,56 +157,71 @@ export default function Topic12_ChallengesWithRL() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. The Math of Obstacles" 
-                subtitle="Credit and Shaping"
+            <SectionWrapper
+                id="math"
+                title="2. The Math of Obstacles"
+                subtitle="Credit Assignment, Reward Shaping & Dimensionality"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="R'(s, a, s') = R(s, a, s') + \gamma \Phi(s') - \Phi(s)"
-                                label="Reward Shaping"
-                                explanation="We add a 'Potential Function' \Phi to provide small breadcrumbs of reward to guide the agent."
-                            />
-                            <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                                <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Clock size={16} /> Credit Assignment</h5>
-                                <p className="text-xs text-slate-400">
-                                    {"The difficulty in knowing which specific action $a_t$ was responsible for a reward $R_{t+100}$ received much later."}
-                                </p>
-                            </div>
-                        </div>
-                        <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
-                            <h5 className="font-bold text-slate-800 dark:text-white mb-4">Dimensionality Curse</h5>
-                            <div className="space-y-2">
-                                <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-full w-full relative overflow-hidden">
-                                    <div className="absolute left-0 top-0 h-full bg-red-500 w-[80%]" />
-                                    <span className="absolute inset-0 flex items-center justify-center text-[8px] font-black uppercase text-white">State Space Size</span>
-                                </div>
-                                <p className="text-[10px] text-slate-500 italic">As you add more sensors, the number of possible states grows exponentially ($S = d^n$).</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: '\Phi(s)', meaning: 'Potential function—an estimate of how "good" state s is.' },
-                            { symbol: 'R\'', meaning: 'The "Shaped" reward—easier for the agent to learn from.' },
-                            { symbol: '\gamma', meaning: 'The factor that ensures we don\'t create infinite reward loops.' }
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="R'(s,a,s') = R(s,a,s') + \gamma\,\Phi(s') - \Phi(s)"
+                        label="Potential-Based Reward Shaping"
+                        accent="amber"
+                        explanation="Reward shaping adds a potential-based bonus to the original reward to provide denser feedback. The potential function Φ(s) estimates how 'good' state s is, giving the agent breadcrumbs toward the goal."
+                        interpretation="Sparse rewards (only at the goal) make learning extremely slow — the agent must stumble upon the goal by chance before it can learn anything. Reward shaping adds intermediate rewards that guide the agent toward the goal without changing the optimal policy. The γΦ(s')−Φ(s) term is carefully designed to preserve policy invariance — the optimal policy under R' is the same as under R."
+                        motivation="Without reward shaping, an agent in a large maze might take millions of steps before reaching the goal for the first time. With shaping, it receives positive feedback for moving closer to the goal, dramatically accelerating learning."
+                        terms={[
+                            { term: "R'(s,a,s')", name: 'Shaped Reward', meaning: 'The modified reward that includes the potential-based bonus. Used for training; the original R is the true objective.', range: '\\mathbb{R}', example: "R'(near_goal, right, goal) = 10 + 0.9×0 − 8 = 2. Extra +2 for being near goal." },
+                            { term: 'R(s,a,s\')', name: 'Original Reward', meaning: 'The true reward signal. Sparse — only non-zero at the goal or key events.', range: '\\mathbb{R}', example: 'R=+10 at goal, R=0 everywhere else.' },
+                            { term: '\\Phi(s)', name: 'Potential Function', meaning: 'A state-dependent value estimating how close state s is to the goal. Higher Φ = closer to goal.', range: '\\mathbb{R}', example: 'Φ(s) = −distance_to_goal. Φ(goal)=0, Φ(start)=−10.' },
+                            { term: '\\gamma\\,\\Phi(s\')-\\Phi(s)', name: 'Shaping Bonus', meaning: 'The difference in potential between next state and current state, discounted by γ. Positive when moving toward the goal.', range: '\\mathbb{R}', example: 'Moving from distance=5 to distance=3: bonus = 0.9×(−3)−(−5) = −2.7+5 = 2.3.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Maze. Φ(s) = −distance_to_goal. γ=0.9. Agent moves from s=(dist=5) to s\'=(dist=3). R(s,a,s\')=0 (not at goal yet).',
+                            steps: [
+                                'Φ(s)  = −5,  Φ(s\') = −3',
+                                'Shaping bonus = γ·Φ(s\') − Φ(s) = 0.9×(−3) − (−5) = −2.7 + 5 = 2.3',
+                                "R'(s,a,s') = 0 + 2.3 = 2.3",
+                                'Agent receives +2.3 for moving closer — even though the original reward was 0!',
+                            ],
+                            result: "R'=2.3 guides the agent toward the goal without changing the optimal policy. The agent now learns 10× faster.",
+                        }}
+                    />
+
+                    <MathBlock
+                        formula="|\mathcal{S}| = d^n \quad \Longrightarrow \quad \text{Curse of Dimensionality}"
+                        label="Dimensionality Curse — State Space Explosion"
+                        accent="red"
+                        explanation="If each of n sensors has d possible values, the total number of states grows exponentially as d^n. This makes tabular RL (Q-tables) infeasible for real-world problems."
+                        interpretation="A robot with 10 joints, each with 100 possible angles, has 100^10 = 10^20 possible states — more than the number of atoms in the observable universe. No Q-table can store this. This is why deep RL uses neural networks as function approximators: instead of storing Q(s,a) for every state, a neural network generalises across similar states."
+                        motivation="Understanding the dimensionality curse explains why tabular Q-learning works for toy problems (grid worlds) but fails for real robots. It motivates the need for function approximation (DQN, PPO) and state representation learning."
+                        terms={[
+                            { term: 'd', name: 'Values per Dimension', meaning: 'Number of discrete values each sensor/feature can take.', range: '\\mathbb{Z}^+', example: 'd=100: each joint angle discretised into 100 positions.' },
+                            { term: 'n', name: 'State Dimensions', meaning: 'Number of independent features/sensors in the state representation.', range: '\\mathbb{Z}^+', example: 'n=10: robot with 10 joints.' },
+                            { term: 'd^n', name: 'Total States', meaning: 'Total number of possible states. Grows exponentially with n — the curse of dimensionality.', range: '\\mathbb{Z}^+', example: 'd=100, n=10: 100^{10} = 10^{20} states. Impossible to enumerate.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Compare state space sizes for different problems:',
+                            steps: [
+                                'Grid world 5×5: |S| = 25. Q-table: 25×4 = 100 entries. ✅ Feasible.',
+                                'Atari game (84×84 pixels, 3 colours): |S| = 3^{7056} ≈ 10^{3365}. ❌ Impossible.',
+                                'CartPole (4 continuous vars): |S| = ∞. ❌ Impossible without approximation.',
+                                'Solution: Neural network Q(s,a;θ) generalises across states.',
+                            ],
+                            result: 'For n>5 dimensions, tabular RL is infeasible. Deep RL (DQN) uses neural networks to approximate Q(s,a) across the entire continuous state space.',
+                        }}
                     />
                 </div>
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: The Loophole Hunt" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: The Loophole Hunt"
                 subtitle="NEP 2020 Interactive Learning"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -240,9 +255,9 @@ export default function Topic12_ChallengesWithRL() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: Safe RL for Drones" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: Safe RL for Drones"
                 subtitle="Balancing Speed and Safety"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -275,9 +290,9 @@ export default function Topic12_ChallengesWithRL() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
                 subtitle="Exam-Ready Challenges"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -299,9 +314,9 @@ export default function Topic12_ChallengesWithRL() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: The Challenge Explorer" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: The Challenge Explorer"
                 subtitle="Visualize Loophole Logic"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

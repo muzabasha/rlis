@@ -3,13 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Zap, TrendingUp, Clock, Briefcase, Layout,
     Compass, Map, Award, Move, MousePointer2, Layers, GitBranch, Binary
 } from 'lucide-react';
-import { 
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
+import {
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, Cell
 } from 'recharts';
 
@@ -20,7 +20,7 @@ import {
  */
 function TransitionMatrixExplorer() {
     const [action, setAction] = useState<'Search' | 'Wait'>('Search');
-    
+
     const transitionData = {
         'Search': [
             { state: 'High Energy', probability: 0.7, color: '#3b82f6' },
@@ -44,7 +44,7 @@ function TransitionMatrixExplorer() {
                 </div>
                 <div className="flex bg-white dark:bg-slate-800 p-1.5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
                     {(['Search', 'Wait'] as const).map(a => (
-                        <button 
+                        <button
                             key={a}
                             onClick={() => setAction(a)}
                             className={`px-6 py-2 rounded-xl text-xs font-bold transition-all ${action === a ? 'bg-primary-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-50'}`}
@@ -64,7 +64,7 @@ function TransitionMatrixExplorer() {
                                 <span className="text-xs font-black text-primary-600">{(item.probability * 100).toFixed(0)}%</span>
                             </div>
                             <div className="w-full h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
-                                <motion.div 
+                                <motion.div
                                     initial={{ width: 0 }}
                                     animate={{ width: `${item.probability * 100}%` }}
                                     className="h-full bg-primary-500"
@@ -83,7 +83,7 @@ function TransitionMatrixExplorer() {
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                             <XAxis dataKey="state" tick={{ fontSize: 10, fontWeight: 700, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                             <YAxis domain={[0, 1]} hide />
-                            <Tooltip 
+                            <Tooltip
                                 contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)' }}
                             />
                             <Bar dataKey="probability" radius={[10, 10, 10, 10]} animationDuration={1000}>
@@ -104,11 +104,11 @@ function TransitionMatrixExplorer() {
 export default function Topic2_FormalMDPDefinition() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Inventory Manager" 
+            <SectionWrapper
+                id="story"
+                title="1. The Inventory Manager"
                 subtitle="Formalizing Business Logic"
                 icon={<BookOpen className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -148,49 +148,73 @@ export default function Topic2_FormalMDPDefinition() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. The Formal 4-Tuple" 
+            <SectionWrapper
+                id="math"
+                title="2. The Formal 4-Tuple"
                 subtitle="The Mathematical Foundation"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="p-8 bg-slate-900 rounded-[2.5rem] text-white">
-                        <h5 className="text-primary-400 font-bold mb-6 flex items-center gap-2 text-xl">
-                            <Layers size={20} /> MDP Formulation: $\langle S, A, P, R \rangle$
-                        </h5>
-                        <div className="grid sm:grid-cols-2 gap-8">
-                            <MathBlock 
-                                formula="P_{ss'}^a = \mathbb{P}[S_{t+1}=s' | S_t=s, A_t=a]"
-                                label="Transition Function"
-                                explanation="The probability that action a in state s will lead to state s'."
-                            />
-                            <MathBlock 
-                                formula="R_s^a = \mathbb{E}[R_{t+1} | S_t=s, A_t=a]"
-                                label="Reward Function"
-                                explanation="The expected immediate reward from taking action a in state s."
-                            />
-                        </div>
-                    </div>
-
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: 'S', meaning: 'A finite set of states.' },
-                            { symbol: 'A', meaning: 'A finite set of actions.' },
-                            { symbol: 'P^a_{ss\'}', meaning: 'State transition probability matrix for each action a.' },
-                            { symbol: 'R^a_s', meaning: 'Reward function.' }
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\mathcal{P}_{ss'}^{a} = \mathbb{P}\!\left[S_{t+1}=s' \;\middle|\; S_t=s,\, A_t=a\right]"
+                        label="Transition Function — Compact Notation"
+                        accent="blue"
+                        explanation="The superscript a and subscripts ss' compactly denote the transition probability from state s to state s' under action a. This notation is used in Sutton & Barto (2019) and most RL textbooks."
+                        interpretation="This is the same transition probability P(s'|s,a) written in a more compact matrix notation. For each action a, we get a matrix P^a where entry (s,s') gives the probability of transitioning from s to s'. This matrix form is useful for analytical solutions and policy evaluation via linear algebra."
+                        motivation="The matrix notation allows us to write the Bellman equation as a linear system: v = R + γP^π v, which can be solved by matrix inversion for small MDPs. This is the foundation of policy evaluation in dynamic programming."
+                        terms={[
+                            { term: '\\mathcal{P}_{ss\'}^{a}', name: 'Transition Matrix Entry', meaning: 'Probability of transitioning from state s to state s\' under action a. Equivalent to P(s\'|s,a).', range: '[0,1]', example: 'P^{Search}_{High,Low} = 0.3 — 30% chance of draining battery when searching.' },
+                            { term: 's', name: 'Current State (row)', meaning: 'The state the agent is currently in. Indexes the row of the transition matrix.', range: '\\mathcal{S}', example: 's = High (battery level).' },
+                            { term: "s'", name: 'Next State (column)', meaning: 'The state the environment transitions to. Indexes the column of the transition matrix.', range: '\\mathcal{S}', example: "s' = Low (battery drained after searching)." },
                         ]}
+                        numericalExample={{
+                            setup: 'Recycling robot. Transition matrix P^{Search} (rows=current state, cols=next state):',
+                            steps: [
+                                'P^{Search} = [[0.7, 0.3],   ← from High: 70% stay High, 30% go Low',
+                                '              [0.1, 0.9]]   ← from Low:  10% go High, 90% stay Low',
+                                'Row sums: 0.7+0.3=1.0 ✓, 0.1+0.9=1.0 ✓',
+                                'P^{Wait}   = [[0.9, 0.1],   ← Waiting is safer (less battery drain)',
+                                '              [0.0, 1.0]]   ← Low+Wait always stays Low',
+                            ],
+                            result: 'Two 2×2 transition matrices, one per action. Each row sums to 1. These matrices completely define the environment dynamics.',
+                        }}
                     />
+
+                    <MathBlock
+                        formula="\mathcal{R}_{s}^{a} = \mathbb{E}\!\left[R_{t+1} \;\middle|\; S_t=s,\, A_t=a\right] = \sum_{s'\in\mathcal{S}}\mathcal{P}_{ss'}^{a}\cdot r(s,a,s')"
+                        label="Reward Function — Expected Immediate Reward"
+                        accent="emerald"
+                        explanation="R^a_s is the expected immediate reward for taking action a in state s, averaged over all possible next states weighted by their transition probabilities."
+                        interpretation="The reward function is the most critical design choice in RL. It defines what the agent is trying to achieve. A well-designed reward function leads to the desired behaviour; a poorly designed one leads to reward hacking. The expected form R^a_s = Σ P^a_{ss'} · r(s,a,s') shows that the reward is an average over all possible outcomes."
+                        motivation="Using expected reward rather than per-transition reward simplifies the Bellman equation. It allows us to write the value function as v_π(s) = Σ_a π(a|s)[R^a_s + γ Σ_{s'} P^a_{ss'} v_π(s')], which is the standard form used in dynamic programming."
+                        terms={[
+                            { term: '\\mathcal{R}_s^a', name: 'Expected Reward', meaning: 'Average reward for taking action a in state s, over all possible next states.', range: '\\mathbb{R}', example: 'R^{Search}_{High} = 4.0 cans expected per search from High battery.' },
+                            { term: 'r(s,a,s\')', name: 'Per-Transition Reward', meaning: 'The specific reward received for the transition from s to s\' via action a. May differ by next state.', range: '\\mathbb{R}', example: 'r(Low,Search,depleted)=−3 (penalty for running out of battery).' },
+                            { term: '\\mathcal{P}_{ss\'}^a', name: 'Transition Weight', meaning: 'Probability of reaching s\', used to weight the per-transition reward.', range: '[0,1]', example: 'P^{Search}_{Low,depleted}=0.1 → contributes 0.1×(−3)=−0.3 to expected reward.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Recycling robot. Action: Search from Low battery. Transitions: Low→High(p=0.1,r=4), Low→Low(p=0.9,r=4), Low→depleted(p=0.0,r=−3).',
+                            steps: [
+                                'R^{Search}_{Low} = P(High|Low,Search)×r(Low,S,High) + P(Low|Low,Search)×r(Low,S,Low)',
+                                '               = 0.1×4 + 0.9×4',
+                                '               = 0.4 + 3.6 = 4.0',
+                                'Note: if P(depleted|Low,Search)=0.1 with r=−3: R = 0.1×4 + 0.8×4 + 0.1×(−3) = 3.3',
+                            ],
+                            result: 'R^{Search}_{Low} = 4.0 (or 3.3 with depletion risk). The reward function captures the expected outcome of each action.',
+                        }}
+                    />
+
+                    <TransitionMatrixExplorer />
                 </div>
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: Dynamics Modeler" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: Dynamics Modeler"
                 subtitle="Calculating Probabilities"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -225,9 +249,9 @@ export default function Topic2_FormalMDPDefinition() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: The Recycling Robot MDP" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: The Recycling Robot MDP"
                 subtitle="Formulating a Classic Example"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -238,7 +262,7 @@ export default function Topic2_FormalMDPDefinition() {
                     <div className="card p-6 bg-indigo-50/30 dark:bg-indigo-900/10 border-none">
                         <h5 className="font-bold mb-2 flex items-center gap-2"><GitBranch size={18} /> The Search Mission</h5>
                         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            A robot searches for cans. It has two energy levels: <strong>High</strong> and <strong>Low</strong>. 
+                            A robot searches for cans. It has two energy levels: <strong>High</strong> and <strong>Low</strong>.
                             It can <strong>Search</strong>, <strong>Wait</strong>, or <strong>Recharge</strong>.
                         </p>
                     </div>
@@ -269,9 +293,9 @@ export default function Topic2_FormalMDPDefinition() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
                 subtitle="Essential Definitions"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -293,9 +317,9 @@ export default function Topic2_FormalMDPDefinition() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: Transition Explorer" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: Transition Explorer"
                 subtitle="Visualizing Environment Dynamics"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

@@ -3,13 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Layers, Cpu, Brain, Zap, Target, TrendingUp,
     Clock, Briefcase, Users2, Layout,
     Network, Database, Share2, Compass
 } from 'lucide-react';
-import { 
+import {
     Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
     ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid
 } from 'recharts';
@@ -51,7 +51,7 @@ function AIComparisonRadar() {
                         <Radar name="ML" dataKey="ML" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
                         <Radar name="DL" dataKey="DL" stroke="#10b981" fill="#10b981" fillOpacity={0.3} />
                         <Radar name="RL" dataKey="RL" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.3} />
-                        <Tooltip 
+                        <Tooltip
                             contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
                         />
                     </RadarChart>
@@ -72,11 +72,11 @@ function AIComparisonRadar() {
 export default function Topic13_RLvsDLvsML() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The AI Family Tree" 
+            <SectionWrapper
+                id="story"
+                title="1. The AI Family Tree"
                 subtitle="Siblings with Different Strengths"
                 icon={<Layers className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -119,46 +119,100 @@ export default function Topic13_RLvsDLvsML() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. Loss Functions Compared" 
+            <SectionWrapper
+                id="math"
+                title="2. Loss Functions Compared"
                 subtitle="The Math of Learning"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="L_{SL} = \frac{1}{N} \sum_{i=1}^N (y_i - f(x_i))^2"
-                                label="Supervised Loss (MSE)"
-                                explanation="We minimize the distance between the prediction and the known correct label."
-                            />
-                            <MathBlock 
-                                formula="L_{RL} = \mathbb{E} [(R + \gamma \max Q' - Q)^2]"
-                                label="Reinforcement Loss (TD)"
-                                explanation="We minimize the difference between our 'Estimate' and the 'Actual Experience' (TD Error)."
-                            />
-                        </div>
-                        <AIComparisonRadar />
-                    </div>
-
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: 'y_i', meaning: 'The Ground Truth Label (the answer key).' },
-                            { symbol: 'f(x_i)', meaning: 'The model prediction in ML/DL.' },
-                            { symbol: 'Q', meaning: 'The estimate of the total reward we expect to get.' }
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\mathcal{L}_{\text{SL}}(\theta) = \frac{1}{N}\sum_{i=1}^{N}\bigl(y_i - f_\theta(x_i)\bigr)^2"
+                        label="Supervised Learning Loss — Mean Squared Error"
+                        accent="blue"
+                        explanation="SL minimises the average squared difference between predictions f_θ(x_i) and true labels y_i over N training examples. Gradient descent updates θ to reduce this loss."
+                        interpretation="This is the 'answer key' loss. Every training example has a known correct answer y_i. The model just needs to learn to reproduce those answers. The loss is always well-defined because y_i is always available. This is fundamentally different from RL where no 'correct answer' exists — only a reward signal."
+                        motivation="Understanding SL's loss function clarifies why RL is harder: in SL, the gradient ∂L/∂θ is computed from fixed labels. In RL, the 'target' itself changes as the agent learns — creating a moving target problem that makes RL training unstable."
+                        terms={[
+                            { term: '\\mathcal{L}_{\\text{SL}}(\\theta)', name: 'SL Loss', meaning: 'Scalar measure of how wrong the model\'s predictions are. Minimised by gradient descent.', range: '\\mathbb{R}^+', example: 'L=0.05 means predictions are on average 0.22 units away from true labels.' },
+                            { term: 'y_i', name: 'True Label', meaning: 'The correct output for training example i, provided by a human annotator. The "answer key" that RL does NOT have.', range: '\\mathcal{Y}', example: 'y_i = "cat" (class 0) or y_i = ₹450 (house price).' },
+                            { term: 'f_\\theta(x_i)', name: 'Model Prediction', meaning: 'The model\'s output for input x_i, parameterised by θ (neural network weights).', range: '\\mathcal{Y}', example: 'f_θ(cat_image) = 0.92 (92% confidence it\'s a cat).' },
+                            { term: 'N', name: 'Dataset Size', meaning: 'Number of labeled training examples. SL needs large N; RL generates its own data through interaction.', range: '\\mathbb{Z}^+', example: 'ImageNet: N=1.2 million labeled images.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Regression: predict house price. 3 examples: true=[200, 350, 500], predicted=[210, 340, 480] (in ₹k).',
+                            steps: [
+                                'Errors: (200−210)²=100, (350−340)²=100, (500−480)²=400',
+                                'MSE = (100+100+400)/3 = 200',
+                                'RMSE = √200 = ₹14.1k average error',
+                                'Gradient descent reduces MSE by adjusting θ.',
+                            ],
+                            result: 'MSE=200 (₹k²). Model is off by ~₹14k on average. Gradient descent will update θ to reduce this.',
+                        }}
                     />
+
+                    <MathBlock
+                        formula="\mathcal{L}_{\text{DQN}}(\theta) = \mathbb{E}_{(s,a,r,s')\sim\mathcal{D}}\!\left[\Bigl(\underbrace{r + \gamma\max_{a'}Q(s',a';\theta^-)}_{\text{TD target}} - \underbrace{Q(s,a;\theta)}_{\text{current estimate}}\Bigr)^{\!2}\right]"
+                        label="Deep Q-Network (DQN) Loss — TD Error Squared"
+                        accent="violet"
+                        explanation="DQN minimises the squared TD error between the current Q-value estimate and the TD target. The target network θ⁻ is a frozen copy of θ, updated periodically to stabilise training."
+                        interpretation="This is the RL equivalent of SL's MSE loss. But there are two critical differences: (1) The 'label' (TD target) is not fixed — it depends on Q(s',a';θ⁻) which changes as θ updates. (2) The data (s,a,r,s') is sampled from a replay buffer 𝒟, not a fixed dataset. These differences make RL training fundamentally harder than SL."
+                        motivation="DQN's loss function is the bridge between deep learning and RL. By expressing the RL objective as a differentiable loss, we can use standard backpropagation and gradient descent — the same tools used for image classification and language models."
+                        terms={[
+                            { term: 'Q(s,a;\\theta)', name: 'Current Q-Network', meaning: 'Neural network with parameters θ that estimates Q(s,a). Updated every step by gradient descent.', range: '\\mathbb{R}', example: 'Q((2,3),right;θ) = 5.2 — current estimate.' },
+                            { term: 'Q(s\',a\';\\theta^-)', name: 'Target Q-Network', meaning: 'A frozen copy of the Q-network with parameters θ⁻, updated every C steps. Provides stable training targets.', range: '\\mathbb{R}', example: 'θ⁻ is copied from θ every 1000 steps. Prevents oscillation.' },
+                            { term: '\\mathcal{D}', name: 'Replay Buffer', meaning: 'A memory bank storing past transitions (s,a,r,s\'). Random sampling from 𝒟 breaks temporal correlations and stabilises training.', range: '\\text{Set of }(s,a,r,s\')', example: '𝒟 stores last 100,000 transitions. Each update samples a mini-batch of 32.' },
+                            { term: 'r + \\gamma\\max_{a\'}Q(s\',a\';\\theta^-)', name: 'TD Target', meaning: 'The "label" for DQN training. Unlike SL labels, this target changes as θ⁻ is updated — the moving target problem.', range: '\\mathbb{R}', example: 'r=−0.1, γ=0.9, max Q(s\',·;θ⁻)=7.5 → target = −0.1+6.75 = 6.65.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'DQN update. Transition: s=(2,3), a=right, r=−0.1, s\'=(2,4). Q(s,a;θ)=5.2. max Q(s\',·;θ⁻)=7.5. γ=0.9. α=0.001.',
+                            steps: [
+                                'TD target = r + γ·max Q(s\',·;θ⁻) = −0.1 + 0.9×7.5 = 6.65',
+                                'TD error  = target − Q(s,a;θ) = 6.65 − 5.2 = 1.45',
+                                'Loss = (1.45)² = 2.1025',
+                                'Gradient: ∂L/∂θ computed by backprop through Q-network',
+                                'θ ← θ − α·∂L/∂θ  (gradient descent step)',
+                            ],
+                            result: 'Q(s,a;θ) moves from 5.2 toward 6.65. After many updates, Q converges to Q*(s,a).',
+                        }}
+                    />
+
+                    <div className="grid lg:grid-cols-2 gap-6">
+                        <AIComparisonRadar />
+                        <div className="space-y-3">
+                            <h5 className="font-bold text-slate-800 dark:text-white text-sm">Key Mathematical Differences</h5>
+                            <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+                                <table className="w-full text-xs">
+                                    <thead><tr className="bg-slate-100 dark:bg-slate-800">
+                                        {['Property', 'ML/DL', 'RL'].map(h => <th key={h} className="text-left p-2 font-semibold text-slate-600 dark:text-slate-300">{h}</th>)}
+                                    </tr></thead>
+                                    <tbody>
+                                        {[
+                                            ['Objective', 'Min loss L(θ)', 'Max E[G_t]'],
+                                            ['Training data', 'Fixed dataset 𝒟', 'Self-generated τ'],
+                                            ['Labels', 'Fixed y_i', 'Moving target r+γQ'],
+                                            ['Feedback', 'Instructive (correct answer)', 'Evaluative (reward)'],
+                                            ['Convergence', 'Guaranteed (convex)', 'Not guaranteed'],
+                                        ].map((row, i) => (
+                                            <tr key={i} className="border-t border-slate-100 dark:border-slate-800">
+                                                {row.map((cell, j) => <td key={j} className={`p-2 ${j === 0 ? 'font-semibold text-slate-700 dark:text-slate-300' : 'text-slate-500 dark:text-slate-400'}`}>{cell}</td>)}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: The AI Task Sorter" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: The AI Task Sorter"
                 subtitle="NEP 2020 Hands-on Taxonomy"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -198,9 +252,9 @@ export default function Topic13_RLvsDLvsML() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: The Hybrid Architect" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: The Hybrid Architect"
                 subtitle="Combining DL with RL"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -229,9 +283,9 @@ export default function Topic13_RLvsDLvsML() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
                 subtitle="Comparison Concepts"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -253,9 +307,9 @@ export default function Topic13_RLvsDLvsML() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: AI Comparison Dashboard" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: AI Comparison Dashboard"
                 subtitle="Quantifying Technique Strengths"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

@@ -3,13 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
-    Rocket, Cpu, Briefcase, Target, Zap, TrendingUp, 
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
+    Rocket, Cpu, Briefcase, Target, Zap, TrendingUp,
     Clock, ShieldAlert, Users2, Layout,
     Gamepad2, Stethoscope, ShoppingCart, Truck, Database
 } from 'lucide-react';
-import { 
+import {
     PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend,
     Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis
 } from 'recharts';
@@ -21,50 +21,50 @@ import {
  */
 function ApplicationGrid() {
     const apps = [
-        { 
-            id: 'games', 
-            name: 'Gaming & Simulation', 
-            icon: <Gamepad2 />, 
+        {
+            id: 'games',
+            name: 'Gaming & Simulation',
+            icon: <Gamepad2 />,
             details: 'AlphaGo, Dota 2, StarCraft II. Mastering complex strategy and real-time tactics.',
             color: 'bg-blue-500',
             reward: 'Score / Win Ratio'
         },
-        { 
-            id: 'finance', 
-            name: 'Quantitative Finance', 
-            icon: <Briefcase />, 
+        {
+            id: 'finance',
+            name: 'Quantitative Finance',
+            icon: <Briefcase />,
             details: 'Portfolio optimization, algorithmic trading, and dynamic risk management.',
             color: 'bg-emerald-500',
             reward: 'ROI / Sharpe Ratio'
         },
-        { 
-            id: 'healthcare', 
-            name: 'Personalized Medicine', 
-            icon: <Stethoscope />, 
+        {
+            id: 'healthcare',
+            name: 'Personalized Medicine',
+            icon: <Stethoscope />,
             details: 'Dynamic treatment regimes and drug discovery simulations.',
             color: 'bg-rose-500',
             reward: 'Patient Outcome'
         },
-        { 
-            id: 'robotics', 
-            name: 'Robotics & Control', 
-            icon: <Cpu />, 
+        {
+            id: 'robotics',
+            name: 'Robotics & Control',
+            icon: <Cpu />,
             details: 'Autonomous navigation, industrial automation, and robotic manipulation.',
             color: 'bg-amber-500',
             reward: 'Efficiency / Safety'
         },
-        { 
-            id: 'ecommerce', 
-            name: 'Recommendation Systems', 
-            icon: <ShoppingCart />, 
+        {
+            id: 'ecommerce',
+            name: 'Recommendation Systems',
+            icon: <ShoppingCart />,
             details: 'Netflix, Amazon, YouTube. Optimizing for long-term user engagement.',
             color: 'bg-indigo-500',
             reward: 'CTR / Watch Time'
         },
-        { 
-            id: 'logistics', 
-            name: 'Supply Chain', 
-            icon: <Truck />, 
+        {
+            id: 'logistics',
+            name: 'Supply Chain',
+            icon: <Truck />,
             details: 'Inventory management and route optimization in dynamic environments.',
             color: 'bg-purple-500',
             reward: 'Cost Reduction'
@@ -99,11 +99,11 @@ function ApplicationGrid() {
 export default function Topic11_ApplicationsOfRL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The AlphaGo Revolution" 
+            <SectionWrapper
+                id="story"
+                title="1. The AlphaGo Revolution"
                 subtitle="From Games to Real World"
                 icon={<Rocket className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -143,53 +143,61 @@ export default function Topic11_ApplicationsOfRL() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. Mapping the World to MDPs" 
+            <SectionWrapper
+                id="math"
+                title="2. Mapping the World to MDPs"
                 subtitle="The Formalization of Domains"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="p-8 bg-slate-900 rounded-[2.5rem] text-white">
-                        <h5 className="text-primary-400 font-bold mb-6 flex items-center gap-2"><Database size={18} /> The Universal Template</h5>
-                        <div className="grid md:grid-cols-3 gap-8">
-                            <div className="space-y-2">
-                                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Application</div>
-                                <div className="font-bold text-lg">Stock Trading</div>
-                            </div>
-                            <div className="space-y-2">
-                                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">State (S)</div>
-                                <div className="text-sm font-mono text-emerald-400">{'[Price, Volume, Portfolio]'}</div>
-                            </div>
-                            <div className="space-y-2">
-                                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Reward (R)</div>
-                                <div className="text-sm font-mono text-blue-400">Profit / Risk-Ratio</div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\text{MDP}_{\text{app}} = \langle \mathcal{S}_{\text{app}},\;\mathcal{A}_{\text{app}},\;\mathcal{P}_{\text{app}},\;\mathcal{R}_{\text{app}},\;\gamma \rangle"
+                        label="Universal MDP Template for Any Application"
+                        accent="blue"
+                        explanation="Every real-world RL application is an instantiation of this 5-tuple. The designer's job is to define each component for their specific domain."
+                        interpretation="This template is the bridge between theory and practice. AlphaGo, ChatGPT, self-driving cars, and recommendation systems all use this same mathematical structure — they just have different definitions of S, A, P, R, and γ. Understanding this template allows you to formulate any sequential decision problem as an RL task."
+                        motivation="Without this formalisation, RL remains abstract. By mapping a real problem to this tuple, we immediately know which algorithms to apply, what data to collect, and how to measure success."
+                        terms={[
+                            { term: '\\mathcal{S}_{\\text{app}}', name: 'Application State Space', meaning: 'All information the agent needs to make decisions. Must be Markov — the future depends only on the current state.', range: '\\mathbb{R}^n \\text{ or finite}', example: 'Trading: S = [price, volume, RSI, portfolio_value]. Recommendation: S = [user_history, time_of_day, device].' },
+                            { term: '\\mathcal{A}_{\\text{app}}', name: 'Application Action Space', meaning: 'All decisions the agent can make. Can be discrete (buy/sell/hold) or continuous (steering angle).', range: 'Finite or \\mathbb{R}^m', example: 'Trading: A = {buy, sell, hold}. Self-driving: A = [steering ∈ [−30°,30°], throttle ∈ [0,1]].' },
+                            { term: '\\mathcal{R}_{\\text{app}}', name: 'Application Reward', meaning: 'The scalar signal that defines success. The most critical design choice — must align with the true objective.', range: '\\mathbb{R}', example: 'Trading: R = daily_profit − risk_penalty. Recommendation: R = watch_time − skip_penalty.' },
+                            { term: '\\gamma', name: 'Application Discount', meaning: 'How much the application values future rewards. High γ for long-horizon tasks (energy management); lower γ for short-horizon tasks (ad placement).', range: '[0,1)', example: 'Energy management: γ=0.99 (plan months ahead). Ad placement: γ=0.9 (plan hours ahead).' },
+                        ]}
+                    />
 
-                    <div className="grid sm:grid-cols-2 gap-8">
-                        <MathBlock 
-                            formula="\text{CTR}(t) = \frac{\sum \text{Clicks}}{\sum \text{Impressions}}"
-                            label="Recommendation Success"
-                            explanation="The Reward Signal for Netflix/Amazon is usually a proxy for user satisfaction like CTR or Watch-Time."
-                        />
-                        <MathBlock 
-                            formula="\text{Efficiency} = \frac{\text{Task Complete}}{\text{Energy Consumed}}"
-                            label="Robotic Optimization"
-                            explanation="Industrial robots optimize for high throughput with minimal mechanical wear and energy."
-                        />
-                    </div>
+                    <MathBlock
+                        formula="\text{CTR}(t) = \frac{\displaystyle\sum_{i=1}^{t}\mathbf{1}[\text{click}_i]}{\displaystyle\sum_{i=1}^{t}\mathbf{1}[\text{impression}_i]}"
+                        label="Recommendation System Reward — Click-Through Rate"
+                        accent="violet"
+                        explanation="CTR is the fraction of impressions that result in clicks. Used as the reward signal for recommendation RL agents (Netflix, YouTube, Amazon)."
+                        interpretation="CTR is a proxy for user satisfaction. The RL agent learns to recommend content that maximises long-term CTR, not just the next click. This is why recommendation systems sometimes show you content you didn't know you wanted — the agent discovered that certain sequences of recommendations lead to higher long-term engagement."
+                        motivation="CTR is measurable, immediate, and directly tied to business value. However, optimising only for CTR can lead to clickbait. Modern systems use a combination of CTR, watch time, and user ratings as a composite reward."
+                        terms={[
+                            { term: '\\mathbf{1}[\\text{click}_i]', name: 'Click Indicator', meaning: 'Equals 1 if the user clicked on impression i, 0 otherwise. A binary reward signal.', range: '\\{0,1\\}', example: 'User clicked on recommended movie → 1. User scrolled past → 0.' },
+                            { term: '\\mathbf{1}[\\text{impression}_i]', name: 'Impression Indicator', meaning: 'Equals 1 if the content was shown to the user. The denominator counts total opportunities.', range: '\\{0,1\\}', example: '100 recommendations shown → 100 impressions.' },
+                            { term: '\\text{CTR}(t)', name: 'CTR at time t', meaning: 'Running click-through rate up to time t. The RL agent\'s reward signal.', range: '[0,1]', example: '30 clicks out of 100 impressions → CTR = 0.30 = 30%.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Recommendation agent. 5 recommendations shown. User clicks on items 2 and 4.',
+                            steps: [
+                                'Impressions: [1,1,1,1,1] → sum = 5',
+                                'Clicks:      [0,1,0,1,0] → sum = 2',
+                                'CTR = 2/5 = 0.40 = 40%',
+                                'Reward R = CTR = 0.40 (positive signal to reinforce this recommendation sequence)',
+                            ],
+                            result: 'CTR=0.40. The agent receives R=0.40 and updates Q-values to make similar recommendations more likely in similar user states.',
+                        }}
+                    />
                 </div>
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: The Industry Consultant" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: The Industry Consultant"
                 subtitle="Designing RL Solutions"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -223,9 +231,9 @@ export default function Topic11_ApplicationsOfRL() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: The RL Chatbot" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: The RL Chatbot"
                 subtitle="Reinforcement Learning from Human Feedback"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -254,9 +262,9 @@ export default function Topic11_ApplicationsOfRL() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
                 subtitle="Exam-Ready Concepts"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -278,9 +286,9 @@ export default function Topic11_ApplicationsOfRL() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: Industry Explorer" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: Industry Explorer"
                 subtitle="Visualizing RL Domains"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

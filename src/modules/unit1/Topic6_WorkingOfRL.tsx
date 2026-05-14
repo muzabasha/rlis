@@ -3,14 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
-    RefreshCw, Play, ArrowRight, Brain, Globe, Zap, 
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
+    RefreshCw, Play, ArrowRight, Brain, Globe, Zap,
     Target, Clock, Briefcase, ShieldAlert, Users2, Layout,
     Pause, SkipForward, Info
 } from 'lucide-react';
-import { 
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, 
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, AreaChart, Area, Legend, BarChart, Bar
 } from 'recharts';
 
@@ -22,7 +22,7 @@ import {
 function RLLoopVisualizer() {
     const [step, setStep] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
-    
+
     const steps = [
         { label: 'State (S_t)', target: 'Agent', desc: 'Agent observes the environment.', icon: <Globe size={18} /> },
         { label: 'Action (A_t)', target: 'Environment', desc: 'Agent makes a decision.', icon: <Brain size={18} /> },
@@ -48,13 +48,13 @@ function RLLoopVisualizer() {
                     <p className="text-xs text-slate-500">Step through the RL interaction loop.</p>
                 </div>
                 <div className="flex gap-2">
-                    <button 
+                    <button
                         onClick={() => setIsPlaying(!isPlaying)}
                         className={`p-2 rounded-xl transition-colors ${isPlaying ? 'bg-red-100 text-red-600' : 'bg-emerald-100 text-emerald-600'}`}
                     >
                         {isPlaying ? <Pause size={18} /> : <Play size={18} />}
                     </button>
-                    <button 
+                    <button
                         onClick={() => setStep((step + 1) % steps.length)}
                         className="p-2 bg-slate-200 dark:bg-slate-700 rounded-xl"
                     >
@@ -65,8 +65,8 @@ function RLLoopVisualizer() {
 
             <div className="relative h-64 flex items-center justify-between px-12">
                 {/* Agent */}
-                <motion.div 
-                    animate={{ 
+                <motion.div
+                    animate={{
                         scale: steps[step].target === 'Agent' ? 1.1 : 1,
                         borderColor: steps[step].target === 'Agent' ? '#3b82f6' : '#e2e8f0'
                     }}
@@ -82,19 +82,19 @@ function RLLoopVisualizer() {
                 <div className="absolute inset-0 flex items-center justify-center">
                     <svg width="100%" height="100%" className="overflow-visible">
                         {/* Action Flow */}
-                        <path 
-                            d="M 140 128 L 360 128" 
+                        <path
+                            d="M 140 128 L 360 128"
                             fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="6 6"
                         />
                         {/* Feedback Flow */}
-                        <path 
-                            d="M 360 160 Q 250 200 140 160" 
+                        <path
+                            d="M 360 160 Q 250 200 140 160"
                             fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="6 6"
                         />
-                        
+
                         {/* Active Pulse Action */}
                         {step === 1 && (
-                            <motion.circle 
+                            <motion.circle
                                 r="6" fill="#3b82f6"
                                 initial={{ cx: 140, cy: 128 }}
                                 animate={{ cx: 360, cy: 128 }}
@@ -103,15 +103,15 @@ function RLLoopVisualizer() {
                         )}
                         {/* Active Pulse Feedback */}
                         {(step === 2 || step === 3) && (
-                            <motion.circle 
+                            <motion.circle
                                 r="6" fill="#10b981"
                                 initial={{ offset: 0 }}
                                 animate={{ offset: 1 }}
                                 transition={{ duration: 1.5, repeat: Infinity }}
                             >
-                                <animateMotion 
-                                    path="M 360 160 Q 250 200 140 160" 
-                                    dur="1.5s" repeatCount="indefinite" 
+                                <animateMotion
+                                    path="M 360 160 Q 250 200 140 160"
+                                    dur="1.5s" repeatCount="indefinite"
                                 />
                             </motion.circle>
                         )}
@@ -119,8 +119,8 @@ function RLLoopVisualizer() {
                 </div>
 
                 {/* Environment */}
-                <motion.div 
-                    animate={{ 
+                <motion.div
+                    animate={{
                         scale: steps[step].target === 'Environment' ? 1.1 : 1,
                         borderColor: steps[step].target === 'Environment' ? '#10b981' : '#e2e8f0'
                     }}
@@ -134,7 +134,7 @@ function RLLoopVisualizer() {
             </div>
 
             <AnimatePresence mode="wait">
-                <motion.div 
+                <motion.div
                     key={step}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -159,11 +159,11 @@ function RLLoopVisualizer() {
 export default function Topic6_WorkingOfRL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Blindfolded Explorer" 
+            <SectionWrapper
+                id="story"
+                title="1. The Blindfolded Explorer"
                 subtitle="The Rhythm of Trial and Error"
                 icon={<RefreshCw className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -206,54 +206,77 @@ export default function Topic6_WorkingOfRL() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. The Formal Interaction Loop" 
+            <SectionWrapper
+                id="math"
+                title="2. The Formal Interaction Loop"
                 subtitle="From Words to Equations"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white space-y-4">
-                        <h4 className="font-bold flex items-center gap-2 text-primary-400"><Info size={18} /> The Interaction Sequence</h4>
-                        <p className="text-sm text-slate-400">
-                            The interaction between the agent and environment can be written as a sequence of states, actions, and rewards:
-                        </p>
-                        <div className="bg-slate-800 p-4 rounded-xl text-center font-mono text-xl text-emerald-400">
-                            S_0, A_0, R_1, S_1, A_1, R_2, S_2, A_2, R_3, \dots
-                        </div>
-                        <p className="text-[10px] text-slate-500 italic text-center">
-                            Note: The reward Rₜ and next state Sₜ are generated by the environment in response to action Aₜ₋₁.
-                        </p>
-                    </div>
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="S_0,\;A_0,\;R_1,\;S_1,\;A_1,\;R_2,\;S_2,\;A_2,\;R_3,\;\ldots"
+                        label="The RL Interaction Sequence"
+                        accent="blue"
+                        explanation="The complete history of an RL episode written as an alternating sequence of states, actions, and rewards. This sequence is the raw data from which all RL algorithms learn."
+                        interpretation="Reading left to right: the agent starts in S₀, takes action A₀, receives reward R₁ and observes new state S₁, takes action A₁, receives R₂, and so on. Every RL algorithm — from simple Q-learning to complex PPO — processes this sequence to improve the agent's policy."
+                        motivation="Writing the interaction as a formal sequence allows us to apply mathematical tools from probability theory and dynamic programming. Without this notation, we cannot derive update rules or prove convergence."
+                        terms={[
+                            { term: 'S_t', name: 'State at time t', meaning: 'The environment\'s configuration observed by the agent at step t. Must satisfy the Markov property.', range: '\\mathcal{S}', example: 'S₀=(0,0) start, S₁=(0,1) after moving right.' },
+                            { term: 'A_t', name: 'Action at time t', meaning: 'The decision made by the agent in state S_t, sampled from policy π(·|S_t).', range: '\\mathcal{A}(S_t)', example: 'A₀=right, A₁=down.' },
+                            { term: 'R_{t+1}', name: 'Reward at t+1', meaning: 'Scalar feedback from the environment after action A_t. Subscript t+1 because it arrives one step after the action.', range: '\\mathbb{R}', example: 'R₁=−0.1 (step cost), R_T=+10 (goal reached).' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Robot navigating a 3×3 grid. Start=(0,0), Goal=(2,2). γ=0.9.',
+                            steps: [
+                                'S₀=(0,0), A₀=right → R₁=−0.1, S₁=(0,1)',
+                                'S₁=(0,1), A₁=down  → R₂=−0.1, S₂=(1,1)',
+                                'S₂=(1,1), A₂=right → R₃=−0.1, S₃=(1,2)',
+                                'S₃=(1,2), A₃=down  → R₄=+10,  S₄=(2,2) ← GOAL',
+                            ],
+                            result: 'G₀ = −0.1 + 0.9×(−0.1) + 0.81×(−0.1) + 0.729×10 = 7.02. The agent reached the goal in 4 steps.',
+                        }}
+                    />
 
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="S_t \in \mathcal{S}, A_t \in \mathcal{A}(s), R_t \in \mathcal{R} \subset \mathbb{R}"
-                                label="The Sets of RL"
-                                explanation="The agent picks an action from the set of allowed actions in that state, and receives a real-number reward."
-                            />
-                            <SymbolTable 
-                                symbols={[
-                                    { symbol: 'S_t', meaning: 'State at time t' },
-                                    { symbol: 'A_t', meaning: 'Action taken at time t' },
-                                    { symbol: 'R_{t+1}', meaning: 'Reward received as a result of A_t' },
-                                    { symbol: '\mathcal{A}(s)', meaning: 'Action Space — the menu of available actions' }
-                                ]}
-                            />
-                        </div>
+                    <MathBlock
+                        formula="S_t \in \mathcal{S},\quad A_t \in \mathcal{A}(S_t),\quad R_{t+1} \in \mathcal{R} \subset \mathbb{R}"
+                        label="The Sets of RL — Formal Domains"
+                        accent="violet"
+                        explanation="States, actions, and rewards each belong to well-defined mathematical sets. This formalisation is necessary to prove properties like convergence and optimality."
+                        interpretation="This equation defines the 'type system' of RL. States live in the state space 𝒮, actions live in the action space 𝒜(s) which may depend on the current state, and rewards are real numbers. Knowing these sets determines which algorithms are applicable."
+                        motivation="Without defining these sets, we cannot distinguish between discrete and continuous RL, finite and infinite MDPs, or episodic and continuing tasks — all of which require different algorithms."
+                        terms={[
+                            { term: '\\mathcal{S}', name: 'State Space', meaning: 'The set of all possible states the environment can be in. Can be finite (grid world) or infinite (continuous robot state).', range: 'Finite or \\mathbb{R}^n', example: 'Grid world: 𝒮 = {(r,c) : 0≤r,c≤4} — 25 states. CartPole: 𝒮 = ℝ⁴.' },
+                            { term: '\\mathcal{A}(S_t)', name: 'Action Space', meaning: 'The set of actions available in state S_t. May vary by state (e.g., cannot move through walls).', range: 'Finite or \\mathbb{R}^m', example: 'Grid: 𝒜={up,down,left,right}. Robot arm: 𝒜=ℝ² (continuous torques).' },
+                            { term: '\\mathcal{R}\\subset\\mathbb{R}', name: 'Reward Set', meaning: 'The set of possible reward values. Usually a bounded subset of the real numbers.', range: '\\mathbb{R}', example: '𝒮 = {−1, 0, +1, +10} for a simple grid task.' },
+                        ]}
+                    />
+
+                    <div className="grid lg:grid-cols-2 gap-6">
                         <RLLoopVisualizer />
+                        <div className="space-y-3">
+                            <h5 className="font-bold text-slate-800 dark:text-white text-sm">Key Properties of the Interaction</h5>
+                            {[
+                                { prop: 'Markov Property', desc: 'P(S_{t+1}|S_t,A_t) = P(S_{t+1}|S_0,...,S_t,A_0,...,A_t). The future depends only on the present state, not the full history.' },
+                                { prop: 'Stationarity', desc: 'The transition dynamics P(s\'|s,a) and reward R(s,a) do not change over time. The same action in the same state always has the same distribution of outcomes.' },
+                                { prop: 'Causality', desc: 'R_{t+1} and S_{t+1} are caused by A_t and S_t. The agent\'s action at time t affects the world at time t+1, not before.' },
+                            ].map(p => (
+                                <div key={p.prop} className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200 dark:border-slate-700">
+                                    <p className="text-xs font-bold text-primary-600 dark:text-primary-400 mb-1">{p.prop}</p>
+                                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{p.desc}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: Trace the Loop" 
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: Trace the Loop"
                 subtitle="Simulating the Cycle"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -294,9 +317,9 @@ export default function Topic6_WorkingOfRL() {
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: Smart Traffic" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: Smart Traffic"
                 subtitle="Optimizing the Urban Loop"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -332,9 +355,9 @@ export default function Topic6_WorkingOfRL() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
                 subtitle="Essential Examination Points"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -356,9 +379,9 @@ export default function Topic6_WorkingOfRL() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: The Cycle Explorer" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: The Cycle Explorer"
                 subtitle="Fine-tuning the Interaction"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
