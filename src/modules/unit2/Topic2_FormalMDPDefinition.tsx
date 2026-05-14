@@ -1,108 +1,332 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock } from '../../components/topic/MathBlock';
-import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, FileText } from 'lucide-react';
+import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import { 
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
+    Zap, TrendingUp, Clock, Briefcase, Layout,
+    Compass, Map, Award, Move, MousePointer2, Layers, GitBranch, Binary
+} from 'lucide-react';
+import { 
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
+    ResponsiveContainer, Cell
+} from 'recharts';
 
-export default function Topic2_FormalMDPDefinition() {
-    const [activeTab, setActiveTab] = useState<'story' | 'math' | 'activity' | 'questions' | 'lab' | 'insights'>('story');
+// ─── Interactive Components for Topic 2 ──────────────────────────────────────
 
-    const tabs = [
-        { id: 'story', label: 'Story', icon: BookOpen },
-        { id: 'math', label: 'Math', icon: Calculator },
-        { id: 'activity', label: 'Activity', icon: Users },
-        { id: 'questions', label: 'Questions', icon: HelpCircle },
-        { id: 'lab', label: 'Virtual Lab', icon: FlaskConical },
-        { id: 'insights', label: 'Insights', icon: Lightbulb },
-    ] as const;
+/**
+ * Interactive Transition Matrix Explorer
+ */
+function TransitionMatrixExplorer() {
+    const [action, setAction] = useState<'Search' | 'Wait'>('Search');
+    
+    const transitionData = {
+        'Search': [
+            { state: 'High Energy', probability: 0.7, color: '#3b82f6' },
+            { state: 'Low Energy', probability: 0.3, color: '#f59e0b' },
+        ],
+        'Wait': [
+            { state: 'High Energy', probability: 0.2, color: '#3b82f6' },
+            { state: 'Low Energy', probability: 0.8, color: '#f59e0b' },
+        ]
+    };
 
     return (
-        <div className="space-y-4">
-            <div className="flex gap-2 flex-wrap">
-                {tabs.map(t => {
-                    const Icon = t.icon;
-                    return (
-                        <button key={t.id} onClick={() => setActiveTab(t.id)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === t.id ? 'bg-primary-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'}`}>
-                            <Icon size={14} />{t.label}
+        <div className="bg-slate-50 dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 space-y-8">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div className="space-y-1">
+                    <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <Binary size={18} className="text-primary-500" />
+                        Transition Dynamics: P(s' | s, a)
+                    </h4>
+                    <p className="text-[10px] text-slate-500 font-medium">Observe how actions change the probability of the next state.</p>
+                </div>
+                <div className="flex bg-white dark:bg-slate-800 p-1.5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    {(['Search', 'Wait'] as const).map(a => (
+                        <button 
+                            key={a}
+                            onClick={() => setAction(a)}
+                            className={`px-6 py-2 rounded-xl text-xs font-bold transition-all ${action === a ? 'bg-primary-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-50'}`}
+                        >
+                            {a}
                         </button>
-                    );
-                })}
+                    ))}
+                </div>
             </div>
 
-            <AnimatePresence mode="wait">
-                <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
-                    
-                    {activeTab === 'story' && (
-                        <SectionWrapper id="story" title="Section 1 — The Formal Language of RL" icon={<FileText size={20} className="text-blue-600" />} badge="Formalism" badgeColor="bg-blue-100 text-blue-700" accentColor="border-blue-500">
-                            <div className="story-block space-y-4">
-                                <p className="text-slate-600 dark:text-slate-400">To build algorithms, we need a precise mathematical language. The formal definition of an MDP allows us to prove that our algorithms will actually work.</p>
-                                <InfoCard type="definition" title="Markov Decision Process (MDP)">
-                                    A Markov Decision Process is a 5-tuple (S, A, P, R, γ), where S is a finite set of states, A is a finite set of actions, P is a state transition probability matrix, R is a reward function, and γ is a discount factor.
-                                </InfoCard>
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+                <div className="space-y-4">
+                    {transitionData[action].map((item, i) => (
+                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 shadow-sm">
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-xs font-bold text-slate-600">{item.state}</span>
+                                <span className="text-xs font-black text-primary-600">{(item.probability * 100).toFixed(0)}%</span>
                             </div>
-                        </SectionWrapper>
-                    )}
+                            <div className="w-full h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                                <motion.div 
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${item.probability * 100}%` }}
+                                    className="h-full bg-primary-500"
+                                />
+                            </div>
+                        </div>
+                    ))}
+                    <InfoCard type="info" title="The Probability Constraint">
+                        The sum of probabilities for all possible next states $s'$ must always equal 1.0.
+                    </InfoCard>
+                </div>
 
-                    {activeTab === 'activity' && (
-                        <SectionWrapper id="activity" title="Section 3 — MDP Builder" icon={<Users size={20} className="text-emerald-600" />} badge="Activity" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
-                            <div className="space-y-4">
-                                <p className="text-slate-600 dark:text-slate-400 font-medium">Define a 5-tuple for a simple game: Coin Flip.</p>
-                                <div className="grid grid-cols-1 gap-2">
-                                    {[
-                                        { tuple: 'S (States)', value: '{Start, Heads, Tails}' },
-                                        { tuple: 'A (Actions)', value: '{Flip}' },
-                                        { tuple: 'P (Transitions)', value: 'P(Heads|Start, Flip) = 0.5' },
-                                        { tuple: 'R (Rewards)', value: 'R(Heads) = +1, R(Tails) = -1' },
-                                        { tuple: 'γ (Discount)', value: '0.9 (Value tomorrow is worth 90% of today)' }
-                                    ].map(item => (
-                                        <div key={item.tuple} className="flex border-b border-slate-100 dark:border-slate-800 py-2">
-                                            <span className="w-32 font-bold text-xs text-primary-600">{item.tuple}</span>
-                                            <span className="text-xs text-slate-500">{item.value}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </SectionWrapper>
-                    )}
+                <div className="h-64 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={transitionData[action]} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                            <XAxis dataKey="state" tick={{ fontSize: 10, fontWeight: 700, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                            <YAxis domain={[0, 1]} hide />
+                            <Tooltip 
+                                contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)' }}
+                            />
+                            <Bar dataKey="probability" radius={[10, 10, 10, 10]} animationDuration={1000}>
+                                {transitionData[action].map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={entry.color} />
+                                ))}
+                            </Bar>
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+        </div>
+    );
+}
 
-                    {activeTab === 'questions' && (
-                        <SectionWrapper id="questions" title="Section 4 — Definition Quiz" icon={<HelpCircle size={20} className="text-violet-600" />} badge="Questions" badgeColor="bg-violet-100 text-violet-700" accentColor="border-violet-500">
-                            <div className="space-y-4">
-                                <div className="card p-4">
-                                    <div className="text-sm font-bold mb-1">What does the "finite" requirement mean in S and A?</div>
-                                    <p className="text-xs text-slate-500 italic">It means there is a countable number of states and actions, allowing us to represent them in matrices.</p>
-                                </div>
-                                <div className="card p-4">
-                                    <div className="text-sm font-bold mb-1">Why do we need the discount factor γ?</div>
-                                    <p className="text-xs text-slate-500 italic">To prevent infinite returns in continuing tasks and to represent the preference for immediate rewards.</p>
-                                </div>
-                            </div>
-                        </SectionWrapper>
-                    )}
+// ─── Main Topic Component ────────────────────────────────────────────────────
 
-                    {activeTab === 'lab' && (
-                        <SectionWrapper id="lab" title="Section 5 — Tuple Explorer" icon={<FlaskConical size={20} className="text-purple-600" />} badge="Lab" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
-                            <div className="card p-8 text-center bg-slate-50 dark:bg-slate-900">
-                                <Calculator size={48} className="mx-auto text-slate-400 mb-4 opacity-50" />
-                                <h4 className="font-bold text-slate-600 mb-2">MDP Configuration Lab</h4>
-                                <p className="text-sm text-slate-500">Modify the P matrix and R vector of a 3-state MDP and see how the state values recalculate instantly.</p>
-                                <button className="btn-primary mt-4 py-2 px-6">Launch Matrix Lab</button>
-                            </div>
-                        </SectionWrapper>
-                    )}
+export default function Topic2_FormalMDPDefinition() {
+    return (
+        <div className="max-w-4xl mx-auto pb-20 space-y-12">
+            
+            {/* SECTION 1: STORYTELLING */}
+            <SectionWrapper 
+                id="story" 
+                title="1. The Inventory Manager" 
+                subtitle="Formalizing Business Logic"
+                icon={<BookOpen className="text-blue-600" size={24} />}
+                badge="Storytelling"
+                badgeColor="bg-blue-100 text-blue-700"
+                accentColor="border-blue-500"
+            >
+                <div className="space-y-6">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <Briefcase size={120} />
+                        </div>
+                        <h4 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2">
+                            📦 The Logic of a Warehouse
+                        </h4>
+                        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
+                            <p>
+                                Imagine you are managing a warehouse. At the end of each week, you look at your stock (<strong>State</strong>) and decide how many items to order (<strong>Action</strong>).
+                            </p>
+                            <p>
+                                However, you don't know exactly how many customers will buy items next week. This uncertainty—where the next state is partly random—is exactly what a <strong>Formal MDP</strong> captures.
+                            </p>
+                            <p>
+                                By defining a "Formal MDP", we turn this messy real-world problem into a clean mathematical 4-tuple that an AI can solve perfectly.
+                            </p>
+                        </div>
+                    </div>
 
-                    {activeTab === 'insights' && (
-                        <SectionWrapper id="insights" title="Section 6 — Strategic Insights" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Insights" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
-                            <div className="card p-4 bg-primary-50 dark:bg-primary-900/20 border-l-4 border-primary-500">
-                                <h4 className="font-bold text-sm mb-1">The Power of Generalization</h4>
-                                <p className="text-xs text-slate-600 dark:text-slate-400">The 5-tuple is so powerful because it can describe almost any sequential decision problem—from playing Atari to controlling a nuclear reactor.</p>
-                            </div>
-                        </SectionWrapper>
-                    )}
-                </motion.div>
-            </AnimatePresence>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <InfoCard type="insight" title="The Tuple Hierarchy">
+                            Some define MDP as a 4-tuple $(S, A, P, R)$, assuming $\gamma$ is external, while others use the 5-tuple $(S, A, P, R, \gamma)$.
+                        </InfoCard>
+                        <InfoCard type="tip" title="State Transitions">
+                            Transitions are stochastic (probabilistic), not deterministic.
+                        </InfoCard>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 2: MATHEMATICAL MODELLING */}
+            <SectionWrapper 
+                id="math" 
+                title="2. The Formal 4-Tuple" 
+                subtitle="The Mathematical Foundation"
+                icon={<Calculator className="text-primary-600" size={24} />}
+                badge="Math Modelling"
+                badgeColor="bg-primary-100 text-primary-700"
+                accentColor="border-primary-500"
+            >
+                <div className="space-y-8">
+                    <div className="p-8 bg-slate-900 rounded-[2.5rem] text-white">
+                        <h5 className="text-primary-400 font-bold mb-6 flex items-center gap-2 text-xl">
+                            <Layers size={20} /> MDP Formulation: $\langle S, A, P, R \rangle$
+                        </h5>
+                        <div className="grid sm:grid-cols-2 gap-8">
+                            <MathBlock 
+                                formula="P_{ss'}^a = \mathbb{P}[S_{t+1}=s' | S_t=s, A_t=a]"
+                                label="Transition Function"
+                                explanation="The probability that action a in state s will lead to state s'."
+                            />
+                            <MathBlock 
+                                formula="R_s^a = \mathbb{E}[R_{t+1} | S_t=s, A_t=a]"
+                                label="Reward Function"
+                                explanation="The expected immediate reward from taking action a in state s."
+                            />
+                        </div>
+                    </div>
+
+                    <SymbolTable 
+                        symbols={[
+                            { symbol: 'S', meaning: 'A finite set of states.' },
+                            { symbol: 'A', meaning: 'A finite set of actions.' },
+                            { symbol: 'P^a_{ss\'}', meaning: 'State transition probability matrix for each action a.' },
+                            { symbol: 'R^a_s', meaning: 'Reward function.' }
+                        ]}
+                    />
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 3: ACTIVITY BASED LEARNING */}
+            <SectionWrapper 
+                id="activity" 
+                title="3. Activity: Dynamics Modeler" 
+                subtitle="Calculating Probabilities"
+                icon={<Users className="text-emerald-600" size={24} />}
+                badge="Activity"
+                badgeColor="bg-emerald-100 text-emerald-700"
+                accentColor="border-emerald-500"
+            >
+                <div className="space-y-6">
+                    {/* Level 1 */}
+                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
+                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Class Challenge: The Rainy Day MDP</h4>
+                        </div>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            "If it is Sunny ($s$), and you take the action 'Walk' ($a$), there is a 90% chance you stay Dry ($s'$) and a 10% chance it starts Raining ($s''$). Write this as a transition probability."
+                            <br /><strong>Answer:</strong> {"$P(\\text{Dry} | \\text{Sunny}, \\text{Walk}) = 0.9$"}
+                        </p>
+                    </div>
+
+                    {/* Level 2 */}
+                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
+                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Interactive: Validating a Matrix</h4>
+                        </div>
+                        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 text-center font-mono text-xs">
+                            {"P = [[0.7, 0.3], [0.4, 0.6]]"}
+                            <div className="mt-2 text-emerald-500 font-bold">Valid: Row sums equal 1.0</div>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 4: PROJECT BASED LEARNING */}
+            <SectionWrapper 
+                id="project" 
+                title="4. Project: The Recycling Robot MDP" 
+                subtitle="Formulating a Classic Example"
+                icon={<Briefcase className="text-indigo-600" size={24} />}
+                badge="PBL"
+                badgeColor="bg-indigo-100 text-indigo-700"
+                accentColor="border-indigo-500"
+            >
+                <div className="space-y-6">
+                    <div className="card p-6 bg-indigo-50/30 dark:bg-indigo-900/10 border-none">
+                        <h5 className="font-bold mb-2 flex items-center gap-2"><GitBranch size={18} /> The Search Mission</h5>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            A robot searches for cans. It has two energy levels: <strong>High</strong> and <strong>Low</strong>. 
+                            It can <strong>Search</strong>, <strong>Wait</strong>, or <strong>Recharge</strong>.
+                        </p>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 text-center space-y-2">
+                            <Layers className="mx-auto text-emerald-500" size={20} />
+                            <div className="text-[10px] font-bold">S</div>
+                            <p className="text-[8px] text-slate-500">{'[High, Low]'}</p>
+                        </div>
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 text-center space-y-2">
+                            <Zap className="mx-auto text-blue-500" size={20} />
+                            <div className="text-[10px] font-bold">A</div>
+                            <p className="text-[8px] text-slate-500">{'[Search, Wait, Recharge]'}</p>
+                        </div>
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 text-center space-y-2">
+                            <Binary className="mx-auto text-amber-500" size={20} />
+                            <div className="text-[10px] font-bold">P</div>
+                            <p className="text-[8px] text-slate-500">Prob. of battery drain.</p>
+                        </div>
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 text-center space-y-2">
+                            <Award className="mx-auto text-purple-500" size={20} />
+                            <div className="text-[10px] font-bold">R</div>
+                            <p className="text-[8px] text-slate-500">Points per can found.</p>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
+            <SectionWrapper 
+                id="questions" 
+                title="5. Quick Check" 
+                subtitle="Essential Definitions"
+                icon={<HelpCircle className="text-purple-600" size={24} />}
+                badge="Questions"
+                badgeColor="bg-purple-100 text-purple-700"
+                accentColor="border-purple-500"
+            >
+                <div className="grid gap-4">
+                    {[
+                        { q: 'Define the formal 4-tuple of an MDP.', a: 'An MDP is defined by the set (S, A, P, R), representing States, Actions, Transition Probabilities, and Reward Functions.' },
+                        { q: 'What is a Transition Probability Matrix?', a: 'A matrix where each element P[i][j] represents the probability of moving from state i to state j under a specific action.' },
+                        { q: 'What is the "Finite" requirement in a Finite MDP?', a: 'It means the sets S, A, and R must have a finite number of elements, allowing for exact computation.' }
+                    ].map((item, i) => (
+                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
+                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
+                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
+                        </div>
+                    ))}
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
+            <SectionWrapper 
+                id="lab" 
+                title="6. Virtual Lab: Transition Explorer" 
+                subtitle="Visualizing Environment Dynamics"
+                icon={<FlaskConical className="text-cyan-600" size={24} />}
+                badge="Virtual Lab"
+                badgeColor="bg-cyan-100 text-cyan-700"
+                accentColor="border-cyan-500"
+            >
+                <div className="space-y-6">
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Toggle between actions to see how the Transition Matrix changes. Notice how <strong>Searching</strong> has a higher risk of battery drain (Low Energy) compared to <strong>Waiting</strong>.
+                    </p>
+                    <TransitionMatrixExplorer />
+                </div>
+            </SectionWrapper>
+
+            {/* FEEDBACK SECTION */}
+            <div className="bg-primary-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-primary-500/20">
+                <div className="max-w-xl mx-auto space-y-2">
+                    <h3 className="text-3xl font-black italic">MDP Defined!</h3>
+                    <p className="text-primary-100">
+                        You've mastered the 4-tuple. Ready to explore the core "Markov Property" that makes this math work?
+                    </p>
+                </div>
+                <div className="flex justify-center gap-4">
+                    <button className="px-10 py-4 bg-white text-primary-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+                        NEXT: MARKOV PROPERTY
+                    </button>
+                    <button className="px-10 py-4 bg-primary-700 text-white font-black rounded-2xl hover:bg-primary-800 transition-colors">
+                        REVIEW DEFINITION
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

@@ -1,81 +1,334 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, Share2, GitBranch } from 'lucide-react';
+import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
+    Share2, GitBranch, Target, Zap, TrendingUp,
+    Clock, Briefcase, ShieldAlert, Users2, Layout,
+    Network, Layers, Binary, ChevronRight, Info
+} from 'lucide-react';
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
+    ResponsiveContainer, AreaChart, Area, Legend, BarChart, Bar
+} from 'recharts';
 
-export default function Topic8_TypesOfRL() {
-    const [activeTab, setActiveTab] = useState<'story' | 'math' | 'activity' | 'questions' | 'lab' | 'insights'>('story');
+// ─── Interactive Components for Topic 8 ──────────────────────────────────────
 
-    const tabs = [
-        { id: 'story', label: 'Story', icon: BookOpen },
-        { id: 'math', label: 'Math', icon: Calculator },
-        { id: 'activity', label: 'Activity', icon: Users },
-        { id: 'questions', label: 'Questions', icon: HelpCircle },
-        { id: 'lab', label: 'Virtual Lab', icon: FlaskConical },
-        { id: 'insights', label: 'Insights', icon: Lightbulb },
-    ] as const;
+/**
+ * Interactive Hierarchy of RL
+ */
+function RLHierarchy() {
+    const [selected, setSelected] = useState<string | null>(null);
+
+    const categories = [
+        {
+            id: 'modality',
+            label: 'Environment Model',
+            types: [
+                { name: 'Model-Free', desc: 'Learns directly from experience. (DQN, PPO)', icon: <Binary size={14} /> },
+                { name: 'Model-Based', desc: 'Builds a world model first. (Dyna-Q, AlphaZero)', icon: <Network size={14} /> }
+            ]
+        },
+        {
+            id: 'policy',
+            label: 'Policy Update',
+            types: [
+                { name: 'On-Policy', desc: 'Learns while following the policy. (SARSA)', icon: <Target size={14} /> },
+                { name: 'Off-Policy', desc: 'Learns from any data/expert. (Q-Learning)', icon: <Share2 size={14} /> }
+            ]
+        }
+    ];
 
     return (
-        <div className="space-y-4">
-            <div className="flex gap-2 flex-wrap">
-                {tabs.map(t => {
-                    const Icon = t.icon;
-                    return (
-                        <button key={t.id} onClick={() => setActiveTab(t.id)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === t.id ? 'bg-primary-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'}`}>
-                            <Icon size={14} />{t.label}
-                        </button>
-                    );
-                })}
+        <div className="bg-slate-50 dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-8">
+            <div className="text-center space-y-2">
+                <h4 className="font-bold text-slate-800 dark:text-white">The RL Taxonomy</h4>
+                <p className="text-xs text-slate-500">Click a category to explore the branches.</p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6">
+                {categories.map(cat => (
+                    <div key={cat.id} className="space-y-4">
+                        <div className="px-4 py-2 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 font-bold text-xs text-primary-600 text-center uppercase tracking-widest shadow-sm">
+                            {cat.label}
+                        </div>
+                        <div className="grid gap-3">
+                            {cat.types.map(type => (
+                                <motion.button
+                                    key={type.name}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={() => setSelected(type.name)}
+                                    className={`p-4 rounded-2xl border-2 text-left transition-all ${selected === type.name ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 shadow-lg' : 'border-white dark:border-slate-800 bg-white dark:bg-slate-800 shadow-sm'}`}
+                                >
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className={`p-2 rounded-lg ${selected === type.name ? 'bg-primary-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500'}`}>
+                                            {type.icon}
+                                        </div>
+                                        <span className="font-bold text-sm text-slate-800 dark:text-white">{type.name}</span>
+                                    </div>
+                                    <p className="text-[10px] text-slate-500 leading-relaxed">{type.desc}</p>
+                                </motion.button>
+                            ))}
+                        </div>
+                    </div>
+                ))}
             </div>
 
             <AnimatePresence mode="wait">
-                <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
-                    
-                    {activeTab === 'story' && (
-                        <SectionWrapper id="story" title="Section 1 — The RL Family Tree" icon={<Share2 size={20} className="text-blue-600" />} badge="Types" badgeColor="bg-blue-100 text-blue-700" accentColor="border-blue-500">
-                            <div className="story-block space-y-6">
-                                <p className="text-slate-600 dark:text-slate-400">RL algorithms can be classified in several ways. The most fundamental split is between those that use a model and those that don't.</p>
-                                <div className="grid sm:grid-cols-2 gap-6">
-                                    <div className="card p-5 bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800">
-                                        <div className="flex items-center gap-2 mb-3">
-                                            <GitBranch className="text-blue-600" size={18} />
-                                            <h4 className="font-bold">Model-Free RL</h4>
-                                        </div>
-                                        <p className="text-xs text-slate-500 mb-3">Learns through trial and error without predicting the environment's physics. Very popular and robust.</p>
-                                        <ul className="text-[10px] space-y-1 list-disc pl-4 text-blue-700">
-                                            <li>Q-Learning</li>
-                                            <li>SARSA</li>
-                                            <li>Policy Gradients</li>
-                                        </ul>
-                                    </div>
-                                    <div className="card p-5 bg-emerald-50/50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800">
-                                        <div className="flex items-center gap-2 mb-3">
-                                            <GitBranch className="text-emerald-600" size={18} />
-                                            <h4 className="font-bold">Model-Based RL</h4>
-                                        </div>
-                                        <p className="text-xs text-slate-500 mb-3">Builds a "Model" of the world first, then uses it to plan ahead. More sample-efficient.</p>
-                                        <ul className="text-[10px] space-y-1 list-disc pl-4 text-emerald-700">
-                                            <li>Dynamic Programming</li>
-                                            <li>Dyna-Q</li>
-                                            <li>AlphaZero (partial)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </SectionWrapper>
-                    )}
-
-                    {activeTab === 'insights' && (
-                        <SectionWrapper id="insights" title="Section 6 — Practical Tips" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Strategy" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
-                            <InfoCard type="tip" title="When to use what?">
-                                Use <strong>Model-Free</strong> when the environment is complex and hard to simulate (like robotics in the wild). Use <strong>Model-Based</strong> when samples are expensive (like medical trials or complex simulations).
-                            </InfoCard>
-                        </SectionWrapper>
-                    )}
-                </motion.div>
+                {selected && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="p-4 bg-primary-600 rounded-2xl text-white flex items-center justify-between shadow-xl shadow-primary-500/20"
+                    >
+                        <div className="flex items-center gap-3">
+                            <Info size={18} />
+                            <span className="text-xs font-bold uppercase tracking-tight">Key Algorithm: {selected === 'Model-Free' ? 'Q-Learning' : selected === 'Model-Based' ? 'Dyna-Q' : selected === 'On-Policy' ? 'SARSA' : 'Deep Q-Network'}</span>
+                        </div>
+                        <ChevronRight size={18} />
+                    </motion.div>
+                )}
             </AnimatePresence>
         </div>
     );
 }
+
+// ─── Main Topic Component ───────────────────────────────────────────────────
+
+export default function Topic8_TypesOfRL() {
+    return (
+        <div className="max-w-4xl mx-auto pb-20 space-y-12">
+
+            {/* SECTION 1: STORYTELLING */}
+            <SectionWrapper
+                id="story"
+                title="1. The Family Reunion"
+                subtitle="Understanding the RL Taxonomy"
+                icon={<Share2 className="text-blue-600" size={24} />}
+                badge="Storytelling"
+                badgeColor="bg-blue-100 text-blue-700"
+                accentColor="border-blue-500"
+            >
+                <div className="space-y-6">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
+                        <div className="absolute -bottom-4 -right-4 opacity-10">
+                            <Network size={200} />
+                        </div>
+                        <h4 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2">
+                            🌲 The RL Family Tree
+                        </h4>
+                        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
+                            <p>
+                                Imagine you are learning to play <strong>Tennis</strong>. There are two very different ways to get better:
+                            </p>
+                            <p>
+                                <strong>The Practice Path:</strong> You go onto the court and hit thousands of balls. You don't try to calculate physics; you just feel what works. This is <strong>Model-Free</strong> learning.
+                            </p>
+                            <p>
+                                <strong>The Video Path:</strong> You watch a pro player's video. You analyze their swing, their footwork, and you try to <em>copy</em> them, even if you are just sitting on your couch. This is <strong>Off-Policy</strong> learning.
+                            </p>
+                            <p>
+                                Reinforcement Learning isn't just one algorithm; it's a diverse family of methods, each suited for different sports (problems).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <InfoCard type="insight" title="The Taxonomy Rule">
+                            Most algorithms aren't just one type—they are combinations! For example, DQN is <strong>Model-Free</strong> AND <strong>Off-Policy</strong>.
+                        </InfoCard>
+                        <InfoCard type="warning" title="Naming Confusion">
+                            Don't confuse "Offline RL" with "Off-Policy RL". Offline RL means learning from a fixed dataset without any environment interaction.
+                        </InfoCard>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 2: MATHEMATICAL MODELLING */}
+            <SectionWrapper
+                id="math"
+                title="2. On-Policy vs Off-Policy Math"
+                subtitle="The Logic of Update Rules"
+                icon={<Calculator className="text-primary-600" size={24} />}
+                badge="Math Modelling"
+                badgeColor="bg-primary-100 text-primary-700"
+                accentColor="border-primary-500"
+            >
+                <div className="space-y-8">
+                    <div className="grid lg:grid-cols-2 gap-8">
+                        <div className="space-y-6">
+                            <MathBlock
+                                formula="Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma Q(s', a') - Q(s, a)]"
+                                label="On-Policy (SARSA)"
+                                explanation="We update based on the action a' that we actually took using our current policy."
+                            />
+                            <MathBlock
+                                formula="Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]"
+                                label="Off-Policy (Q-Learning)"
+                                explanation="We update based on the absolute BEST possible action, even if we didn't take it."
+                            />
+                        </div>
+                        <div className="p-6 bg-slate-900 rounded-3xl text-white">
+                            <h4 className="font-bold text-primary-400 mb-4 flex items-center gap-2"><Info size={16} /> Key Differences</h4>
+                            <ul className="space-y-4">
+                                <li className="flex gap-3 text-xs leading-relaxed">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1 shrink-0" />
+                                    <span><strong>On-Policy:</strong> Conservative. It respects the explorer's mistakes (e.g., if you're exploring a cliff edge, it learns to be very careful).</span>
+                                </li>
+                                <li className="flex gap-3 text-xs leading-relaxed">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1 shrink-0" />
+                                    <span><strong>Off-Policy:</strong> Aggressive. It assumes you will act perfectly in the future, even if you are currently making mistakes.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <SymbolTable
+                        symbols={[
+                            { symbol: '\alpha', meaning: 'Learning rate (how much to trust new info)' },
+                            { symbol: '\gamma', meaning: 'Discount factor (importance of future rewards)' },
+                            { symbol: 'a\'', meaning: 'The next action taken' },
+                            { symbol: "\\max_{a'}", meaning: 'The best possible action regardless of current policy' }
+                        ]}
+                    />
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 3: ACTIVITY BASED LEARNING */}
+            <SectionWrapper
+                id="activity"
+                title="3. Activity: Build the Tree"
+                subtitle="Classifying the RL Universe"
+                icon={<Users className="text-emerald-600" size={24} />}
+                badge="Activity"
+                badgeColor="bg-emerald-100 text-emerald-700"
+                accentColor="border-emerald-500"
+            >
+                <div className="space-y-6">
+                    {/* Level 1 */}
+                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
+                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Video Game Test</h4>
+                        </div>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            Teacher shows a clip of a speedrunner playing Mario. "If the agent learns by watching this video, is it On-policy or Off-policy?" (Answer: Off-policy).
+                        </p>
+                    </div>
+
+                    {/* Level 2 */}
+                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
+                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Interactive Sorting</h4>
+                        </div>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase">Scenario A</span>
+                                <p className="text-xs font-bold mt-1 text-slate-700 dark:text-slate-300">Robotic arm learning in a simulated physics engine.</p>
+                                <div className="mt-2 text-[10px] px-2 py-1 bg-amber-100 text-amber-700 rounded-md inline-block">Model-Based</div>
+                            </div>
+                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase">Scenario B</span>
+                                <p className="text-xs font-bold mt-1 text-slate-700 dark:text-slate-300">Self-driving car learning from historical human logs.</p>
+                                <div className="mt-2 text-[10px] px-2 py-1 bg-blue-100 text-blue-700 rounded-md inline-block">Off-Policy</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 4: PROJECT BASED LEARNING */}
+            <SectionWrapper
+                id="project"
+                title="4. Project: The Cliff Walker"
+                subtitle="On-Policy vs Off-Policy Duel"
+                icon={<Briefcase className="text-indigo-600" size={24} />}
+                badge="PBL"
+                badgeColor="bg-indigo-100 text-indigo-700"
+                accentColor="border-indigo-500"
+            >
+                <div className="space-y-6 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p>
+                        In the <strong>CliffWalking</strong> environment, the agent must reach a goal without falling off a cliff.
+                    </p>
+                    <div className="grid sm:grid-cols-2 gap-8">
+                        <div className="card p-6 border-l-4 border-emerald-500">
+                            <h5 className="font-bold text-slate-800 dark:text-white mb-2">Team SARSA (On-Policy)</h5>
+                            <p className="text-xs">It will take a long, safe path far from the cliff because it learns that its own "Exploration" (random moves) could make it fall.</p>
+                        </div>
+                        <div className="card p-6 border-l-4 border-blue-500">
+                            <h5 className="font-bold text-slate-800 dark:text-white mb-2">Team Q-Learning (Off-Policy)</h5>
+                            <p className="text-xs">It will learn the optimal path right along the cliff edge, ignoring the risk that its own exploration might cause a fall.</p>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
+                subtitle="Exam-Ready Definitions"
+                icon={<HelpCircle className="text-purple-600" size={24} />}
+                badge="Questions"
+                badgeColor="bg-purple-100 text-purple-700"
+                accentColor="border-purple-500"
+            >
+                <div className="grid gap-4">
+                    {[
+                        { q: 'What is the primary advantage of Off-Policy RL?', a: 'It can learn from expert demonstrations, historical data, or even a different policy, making it more sample-efficient.' },
+                        { q: 'Why is SARSA called "On-Policy"?', a: 'Because it evaluates and improves the same policy that it uses to make decisions during learning.' },
+                        { q: 'Define a "Model" in Model-Based RL.', a: 'A model is any function that mimics the environment dynamics, specifically predicting the next state and reward given a current state and action.' }
+                    ].map((item, i) => (
+                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
+                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
+                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
+                        </div>
+                    ))}
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: The Taxonomy Explorer"
+                subtitle="Navigating the RL Landscape"
+                icon={<FlaskConical className="text-cyan-600" size={24} />}
+                badge="Virtual Lab"
+                badgeColor="bg-cyan-100 text-cyan-700"
+                accentColor="border-cyan-500"
+            >
+                <div className="space-y-6">
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Explore the different categories of Reinforcement Learning. Notice how modern algorithms like <strong>PPO</strong> or <strong>SAC</strong> fit into multiple branches of this tree.
+                    </p>
+                    <RLHierarchy />
+                </div>
+            </SectionWrapper>
+
+            {/* FEEDBACK SECTION */}
+            <div className="bg-emerald-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-emerald-500/20">
+                <div className="max-w-xl mx-auto space-y-2">
+                    <h3 className="text-3xl font-black italic">Family Tree: Explored!</h3>
+                    <p className="text-emerald-100">
+                        You've mapped the entire RL landscape. Ready to tackle the biggest challenge in all of AI?
+                    </p>
+                </div>
+                <div className="flex justify-center gap-4">
+                    <button className="px-10 py-4 bg-white text-emerald-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+                        NEXT: EXPLORATION
+                    </button>
+                    <button className="px-10 py-4 bg-emerald-700 text-white font-black rounded-2xl hover:bg-emerald-800 transition-colors">
+                        REVIEW TYPES
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+

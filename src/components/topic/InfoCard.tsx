@@ -1,7 +1,7 @@
 import React from 'react';
 import { AlertCircle, CheckCircle2, Info, Lightbulb, AlertTriangle } from 'lucide-react';
 
-type CardType = 'info' | 'success' | 'warning' | 'tip' | 'definition' | 'example';
+type CardType = 'info' | 'success' | 'warning' | 'tip' | 'definition' | 'example' | 'insight' | 'question';
 
 interface InfoCardProps {
     type?: CardType;
@@ -45,6 +45,18 @@ const config: Record<CardType, { icon: React.ReactNode; bg: string; border: stri
         bg: 'bg-cyan-50 dark:bg-cyan-900/20',
         border: 'border-cyan-200 dark:border-cyan-800',
         title: 'Example',
+    },
+    insight: {
+        icon: <Lightbulb size={18} className="text-pink-600 dark:text-pink-400" />,
+        bg: 'bg-pink-50 dark:bg-pink-900/20',
+        border: 'border-pink-200 dark:border-pink-800',
+        title: 'Insight',
+    },
+    question: {
+        icon: <Info size={18} className="text-indigo-600 dark:text-indigo-400" />,
+        bg: 'bg-indigo-50 dark:bg-indigo-900/20',
+        border: 'border-indigo-200 dark:border-indigo-800',
+        title: 'Question',
     },
 };
 

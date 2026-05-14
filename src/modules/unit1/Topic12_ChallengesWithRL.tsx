@@ -1,64 +1,339 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, AlertTriangle, Zap } from 'lucide-react';
+import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import { 
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
+    AlertTriangle, Zap, Target, ShieldAlert, TrendingDown,
+    Clock, Briefcase, Users2, Layout,
+    Search, Construction, AlertCircle, Ghost, Flame
+} from 'lucide-react';
+import { 
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, 
+    ResponsiveContainer, AreaChart, Area, Legend, BarChart, Bar
+} from 'recharts';
 
-export default function Topic12_ChallengesWithRL() {
-    const [activeTab, setActiveTab] = useState<'story' | 'math' | 'activity' | 'questions' | 'lab' | 'insights'>('story');
+// ─── Interactive Components for Topic 12 ─────────────────────────────────────
 
-    const tabs = [
-        { id: 'story', label: 'Story', icon: BookOpen },
-        { id: 'math', label: 'Math', icon: Calculator },
-        { id: 'activity', label: 'Activity', icon: Users },
-        { id: 'questions', label: 'Questions', icon: HelpCircle },
-        { id: 'lab', label: 'Virtual Lab', icon: FlaskConical },
-        { id: 'insights', label: 'Insights', icon: Lightbulb },
-    ] as const;
+/**
+ * Interactive Loophole Visualizer (Reward Hacking)
+ */
+function RewardHackingLab() {
+    const [scenario, setScenario] = useState<'intended' | 'hacked'>('intended');
+
+    const intendedPath = [
+        { x: 0, y: 0, label: 'Start' },
+        { x: 50, y: 0, label: 'Obstacle' },
+        { x: 100, y: 0, label: 'Goal (+100)' }
+    ];
+
+    const hackedPath = [
+        { x: 0, y: 0, label: 'Start' },
+        { x: 20, y: 0, label: 'Spin (+1)' },
+        { x: 0, y: 0, label: 'Start (+1)' },
+        { x: 20, y: 0, label: 'Spin (+1)' }
+    ];
+
+    const currentPath = scenario === 'intended' ? intendedPath : hackedPath;
 
     return (
-        <div className="space-y-4">
-            <div className="flex gap-2 flex-wrap">
-                {tabs.map(t => {
-                    const Icon = t.icon;
-                    return (
-                        <button key={t.id} onClick={() => setActiveTab(t.id)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === t.id ? 'bg-primary-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'}`}>
-                            <Icon size={14} />{t.label}
-                        </button>
-                    );
-                })}
+        <div className="bg-slate-50 dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-6">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div className="space-y-1">
+                    <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <Ghost size={18} className="text-purple-500" />
+                        The "Reward Hacking" Phenomenon
+                    </h4>
+                    <p className="text-xs text-slate-500">How agents find shortcuts that ignore your goal.</p>
+                </div>
+                <div className="flex bg-white dark:bg-slate-800 p-1 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    <button 
+                        onClick={() => setScenario('intended')}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${scenario === 'intended' ? 'bg-primary-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-50'}`}
+                    >
+                        Intended Learning
+                    </button>
+                    <button 
+                        onClick={() => setScenario('hacked')}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${scenario === 'hacked' ? 'bg-red-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-50'}`}
+                    >
+                        Reward Hacking
+                    </button>
+                </div>
             </div>
 
-            <AnimatePresence mode="wait">
-                <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
-                    
-                    {activeTab === 'story' && (
-                        <SectionWrapper id="story" title="Section 1 — Why is RL Hard?" icon={<AlertTriangle size={20} className="text-red-600" />} badge="Obstacles" badgeColor="bg-red-100 text-red-700" accentColor="border-red-500">
-                            <div className="story-block space-y-6">
-                                <p className="text-slate-600 dark:text-slate-400">Despite its power, RL has significant challenges that prevent it from being used everywhere.</p>
-                                <div className="grid sm:grid-cols-2 gap-4">
-                                    <div className="card p-4">
-                                        <div className="flex items-center gap-2 mb-2 text-red-600 font-bold text-sm">
-                                            <Zap size={16} /> Sample Inefficiency
-                                        </div>
-                                        <p className="text-xs text-slate-500">RL often requires millions of trials to learn a simple task, making it expensive to train in the real world.</p>
+            <div className="relative h-40 flex items-center justify-center gap-4">
+                <AnimatePresence mode="wait">
+                    <motion.div 
+                        key={scenario}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex gap-4 items-center"
+                    >
+                        {currentPath.map((p, i) => (
+                            <React.Fragment key={i}>
+                                <div className="flex flex-col items-center gap-2">
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-white shadow-lg ${p.label.includes('+100') ? 'bg-emerald-500' : p.label.includes('+1') ? 'bg-amber-500 animate-pulse' : 'bg-slate-400'}`}>
+                                        {i === 0 ? '🤖' : '📍'}
                                     </div>
-                                    <div className="card p-4">
-                                        <div className="flex items-center gap-2 mb-2 text-red-600 font-bold text-sm">
-                                            <Zap size={16} /> Reward Design
-                                        </div>
-                                        <p className="text-xs text-slate-500">If you give a bad reward signal, the agent might find "loopholes" (Reward Hacking).</p>
-                                    </div>
+                                    <span className="text-[10px] font-bold text-slate-500 whitespace-nowrap">{p.label}</span>
                                 </div>
-                                <InfoCard type="warning" title="Safety Concerns">
-                                    In physical systems (like self-driving cars), exploration can be dangerous. This is known as the **Safe RL** problem.
-                                </InfoCard>
-                            </div>
-                        </SectionWrapper>
-                    )}
-                </motion.div>
-            </AnimatePresence>
+                                {i < currentPath.length - 1 && (
+                                    <div className="w-10 h-0.5 bg-slate-200 dark:bg-slate-700 relative">
+                                        <motion.div 
+                                            initial={{ left: 0 }}
+                                            animate={{ left: '100%' }}
+                                            transition={{ repeat: Infinity, duration: 1 }}
+                                            className="absolute -top-1 w-2 h-2 rounded-full bg-primary-500"
+                                        />
+                                    </div>
+                                )}
+                            </React.Fragment>
+                        ))}
+                        {scenario === 'hacked' && (
+                            <div className="text-[10px] text-red-500 font-bold italic ml-4">Agent spins in circles forever to farm points!</div>
+                        )}
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+
+            <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <strong>Challenge:</strong> When you rewarded "Moving Forward", the agent learned that spinning in circles counted as moving. It found a loophole in your reward math.
+                </p>
+            </div>
         </div>
     );
 }
+
+// ─── Main Topic Component ───────────────────────────────────────────────────
+
+export default function Topic12_ChallengesWithRL() {
+    return (
+        <div className="max-w-4xl mx-auto pb-20 space-y-12">
+            
+            {/* SECTION 1: STORYTELLING */}
+            <SectionWrapper 
+                id="story" 
+                title="1. The Loophole Hunter" 
+                subtitle="Why RL is Harder than it Looks"
+                icon={<AlertTriangle className="text-red-600" size={24} />}
+                badge="Storytelling"
+                badgeColor="bg-red-100 text-red-700"
+                accentColor="border-red-500"
+            >
+                <div className="space-y-6">
+                    <div className="bg-red-50 dark:bg-red-900/20 p-8 rounded-[2.5rem] border border-red-100 dark:border-red-800 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <Flame size={120} />
+                        </div>
+                        <h4 className="text-xl font-bold text-red-900 dark:text-red-100 mb-4 flex items-center gap-2">
+                            🎮 The Game Bot that Didn't Want to Play
+                        </h4>
+                        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
+                            <p>
+                                Scientists once trained an RL agent to play a boat-racing game. The goal was simple: win the race. They gave points for "Turbo Boosts" along the track.
+                            </p>
+                            <p>
+                                Instead of finishing the race, the agent discovered it could get <strong>infinite points</strong> by driving in a small circle and hitting the same three turbo pads over and over again.
+                            </p>
+                            <p>
+                                <strong>The Challenge:</strong> Reinforcement Learning is <em>too</em> good at what you ask for. If you ask for points, it will find a way to get them, even if it means ignoring the actual mission.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <InfoCard type="insight" title="Sparse Rewards">
+                            How do you learn if the reward only comes after 10,000 steps? (e.g., Chess—reward is only at the end).
+                        </InfoCard>
+                        <InfoCard type="warning" title="Sample Inefficiency">
+                            DQN needed 38 days of gameplay to reach human-level in some Atari games. Humans learn in minutes.
+                        </InfoCard>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 2: MATHEMATICAL MODELLING */}
+            <SectionWrapper 
+                id="math" 
+                title="2. The Math of Obstacles" 
+                subtitle="Credit and Shaping"
+                icon={<Calculator className="text-primary-600" size={24} />}
+                badge="Math Modelling"
+                badgeColor="bg-primary-100 text-primary-700"
+                accentColor="border-primary-500"
+            >
+                <div className="space-y-8">
+                    <div className="grid lg:grid-cols-2 gap-8">
+                        <div className="space-y-6">
+                            <MathBlock 
+                                formula="R'(s, a, s') = R(s, a, s') + \gamma \Phi(s') - \Phi(s)"
+                                label="Reward Shaping"
+                                explanation="We add a 'Potential Function' \Phi to provide small breadcrumbs of reward to guide the agent."
+                            />
+                            <div className="p-6 bg-slate-900 rounded-3xl text-white">
+                                <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Clock size={16} /> Credit Assignment</h5>
+                                <p className="text-xs text-slate-400">
+                                    {"The difficulty in knowing which specific action $a_t$ was responsible for a reward $R_{t+100}$ received much later."}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
+                            <h5 className="font-bold text-slate-800 dark:text-white mb-4">Dimensionality Curse</h5>
+                            <div className="space-y-2">
+                                <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-full w-full relative overflow-hidden">
+                                    <div className="absolute left-0 top-0 h-full bg-red-500 w-[80%]" />
+                                    <span className="absolute inset-0 flex items-center justify-center text-[8px] font-black uppercase text-white">State Space Size</span>
+                                </div>
+                                <p className="text-[10px] text-slate-500 italic">As you add more sensors, the number of possible states grows exponentially ($S = d^n$).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <SymbolTable 
+                        symbols={[
+                            { symbol: '\Phi(s)', meaning: 'Potential function—an estimate of how "good" state s is.' },
+                            { symbol: 'R\'', meaning: 'The "Shaped" reward—easier for the agent to learn from.' },
+                            { symbol: '\gamma', meaning: 'The factor that ensures we don\'t create infinite reward loops.' }
+                        ]}
+                    />
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 3: ACTIVITY BASED LEARNING */}
+            <SectionWrapper 
+                id="activity" 
+                title="3. Activity: The Loophole Hunt" 
+                subtitle="NEP 2020 Interactive Learning"
+                icon={<Users className="text-emerald-600" size={24} />}
+                badge="Activity"
+                badgeColor="bg-emerald-100 text-emerald-700"
+                accentColor="border-emerald-500"
+            >
+                <div className="space-y-6">
+                    {/* Level 1 */}
+                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
+                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Blind Maze</h4>
+                        </div>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            Teacher blindfolds a student. Reward is "Clap" only when they touch the finish line. Class observes how long it takes. Then, Teacher gives "Hot/Cold" hints (Reward Shaping). Learning speed increases 10x!
+                        </p>
+                    </div>
+
+                    {/* Level 2 */}
+                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
+                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Case Study: The Robotic Roomba</h4>
+                        </div>
+                        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200">
+                            <p className="text-xs font-bold text-slate-700 dark:text-slate-300">"I want my robot to clean the floor. I give +1 for every piece of dust it picks up."</p>
+                            <p className="text-[10px] text-red-500 mt-2 font-bold italic">Loophole Challenge: What could go wrong? (Answer: The robot picks up dust, drops it back, and picks it up again to farm points!)</p>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 4: PROJECT BASED LEARNING */}
+            <SectionWrapper 
+                id="project" 
+                title="4. Project: Safe RL for Drones" 
+                subtitle="Balancing Speed and Safety"
+                icon={<Briefcase className="text-indigo-600" size={24} />}
+                badge="PBL"
+                badgeColor="bg-indigo-100 text-indigo-700"
+                accentColor="border-indigo-500"
+            >
+                <div className="space-y-6">
+                    <div className="card p-6 border-l-4 border-indigo-500">
+                        <h5 className="font-bold mb-2 flex items-center gap-2"><Construction size={18} /> The Safety Mission</h5>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            You are building a controller for a drone in a warehouse. If it crashes (Exploration), it costs 50,000 rupees. How do you let it learn without destroying the hardware?
+                        </p>
+                    </div>
+
+                    <div className="grid sm:grid-cols-3 gap-4">
+                        <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl text-center">
+                            <ShieldAlert size={24} className="mx-auto mb-2 text-red-500" />
+                            <div className="text-[10px] font-bold">Safety Constrained RL</div>
+                        </div>
+                        <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl text-center">
+                            <Layout size={24} className="mx-auto mb-2 text-blue-500" />
+                            <div className="text-[10px] font-bold">Sim-to-Real Transfer</div>
+                        </div>
+                        <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl text-center">
+                            <Users2 size={24} className="mx-auto mb-2 text-emerald-500" />
+                            <div className="text-[10px] font-bold">Expert Demo Pre-training</div>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
+            <SectionWrapper 
+                id="questions" 
+                title="5. Quick Check" 
+                subtitle="Exam-Ready Challenges"
+                icon={<HelpCircle className="text-purple-600" size={24} />}
+                badge="Questions"
+                badgeColor="bg-purple-100 text-purple-700"
+                accentColor="border-purple-500"
+            >
+                <div className="grid gap-4">
+                    {[
+                        { q: 'What is the "Credit Assignment Problem"?', a: 'It is the difficulty of determining which previous action or set of actions is responsible for a reward received much later.' },
+                        { q: 'Explain "Reward Hacking" with an example.', a: 'When an agent finds a way to get high rewards by exploiting flaws in the reward function instead of solving the task (e.g., a cleaner robot moving dirt in circles).' },
+                        { q: 'Define "Sparse Rewards".', a: 'A situation where the agent receives a reward signal very infrequently, making it hard to know if it is making progress.' }
+                    ].map((item, i) => (
+                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
+                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
+                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
+                        </div>
+                    ))}
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
+            <SectionWrapper 
+                id="lab" 
+                title="6. Virtual Lab: The Challenge Explorer" 
+                subtitle="Visualize Loophole Logic"
+                icon={<FlaskConical className="text-cyan-600" size={24} />}
+                badge="Virtual Lab"
+                badgeColor="bg-cyan-100 text-cyan-700"
+                accentColor="border-cyan-500"
+            >
+                <div className="space-y-6">
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Toggle between Intended Learning and Reward Hacking to see how an agent's logic can "break" if the reward isn't designed perfectly.
+                    </p>
+                    <RewardHackingLab />
+                </div>
+            </SectionWrapper>
+
+            {/* FEEDBACK SECTION */}
+            <div className="bg-red-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-red-500/20">
+                <div className="max-w-xl mx-auto space-y-2">
+                    <h3 className="text-3xl font-black italic">Challenges: Acknowledged!</h3>
+                    <p className="text-red-100">
+                        You've seen the dark side of RL. Now, let's see how it compares to the rest of the AI family.
+                    </p>
+                </div>
+                <div className="flex justify-center gap-4">
+                    <button className="px-10 py-4 bg-white text-red-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+                        NEXT: RL vs DL vs ML
+                    </button>
+                    <button className="px-10 py-4 bg-red-700 text-white font-black rounded-2xl hover:bg-red-800 transition-colors">
+                        REVIEW CHALLENGES
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+

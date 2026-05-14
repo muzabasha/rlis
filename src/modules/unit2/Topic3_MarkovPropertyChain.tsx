@@ -1,60 +1,329 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock } from '../../components/topic/MathBlock';
-import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, GitBranch, History } from 'lucide-react';
+import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import { 
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
+    Zap, TrendingUp, Clock, Briefcase, Layout,
+    Compass, Map, Award, Move, MousePointer2, Layers, GitBranch, Binary, Brain,
+    CloudSun, RefreshCcw
+} from 'lucide-react';
 
-export default function Topic3_MarkovPropertyChain() {
-    const [activeTab, setActiveTab] = useState<'story' | 'math' | 'activity' | 'questions' | 'lab' | 'insights'>('story');
+// ─── Interactive Components for Topic 3 ──────────────────────────────────────
 
-    const tabs = [
-        { id: 'story', label: 'Story', icon: BookOpen },
-        { id: 'math', label: 'Math', icon: Calculator },
-        { id: 'activity', label: 'Activity', icon: Users },
-        { id: 'questions', label: 'Questions', icon: HelpCircle },
-        { id: 'lab', label: 'Virtual Lab', icon: FlaskConical },
-        { id: 'insights', label: 'Insights', icon: Lightbulb },
-    ] as const;
+/**
+ * Interactive Markov Chain Visualizer
+ */
+function MarkovChainVisualizer() {
+    const [state, setState] = useState<'Sunny' | 'Rainy'>('Sunny');
+    const [history, setHistory] = useState<string[]>(['Sunny']);
+    
+    const transitionMatrix = {
+        'Sunny': { 'Sunny': 0.8, 'Rainy': 0.2 },
+        'Rainy': { 'Sunny': 0.4, 'Rainy': 0.6 }
+    };
+
+    const nextStep = () => {
+        const rand = Math.random();
+        const probabilities = transitionMatrix[state];
+        let nextState: 'Sunny' | 'Rainy' = 'Sunny';
+        
+        if (rand < probabilities['Sunny']) {
+            nextState = 'Sunny';
+        } else {
+            nextState = 'Rainy';
+        }
+
+        setState(nextState);
+        setHistory(prev => [...prev.slice(-9), nextState]);
+    };
+
+    const reset = () => {
+        setState('Sunny');
+        setHistory(['Sunny']);
+    };
 
     return (
-        <div className="space-y-4">
-            <div className="flex gap-2 flex-wrap">
-                {tabs.map(t => {
-                    const Icon = t.icon;
-                    return (
-                        <button key={t.id} onClick={() => setActiveTab(t.id)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === t.id ? 'bg-primary-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'}`}>
-                            <Icon size={14} />{t.label}
-                        </button>
-                    );
-                })}
+        <div className="bg-slate-50 dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 space-y-8">
+            <div className="flex justify-between items-center">
+                <div className="space-y-1">
+                    <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <CloudSun size={18} className="text-primary-500" />
+                        Weather Markov Chain
+                    </h4>
+                    <p className="text-[10px] text-slate-500 font-medium">The future depends only on the current weather.</p>
+                </div>
+                <button onClick={reset} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-400">
+                    <RefreshCcw size={16} />
+                </button>
             </div>
 
-            <AnimatePresence mode="wait">
-                <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+                {/* Visual Representation */}
+                <div className="relative h-48 bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 shadow-sm flex items-center justify-around overflow-hidden">
+                    <motion.div 
+                        animate={{ scale: state === 'Sunny' ? 1.2 : 1, opacity: state === 'Sunny' ? 1 : 0.4 }}
+                        className={`p-6 rounded-2xl ${state === 'Sunny' ? 'bg-amber-100 text-amber-600 shadow-lg shadow-amber-500/20' : 'bg-slate-50 text-slate-400'}`}
+                    >
+                        <CloudSun size={32} />
+                        <span className="block text-[10px] font-bold mt-2">SUNNY</span>
+                    </motion.div>
                     
-                    {activeTab === 'story' && (
-                        <SectionWrapper id="story" title="Section 1 — The Power of the Present" icon={<History size={20} className="text-emerald-600" />} badge="Markov Property" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
-                            <div className="story-block space-y-4">
-                                <h3 className="text-xl font-bold text-slate-900 dark:text-white">🧠 Forget the Past</h3>
-                                <p className="text-slate-600 dark:text-slate-400">Imagine you are playing Chess. To make the best move, you only need to know the current position of the pieces. You don't need to know *how* they got there. This "memoryless" property is the <strong>Markov Property</strong>.</p>
-                                <InfoCard type="definition" title="Markov Property">
-                                    "The future is independent of the past, given the present." 
-                                </InfoCard>
-                            </div>
-                        </SectionWrapper>
-                    )}
+                    <div className="flex flex-col gap-4 text-[10px] font-bold text-slate-300">
+                        <div className="flex items-center gap-2">0.8 <TrendingUp size={10} className="rotate-90" /></div>
+                        <div className="flex items-center gap-2"><TrendingUp size={10} className="-rotate-90" /> 0.4</div>
+                    </div>
 
-                    {activeTab === 'math' && (
-                        <SectionWrapper id="math" title="Section 2 — The Markov Equation" icon={<Calculator size={20} className="text-red-600" />} badge="Math" badgeColor="bg-red-100 text-red-700" accentColor="border-red-500">
-                            <div className="space-y-6">
-                                <MathBlock formula="\mathbb{P}[S_{t+1} | S_t] = \mathbb{P}[S_{t+1} | S_1, ..., S_t]" label="Markov Property" explanation="The probability of the next state depends only on the current state, not the entire history." />
+                    <motion.div 
+                        animate={{ scale: state === 'Rainy' ? 1.2 : 1, opacity: state === 'Rainy' ? 1 : 0.4 }}
+                        className={`p-6 rounded-2xl ${state === 'Rainy' ? 'bg-blue-100 text-blue-600 shadow-lg shadow-blue-500/20' : 'bg-slate-50 text-slate-400'}`}
+                    >
+                        <Brain size={32} />
+                        <span className="block text-[10px] font-bold mt-2">RAINY</span>
+                    </motion.div>
+                </div>
+
+                {/* Controls and History */}
+                <div className="space-y-4">
+                    <button 
+                        onClick={nextStep}
+                        className="w-full py-4 bg-primary-600 text-white rounded-2xl font-bold shadow-lg shadow-primary-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    >
+                        Next Time Step (t+1)
+                    </button>
+                    <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase block mb-2">Trajectory History</span>
+                        <div className="flex gap-1 overflow-x-auto pb-2">
+                            {history.map((h, i) => (
+                                <div key={i} className={`w-6 h-6 shrink-0 rounded-md flex items-center justify-center text-[8px] font-bold ${h === 'Sunny' ? 'bg-amber-100 text-amber-600' : 'bg-blue-100 text-blue-600'}`}>
+                                    {h[0]}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// ─── Main Topic Component ────────────────────────────────────────────────────
+
+export default function Topic3_MarkovPropertyChain() {
+    return (
+        <div className="max-w-4xl mx-auto pb-20 space-y-12">
+            
+            {/* SECTION 1: STORYTELLING */}
+            <SectionWrapper 
+                id="story" 
+                title="1. The Forgetful Weather" 
+                subtitle="The Core Assumption of RL"
+                icon={<Brain className="text-purple-600" size={24} />}
+                badge="Storytelling"
+                badgeColor="bg-purple-100 text-purple-700"
+                accentColor="border-purple-500"
+            >
+                <div className="space-y-6">
+                    <div className="bg-purple-50 dark:bg-purple-900/20 p-8 rounded-[2.5rem] border border-purple-100 dark:border-purple-800 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <Clock size={120} />
+                        </div>
+                        <h4 className="text-xl font-bold text-purple-900 dark:text-purple-100 mb-4 flex items-center gap-2">
+                            🧠 Memoryless Intelligence
+                        </h4>
+                        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
+                            <p>
+                                Imagine a weather system. To predict if it will rain tomorrow, do you need to know the weather for the last 100 years?
+                            </p>
+                            <p>
+                                <strong>The Markov Property</strong> says: No. All the information you need to predict the future is contained in the <strong>present state</strong>. The past is irrelevant once you know the "now".
+                            </p>
+                            <p>
+                                This "forgetfulness" is actually a superpower. It allows us to build complex AI models that don't need to store infinite history—they just need to understand the current situation.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <InfoCard type="insight" title="The Present is Sufficient">
+                            The current state captures all relevant information from the past.
+                        </InfoCard>
+                        <InfoCard type="tip" title="Markov Chain">
+                            A sequence of states where each state depends only on the previous one is called a <strong>Markov Chain</strong>.
+                        </InfoCard>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 2: MATHEMATICAL MODELLING */}
+            <SectionWrapper 
+                id="math" 
+                title="2. The Markov Equation" 
+                subtitle="Defining the Property Formally"
+                icon={<Calculator className="text-primary-600" size={24} />}
+                badge="Math Modelling"
+                badgeColor="bg-primary-100 text-primary-700"
+                accentColor="border-primary-500"
+            >
+                <div className="space-y-8">
+                    <div className="p-8 bg-slate-900 rounded-[2.5rem] text-white">
+                        <h5 className="text-primary-400 font-bold mb-6 flex items-center gap-2 text-xl">
+                            <Layers size={20} /> The Markov Property
+                        </h5>
+                        <div className="grid sm:grid-cols-1 gap-8">
+                            <MathBlock 
+                                formula="\mathbb{P}[S_{t+1} | S_t] = \mathbb{P}[S_{t+1} | S_1, S_2, \dots, S_t]"
+                                label="Independence from History"
+                                explanation="The probability of the next state depends only on the current state, not the sequence that led to it."
+                            />
+                        </div>
+                    </div>
+
+                    <SymbolTable 
+                        symbols={[
+                            { symbol: 'S_t', meaning: 'The state at the current time step.' },
+                            { symbol: 'S_{t+1}', meaning: 'The state at the next time step.' },
+                            { symbol: 'S_1, \dots, S_t', meaning: 'The entire history of states.' },
+                            { symbol: '\mathbb{P}', meaning: 'Probability distribution.' }
+                        ]}
+                    />
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 3: ACTIVITY BASED LEARNING */}
+            <SectionWrapper 
+                id="activity" 
+                title="3. Activity: The Memory Test" 
+                subtitle="Identifying Markovian Systems"
+                icon={<Users className="text-emerald-600" size={24} />}
+                badge="Activity"
+                badgeColor="bg-emerald-100 text-emerald-700"
+                accentColor="border-emerald-500"
+            >
+                <div className="space-y-6">
+                    {/* Level 1 */}
+                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
+                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Class Challenge: Markov or Not?</h4>
+                        </div>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200">
+                                <span className="text-[10px] font-bold text-blue-500 uppercase">Chess</span>
+                                <p className="text-xs font-bold">Markovian (The board tells you everything).</p>
                             </div>
-                        </SectionWrapper>
-                    )}
-                </motion.div>
-            </AnimatePresence>
+                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200">
+                                <span className="text-[10px] font-bold text-red-500 uppercase">Poker</span>
+                                <p className="text-xs font-bold">Non-Markovian (History of betting matters).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Level 2 */}
+                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
+                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Interactive: State Augmentation</h4>
+                        </div>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            "If a system is non-Markovian, how do we fix it?" 
+                            <br /><strong>Solution:</strong> We include history in the current state (e.g., instead of just "Position", use "Position + Velocity").
+                        </p>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 4: PROJECT BASED LEARNING */}
+            <SectionWrapper 
+                id="project" 
+                title="4. Project: Next-Word Predictor" 
+                subtitle="The Simplest Markov Model"
+                icon={<Briefcase className="text-indigo-600" size={24} />}
+                badge="PBL"
+                badgeColor="bg-indigo-100 text-indigo-700"
+                accentColor="border-indigo-500"
+            >
+                <div className="space-y-6">
+                    <div className="card p-6 bg-indigo-50/30 dark:bg-indigo-900/10 border-none">
+                        <h5 className="font-bold mb-2 flex items-center gap-2"><GitBranch size={18} /> Building a Text Generator</h5>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            A "Bigram" model is a Markov Chain for text. It predicts the next word based <strong>only</strong> on the current word.
+                        </p>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100">
+                            <span className="text-[10px] font-bold text-slate-400">Input Sequence</span>
+                            <p className="text-sm font-mono mt-1">"The AI is ..."</p>
+                        </div>
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100">
+                            <span className="text-[10px] font-bold text-emerald-500">Markov Prediction</span>
+                            <p className="text-sm font-mono mt-1">"Learning" (Prob: 0.6)</p>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
+            <SectionWrapper 
+                id="questions" 
+                title="5. Quick Check" 
+                subtitle="Markov Concepts"
+                icon={<HelpCircle className="text-purple-600" size={24} />}
+                badge="Questions"
+                badgeColor="bg-purple-100 text-purple-700"
+                accentColor="border-purple-500"
+            >
+                <div className="grid gap-4">
+                    {[
+                        { q: 'State the Markov Property.', a: 'A state satisfies the Markov Property if the future is independent of the past given the present.' },
+                        { q: 'Define a Markov Chain.', a: 'A stochastic process where the transition from one state to another depends only on the current state.' },
+                        { q: 'Why is the Markov Property important in RL?', a: 'It allows the agent to make optimal decisions based only on the current state representation without needing a full history.' }
+                    ].map((item, i) => (
+                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
+                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
+                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
+                        </div>
+                    ))}
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
+            <SectionWrapper 
+                id="lab" 
+                title="6. Virtual Lab: Markov Chain Visualizer" 
+                subtitle="Experience State Transitions"
+                icon={<FlaskConical className="text-cyan-600" size={24} />}
+                badge="Virtual Lab"
+                badgeColor="bg-cyan-100 text-cyan-700"
+                accentColor="border-cyan-500"
+            >
+                <div className="space-y-6">
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Interact with a 2-state Markov Chain. Observe how the system jumps between <strong>Sunny</strong> and <strong>Rainy</strong> based on fixed probabilities.
+                    </p>
+                    <MarkovChainVisualizer />
+                </div>
+            </SectionWrapper>
+
+            {/* FEEDBACK SECTION */}
+            <div className="bg-primary-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-primary-500/20">
+                <div className="max-w-xl mx-auto space-y-2">
+                    <h3 className="text-3xl font-black italic">The Future is Now!</h3>
+                    <p className="text-primary-100">
+                        You've understood how Markov Chains work. Ready to add "Rewards" and see how agents learn values?
+                    </p>
+                </div>
+                <div className="flex justify-center gap-4">
+                    <button className="px-10 py-4 bg-white text-primary-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+                        NEXT: MARKOV REWARD PROCESS
+                    </button>
+                    <button className="px-10 py-4 bg-primary-700 text-white font-black rounded-2xl hover:bg-primary-800 transition-colors">
+                        REVIEW PROPERTY
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }
