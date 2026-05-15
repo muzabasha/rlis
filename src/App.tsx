@@ -12,6 +12,8 @@ import SearchPage from './pages/SearchPage';
 import QuestionBankPage from './pages/QuestionBankPage';
 import SampleProjectsPage from './pages/SampleProjectsPage';
 import CaseStudiesPage from './pages/CaseStudiesPage';
+import VirtualLabPage from './pages/VirtualLabPage';
+import InsightsPage from './pages/InsightsPage';
 
 function PageLoader() {
     return (
@@ -51,6 +53,8 @@ export default function App() {
                         <Route path="/question-bank" element={<QuestionBankPage />} />
                         <Route path="/sample-projects" element={<SampleProjectsPage />} />
                         <Route path="/case-studies" element={<CaseStudiesPage />} />
+                        <Route path="/virtual-lab" element={<VirtualLabPage />} />
+                        <Route path="/insights" element={<InsightsPage />} />
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </Suspense>
