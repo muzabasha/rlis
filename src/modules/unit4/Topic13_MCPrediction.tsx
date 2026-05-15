@@ -4,6 +4,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
+import MCPredictionLab from '../../components/labs/MCPredictionLab';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Target, Bot, Zap, Binary, Layers, Eye, ChevronRight,
@@ -12,85 +13,6 @@ import {
     Shield, Move, MousePointer2, User, Layout, Map,
     TrendingUp, ArrowRight
 } from 'lucide-react';
-
-// ─── Interactive Components for Topic 13 ─────────────────────────────────────
-
-/**
- * Value Explorer: Visualizing MC Prediction (Policy Evaluation)
- */
-function PredictionLab() {
-    const [policy, setPolicy] = useState<'Safe' | 'Risky'>('Safe');
-    const [stats, setStats] = useState({ v: 0, count: 0 });
-
-    const runSample = () => {
-        // Safe policy: small rewards, low variance (True value ~5)
-        // Risky policy: big rewards, high variance (True value ~10 but often 0)
-        const sample = policy === 'Safe' 
-            ? 5 + (Math.random() - 0.5) * 2 
-            : Math.random() > 0.5 ? 20 : 0;
-        
-        setStats(prev => {
-            const newCount = prev.count + 1;
-            const newV = prev.v + (1 / newCount) * (sample - prev.v);
-            return { v: newV, count: newCount };
-        });
-    };
-
-    return (
-        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl space-y-8">
-            <div className="flex justify-center gap-4">
-                {['Safe', 'Risky'].map(p => (
-                    <button
-                        key={p}
-                        onClick={() => { setPolicy(p as any); setStats({ v: 0, count: 0 }); }}
-                        className={`px-6 py-2 rounded-full text-xs font-black transition-all ${
-                            policy === p 
-                            ? 'bg-primary-600 text-white shadow-lg' 
-                            : 'bg-slate-100 dark:bg-slate-700 text-slate-500'
-                        }`}
-                    >
-                        {p.toUpperCase()} POLICY
-                    </button>
-                ))}
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="space-y-4">
-                    <div className="p-6 bg-slate-50 dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800 text-center">
-                        <span className="text-[10px] font-black text-slate-400 uppercase block mb-2">Estimated Value V(s)</span>
-                        <div className="text-5xl font-black text-primary-600">
-                            {stats.v.toFixed(2)}
-                        </div>
-                        <div className="text-[10px] text-slate-400 mt-2 font-bold">Samples: {stats.count}</div>
-                    </div>
-                    <button 
-                        onClick={runSample}
-                        className="w-full py-4 bg-primary-600 text-white rounded-2xl font-black text-xs hover:bg-primary-700 transition-all flex items-center justify-center gap-2"
-                    >
-                        <Play size={16} /> GENERATE EPISODE SAMPLE
-                    </button>
-                </div>
-
-                <div className="space-y-4">
-                    <h5 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                        <TrendingUp size={18} className="text-emerald-500" />
-                        Incremental Insight
-                    </h5>
-                    <p className="text-xs text-slate-500 leading-relaxed italic">
-                        Notice how the value fluctuates wildly in the first few samples but starts to "settle" as the count increases. This is how the agent "Predicts" how good a policy is.
-                    </p>
-                    <div className="p-4 bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 rounded-2xl">
-                        <p className="text-[10px] text-emerald-700 dark:text-emerald-300 font-medium">
-                            {policy === 'Safe' 
-                                ? 'The Safe policy converges quickly because the rewards are consistent.' 
-                                : 'The Risky policy takes many more samples to converge because the rewards are "All or Nothing".'}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
 
 // ─── Main Topic Component ────────────────────────────────────────────────────
 
@@ -326,7 +248,7 @@ export default function Topic13_MCPrediction() {
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
             <SectionWrapper 
                 id="lab" 
-                title="6. Virtual Lab: Value Explorer" 
+                title="6. Virtual Lab: MC Policy Predictor" 
                 subtitle="Convergence under Policy"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
@@ -335,9 +257,9 @@ export default function Topic13_MCPrediction() {
             >
                 <div className="space-y-6">
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Select a policy and generate episode samples to see how the predicted value $V(s)$ changes. Notice how different policies lead to different stable values.
+                        Select a policy and generate episode samples to see how the predicted value $V(s)$ changes. Notice how **Risky** policies cause higher variance in the short term but eventually settle.
                     </p>
-                    <PredictionLab />
+                    <MCPredictionLab />
                 </div>
             </SectionWrapper>
 

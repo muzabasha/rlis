@@ -4,106 +4,13 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
+import MCSamplingLab from '../../components/labs/MCSamplingLab';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Target, Zap, TrendingUp, Sparkles, Binary, Focus,
     Activity, Cpu, HardDrive, Briefcase,
     Shield, Move, MousePointer2, User, Play, Pause, RotateCcw, Layout, Dice5, History, Calculator as CalcIcon, Map
 } from 'lucide-react';
-import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
-    ResponsiveContainer, AreaChart, Area
-} from 'recharts';
-
-// ─── Interactive Components for Topic 10 ─────────────────────────────────────
-
-/**
- * Monte Carlo Averaging Simulator
- */
-function MCAveragingSimulator() {
-    const [episodes, setEpisodes] = useState<any[]>([]);
-    const [avgValue, setAvgValue] = useState(0);
-    const [isRunning, setIsRunning] = useState(false);
-
-    const runEpisode = useCallback(() => {
-        // Simulate an episode return G
-        // True value is 10, but individual returns are noisy
-        const noise = (Math.random() - 0.5) * 10;
-        const returnG = 10 + noise;
-        
-        setEpisodes(prev => {
-            const next = [...prev, { id: prev.length + 1, g: returnG }];
-            const sum = next.reduce((acc, curr) => acc + curr.g, 0);
-            setAvgValue(sum / next.length);
-            return next.slice(-20); // Keep last 20 for the chart
-        });
-    }, []);
-
-    useEffect(() => {
-        let interval: any;
-        if (isRunning) {
-            interval = setInterval(runEpisode, 300);
-        }
-        return () => clearInterval(interval);
-    }, [isRunning, runEpisode]);
-
-    const reset = () => {
-        setEpisodes([]);
-        setAvgValue(0);
-        setIsRunning(false);
-    };
-
-    return (
-        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl space-y-8">
-            <div className="flex flex-col md:flex-row justify-between gap-8">
-                <div className="flex-1 space-y-4">
-                    <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                        <CalcIcon size={18} className="text-primary-500" />
-                        Law of Large Numbers
-                    </h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Monte Carlo methods estimate the value of a state by averaging the <strong>Returns (G)</strong> from many complete episodes.
-                    </p>
-                    <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 text-center">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Current Estimated V(s)</span>
-                        <span className="text-4xl font-black text-primary-600">{avgValue.toFixed(2)}</span>
-                    </div>
-                    <div className="flex gap-2">
-                        <button 
-                            onClick={() => setIsRunning(!isRunning)} 
-                            className={`flex-1 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${isRunning ? 'bg-red-100 text-red-600' : 'bg-primary-100 text-primary-600'}`}
-                        >
-                            {isRunning ? <Pause size={18} /> : <Play size={18} />}
-                            {isRunning ? 'Stop Sampling' : 'Run Episodes'}
-                        </button>
-                        <button onClick={reset} className="p-3 bg-slate-100 dark:bg-slate-700 rounded-xl text-slate-500">
-                            <RotateCcw size={18} />
-                        </button>
-                    </div>
-                </div>
-
-                <div className="flex-1 h-64 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800 p-4">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={episodes}>
-                            <defs>
-                                <linearGradient id="colorG" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-                                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
-                                </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                            <XAxis dataKey="id" hide />
-                            <YAxis domain={[0, 20]} tick={{ fontSize: 10 }} />
-                            <Tooltip />
-                            <Area type="monotone" dataKey="g" stroke="#3b82f6" fillOpacity={1} fill="url(#colorG)" />
-                        </AreaChart>
-                    </ResponsiveContainer>
-                    <p className="text-[8px] text-center text-slate-400 mt-2 italic">Fluctuations represent individual episode returns (High Variance)</p>
-                </div>
-            </div>
-        </div>
-    );
-}
 
 // ─── Main Topic Component ────────────────────────────────────────────────────
 
@@ -226,18 +133,18 @@ export default function Topic10_MCIntro() {
                     levels={[
                         {
                             level: 1,
-                            title: "The Average Engine Demo",
-                            objectives: "Visualize how noisy individual returns eventually converge to a stable state value.",
+                            title: "The Sampling Engine Demo",
+                            objectives: "Visualize how complete episode trajectories are required before calculating an average.",
                             instructions: [
-                                "Open the 'Average Engine' in the Virtual Lab section.",
-                                "Click 'Run Episodes'. Point out: 'The blue peaks represent individual returns (High Variance).'",
-                                "Watch the 'Current Estimated V(s)' counter. Explain: 'As samples increase, the fluctuation decreases.'",
-                                "Explain: 'This is the Law of Large Numbers at work for RL.'",
-                                "Ask: 'If we stop after only 2 episodes, would our estimate be reliable?'"
+                                "Open the 'MC Sampling Engine' in the Virtual Lab section.",
+                                "Click 'Start'. Point out: 'The agent must reach the target (🏁) before any value update occurs.'",
+                                "Watch the 'Estimated V(start)' counter. Explain: 'The estimate only changes at the end of the episode.'",
+                                "Explain: 'This is the fundamental difference from Dynamic Programming or TD learning.'",
+                                "Ask: 'What happens to the estimate if we increase the number of episodes?'"
                             ],
-                            inputs: "Interactive MCAveragingSimulator component",
+                            inputs: "Interactive MCSamplingLab component",
                             outputs: "Live-updating area chart and value counter.",
-                            rubrics: ["Clarity of 'Return' vs 'Value' distinction", "Correct identification of the Law of Large Numbers", "Student engagement"],
+                            rubrics: ["Clarity of 'Episode completion' concept", "Correct identification of the MC update rule", "Student engagement"],
                             outcomes: "Students identify the statistical foundation of Monte Carlo estimation.",
                             time: "10 Mins",
                             materials: ["Interactive Component", "Projector"]
@@ -359,8 +266,8 @@ export default function Topic10_MCIntro() {
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
             <SectionWrapper 
                 id="lab" 
-                title="6. Virtual Lab: The Average Engine" 
-                subtitle="Convergence in Action"
+                title="6. Virtual Lab: MC Sampling Engine" 
+                subtitle="From Episodes to Estimates"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
                 badgeColor="bg-cyan-100 text-cyan-700"
@@ -368,9 +275,9 @@ export default function Topic10_MCIntro() {
             >
                 <div className="space-y-6">
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Run the simulator to see how individual random returns (noisy blue area) eventually average out to a stable value estimate.
+                        Watch the agent complete full trajectories before any learning occurs. This is the defining characteristic of Monte Carlo: **learning from experience averages**.
                     </p>
-                    <MCAveragingSimulator />
+                    <MCSamplingLab />
                 </div>
             </SectionWrapper>
 

@@ -4,6 +4,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
+import MCBackupLab from '../../components/labs/MCBackupLab';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Share2, Bot, Zap, Binary, Layers, Eye, ChevronRight,
@@ -12,104 +13,6 @@ import {
     Shield, Move, MousePointer2, User, Layout, Map,
     History, ArrowDown, Flag
 } from 'lucide-react';
-
-// ─── Interactive Components for Topic 11 ─────────────────────────────────────
-
-/**
- * Episode Tracer: Visualizing MC Trajectories
- */
-function EpisodeTracer() {
-    const [step, setStep] = useState(0);
-    const trajectory = [
-        { type: 'State', label: 'S₀', reward: 0 },
-        { type: 'Action', label: 'a₀', reward: 0 },
-        { type: 'State', label: 'S₁', reward: -1 },
-        { type: 'Action', label: 'a₁', reward: 0 },
-        { type: 'State', label: 'S₂', reward: -1 },
-        { type: 'Action', label: 'a₂', reward: 0 },
-        { type: 'State', label: 'Goal', reward: 10, isTerminal: true }
-    ];
-
-    const next = () => setStep(prev => Math.min(prev + 1, trajectory.length - 1));
-    const reset = () => setStep(0);
-
-    return (
-        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl space-y-8">
-            <div className="flex flex-col md:flex-row gap-8 items-center">
-                
-                {/* Visual Trajectory */}
-                <div className="flex flex-col items-center gap-2 py-4">
-                    {trajectory.map((item, i) => (
-                        <React.Fragment key={i}>
-                            <motion.div
-                                initial={{ scale: 0, opacity: 0 }}
-                                animate={{ 
-                                    scale: i <= step ? 1 : 0.5, 
-                                    opacity: i <= step ? 1 : 0.2,
-                                    backgroundColor: item.isTerminal ? '#10b981' : item.type === 'State' ? '#fff' : '#1e293b'
-                                }}
-                                className={`w-10 h-10 rounded-full flex items-center justify-center border-2 shadow-sm font-black text-[10px] 
-                                    ${item.type === 'State' ? 'border-slate-300 text-slate-800' : 'border-slate-800 text-white'}`}
-                            >
-                                {item.label}
-                            </motion.div>
-                            {i < trajectory.length - 1 && (
-                                <motion.div 
-                                    animate={{ opacity: i < step ? 1 : 0.2 }}
-                                    className="w-0.5 h-4 bg-slate-300" 
-                                />
-                            )}
-                        </React.Fragment>
-                    ))}
-                </div>
-
-                {/* Info Panel */}
-                <div className="flex-1 space-y-6">
-                    <div className="p-6 bg-slate-50 dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800">
-                        <h4 className="text-lg font-black text-slate-800 dark:text-white mb-2">Step {step}: {trajectory[step].type}</h4>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 italic">
-                            {trajectory[step].type === 'State' 
-                                ? 'The agent observes its surroundings.' 
-                                : 'The agent makes a move based on its policy.'}
-                        </p>
-                        <div className="flex justify-between items-center p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 shadow-sm">
-                            <span className="text-[10px] font-black text-slate-400 uppercase">Step Reward</span>
-                            <span className={`text-sm font-bold ${trajectory[step].reward > 0 ? 'text-emerald-500' : 'text-red-500'}`}>
-                                {trajectory[step].reward}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="flex gap-2">
-                        <button 
-                            onClick={next} 
-                            disabled={step === trajectory.length - 1}
-                            className="flex-1 bg-primary-600 text-white py-3 rounded-2xl font-black text-xs hover:bg-primary-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-lg"
-                        >
-                            {step === trajectory.length - 1 ? 'TERMINAL STATE' : 'STEP FORWARD'}
-                        </button>
-                        <button onClick={reset} className="p-3 bg-slate-100 dark:bg-slate-700 rounded-2xl text-slate-500">
-                            <RotateCcw size={20} />
-                        </button>
-                    </div>
-
-                    {step === trajectory.length - 1 && (
-                        <motion.div
-                            initial={{ y: 10, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            className="p-4 bg-emerald-500 text-white rounded-2xl text-center"
-                        >
-                            <div className="text-[10px] font-bold uppercase opacity-80 mb-1">Final Episode Return (G)</div>
-                            <div className="text-2xl font-black">
-                                {trajectory.reduce((acc, curr) => acc + curr.reward, 0)}
-                            </div>
-                        </motion.div>
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-}
 
 // ─── Main Topic Component ────────────────────────────────────────────────────
 
@@ -204,19 +107,19 @@ export default function Topic11_MCBackupDiagrams() {
                     levels={[
                         {
                             level: 1,
-                            title: "Episode Tracer Demo",
-                            objectives: "Visualize a single trajectory and the resulting narrow backup diagram.",
+                            title: "Backup Visualizer Demo",
+                            objectives: "Visualize a single trajectory and the resulting reverse flow of return values.",
                             instructions: [
-                                "Open the 'Episode Tracer' in the Virtual Lab section.",
-                                "Click 'Step Forward' 3 times. Point out: 'Each circle is a state we actually visited.'",
-                                "Reach the 'Goal'. Explain: 'The square is our finish line. We cannot calculate G without it.'",
-                                "Explain: 'Unlike DP, we don't care about the states we DID NOT visit in this episode.'",
-                                "Ask: 'What does the thin vertical line connecting these states represent?'"
+                                "Open the 'MC Backup Visualizer' in the Virtual Lab section.",
+                                "Click 'Step Forward' until you reach the Goal. Point out: 'The diagram shows only the path actually taken.'",
+                                "Click 'Back-Propagate'. Watch the purple flow move upwards.",
+                                "Explain: 'This flow represents the calculation of G for every state in the trajectory.'",
+                                "Ask: 'How does the backup change if the reward at the goal is doubled?'"
                             ],
-                            inputs: "Interactive EpisodeTracer component",
-                            outputs: "Step-by-step trajectory visualization with final G-value calculation.",
-                            rubrics: ["Clarity of 'Sample path' concept", "Identification of Terminal vs. Non-terminal nodes", "Student engagement"],
-                            outcomes: "Students identify the 'Narrow and Deep' nature of Monte Carlo backups.",
+                            inputs: "Interactive MCBackupLab component",
+                            outputs: "Step-by-step trajectory and back-propagation visualization.",
+                            rubrics: ["Clarity of 'Narrow and Deep' backup concept", "Identification of back-propagation direction", "Student engagement"],
+                            outcomes: "Students identify the visual mechanics of Monte Carlo backups.",
                             time: "10 Mins",
                             materials: ["Interactive Component", "Projector"]
                         },
@@ -343,8 +246,8 @@ export default function Topic11_MCBackupDiagrams() {
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
             <SectionWrapper 
                 id="lab" 
-                title="6. Virtual Lab: Episode Tracer" 
-                subtitle="Visualize the Journey"
+                title="6. Virtual Lab: MC Backup Visualizer" 
+                subtitle="Trajectory Flow Analysis"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
                 badgeColor="bg-cyan-100 text-cyan-700"
@@ -352,9 +255,9 @@ export default function Topic11_MCBackupDiagrams() {
             >
                 <div className="space-y-6">
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Follow a single episode of experience. Click **Step Forward** to see how the agent moves and collects rewards, building a "Trace" that will eventually be used to update the values of every state in the path.
+                        Experience the "Narrow and Deep" nature of Monte Carlo. Step through a trajectory, then watch the **G-value** flow backwards from the terminal state to all previous states in the path.
                     </p>
-                    <EpisodeTracer />
+                    <MCBackupLab />
                 </div>
             </SectionWrapper>
 

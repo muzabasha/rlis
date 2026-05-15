@@ -4,6 +4,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
+import MCAlgoComparisonLab from '../../components/labs/MCAlgoComparisonLab';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     GitBranch, Bot, Zap, Binary, Layers, Eye, ChevronRight,
@@ -11,81 +12,6 @@ import {
     Activity, Cpu, HardDrive, Target, Briefcase, Clock,
     Shield, Move, MousePointer2, User, Layout, Map, CheckCircle2
 } from 'lucide-react';
-
-// ─── Interactive Components for Topic 12 ─────────────────────────────────────
-
-/**
- * Visit Comparison: First-Visit vs Every-Visit
- */
-function VisitLab() {
-    const [method, setMethod] = useState<'First' | 'Every'>('First');
-    const trajectory = ['S1', 'S2', 'S1', 'S3', 'S1', 'Goal'];
-
-    return (
-        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl space-y-8">
-            <div className="flex justify-center gap-4">
-                {['First', 'Every'].map(m => (
-                    <button
-                        key={m}
-                        onClick={() => setMethod(m as any)}
-                        className={`px-6 py-2 rounded-full text-xs font-black transition-all ${
-                            method === m 
-                            ? 'bg-primary-600 text-white shadow-lg' 
-                            : 'bg-slate-100 dark:bg-slate-700 text-slate-500'
-                        }`}
-                    >
-                        {m.toUpperCase()}-VISIT
-                    </button>
-                ))}
-            </div>
-
-            <div className="space-y-6">
-                <div className="flex items-center justify-center gap-2 overflow-x-auto p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl">
-                    {trajectory.map((s, i) => {
-                        const isCounted = method === 'Every' || trajectory.indexOf(s) === i;
-                        const isS1 = s === 'S1';
-                        return (
-                            <React.Fragment key={i}>
-                                <div className="flex flex-col items-center gap-1">
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 font-bold text-[10px] transition-all 
-                                        ${isS1 && isCounted ? 'border-primary-500 bg-primary-50 text-primary-700' : 'border-slate-200 text-slate-400'}`}>
-                                        {s}
-                                    </div>
-                                    {isS1 && (
-                                        <div className={`text-[8px] font-black uppercase ${isCounted ? 'text-primary-500' : 'text-slate-300'}`}>
-                                            {isCounted ? 'Counted' : 'Ignored'}
-                                        </div>
-                                    )}
-                                </div>
-                                {i < trajectory.length - 1 && <ChevronRight size={14} className="text-slate-300" />}
-                            </React.Fragment>
-                        );
-                    })}
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="p-6 bg-slate-900 rounded-[2rem] border border-slate-800">
-                        <div className="text-[10px] font-black text-primary-400 uppercase mb-2">Visits for S1</div>
-                        <div className="text-3xl font-black text-white">
-                            {method === 'First' ? '1' : '3'}
-                        </div>
-                        <p className="text-[10px] text-slate-500 mt-2 italic">
-                            {method === 'First' 
-                                ? 'Only the very first appearance in the episode contributes to the average.' 
-                                : 'Every time the agent enters the state, the return is added to the total.'}
-                        </p>
-                    </div>
-                    <div className="p-6 bg-slate-900 rounded-[2rem] border border-slate-800 flex flex-col justify-center">
-                        <h5 className="text-[10px] font-black text-emerald-400 uppercase mb-2">Convergence Info</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            Both methods are **guaranteed to converge** to the true value function, but Every-Visit is often preferred in practice as it uses more data from each episode.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
 
 // ─── Main Topic Component ────────────────────────────────────────────────────
 
@@ -197,18 +123,18 @@ export default function Topic12_MCAlgorithms() {
                     levels={[
                         {
                             level: 1,
-                            title: "Visit Logic Demo",
+                            title: "Algorithm Auditor Demo",
                             objectives: "Differentiate between First-Visit and Every-Visit counting in a looping trajectory.",
                             instructions: [
-                                "Open the 'Visit Comparison' in the Virtual Lab section.",
-                                "Select 'First-Visit'. Point out: 'Only the first S1 is blue. The others are ignored.'",
-                                "Select 'Every-Visit'. Show how all three S1 states become blue.",
-                                "Explain: 'First-Visit is statistically simpler; Every-Visit uses 300% more data here.'",
-                                "Ask: 'In a game where you go in circles, which method learns faster?'"
+                                "Open the 'MC Algorithm Auditor' in the Virtual Lab section.",
+                                "Select 'First-Visit' and Step Forward. Point out: 'The second time we enter S1, it says Ignored.'",
+                                "Select 'Every-Visit' and Step Forward. Show how all S1 entries are 'Counted'.",
+                                "Explain: 'First-Visit treats each episode as one data point for a state. Every-Visit treats every visit as one.'",
+                                "Ask: 'Which method uses more of the agent's memory?'"
                             ],
-                            inputs: "Interactive VisitLab component",
-                            outputs: "Visual highlight shift between counted and ignored states.",
-                            rubrics: ["Clarity of 'Independent' vs 'Data-efficient' concepts", "Correct identification of the S1 count", "Student engagement"],
+                            inputs: "Interactive MCAlgoComparisonLab component",
+                            outputs: "Visual highlight shift and visit count tracking.",
+                            rubrics: ["Clarity of 'First' vs 'Every' counting logic", "Identification of the Accounting panel differences", "Student engagement"],
                             outcomes: "Students identify the core algorithmic trade-offs in MC state updates.",
                             time: "10 Mins",
                             materials: ["Interactive Component", "Projector"]
@@ -337,8 +263,8 @@ export default function Topic12_MCAlgorithms() {
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
             <SectionWrapper 
                 id="lab" 
-                title="6. Virtual Lab: Visit Comparison" 
-                subtitle="Count the Experience"
+                title="6. Virtual Lab: MC Algorithm Auditor" 
+                subtitle="The Accountant's Choice"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
                 badgeColor="bg-cyan-100 text-cyan-700"
@@ -346,9 +272,9 @@ export default function Topic12_MCAlgorithms() {
             >
                 <div className="space-y-6">
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Toggle between **First-Visit** and **Every-Visit** to see which states in the sequence are highlighted for an update. Notice how S1 is treated differently when it appears multiple times.
+                        Toggle between **First-Visit** and **Every-Visit** to see how the "Accounting" changes when an agent visits the same state multiple times in one episode.
                     </p>
-                    <VisitLab />
+                    <MCAlgoComparisonLab />
                 </div>
             </SectionWrapper>
 

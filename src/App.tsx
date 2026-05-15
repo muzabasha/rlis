@@ -11,6 +11,7 @@ import DependencyGraphPage from './pages/DependencyGraphPage';
 import SearchPage from './pages/SearchPage';
 import QuestionBankPage from './pages/QuestionBankPage';
 import SampleProjectsPage from './pages/SampleProjectsPage';
+import CaseStudiesPage from './pages/CaseStudiesPage';
 
 function PageLoader() {
     return (
@@ -49,6 +50,7 @@ export default function App() {
                         <Route path="/search" element={<SearchPage />} />
                         <Route path="/question-bank" element={<QuestionBankPage />} />
                         <Route path="/sample-projects" element={<SampleProjectsPage />} />
+                        <Route path="/case-studies" element={<CaseStudiesPage />} />
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </Suspense>
