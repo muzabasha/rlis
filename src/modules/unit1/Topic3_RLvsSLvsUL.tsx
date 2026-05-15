@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     ArrowRightLeft, Target, Zap, TrendingUp, Clock, Briefcase,
@@ -263,48 +264,88 @@ export default function Topic3_RLvsSLvsUL() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: Paradigm Matcher"
-                subtitle="NEP 2020 Real-World Sorting"
+                title="3. Multi-Level Activities"
+                subtitle="Classifying Intelligence"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: Sorting the Zoo</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Teacher shows 10 photos of animals. Class sorts them. Then, teacher asks: "If I want a robot to walk through this zoo without hitting the cages, which paradigm do we use?" (Answer: RL).
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Interactive: Task Categorization</h4>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {[
-                                { task: 'Filtering Spam Emails', type: 'Supervised' },
-                                { task: 'AlphaGo winning Go', type: 'Reinforcement' },
-                                { task: 'Grouping news by topic', type: 'Unsupervised' },
-                                { task: 'Self-driving Lane Keeping', type: 'Reinforcement' }
-                            ].map((item, i) => (
-                                <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 flex justify-between items-center">
-                                    <span className="text-xs font-bold text-slate-600">{item.task}</span>
-                                    <span className={`text-[10px] px-2 py-1 rounded-md font-black uppercase ${item.type === 'Supervised' ? 'bg-blue-100 text-blue-700' : item.type === 'Unsupervised' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
-                                        {item.type}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Paradigm Switcher Demo",
+                            objectives: "Visually demonstrate the trade-offs between Label Dependency, Autonomy, and Exploration across AI branches.",
+                            instructions: [
+                                "Open the 'Paradigm Switcher' in the Virtual Lab section.",
+                                "Select SL and show the high 'Labels' bar (Fixed dataset dependency).",
+                                "Switch to UL and point out zero 'Labels' but lower 'Feedback'.",
+                                "Switch to RL and highlight 100% 'Exploration' and 'Autonomy'.",
+                                "Explain that RL generates its own data through interaction."
+                            ],
+                            inputs: "Interactive Bar Chart Lab",
+                            outputs: "Visual comparison of 4 metrics (Labels, Autonomy, Feedback, Exploration).",
+                            rubrics: ["Clarity of metric explanation", "Transition logic", "Student engagement"],
+                            outcomes: "Students identify that RL is the most autonomous and exploratory branch of AI.",
+                            time: "10 Mins",
+                            materials: ["Interactive Lab Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Label vs Reward Workshop",
+                            objectives: "Collaboratively analyze if a task needs an 'Answer Key' (SL) or a 'Scoreboard' (RL).",
+                            instructions: [
+                                "Teacher lists 5 tasks: 'Detecting Fraud', 'Winning Poker', 'Translating French', 'Flying a Fighter Jet', 'Clustering News'.",
+                                "For each task, ask: 'Do we have a teacher who knows the exact right move?'",
+                                "Guided Discussion: If YES, it's SL. If NO (only 'Better' or 'Worse'), it's RL.",
+                                "Students mark the tasks on a spectrum on the board."
+                            ],
+                            inputs: "List of real-world AI tasks",
+                            outputs: "Categorized Task Spectrum on the board",
+                            rubrics: ["Conceptual accuracy", "Reasoning depth", "Team participation"],
+                            outcomes: "Students master the criteria for selecting the appropriate learning paradigm.",
+                            time: "15 Mins",
+                            materials: ["Board", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Medical Diagnosis Debate",
+                            objectives: "Analyze the ethical and practical implications of SL vs RL in safety-critical domains.",
+                            instructions: [
+                                "Divide class into two groups: 'The SL Doctors' and 'The RL Researchers'.",
+                                "Topic: Using AI for Cancer Diagnosis.",
+                                "SL Group argues for 'Imitating Human Experts' (Safety through labels).",
+                                "RL Group argues for 'Optimizing Long-term Patient Outcome' (Discovery of new treatments).",
+                                "Groups present: Why is RL 'dangerous' but potentially 'superior'?"
+                            ],
+                            inputs: "Case study on AI in medicine",
+                            outputs: "Brief position statements from both groups",
+                            rubrics: ["Understanding of loss vs return", "Safety awareness", "Persuasive logic"],
+                            outcomes: "Students realize that SL mimics existing knowledge while RL searches for optimal (possibly superhuman) strategies.",
+                            time: "20 Mins",
+                            materials: ["Debate Prompt Sheet"]
+                        },
+                        {
+                            level: 4,
+                            title: "Hybrid System Architect",
+                            objectives: "Independently design a multi-paradigm system for a complex real-world application.",
+                            instructions: [
+                                "Task: Design a 'Smart YouTube' system.",
+                                "Step 1: Use SL for what? (e.g., Categorizing video content/thumbnails).",
+                                "Step 2: Use RL for what? (e.g., Maximizing 'Watch Time' through recommendations).",
+                                "Step 3: Draw a simple block diagram showing how the SL output feeds into the RL agent.",
+                                "Self-Check: Does the RL part have a reward? (Yes, watch time)."
+                            ],
+                            inputs: "Knowledge of content platforms",
+                            outputs: "Hybrid Architecture Diagram + Description",
+                            rubrics: ["Correct use of SL vs RL", "Logical flow", "System complexity"],
+                            outcomes: "Students internalize that modern AI (like ChatGPT or YouTube) is a hybrid of multiple paradigms.",
+                            time: "15 Mins",
+                            materials: ["A4 Paper/Tablets"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     GitMerge, Target, Database, Cpu, Zap, TrendingUp,
@@ -236,48 +237,89 @@ export default function Topic7_ApproachesToRL() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: Strategy Swap"
-                subtitle="Thinking like a General"
+                title="3. Multi-Level Activities"
+                subtitle="Mastering the Three Strategists"
                 icon={<Users className="text-emerald-600" size={24} />}
-                badge="NEP 2020"
+                badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1: Teacher Do */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Grid Master</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Teacher draws a grid on the board. For <strong>Value-Based</strong>, teacher writes numbers in every cell. For <strong>Policy-Based</strong>, teacher draws arrows in every cell. For <strong>Model-Based</strong>, teacher closes the board and tries to describe the grid from memory.
-                        </p>
-                    </div>
-
-                    {/* Level 2: Teacher + Student */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Collaborative Sort</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                            Let's classify these real-world AI behaviors:
-                        </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            {[
-                                { task: 'GPS calculating route', type: 'Model-Based' },
-                                { task: 'Pro-player muscle memory', type: 'Policy-Based' },
-                                { task: 'Evaluating stock prices', type: 'Value-Based' }
-                            ].map(item => (
-                                <div key={item.task} className="p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 text-center">
-                                    <div className="text-xs font-bold text-primary-600">{item.type}</div>
-                                    <div className="text-[10px] text-slate-500">{item.task}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Approach Radar Demo",
+                            objectives: "Demonstrate the comparative strengths and weaknesses of Value, Policy, and Model-based RL.",
+                            instructions: [
+                                "Open the 'Approach Comparison Radar' in the Virtual Lab section.",
+                                "Highlight 'Sample Efficiency' and show why Model-Based (Amber) is at 95% (it dreams future trajectories).",
+                                "Point out 'Compute Speed' and show why Policy-Based (Emerald) is faster (direct mapping, no search).",
+                                "Show the 'Stability' of Value-Based (Blue) for discrete tasks.",
+                                "Explain that modern RL often mixes these (e.g., Actor-Critic)."
+                            ],
+                            inputs: "Interactive Radar Comparison Chart",
+                            outputs: "Multi-axis performance visualization (Sample Efficiency, Stability, Versatility, Speed, Complexity).",
+                            rubrics: ["Clarity of trade-off explanation", "Connection to the 🏰 Siege story", "Student engagement"],
+                            outcomes: "Students learn that no approach is globally superior; selection depends on the problem constraints.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Strategy Classifier Workshop",
+                            objectives: "Collaboratively classify real-world automated systems into RL approaches.",
+                            instructions: [
+                                "Teacher lists 5 systems: 'Chess Engine', 'Self-Driving Lane Keeping', 'Stock Trading Bot', 'Industrial Robot Arm', 'Weather Predictor'.",
+                                "Guided Discussion: 'Does a Stock Bot care about the price tag of a state?' (Yes, Value-Based).",
+                                "Discussion: 'Does a Robot Arm need continuous torque?' (Yes, Policy-Based).",
+                                "Discussion: 'Does a Chess Engine use a mental map?' (Yes, Model-Based)."
+                            ],
+                            inputs: "List of real-world AI applications",
+                            outputs: "Categorized Application Matrix on the whiteboard",
+                            rubrics: ["Conceptual accuracy", "Logical reasoning", "Classroom participation"],
+                            outcomes: "Students master the criteria for selecting Value vs Policy vs Model based methods.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Three Generals Roleplay",
+                            objectives: "Experience the internal logic of different RL approaches through a physical grid game.",
+                            instructions: [
+                                "Divide class into 3 groups: The Value Generals, The Policy Generals, The Model Generals.",
+                                "Place a 'Treasure' in a 5x5 classroom grid.",
+                                "Value Group: Must label every tile with a 'Gold Value' (+/-) before moving.",
+                                "Policy Group: Must decide a 'Rule' (e.g., If wall on left, go right) and follow it blindly.",
+                                "Model Group: Must close their eyes and predict 3 steps ahead before any real movement.",
+                                "Groups race to the treasure. Discuss: Who was 'safest'? Who was 'fastest'?"
+                            ],
+                            inputs: "Classroom grid with obstacles and treasure",
+                            outputs: "Timed completion of the navigation task",
+                            rubrics: ["Adherence to role logic", "Execution speed", "Post-game reflection"],
+                            outcomes: "Students internalize the different 'thinking styles' behind RL algorithms.",
+                            time: "20 Mins",
+                            materials: ["Labels/Sticky notes", "Stopwatch"]
+                        },
+                        {
+                            level: 4,
+                            title: "The Rubik's Cube Strategy",
+                            objectives: "Independently design a high-level RL strategy for a specific complex puzzle.",
+                            instructions: [
+                                "Task: You are designing an AI to solve a Rubik's Cube.",
+                                "Question 1: If you use Value-Based (Q-learning), how many states would you need to value? (Hint: It's millions).",
+                                "Question 2: If you use Model-Based, why is it easy to 'model' a cube? (Rules are fixed).",
+                                "Final Proposal: Write 3 sentences justifying which approach you would pick and why.",
+                                "Self-Evaluation: Does your choice prioritize speed or stability?"
+                            ],
+                            inputs: "Knowledge of Rubik's Cube rules",
+                            outputs: "1-page Strategy Proposal",
+                            rubrics: ["Understanding of state-space complexity", "Model-based feasibility", "Originality"],
+                            outcomes: "Students develop the engineering intuition required to architect RL solutions for real-world puzzles.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, History, ChevronDown, ChevronUp, Play, Pause, RotateCcw, CheckCircle2, Clock, Target, AlertTriangle, TrendingUp, Briefcase, Star } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, Legend } from 'recharts';
 
@@ -254,28 +255,85 @@ export default function Topic1_EarlyRoots() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: Trial & Error Simulation"
-                subtitle="Predicting Behavior"
+                title="3. Multi-Level Activities"
+                subtitle="From Demonstration to Mastery"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    <p className="text-slate-600 dark:text-slate-400">Try to predict the cat's behavior in the puzzle box over multiple trials.</p>
-                    <div className="grid sm:grid-cols-2 gap-6">
-                        <div className="card p-6 bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200">
-                            <h4 className="font-bold text-sm mb-3">Trial 1</h4>
-                            <p className="text-xs text-slate-500 italic">"Cat meows, scratches at walls, pushes randomly..."</p>
-                            <div className="mt-4 p-2 bg-white dark:bg-slate-800 rounded text-[10px] text-slate-400 font-medium">Exploration phase (High Randomness)</div>
-                        </div>
-                        <div className="card p-6 bg-emerald-50 dark:bg-emerald-900/20 border-2 border-emerald-200">
-                            <h4 className="font-bold text-sm mb-3 text-emerald-800 dark:text-emerald-200">Trial 50</h4>
-                            <p className="text-xs text-emerald-600 italic">"Cat immediately pulls the loop and escapes."</p>
-                            <div className="mt-4 p-2 bg-white dark:bg-slate-800 rounded text-[10px] text-emerald-500 font-medium">Exploitation phase (Learned Policy)</div>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Thorndike's Box Live Demo",
+                            objectives: "Demonstrate the 'Law of Effect' using a digital simulation to show how rewards reinforce behavior.",
+                            instructions: [
+                                "Open the Virtual Lab below.",
+                                "Set Reward Probability to 0.5 (Neutral).",
+                                "Run 10 trials and observe the random movement initially.",
+                                "Increase Reward Probability to 0.9 and observe the steep learning curve.",
+                                "Point out the decreasing 'Escape Time' on the chart."
+                            ],
+                            inputs: "Reward Probability Slider (0.1 to 0.9)",
+                            outputs: "Decreasing Escape Time Graph",
+                            rubrics: ["Clarity of demonstration", "Explanation of Law of Effect", "Engagement of students"],
+                            outcomes: "Students will visually verify that behavior frequency increases with positive reinforcement.",
+                            time: "10 Mins",
+                            materials: ["Digital Screen", "Virtual Lab Component"]
+                        },
+                        {
+                            level: 2,
+                            title: "Collaborative Data Analysis",
+                            objectives: "Calculate the average improvement rate (learning rate) across different reward settings.",
+                            instructions: [
+                                "Divide students into two groups: 'Hard' (0.3 prob) and 'Easy' (0.8 prob).",
+                                "Run 50 trials in each group using the Virtual Lab.",
+                                "Compare the Trial 1 Escape Time vs Trial 50 Escape Time.",
+                                "Guide students to calculate: (Initial - Final) / 50."
+                            ],
+                            inputs: "Trial Data from Simulator",
+                            outputs: "Calculated Learning Rate (seconds/trial)",
+                            rubrics: ["Data Accuracy", "Mathematical Calculation", "Collaborative Input"],
+                            outcomes: "Students understand that higher rewards lead to faster convergence (steeper slopes).",
+                            time: "15 Mins",
+                            materials: ["Calculators", "Shared Classroom Lab"]
+                        },
+                        {
+                            level: 3,
+                            title: "The RL Mapping Workshop",
+                            objectives: "Enable students to map biological learning concepts to formal RL mathematical components.",
+                            instructions: [
+                                "Form groups of 4 students.",
+                                "Assign each group a 'Pet Learning Task' (e.g., teaching a dog to sit).",
+                                "Identify: Who is the Agent? What is the State? What is the Action? What is the Reward?",
+                                "Present the mapping to the class."
+                            ],
+                            inputs: "Real-world animal training scenario",
+                            outputs: "Completed RL Mapping Table (S, A, R, S')",
+                            rubrics: ["Conceptual Correctness", "Team Presentation", "Diversity of Scenarios"],
+                            outcomes: "Students master the translation of abstract biological ideas into the RL tuple.",
+                            time: "20 Mins",
+                            materials: ["Flip charts", "Markers"]
+                        },
+                        {
+                            level: 4,
+                            title: "Reflective Synthesis",
+                            objectives: "Individually evaluate the impact of early roots on modern AI breakthroughs.",
+                            instructions: [
+                                "Write a 100-word reflection on Arthur Samuel's contribution.",
+                                "Explain why self-play (Samuel's Checkers) was the ancestor of AlphaGo.",
+                                "Identify one modern app (e.g., YouTube Recommendations) and explain its 'Law of Effect'."
+                            ],
+                            inputs: "Historical notes and current app knowledge",
+                            outputs: "Individual Reflection Paper/Digital Note",
+                            rubrics: ["Depth of insight", "Connection to history", "Originality"],
+                            outcomes: "Students internalize the long-term evolution of RL from 1898 to today.",
+                            time: "15 Mins",
+                            materials: ["Student Journals"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

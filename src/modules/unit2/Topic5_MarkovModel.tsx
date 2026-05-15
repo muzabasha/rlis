@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import { 
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
     Network, Eye, EyeOff, Gamepad2, Settings2, GitBranch, ShieldAlert, Zap
@@ -205,51 +206,86 @@ export default function Topic5_MarkovModel() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
                 id="activity" 
-                title="3. Activity: Sort the System" 
-                subtitle="Real-world Classification"
+                title="3. Multi-Level Activities" 
+                subtitle="Classifying Complex Environments"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Blindfolded Maze</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            The teacher shows a maze. 
-                            <br/><br/>
-                            1. Walking through it normally = <strong>MDP</strong>. You choose actions, you see where you are.
-                            <br/>
-                            2. Walking through it blindfolded, only feeling the walls = <strong>POMDP</strong>. You choose actions, but you don't know exactly where you are!
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Student Task: Identify the Model</h4>
-                        </div>
-                        <div className="grid sm:grid-cols-3 gap-4">
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 text-center">
-                                <span className="text-[10px] font-bold text-slate-400 uppercase">Stock Prices</span>
-                                <p className="text-sm font-bold text-purple-600 mt-2">HMM</p>
-                            </div>
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 text-center">
-                                <span className="text-[10px] font-bold text-slate-400 uppercase">Tic-Tac-Toe</span>
-                                <p className="text-sm font-bold text-blue-600 mt-2">MDP</p>
-                            </div>
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 text-center">
-                                <span className="text-[10px] font-bold text-slate-400 uppercase">Autonomous Drone</span>
-                                <p className="text-sm font-bold text-amber-600 mt-2">POMDP</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Taxonomy Explorer Demo",
+                            objectives: "Identify the four major Markov models based on the criteria of control and observability.",
+                            instructions: [
+                                "Open the 'Taxonomy Explorer' in the Virtual Lab section.",
+                                "Toggle 'Control' to show the shift from MC/HMM to MDP/POMDP.",
+                                "Toggle 'Observability' to show how 'Hidden' states transform the model complexity.",
+                                "Explain that RL practitioners usually work in the 'Controlled' domain."
+                            ],
+                            inputs: "Interactive ModelTaxonomyLab component",
+                            outputs: "Visual classification of 4 models with specific use cases.",
+                            rubrics: ["Clarity of taxonomy boundaries", "Demonstration of observability impact", "Student engagement"],
+                            outcomes: "Students categorize any random system into one of the four Markov quadrants.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Tuple Expansion Workshop",
+                            objectives: "Collaboratively map real-world scenarios to their formal mathematical tuple representation.",
+                            instructions: [
+                                "Teacher presents a scenario: 'A weather-sensing satellite that cannot see through clouds but can move its camera.'",
+                                "Guided Discussion: 'Is it controlled? (Yes). Is it fully observable? (No)'.",
+                                "Class identifies it as a POMDP.",
+                                "Teacher asks: 'What symbols must we add to the basic $\\langle S, P \\rangle$ tuple?'",
+                                "Students list: $A$ (Actions), $R$ (Rewards), $\\Omega$ (Observations), and $O$ (Emission probabilities)."
+                            ],
+                            inputs: "Scenario descriptions",
+                            outputs: "Formal Tuple mapping on the board (e.g., $\\langle S, A, P, R, \\Omega, O \\rangle$)",
+                            rubrics: ["Correct model identification", "Technical symbol accuracy", "Classroom participation"],
+                            outcomes: "Students understand that increasing environment complexity requires expanding the mathematical definition.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Blindfolded Maze Simulation",
+                            objectives: "Experience the fundamental difference between an MDP and a POMDP through physical simulation.",
+                            instructions: [
+                                "Divide class into 4 teams. Team 1/2 are 'MDP Teams', Team 3/4 are 'POMDP Teams'.",
+                                "MDP Team: One student directs a 'Robot' through a floor-maze with eyes open (Full Observability).",
+                                "POMDP Team: Same task, but the 'Robot' is blindfolded and can only ask: 'Am I touching a wall?' (Partial Observability).",
+                                "Groups compare the number of steps and 'Reward' (speed/accuracy) between the two models."
+                            ],
+                            inputs: "Classroom floor maze",
+                            outputs: "Comparison Table: Steps vs Accuracy for MDP vs POMDP",
+                            rubrics: ["Depth of insight on 'Uncertainty'", "Technical observation reporting", "Team coordination"],
+                            outcomes: "Students internalize the difficulty of decision-making under partial observability.",
+                            time: "20 Mins",
+                            materials: ["Tape for floor maze", "Blindfolds"]
+                        },
+                        {
+                            level: 4,
+                            title: "Smart Device Audit",
+                            objectives: "Independently analyze an everyday smart device as a formal Markovian system.",
+                            instructions: [
+                                "Task: Choose one device (e.g., Smart Thermostat, Noise-Cancelling Headphones, Netflix Recommendation Engine).",
+                                "Audit: Does it have 'Control' (Actions) or is it just 'Monitoring'?",
+                                "Audit: Does it see the 'True State' (e.g., user's exact body temperature) or just an 'Observation' (e.g., room air temperature)?",
+                                "Report: Classify your device as an MC, HMM, MDP, or POMDP and justify why."
+                            ],
+                            inputs: "Everyday smart technology examples",
+                            outputs: "Individual System Classification Report (1 page)",
+                            rubrics: ["Correct model selection", "Logical justification of observability/control", "Originality"],
+                            outcomes: "Students realize that most 'Intelligent' systems are actually POMDPs in disguise.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

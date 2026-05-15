@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     RefreshCw, Play, ArrowRight, Brain, Globe, Zap,
@@ -276,44 +277,88 @@ export default function Topic6_WorkingOfRL() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: Trace the Loop"
-                subtitle="Simulating the Cycle"
+                title="3. Multi-Level Activities"
+                subtitle="Stepping through the RL Loop"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Human Robot</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Teacher acts as "Environment" and a student acts as "Agent". Student is blindfolded. Teacher says: "State: Chair nearby." Student says: "Action: Sit." Teacher says: "Reward: +10. Next State: Sitting."
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Collaborative Flowchart</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                            Let's map the loop for a **Coffee Vending Machine**:
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                            {['State: Idle', 'Action: Insert Coin', 'Reward: 0', 'Next State: Paid', 'Action: Select Latte', 'Reward: +10', 'Next State: Dispensing'].map((step, i) => (
-                                <div key={i} className="flex items-center gap-2">
-                                    <div className="px-3 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 text-xs font-bold">{step}</div>
-                                    {i < 6 && <ArrowRight size={14} className="text-slate-300" />}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Loop Visualizer Demo",
+                            objectives: "Visually demonstrate the sequence of State, Action, Reward, and Next State in a continuous cycle.",
+                            instructions: [
+                                "Open the 'Interaction Cycle' visualizer in the Virtual Lab section.",
+                                "Click 'Play' and point out the pulse moving from Agent to Environment (Action).",
+                                "Wait for the feedback pulse (Reward + Next State) to return to the Agent.",
+                                "Pause at 'Step 2' and ask: 'What did the agent just receive?' (Reward).",
+                                "Explain that this cycle happens thousands of times in a real RL training run."
+                            ],
+                            inputs: "Interactive RLLoopVisualizer component",
+                            outputs: "Dynamic SVG animation showing data flow between Agent and Env.",
+                            rubrics: ["Clarity of step sequencing", "Explanation of data flow", "Student engagement"],
+                            outcomes: "Students identify the chronological order of events in the RL interaction loop.",
+                            time: "10 Mins",
+                            materials: ["Interactive Lab", "Digital Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Vending Machine Trace",
+                            objectives: "Collaboratively map the state-action transitions of a common automated system.",
+                            instructions: [
+                                "Teacher draws 3 empty boxes on the board: S_t, A_t, R_{t+1}.",
+                                "Scenario: Using a Coffee Vending Machine.",
+                                "Guided Discussion: If S_t is 'Idle (Waiting for Coin)', what is the Action? (Insert Coin).",
+                                "If the action is successful, what is R_{t+1}? (0 or sound). What is S_{t+1}? (Paid).",
+                                "Repeat for 'Selecting Beverage' and 'Dispensing'."
+                            ],
+                            inputs: "Vending machine operational steps",
+                            outputs: "Completed sequence trace on the whiteboard",
+                            rubrics: ["Correct state-action mapping", "Logical flow", "Team participation"],
+                            outcomes: "Students learn to break down a complex task into discrete RL interaction steps.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Colored Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Smart Traffic Roleplay",
+                            objectives: "Simulate a multi-step RL loop where actions have delayed consequences.",
+                            instructions: [
+                                "Divide class into 4 groups: The Sensor (Detects cars), The Controller (Sets light timer), The Driver (Gives 'Ouch' if stuck), The Timer (Manages 'Steps').",
+                                "Run 5 'Steps' of a traffic junction simulation.",
+                                "The Controller must decide the 'Green Light' duration based on what the Sensor 'Observes'.",
+                                "If a queue builds up, the Driver gives a negative reward.",
+                                "Discuss: 'Why did the action in Step 1 cause a traffic jam in Step 3?'"
+                            ],
+                            inputs: "Paper cars/junction markers",
+                            outputs: "A log of 5 steps with actions and rewards",
+                            rubrics: ["Coordination between roles", "Responsiveness to rewards", "Post-activity debrief"],
+                            outcomes: "Students internalize that RL actions affect the future state of the world.",
+                            time: "20 Mins",
+                            materials: ["Role cards", "Toy cars (optional)"]
+                        },
+                        {
+                            level: 4,
+                            title: "Personal RL Skill Loop",
+                            objectives: "Independently map the RL loop to a personal learning experience.",
+                            instructions: [
+                                "Task: Choose a skill you recently learned (e.g., Cooking, Gaming, or a Sport).",
+                                "Write down one full loop: What was your 'Observation' (State)? What was your 'Attempt' (Action)?",
+                                "What was the 'Result' (Reward)? How did you 'Change' (Next State/Policy)?",
+                                "Self-Evaluation: Did you use high γ (long-term focus) or low γ (short-term fun)?"
+                            ],
+                            inputs: "Personal learning memories",
+                            outputs: "Individual Skill-Loop Diagram",
+                            rubrics: ["Depth of reflection", "Correct use of RL sequence notation", "Originality"],
+                            outcomes: "Students connect formal RL math (S, A, R) to their own human learning process.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

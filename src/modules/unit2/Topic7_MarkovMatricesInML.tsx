@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import { 
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
     MessageSquare, Type, Search, Network, Brain, Activity, Zap
@@ -234,34 +235,88 @@ export default function Topic7_MarkovMatricesInML() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
                 id="activity" 
-                title="3. Activity: Human Auto-Complete" 
-                subtitle="Acting as a Bigram Model"
+                title="3. Multi-Level Activities" 
+                subtitle="Becoming the Bigram Model"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Class Chain Story</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            The teacher says a starting word: "The".
-                            <br/><br/>
-                            Each student must rapidly add exactly <strong>one</strong> word that makes sense based <em>only</em> on the previous student's word.
-                            <br/><br/>
-                            Teacher: "The" <br/>
-                            Student 1: "Quick" <br/>
-                            Student 2: "Brown" <br/>
-                            Student 3: "Fox" <br/>
-                            <br/>
-                            This perfectly simulates a human 1st-order Markov Chain!
-                        </p>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Bigram Predictor Demo",
+                            objectives: "Observe how a transition matrix generates coherent (but simple) language structures.",
+                            instructions: [
+                                "Open the 'Bigram Text Generator' in the Virtual Lab section.",
+                                "Press 'Start' and watch the current word state change.",
+                                "Trace a specific transition: if current is 'love', show how the next is sampled from {machine, to, this}.",
+                                "Explain that ML 'learned' these percentages by reading millions of sentences."
+                            ],
+                            inputs: "Interactive TextGeneratorLab component",
+                            outputs: "Generated sentences and real-time state tracking.",
+                            rubrics: ["Clarity of 'Next-Word' logic", "Demonstration of probability sampling", "Student engagement"],
+                            outcomes: "Students understand that 'Autocomplete' is just a Markov Chain sampling from a transition matrix.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Data Learning Workshop",
+                            objectives: "Collaboratively calculate transition probabilities from a raw sample of text.",
+                            instructions: [
+                                "Teacher provides a sample sentence: 'The cat sat. The cat ate. The dog sat.'",
+                                "Task: Build a transition matrix for the word 'The'.",
+                                "Guided Calculation: 'The' is followed by 'cat' 2 times and 'dog' 1 time.",
+                                "Class calculates: $P(\\text{cat} | \\text{The}) = 2/3$ and $P(\\text{dog} | \\text{The}) = 1/3$.",
+                                "Students fill in the 'The' row of the matrix on the board."
+                            ],
+                            inputs: "Sample repetitive text phrases",
+                            outputs: "Partial 1st-order Transition Matrix",
+                            rubrics: ["Mathematical accuracy of counts", "Probability normalization", "Classroom participation"],
+                            outcomes: "Students master the fundamental method machines use to 'learn' Markovian dynamics.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Class Chain Story",
+                            objectives: "Experience the generation of a stochastic process through a live human Markov Chain simulation.",
+                            instructions: [
+                                "Teacher starts with a word: 'Once'.",
+                                "Rule: Each student adds exactly ONE word.",
+                                "Constraint: You must only look at the VERY LAST word spoken, not the whole story so far.",
+                                "Example: If 'Once' -> 'upon' -> 'a' -> 'time' -> 'is' -> 'up'.",
+                                "Groups record the generated story and identify where the 'Markovian' memory makes the story go off track."
+                            ],
+                            inputs: "Starting seed word",
+                            outputs: "Transcribed Class Chain Story",
+                            rubrics: ["Strict adherence to 1st-order memory", "Participation", "Team coordination"],
+                            outcomes: "Students visually and audibly grasp the 'short-term memory' limitation of 1st-order Markov models.",
+                            time: "20 Mins",
+                            materials: ["Notebooks", "Pens"]
+                        },
+                        {
+                            level: 4,
+                            title: "Smart Keyboard Audit",
+                            objectives: "Independently analyze the predictive behavior of a personal smartphone keyboard.",
+                            instructions: [
+                                "Task: Open your phone's messaging app.",
+                                "Type the word 'I' and record the 3 suggested words.",
+                                "Select one suggestion and record the next 3.",
+                                "Repeat for 'Happy', 'Machine', and 'The'.",
+                                "Reflect: Do the suggestions change if you delete the history? Is your phone using a 1st-order or higher-order Markov model?"
+                            ],
+                            inputs: "Personal smartphone keyboard",
+                            outputs: "Individual Auto-Complete Analysis Chart",
+                            rubrics: ["Depth of technical reflection", "Data collection accuracy", "Originality"],
+                            outcomes: "Students realize that everyday tools are living implementations of Markovian probability matrices.",
+                            time: "15 Mins",
+                            materials: ["Smartphone", "Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

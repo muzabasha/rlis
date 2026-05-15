@@ -1,55 +1,410 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, Zap } from 'lucide-react';
+import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
+    Zap, Target, LayoutGrid, Brain, Swords, Focus, CheckCircle2,
+    Play, Pause, RotateCcw, ChevronRight, Binary, TrendingUp,
+    Activity, Cpu, HardDrive, Briefcase,
+    Shield, Move, MousePointer2, User, Layout, Map
+} from 'lucide-react';
 
-export default function Topic8_QLearningOverview() {
-    const [activeTab, setActiveTab] = useState<'story' | 'math' | 'activity' | 'questions' | 'lab' | 'insights'>('story');
+// ─── Interactive Components for Topic 8 ─────────────────────────────────────
 
-    const tabs = [
-        { id: 'story', label: 'Story', icon: BookOpen },
-        { id: 'math', label: 'Math', icon: Calculator },
-        { id: 'activity', label: 'Activity', icon: Users },
-        { id: 'questions', label: 'Questions', icon: HelpCircle },
-        { id: 'lab', label: 'Virtual Lab', icon: FlaskConical },
-        { id: 'insights', label: 'Insights', icon: Lightbulb },
-    ] as const;
+/**
+ * Q-Learning Process Simulator
+ */
+function QLearningSimulator() {
+    const [qValue, setQValue] = useState(0);
+    const [step, setStep] = useState(0);
+    const [isRunning, setIsRunning] = useState(false);
+
+    // Params
+    const alpha = 0.5;
+    const gamma = 0.9;
+    const reward = 10;
+    const nextMaxQ = 8; // Assume next state has a max Q of 8
+
+    const updateQ = useCallback(() => {
+        setQValue(prev => {
+            const tdTarget = reward + gamma * nextMaxQ;
+            const tdError = tdTarget - prev;
+            return prev + alpha * tdError;
+        });
+        setStep(s => s + 1);
+    }, [alpha, gamma, reward, nextMaxQ]);
+
+    useEffect(() => {
+        let interval: any;
+        if (isRunning && step < 20) {
+            interval = setInterval(updateQ, 500);
+        } else {
+            setIsRunning(false);
+        }
+        return () => clearInterval(interval);
+    }, [isRunning, step, updateQ]);
 
     return (
-        <div className="space-y-4">
-            <div className="flex gap-2 flex-wrap">
-                {tabs.map(t => {
-                    const Icon = t.icon;
-                    return (
-                        <button key={t.id} onClick={() => setActiveTab(t.id)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === t.id ? 'bg-primary-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'}`}>
-                            <Icon size={14} />{t.label}
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl space-y-8">
+            <div className="flex flex-col md:flex-row justify-between gap-8">
+                <div className="flex-1 space-y-4">
+                    <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <Binary size={18} className="text-primary-500" />
+                        Iterative Value Convergence
+                    </h4>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Watch how the <strong>Q-Value</strong> for a single (state, action) pair converges over multiple updates. 
+                    </p>
+                    <div className="grid grid-cols-2 gap-4 text-xs">
+                        <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl">
+                            <span className="text-slate-400 block uppercase font-bold tracking-widest text-[8px] mb-1">Learning Rate (\u03B1)</span>
+                            <span className="font-mono text-primary-600">{alpha}</span>
+                        </div>
+                        <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl">
+                            <span className="text-slate-400 block uppercase font-bold tracking-widest text-[8px] mb-1">Discount (\u03B3)</span>
+                            <span className="font-mono text-primary-600">{gamma}</span>
+                        </div>
+                        <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl">
+                            <span className="text-slate-400 block uppercase font-bold tracking-widest text-[8px] mb-1">Immediate Reward</span>
+                            <span className="font-mono text-emerald-600">+{reward}</span>
+                        </div>
+                        <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl">
+                            <span className="text-slate-400 block uppercase font-bold tracking-widest text-[8px] mb-1">Future Max Q</span>
+                            <span className="font-mono text-blue-600">{nextMaxQ}</span>
+                        </div>
+                    </div>
+                    <div className="flex gap-2">
+                        <button 
+                            onClick={() => setIsRunning(!isRunning)} 
+                            disabled={step >= 20}
+                            className={`flex-1 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${isRunning ? 'bg-red-100 text-red-600' : 'bg-primary-100 text-primary-600'}`}
+                        >
+                            {isRunning ? <Pause size={18} /> : <Play size={18} />}
+                            {step === 0 ? 'Start Updates' : step >= 20 ? 'Converged' : 'Continue'}
                         </button>
-                    );
-                })}
-            </div>
+                        <button onClick={() => { setQValue(0); setStep(0); setIsRunning(false); }} className="p-3 bg-slate-100 dark:bg-slate-700 rounded-xl text-slate-500">
+                            <RotateCcw size={18} />
+                        </button>
+                    </div>
+                </div>
 
-            <AnimatePresence mode="wait">
-                <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
-                    
-                    {activeTab === 'story' && (
-                        <SectionWrapper id="story" title="Section 1 — The Essence of Q-Learning" icon={<Zap size={20} className="text-amber-600" />} badge="Overview" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
-                            <div className="story-block space-y-4">
-                                <p className="text-slate-600 dark:text-slate-400">Q-Learning is a model-free, off-policy Temporal Difference (TD) control algorithm. It is one of the most important breakthroughs in RL because it allows an agent to find an optimal action-selection policy for any given finite MDP.</p>
-                                <div className="card p-5 bg-amber-50/50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800">
-                                    <h4 className="font-bold text-sm mb-2">Key Features</h4>
-                                    <ul className="text-xs space-y-2 list-disc pl-4 text-slate-500">
-                                        <li><strong>Model-Free:</strong> No need to know transition probabilities.</li>
-                                        <li><strong>Off-Policy:</strong> Can learn from historical data or random exploration.</li>
-                                        <li><strong>Guaranteed Convergence:</strong> Under certain conditions, it always finds the optimal Q-values.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </SectionWrapper>
-                    )}
-                </motion.div>
-            </AnimatePresence>
+                <div className="flex-1 bg-slate-900 rounded-2xl p-8 flex flex-col items-center justify-center relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                        <div className="w-full h-full border-[20px] border-primary-500 rounded-full scale-150 animate-pulse" />
+                    </div>
+                    <span className="text-[10px] font-bold text-primary-400 uppercase tracking-[0.2em] mb-2">Estimated Q(s, a)</span>
+                    <motion.span 
+                        key={qValue}
+                        initial={{ scale: 0.8, opacity: 0.5 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="text-6xl font-black text-white font-mono"
+                    >
+                        {qValue.toFixed(2)}
+                    </motion.span>
+                    <div className="mt-6 w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <motion.div 
+                            className="h-full bg-primary-500" 
+                            animate={{ width: `${(qValue / 17.2) * 100}%` }} 
+                        />
+                    </div>
+                    <p className="text-[8px] text-slate-500 mt-4 italic">Theoretical Limit: reward + \u03B3 * nextMaxQ = 17.20</p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// ─── Main Topic Component ────────────────────────────────────────────────────
+
+export default function Topic8_QLearningOverview() {
+    return (
+        <div className="max-w-4xl mx-auto pb-20 space-y-12">
+            
+            {/* SECTION 1: STORYTELLING */}
+            <SectionWrapper 
+                id="story" 
+                title="1. The Learning Breakthrough" 
+                subtitle="Learning from Experience, Not Maps"
+                icon={<Zap className="text-blue-600" size={24} />}
+                badge="Storytelling"
+                badgeColor="bg-blue-100 text-blue-700"
+                accentColor="border-blue-500"
+            >
+                <div className="space-y-6">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <Brain size={120} />
+                        </div>
+                        <h4 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2">
+                            🧭 Finding Your Way in the Dark
+                        </h4>
+                        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
+                            <p>
+                                Imagine you are dropped into a pitch-black cave. You don't have a map. You don't know where the exit is. All you can do is move and feel your way around.
+                            </p>
+                            <p>
+                                Every time you bump into a wall, it hurts (Negative Reward). When you find a flat path, you feel relief (Positive Reward). 
+                            </p>
+                            <p>
+                                <strong>Q-Learning</strong> is exactly like this. The agent doesn't need to know the rules of the world (the map). It just tries things, remembers what happened, and builds its own "mental map" of which actions are good in which places.
+                            </p>
+                            <p>
+                                This "Model-Free" nature is what made Q-Learning a revolution. It proved that machines can learn complex tasks purely by <strong>Trial and Error</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <InfoCard type="insight" title="The Breakthrough">
+                            Before Q-Learning (1989), most AI needed a perfect mathematical model of the world. Q-Learning proved you only need <strong>Experience</strong>.
+                        </InfoCard>
+                        <InfoCard type="tip" title="Off-Policy Power">
+                            Q-Learning can learn the optimal strategy even while it is acting randomly. It's like learning the best way to drive while watching someone else make mistakes.
+                        </InfoCard>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 2: MATHEMATICAL MODELLING */}
+            <SectionWrapper 
+                id="math" 
+                title="2. The Q-Learning Rule" 
+                subtitle="The Equation that Changed RL"
+                icon={<Calculator className="text-primary-600" size={24} />}
+                badge="Math Modelling"
+                badgeColor="bg-primary-100 text-primary-700"
+                accentColor="border-primary-500"
+            >
+                <div className="space-y-8">
+                    <MathBlock 
+                        formula="Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]"
+                        label="The Q-Learning Update Equation"
+                        accent="blue"
+                        explanation="The formula used to update the estimate of an action's value based on new experience."
+                        interpretation="This is a 'self-correcting' formula. It compares what you *thought* the action was worth (Q(s, a)) with a new, more informed estimate (the TD Target: r + \u03B3 max Q). If the new estimate is higher, the Q-value moves up. If lower, it moves down."
+                        motivation="This single line of math allows an agent to learn from the future. By using the 'max' of the next state, the agent is always looking for the best possible outcome, which eventually leads to the optimal policy."
+                        terms={[
+                            { term: 'Q(s, a)', name: 'Current Estimate', meaning: 'The current value stored in the agent\'s memory for action a in state s.', range: '\\mathbb{R}', example: 'Q(room1, move_north) = 5.2.' },
+                            { term: '\\alpha', name: 'Learning Rate', meaning: 'How much the new information overrides the old. 0 = learn nothing, 1 = forget everything old.', range: '[0, 1]', example: '0.1 is a common value for stable learning.' },
+                            { term: 'r', name: 'Reward', meaning: 'The immediate reward received after taking action a.', range: '\\mathbb{R}', example: '+10 for reaching a goal.' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'How much the agent cares about future rewards compared to now.', range: '[0, 1]', example: '0.9 means a future reward is worth 90% of its value today.' },
+                            { term: '\\max_{a\'} Q(s\', a\')', name: 'Best Future', meaning: 'The value of the best possible action the agent *could* take in the next state s\'.', range: '\\mathbb{R}', example: 'If in next state, the best action is worth 8.0, then max Q = 8.0.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Current Q(s, a) = 5. Agent takes action, gets reward r = 10, lands in state s\'. In s\', the best possible action has Q(s\', a\') = 8. \u03B1 = 0.5, \u03B3 = 0.9.',
+                            steps: [
+                                'Target = 10 + 0.9 * 8 = 17.2',
+                                'Difference (TD Error) = 17.2 - 5 = 12.2',
+                                'New Q = 5 + 0.5 * 12.2 = 11.1'
+                            ],
+                            result: 'The Q-value jumped from 5 to 11.1, reflecting the high reward and good future potential discovered.',
+                        }}
+                    />
+
+                    <div className="grid lg:grid-cols-3 gap-4">
+                        <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
+                            <h5 className="font-bold text-[10px] text-primary-500 uppercase mb-2">Model-Free</h5>
+                            <p className="text-[10px] text-slate-500">The agent doesn't need to know $p(s', r|s, a)$. It learns solely from samples.</p>
+                        </div>
+                        <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
+                            <h5 className="font-bold text-[10px] text-emerald-500 uppercase mb-2">Off-Policy</h5>
+                            <p className="text-[10px] text-slate-500">The agent learns about the optimal policy while potentially following a random one.</p>
+                        </div>
+                        <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
+                            <h5 className="font-bold text-[10px] text-amber-500 uppercase mb-2">TD Learning</h5>
+                            <p className="text-[10px] text-slate-500">It updates its guesses based on other guesses (bootstrapping), not waiting for the end.</p>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 3: ACTIVITY BASED LEARNING */}
+            <SectionWrapper 
+                id="activity" 
+                title="3. Multi-Level Activities" 
+                subtitle="Mastering the Update"
+                icon={<Users className="text-emerald-600" size={24} />}
+                badge="Activity"
+                badgeColor="bg-emerald-100 text-emerald-700"
+                accentColor="border-emerald-500"
+            >
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Convergence Sandbox Demo",
+                            objectives: "Observe how the iterative update rule eventually reaches a stable mathematical truth.",
+                            instructions: [
+                                "Open the 'Convergence Sandbox' in the Virtual Lab section.",
+                                "Run the simulation with $\\alpha=0.5$. Show how the value 'jumps' at first.",
+                                "Reset and run with $\\alpha=0.1$. Show how it crawls slowly but smoothly.",
+                                "Explain: 'High learning rates are fast but unstable. Low rates are slow but precise.'",
+                                "Ask: 'What happens to our guess if the future Max Q suddenly drops to zero?'"
+                            ],
+                            inputs: "Interactive QLearningSimulator component",
+                            outputs: "Live Q-value graph and convergence animations.",
+                            rubrics: ["Clarity of 'Learning Rate' explanation", "Demonstration of convergence", "Student engagement"],
+                            outcomes: "Students identify Q-Learning as a self-correcting process driven by experience.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Bootstrapping Workshop",
+                            objectives: "Collaboratively perform a manual Q-update calculation using the 'Max' of the next state.",
+                            instructions: [
+                                "Teacher writes current state on board: $Q(s, a) = 10$.",
+                                "The agent takes action, gets $R = 5$, and lands in $s'$.",
+                                "In $s'$, there are two actions: $Q(s', a_1) = 20$ and $Q(s', a_2) = 8$.",
+                                "Guided Calculation: 'Step 1: Pick the Max of next state' (20).",
+                                "Guided Calculation: 'Step 2: Apply the full formula with $\\alpha=0.5, \\gamma=0.9$'.",
+                                "Class reflects: 'Why did we ignore the action worth 8?' (Because Q-learning assumes we will always be smart in the future)."
+                            ],
+                            inputs: "Numerical Q-table snippets",
+                            outputs: "Full calculation string and updated Q-value on the board",
+                            rubrics: ["Correct use of Max operator", "Accurate arithmetic for TD Target", "Classroom participation"],
+                            outcomes: "Students master the technical execution of the Q-Learning update rule.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Human DQN Challenge",
+                            objectives: "Experience how a Neural Network approximates Q-values for complex inputs.",
+                            instructions: [
+                                "Divide class into 3 'Layers' (Input, Hidden, Output).",
+                                "Input Layer: Receive 'Pixel Data' (e.g., 'Ball is at x=5, y=10').",
+                                "Hidden Layer: Apply a simple rule (e.g., 'If x < 10, pass 1; else pass 0').",
+                                "Output Layer: Students acting as Q-values for {Left, Right}. They adjust their 'weights' based on if the agent scored points.",
+                                "Group Task: Play 5 rounds of a 'mental' Pong game. Can the Human DQN learn to pass the correct action?",
+                                "Conclusion: 'DQN is just Q-learning where the brain is a group of layers instead of a table.'"
+                            ],
+                            inputs: "Simulated game coordinates",
+                            outputs: "Action predictions and weight adjustments",
+                            rubrics: ["Understanding of 'Approximation'", "Communication between layers", "Team coordination"],
+                            outcomes: "Students visualize the transition from Tabular Q-Learning to Deep Q-Learning.",
+                            time: "20 Mins",
+                            materials: ["Cards for data passing", "Scoreboard"]
+                        },
+                        {
+                            level: 4,
+                            title: "Learning from Failure Audit",
+                            objectives: "Independently audit a real-world learning system that uses 'Trial and Error' logic.",
+                            instructions: [
+                                "Task: Choose a failure-heavy engineering task (e.g., SpaceX rocket landings or Boston Dynamics robot balancing).",
+                                "Audit: How does the system record its 'Mistakes'? (The Negative Reward).",
+                                "Reflection: Why is this 'Off-Policy'? (Engineers can analyze data from a crashed rocket to learn how a successful rocket *should* fly).",
+                                "Analysis: If the 'Learning Rate' $\\alpha$ was 1.0, what would happen after one crash? (The system would forget all previous successful flights).",
+                                "Propose: A 'Safe' Q-Learning rule for an autonomous car."
+                            ],
+                            inputs: "Case study videos or reports",
+                            outputs: "Individual Q-Learning Strategy Report (1 page)",
+                            rubrics: ["Correct use of RL terminology", "Critical thinking on 'Stability'", "Originality"],
+                            outcomes: "Students bridge the classroom formula with state-of-the-art aerospace and robotics engineering.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook", "Internet Access"]
+                        }
+                    ]}
+                />
+            </SectionWrapper>
+
+            {/* SECTION 4: PROJECT BASED LEARNING */}
+            <SectionWrapper 
+                id="project" 
+                title="4. Project: The Self-Driving Cart" 
+                subtitle="From Pixels to Actions"
+                icon={<Briefcase className="text-indigo-600" size={24} />}
+                badge="PBL"
+                badgeColor="bg-indigo-100 text-indigo-700"
+                accentColor="border-indigo-500"
+            >
+                <div className="space-y-6">
+                    <div className="card p-6 border-l-4 border-indigo-500 bg-indigo-50/30 dark:bg-indigo-900/10">
+                        <h5 className="font-bold mb-2 flex items-center gap-2"><Target size={18} /> Deep Q-Networks (DQN)</h5>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            When the state space is too big for a table (like pixels in a game), we use a Neural Network to <em>predict</em> the Q-values. This is what DeepMind used to master Atari games.
+                        </p>
+                    </div>
+
+                    <div className="grid sm:grid-cols-3 gap-4">
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-center">
+                            <LayoutGrid size={24} className="mx-auto mb-2 text-indigo-500" />
+                            <div className="text-[10px] font-bold text-slate-400 uppercase">Input</div>
+                            <p className="text-[8px] mt-1">Camera Pixels</p>
+                        </div>
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-center">
+                            <Binary size={24} className="mx-auto mb-2 text-indigo-500" />
+                            <div className="text-[10px] font-bold text-slate-400 uppercase">Network</div>
+                            <p className="text-[8px] mt-1">Predicts Q(s, a)</p>
+                        </div>
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-center">
+                            <Focus size={24} className="mx-auto mb-2 text-indigo-500" />
+                            <div className="text-[10px] font-bold text-slate-400 uppercase">Output</div>
+                            <p className="text-[8px] mt-1">Best Action</p>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
+            <SectionWrapper 
+                id="questions" 
+                title="5. Quick Check" 
+                subtitle="Q-Learning Essentials"
+                icon={<HelpCircle className="text-purple-600" size={24} />}
+                badge="Questions"
+                badgeColor="bg-purple-100 text-purple-700"
+                accentColor="border-purple-500"
+            >
+                <div className="grid gap-4">
+                    {[
+                        { q: 'What does "Off-Policy" mean in the context of Q-Learning?', a: 'It means the agent can learn about the optimal policy (the target policy) while actually following a different policy (the behavior policy, like random exploration).' },
+                        { q: 'Why is Q-Learning considered "Model-Free"?', a: 'Because it doesn\'t need to know the environment\'s transition probabilities or reward function. It learns strictly from interacting with the environment.' },
+                        { q: 'What happens if the learning rate \u03B1 is set to 0?', a: 'The agent will never update its Q-values; it will never learn anything new from its experiences.' }
+                    ].map((item, i) => (
+                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
+                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
+                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
+                        </div>
+                    ))}
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
+            <SectionWrapper 
+                id="lab" 
+                title="6. Virtual Lab: Convergence Sandbox" 
+                subtitle="Witness the Math in Action"
+                icon={<FlaskConical className="text-cyan-600" size={24} />}
+                badge="Virtual Lab"
+                badgeColor="bg-cyan-100 text-cyan-700"
+                accentColor="border-cyan-500"
+            >
+                <div className="space-y-6">
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Hit "Start" to see how the Q-Learning update rule pulls a random initial guess towards the correct mathematical value over time.
+                    </p>
+                    <QLearningSimulator />
+                </div>
+            </SectionWrapper>
+
+            {/* FEEDBACK SECTION */}
+            <div className="bg-primary-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-primary-500/20">
+                <div className="max-w-xl mx-auto space-y-2">
+                    <h3 className="text-3xl font-black italic">Q-Learning: Decoded!</h3>
+                    <p className="text-primary-100">
+                        You've mastered the logic behind the world's most famous RL algorithm. Ready to see the terms and conditions?
+                    </p>
+                </div>
+                <div className="flex justify-center gap-4">
+                    <button className="px-10 py-4 bg-white text-primary-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+                        NEXT: Q-LEARNING TERMS
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Box, GitMerge, ChefHat, Star, AlertCircle, TrendingUp,
@@ -366,77 +367,88 @@ export default function Topic4_ElementsOfRL() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity Based Learning"
-                subtitle="Mastery through Doing"
+                title="3. Multi-Level Activities"
+                subtitle="Interacting with the Core Elements"
                 icon={<Users className="text-emerald-600" size={24} />}
-                badge="NEP 2020"
+                badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1: Teacher Do */}
-                    <div className="p-6 rounded-2xl border-2 border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/30 dark:bg-emerald-900/10">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-xs">L1</div>
-                            <h4 className="font-bold text-emerald-800 dark:text-emerald-200">Teacher Demonstration: The Maze Runner</h4>
-                        </div>
-                        <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400 list-disc pl-5">
-                            <li>Teacher draws a 3x3 grid on the board.</li>
-                            <li>Teacher defines a +10 reward at (3,3) and -10 reward at (2,2).</li>
-                            <li>Teacher demonstrates two different **Policies**: "Always go Right then Down" vs "Explore randomly".</li>
-                            <li>Expected observation: Students see how policy affects the final Return (G).</li>
-                        </ul>
-                    </div>
-
-                    {/* Level 2: Teacher + Student Together */}
-                    <div className="p-6 rounded-2xl border-2 border-primary-100 dark:border-primary-900/30 bg-primary-50/30 dark:bg-primary-900/10">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold text-xs">L2</div>
-                            <h4 className="font-bold text-primary-800 dark:text-primary-200">Guided Collaborative Activity: Reward Designer</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                            Let's design the **Reward Signal** for an Autonomous School Bus.
-                        </p>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-primary-100 dark:border-primary-800">
-                                <div className="text-xs font-bold text-emerald-500">Positive Rewards (+)</div>
-                                <input placeholder="e.g., Reaching stop on time" className="mt-2 w-full bg-slate-50 dark:bg-slate-900 text-[11px] p-2 rounded border-none outline-none" />
-                            </div>
-                            <div className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-red-100 dark:border-red-800">
-                                <div className="text-xs font-bold text-red-500">Negative Rewards (-)</div>
-                                <input placeholder="e.g., Sudden braking" className="mt-2 w-full bg-slate-50 dark:bg-slate-900 text-[11px] p-2 rounded border-none outline-none" />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Level 3: All Students Do */}
-                    <div className="p-6 rounded-2xl border-2 border-amber-100 dark:border-amber-900/30 bg-amber-50/30 dark:bg-amber-900/10">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-xs">L3</div>
-                            <h4 className="font-bold text-amber-800 dark:text-amber-200">Group Task: Be the Reward Signal</h4>
-                        </div>
-                        <div className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-                            <p>Divide the class into groups of 3:</p>
-                            <div className="flex gap-4 items-center">
-                                <div className="flex-1 p-2 bg-white dark:bg-slate-800 rounded border border-amber-200 text-center text-xs">Student A: The Agent (Blindfolded)</div>
-                                <div className="flex-1 p-2 bg-white dark:bg-slate-800 rounded border border-amber-200 text-center text-xs">Student B: The Environment (Voice Only)</div>
-                                <div className="flex-1 p-2 bg-white dark:bg-slate-800 rounded border border-amber-200 text-center text-xs">Student C: The Reward Recorder</div>
-                            </div>
-                            <p className="italic text-xs">Task: Student A must find a hidden object only by hearing Student B say "Warm" or "Cold" (Rewards).</p>
-                        </div>
-                    </div>
-
-                    {/* Level 4: Individual Student Do */}
-                    <div className="p-6 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/20">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-8 h-8 rounded-full bg-slate-600 text-white flex items-center justify-center font-bold text-xs">L4</div>
-                            <h4 className="font-bold text-slate-800 dark:text-slate-200">Individual Reflection: My Life's Value Function</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 italic">
-                            "Think of your career. Getting an 'A' in this course is a Reward. Being a successful engineer is the Value. How do you adjust your current Policy to maximize that Value?"
-                        </p>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Gamma & Element Live Demo",
+                            objectives: "Demonstrate how the internal 'organs' (Policy, Reward, Value, Model) and the Discount Factor (Gamma) drive agent behavior.",
+                            instructions: [
+                                "Open the 'Gamma Explorer' in the Math section.",
+                                "Set γ = 0 and show that the agent only values T+1 (Raw reward).",
+                                "Set γ = 0.99 and show the 'Total Return' increase as future rewards are included.",
+                                "Open the 'Agent Organ Simulator' in the Virtual Lab section.",
+                                "Toggle the 'Policy' off and show the 60% drop in performance (Agent acts randomly).",
+                                "Toggle 'Reward' off and show how the agent loses its 'Health' over time."
+                            ],
+                            inputs: "Interactive Gamma Slider and Organ Simulator",
+                            outputs: "Performance Health Bar and Discounted Return Charts",
+                            rubrics: ["Clarity of Gamma interpretation", "Demonstration of organ dependencies", "Student engagement"],
+                            outcomes: "Students identify the critical role of each element and the impact of the time horizon (γ).",
+                            time: "10 Mins",
+                            materials: ["Interactive Components", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Smart Thermostat Workshop",
+                            objectives: "Collaboratively design a full RL tuple (S, A, R) for a simple IoT device.",
+                            instructions: [
+                                "Scenario: A Smart Thermostat wants to save energy while keeping the user comfortable.",
+                                "Teacher asks: 'What is the State?' (Current Temp, Time, Occupancy).",
+                                "Teacher asks: 'What is the Action?' (Heat ON, Cool ON, IDLE).",
+                                "Collaborative Reward Design: If temp is 22°C (Goal), Reward = +10. If energy used, Reward = -2.",
+                                "Students calculate the Return (G) for a 3-step sequence on the board."
+                            ],
+                            inputs: "Thermostat scenario constraints",
+                            outputs: "Drafted RL Tuple and Reward Function on the board",
+                            rubrics: ["Correct state definition", "Logical reward scaling", "Team participation"],
+                            outcomes: "Students learn to translate physical sensing/control into RL mathematical elements.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Blind Navigator Game",
+                            objectives: "Simulate the interaction between Policy (instructions) and Reward (feedback) in a physical space.",
+                            instructions: [
+                                "Divide class into teams of 3: The Agent (Blindfolded), The Policy (Gives directions), The Reward (Claps).",
+                                "The Agent must navigate a small obstacle course.",
+                                "Challenge: The Policy can only speak *before* the move. The Reward only claps *after* the move.",
+                                "Groups switch roles and discuss: 'Which was more helpful — the direction or the feedback?'"
+                            ],
+                            inputs: "Obstacle course in classroom",
+                            outputs: "Successful navigation without hitting obstacles",
+                            rubrics: ["Policy clarity", "Reward timing", "Team coordination"],
+                            outcomes: "Students internalize the difference between the 'Strategy' (Policy) and the 'Feedback' (Reward).",
+                            time: "20 Mins",
+                            materials: ["Blindfolds", "Classroom chairs (obstacles)"]
+                        },
+                        {
+                            level: 4,
+                            title: "Personal Value Function Mapping",
+                            objectives: "Independently apply RL concepts to personal goal setting and long-term planning.",
+                            instructions: [
+                                "Task: Think of your goal for the next 5 years (e.g., Graduating with Honors).",
+                                "Define your 'Reward' (Passing an exam = +10) vs your 'Value' (The cumulative benefit of the degree).",
+                                "Explain your 'Discount Factor' (γ): Do you value short-term fun (low γ) or long-term career (high γ)?",
+                                "Identify one 'Model' of your environment: What do you predict will happen if you study 5 hours extra per week?"
+                            ],
+                            inputs: "Self-reflection on personal goals",
+                            outputs: "Individual RL-Life Map (1 page)",
+                            rubrics: ["Depth of insight", "Correct use of RL terminology", "Originality"],
+                            outcomes: "Students develop a personal connection to abstract RL elements through self-evaluation.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

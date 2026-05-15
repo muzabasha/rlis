@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Globe, Settings, Wind, Eye, EyeOff, Zap, Target, Clock,
@@ -242,58 +243,86 @@ export default function Topic5_EnvironmentTypes() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: Environment Scavenger Hunt"
-                subtitle="Learning by Identifying"
+                title="3. Multi-Level Activities"
+                subtitle="Navigating Different Worlds"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1: Teacher Do */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Invisible Board</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                            Teacher plays a game of Tic-Tac-Toe but keeps the board hidden from students, only announcing moves.
-                        </p>
-                        <div className="flex items-center gap-2 text-xs font-bold text-emerald-600 bg-white dark:bg-slate-800 p-2 rounded-lg inline-block">
-                            <EyeOff size={14} /> This transforms a Fully Observable game into a Partially Observable one!
-                        </div>
-                    </div>
-
-                    {/* Level 2: Teacher + Student */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Class Collaboration: Classification Table</h4>
-                        </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            {['Game', 'Observability', 'Determinism', 'Classify'].map((h, i) => (
-                                <div key={i} className="text-[10px] font-black uppercase text-slate-400 p-2">{h}</div>
-                            ))}
-                            {['Chess', 'Full', 'Det', 'Zoo'].map((v, i) => (
-                                <div key={i} className="text-xs p-2 bg-white dark:bg-slate-800 rounded">{v}</div>
-                            ))}
-                            {['Poker', 'Partial', 'Stoch', 'Jungle'].map((v, i) => (
-                                <div key={i} className="text-xs p-2 bg-white dark:bg-slate-800 rounded">{v}</div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Level 3: All Students Do */}
-                    <div className="p-6 rounded-3xl bg-amber-50/50 dark:bg-amber-900/10 border-2 border-amber-100 dark:border-amber-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold">L3</div>
-                            <h4 className="font-bold text-amber-900 dark:text-amber-100">Team Challenge: The Wind Game</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Students try to toss a paper ball into a bin. In Round 2, other students use fans or wave papers to create "Wind" (Stochasticity).
-                        </p>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Environment Tuner Demo",
+                            objectives: "Demonstrate how Stochasticity and Observability change the agent's ability to plan.",
+                            instructions: [
+                                "Open the 'Environment Property Tuner' in the Math section.",
+                                "Set Stochasticity to 0% (Deterministic) and show the 'Actual Path' matching the 'Ideal Path'.",
+                                "Set Stochasticity to 100% and show the 'Chaotic' deviation.",
+                                "Drop Observability to 20% and point out how the dots (sensor readings) vanish.",
+                                "Explain that real-world AI lives in the bottom-left corner of this tuner (PO-MDP)."
+                            ],
+                            inputs: "Interactive Environment Tuner Sandbox",
+                            outputs: "Visual Path Deviation Graphs and Confidence Indicators.",
+                            rubrics: ["Clarity of metric definitions", "Impact visualization", "Student engagement"],
+                            outcomes: "Students observe the difference between a 'Zoo' (Deterministic) and 'Jungle' (Stochastic) environment.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Game Classifier Workshop",
+                            objectives: "Collaboratively categorize famous games based on RL environment properties.",
+                            instructions: [
+                                "Teacher creates a 4-column table: Game, Observability, Determinism, Dynamics.",
+                                "Class discusses: 'Is Chess Fully Observable?' (Yes). 'Is it Stochastic?' (No, if no dice).",
+                                "Class discusses: 'Is Poker Partially Observable?' (Yes, hidden cards).",
+                                "Students suggest games like Ludo, CS:GO, and Stock Trading for classification."
+                            ],
+                            inputs: "List of common games and sports",
+                            outputs: "Completed Environment Classification Matrix on the board",
+                            rubrics: ["Conceptual accuracy", "Logical reasoning", "Classroom participation"],
+                            outcomes: "Students master the taxonomy of RL environments.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Blindfold Drawing Task",
+                            objectives: "Experience Partial Observability and Stochasticity in a physical creative task.",
+                            instructions: [
+                                "Divide class into groups of 3: The Artist (Blindfolded), The Sensor (Describes the paper), The Noise (Shakes the table slightly).",
+                                "The Artist must draw a simple house.",
+                                "Round 1: Full description (MDP). Round 2: Sensor only speaks every 10 seconds (PO-MDP).",
+                                "Discuss: How did 'Table Shaking' (Stochasticity) affect the reward (quality of the drawing)?"
+                            ],
+                            inputs: "Paper, Pens, Blindfolds",
+                            outputs: "A series of drawings with varying 'sensor' quality",
+                            rubrics: ["Adaptability to feedback", "Communication efficiency", "Teamwork"],
+                            outcomes: "Students internalize the difficulty of PO-MDPs where state information is missing.",
+                            time: "20 Mins",
+                            materials: ["Stationery", "Blindfolds"]
+                        },
+                        {
+                            level: 4,
+                            title: "Commute Stochasticity Audit",
+                            objectives: "Independently analyze a daily human task as an RL environment.",
+                            instructions: [
+                                "Task: Analyze your 'Commute to College'.",
+                                "Define the Environment Type: Is it Dynamic? (Yes, traffic moves). Is it Stochastic? (Yes, unexpected signals/delays).",
+                                "Explain one 'Partially Observable' element (e.g., You don't know what's around the next corner).",
+                                "Propose a 'Reward' for a Self-Driving car on this route (+10 for speed, -50 for safety violations)."
+                            ],
+                            inputs: "Student's personal experience of travel",
+                            outputs: "Personal Environment Audit Report (Digital/Workbook)",
+                            rubrics: ["Identification of dynamics", "Logical reward design", "Originality"],
+                            outcomes: "Students apply RL environment theory to solve real-world mobility challenges.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

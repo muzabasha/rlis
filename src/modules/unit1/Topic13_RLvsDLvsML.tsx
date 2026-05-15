@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Layers, Cpu, Brain, Zap, Target, TrendingUp,
@@ -212,43 +213,86 @@ export default function Topic13_RLvsDLvsML() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: The AI Task Sorter"
-                subtitle="NEP 2020 Hands-on Taxonomy"
+                title="3. Multi-Level Activities"
+                subtitle="The AI Taxonomy in Action"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Learning Styles</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Teacher shows an image of a dog. "In DL, I tell you it's a dog. In RL, you guess 'Cat', I give you a shock, you guess 'Dog', I give you a biscuit. Which one is better for a robot walking in a new forest?"
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">The Selection Matrix</h4>
-                        </div>
-                        <div className="grid sm:grid-cols-2 gap-4">
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 flex justify-between items-center">
-                                <span className="text-xs font-bold">Email Spam Filter</span>
-                                <span className="text-[10px] px-2 py-1 bg-blue-100 text-blue-700 rounded-md">ML (Supervised)</span>
-                            </div>
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 flex justify-between items-center">
-                                <span className="text-xs font-bold">Self-Driving Lane Change</span>
-                                <span className="text-[10px] px-2 py-1 bg-amber-100 text-amber-700 rounded-md">Reinforcement</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Capability Profile Demo",
+                            objectives: "Demonstrate the trade-offs between Data, Exploration, and Autonomy across AI paradigms.",
+                            instructions: [
+                                "Open the 'AI Capability Profile' radar chart in the Virtual Lab section.",
+                                "Point out the 'Exploration' axis: Show why RL is 95% while ML is 10%.",
+                                "Show the 'Data Need' axis: Explain why DL is 95% (it needs millions of images) while RL generates its own data.",
+                                "Discuss why 'Autonomy' is the primary differentiator for Reinforcement Learning."
+                            ],
+                            inputs: "Interactive AIComparisonRadar component",
+                            outputs: "Visual radar overlay comparing ML, DL, and RL profiles.",
+                            rubrics: ["Clarity of trade-off explanation", "Explanation of 'Exploration' gap", "Student engagement"],
+                            outcomes: "Students observe the structural strengths and weaknesses of each AI sibling.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Loss Logic Workshop",
+                            objectives: "Collaboratively compare the 'Feedback' mathematics of SL and RL.",
+                            instructions: [
+                                "Teacher presents two formulas: MSE (SL) and TD Error (RL).",
+                                "Scenario: A model predicts a value of 100. In SL, the label is 120. In RL, the reward is +5 and the next state value is 90.",
+                                "Guided Calculation: SL Loss = (120 - 100)² = 400. RL Loss = (5 + 0.9*90 - 100)² = (86 - 100)² = 196.",
+                                "Discussion: 'Which loss feels more stable?' (Answer: SL, because 120 is a fixed constant, whereas 90 is an estimate that also changes)."
+                            ],
+                            inputs: "Loss formulas and simulated data points",
+                            outputs: "Comparative error calculation on the board",
+                            rubrics: ["Mathematical accuracy", "Logic of 'Fixed' vs 'Moving' targets", "Classroom participation"],
+                            outcomes: "Students master the mathematical distinction between instructive (SL) and evaluative (RL) feedback.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The AI Selection Matrix",
+                            objectives: "Experience the decision-making process of an AI Architect choosing the right tool for the job.",
+                            instructions: [
+                                "Divide class into 4 teams. Each team gets a mission: 1. Predict Stock Prices, 2. Detect Facial Emotions, 3. Master a New Video Game, 4. Organize a Library's Unlabeled Books.",
+                                "Teams must choose: ML, DL, or RL (or a hybrid).",
+                                "They must justify based on: 'Do we have a label?', 'Do we need to explore?', 'Is it a sequence of decisions?'",
+                                "Teams present their 'Architectural Blueprint' to the class."
+                            ],
+                            inputs: "4 distinct real-world AI problems",
+                            outputs: "Justification posters (Problem -> Technique -> Reason)",
+                            rubrics: ["Correct technique selection", "Strength of justification", "Team coordination"],
+                            outcomes: "Students develop the intuition for when to deploy RL vs traditional deep learning.",
+                            time: "20 Mins",
+                            materials: ["Poster sheets", "Markers"]
+                        },
+                        {
+                            level: 4,
+                            title: "Personal Learning Taxonomy",
+                            objectives: "Independently map human learning patterns to the ML/DL/RL framework.",
+                            instructions: [
+                                "Task: Think of 3 things you learned this semester.",
+                                "1. Something you learned by reading/watching (SL style - copying labels).",
+                                "2. Something you learned by pure trial and error (RL style - exploring rewards).",
+                                "3. Something you learned by finding patterns in raw data (Unsupervised style - clustering).",
+                                "Write a 4-sentence reflection: Which style felt most 'Deep' and which felt most 'Rewarding'?"
+                            ],
+                            inputs: "Personal academic history",
+                            outputs: "Individual 'Cognitive AI' Mapping Note",
+                            rubrics: ["Accurate use of AI paradigm terms", "Depth of self-analysis", "Originality"],
+                            outcomes: "Students internalize the AI family tree by relating it to their own biological intelligence.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

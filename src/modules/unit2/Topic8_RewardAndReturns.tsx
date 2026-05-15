@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import { 
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
     Coins, Gift, TrendingDown, Target, Briefcase, Rocket
@@ -230,33 +231,88 @@ export default function Topic8_RewardAndReturns() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
                 id="activity" 
-                title="3. Activity: Calculate the Return" 
-                subtitle="Pen and Paper Discounting"
+                title="3. Multi-Level Activities" 
+                subtitle="Calculating Cumulative Value"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Student Task: Discounted Sequence</h4>
-                        </div>
-                        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200">
-                            <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">
-                                An agent receives the following sequence of rewards: $R_1=10$, $R_2=10$, $R_3=10$, $R_4=10$.
-                                <br/>The discount factor $\gamma = 0.5$. Calculate $G_0$.
-                            </p>
-                            <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg font-mono text-sm">
-                                $G_0 = 10 + (0.5 \times 10) + (0.25 \times 10) + (0.125 \times 10)$
-                                <br/>$G_0 = 10 + 5 + 2.5 + 1.25 = 18.75$
-                            </div>
-                            <p className="text-[10px] text-slate-500 italic mt-2">Even though the agent collects 40 total points, the "present value" of those points is only 18.75 because of the steep discount factor.</p>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Return Decay Demo",
+                            objectives: "Visualize how the discount factor gamma $(\\gamma)$ shrinks the perceived value of future rewards.",
+                            instructions: [
+                                "Open the 'Discounted Return Calculator' in the Virtual Lab section.",
+                                "Set $\\gamma = 1.0$ and observe the total return is just the simple sum.",
+                                "Slide $\\gamma$ down to 0.5 and watch the distant bars (t+5) vanish.",
+                                "Ask: 'If the agent is greedy, which reward does it care about most?' (The first one)."
+                            ],
+                            inputs: "Interactive ReturnCalculatorLab component",
+                            outputs: "Dynamic bar charts showing reward value over time.",
+                            rubrics: ["Clarity of 'Time Value' explanation", "Demonstration of Gamma sensitivity", "Student engagement"],
+                            outcomes: "Students identify the difference between 'Immediate Reward' and 'Discounted Return'.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The 3-Step Return Workshop",
+                            objectives: "Collaboratively calculate the exact numerical return for a short sequence of rewards.",
+                            instructions: [
+                                "Teacher writes a sequence on the board: $R_{t+1}=100, R_{t+2}=50, R_{t+3}=200$.",
+                                "Set $\\gamma = 0.9$.",
+                                "Guided Calculation Step 1: $100$.",
+                                "Step 2: $0.9 \\times 50 = 45$.",
+                                "Step 3: $0.9^2 \\times 200 = 0.81 \\times 200 = 162$.",
+                                "Sum the results: $100 + 45 + 162 = 307$."
+                            ],
+                            inputs: "Reward sequence data",
+                            outputs: "Calculated Total Return $G_t$ on the board",
+                            rubrics: ["Mathematical accuracy", "Logic of exponentiation", "Classroom participation"],
+                            outcomes: "Students master the technical execution of the return formula.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Marshmallow Simulation",
+                            objectives: "Experience the impact of different discount factors on strategy and behavior.",
+                            instructions: [
+                                "Divide class into 'Myopic' ($\\gamma=0.1$) and 'Far-Sighted' ($\\gamma=0.99$) teams.",
+                                "Task: A player is offered 10 points now OR 100 points if they complete a 5-step difficult path.",
+                                "Myopic Team: Calculates perceived value. (Answer: 10 vs very low). They choose the 10 points.",
+                                "Far-Sighted Team: Calculates perceived value. (Answer: 10 vs ~95). They choose the difficult path.",
+                                "Teams present why their 'Gamma' forced their decision."
+                            ],
+                            inputs: "Binary decision scenario (Small/Fast vs Large/Slow)",
+                            outputs: "Team Strategy Reports",
+                            rubrics: ["Depth of insight on 'Long-term thinking'", "Correct application of formula", "Team coordination"],
+                            outcomes: "Students internalize that an RL agent's behavior is a direct result of its discount factor.",
+                            time: "20 Mins",
+                            materials: ["Paper sheets", "Calculators"]
+                        },
+                        {
+                            level: 4,
+                            title: "Life Choice Audit",
+                            objectives: "Independently model a real-life high-stakes decision as a discounted return problem.",
+                            instructions: [
+                                "Task: Choose a long-term goal (e.g., getting a Degree, starting a Gym habit, saving for a Car).",
+                                "Audit: List the immediate 'Costs' (Negative rewards) and future 'Benefits' (Positive rewards).",
+                                "Reflect: If you had a very low $\\gamma$, would you still pursue this goal? Why do humans often fail at these tasks (low $\\gamma$ behavior)?",
+                                "Calculate: Estimate the 'Present Value' of your goal using $\\gamma=0.9$."
+                            ],
+                            inputs: "Personal life scenarios",
+                            outputs: "Individual Return Analysis Note (1 page)",
+                            rubrics: ["Correct use of negative/positive rewards", "Mathematical logic", "Depth of self-reflection"],
+                            outcomes: "Students bridge RL mathematics with real-world human behavior and economics.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

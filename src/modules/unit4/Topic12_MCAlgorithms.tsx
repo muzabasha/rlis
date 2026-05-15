@@ -2,116 +2,370 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock } from '../../components/topic/MathBlock';
-import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, GitBranch } from 'lucide-react';
+import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
+    GitBranch, Bot, Zap, Binary, Layers, Eye, ChevronRight,
+    Play, RotateCcw, Search, Brain, Globe, Rocket,
+    Activity, Cpu, HardDrive, Target, Briefcase, Clock,
+    Shield, Move, MousePointer2, User, Layout, Map, CheckCircle2
+} from 'lucide-react';
 
-export default function Topic12_MCAlgorithms() {
-    const [activeTab, setActiveTab] = useState<'story' | 'math' | 'activity' | 'questions' | 'lab' | 'insights'>('story');
+// ─── Interactive Components for Topic 12 ─────────────────────────────────────
 
-    const tabs = [
-        { id: 'story', label: 'Story', icon: BookOpen },
-        { id: 'math', label: 'Math', icon: Calculator },
-        { id: 'activity', label: 'Activity', icon: Users },
-        { id: 'questions', label: 'Questions', icon: HelpCircle },
-        { id: 'lab', label: 'Virtual Lab', icon: FlaskConical },
-        { id: 'insights', label: 'Insights', icon: Lightbulb },
-    ] as const;
+/**
+ * Visit Comparison: First-Visit vs Every-Visit
+ */
+function VisitLab() {
+    const [method, setMethod] = useState<'First' | 'Every'>('First');
+    const trajectory = ['S1', 'S2', 'S1', 'S3', 'S1', 'Goal'];
 
     return (
-        <div className="space-y-4">
-            <div className="flex gap-2 flex-wrap">
-                {tabs.map(t => {
-                    const Icon = t.icon;
-                    return (
-                        <button key={t.id} onClick={() => setActiveTab(t.id)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === t.id ? 'bg-primary-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'}`}>
-                            <Icon size={14} />{t.label}
-                        </button>
-                    );
-                })}
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl space-y-8">
+            <div className="flex justify-center gap-4">
+                {['First', 'Every'].map(m => (
+                    <button
+                        key={m}
+                        onClick={() => setMethod(m as any)}
+                        className={`px-6 py-2 rounded-full text-xs font-black transition-all ${
+                            method === m 
+                            ? 'bg-primary-600 text-white shadow-lg' 
+                            : 'bg-slate-100 dark:bg-slate-700 text-slate-500'
+                        }`}
+                    >
+                        {m.toUpperCase()}-VISIT
+                    </button>
+                ))}
             </div>
 
-            <AnimatePresence mode="wait">
-                <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
-                    
-                    {activeTab === 'story' && (
-                        <SectionWrapper id="story" title="Section 1 — Counting Visits" icon={<GitBranch size={20} className="text-blue-600" />} badge="Algorithms" badgeColor="bg-blue-100 text-blue-700" accentColor="border-blue-500">
-                            <div className="story-block space-y-6">
-                                <div className="grid sm:grid-cols-2 gap-4">
-                                    <div className="card p-4">
-                                        <h4 className="font-bold text-sm mb-2 text-primary-600">First-Visit MC</h4>
-                                        <p className="text-xs text-slate-500">Only the first time a state is visited in an episode is used to estimate the value.</p>
+            <div className="space-y-6">
+                <div className="flex items-center justify-center gap-2 overflow-x-auto p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl">
+                    {trajectory.map((s, i) => {
+                        const isCounted = method === 'Every' || trajectory.indexOf(s) === i;
+                        const isS1 = s === 'S1';
+                        return (
+                            <React.Fragment key={i}>
+                                <div className="flex flex-col items-center gap-1">
+                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 font-bold text-[10px] transition-all 
+                                        ${isS1 && isCounted ? 'border-primary-500 bg-primary-50 text-primary-700' : 'border-slate-200 text-slate-400'}`}>
+                                        {s}
                                     </div>
-                                    <div className="card p-4">
-                                        <h4 className="font-bold text-sm mb-2 text-emerald-600">Every-Visit MC</h4>
-                                        <p className="text-xs text-slate-500">Every time a state is visited in an episode, it contributes to the value estimation.</p>
-                                    </div>
-                                </div>
-                                <InfoCard type="info" title="Convergence">
-                                    Both methods converge to the true value function as the number of visits to each state goes to infinity.
-                                </InfoCard>
-                            </div>
-                        </SectionWrapper>
-                    )}
-
-                    {activeTab === 'activity' && (
-                        <SectionWrapper id="activity" title="Section 3 — First vs Every Visit" icon={<Users size={20} className="text-emerald-600" />} badge="Activity" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
-                            <div className="space-y-4">
-                                <p className="text-slate-600 dark:text-slate-400 font-medium">Episode Trace: S1 → S2 → S1 → S3 (End)</p>
-                                <div className="card p-4 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200">
-                                    <div className="flex justify-between items-center px-4">
-                                        <div className="text-center">
-                                            <div className="text-[10px] font-bold text-primary-600">First-Visit</div>
-                                            <div className="text-xs">S1 counted ONCE</div>
+                                    {isS1 && (
+                                        <div className={`text-[8px] font-black uppercase ${isCounted ? 'text-primary-500' : 'text-slate-300'}`}>
+                                            {isCounted ? 'Counted' : 'Ignored'}
                                         </div>
-                                        <div className="h-8 w-px bg-slate-300" />
-                                        <div className="text-center">
-                                            <div className="text-[10px] font-bold text-emerald-600">Every-Visit</div>
-                                            <div className="text-xs">S1 counted TWICE</div>
-                                        </div>
-                                    </div>
-                                    <p className="text-[10px] text-center text-slate-500 mt-4 italic">Which one is more computationally expensive? (Every-Visit)</p>
+                                    )}
                                 </div>
-                            </div>
-                        </SectionWrapper>
-                    )}
+                                {i < trajectory.length - 1 && <ChevronRight size={14} className="text-slate-300" />}
+                            </React.Fragment>
+                        );
+                    })}
+                </div>
 
-                    {activeTab === 'questions' && (
-                        <SectionWrapper id="questions" title="Section 4 — Algorithm Quiz" icon={<HelpCircle size={20} className="text-violet-600" />} badge="Questions" badgeColor="bg-violet-100 text-violet-700" accentColor="border-violet-500">
-                            <div className="space-y-4">
-                                <div className="card p-4">
-                                    <div className="text-sm font-bold mb-1">Q: Does MC Prediction require a model of the environment?</div>
-                                    <p className="text-xs text-slate-500 italic">A: No, it only requires experience—sample sequences of states, actions, and rewards.</p>
-                                </div>
-                                <div className="card p-4">
-                                    <div className="text-sm font-bold mb-1">Q: What is the main disadvantage of MC?</div>
-                                    <p className="text-xs text-slate-500 italic">A: It can only be applied to episodic tasks (tasks that eventually end).</p>
-                                </div>
-                            </div>
-                        </SectionWrapper>
-                    )}
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="p-6 bg-slate-900 rounded-[2rem] border border-slate-800">
+                        <div className="text-[10px] font-black text-primary-400 uppercase mb-2">Visits for S1</div>
+                        <div className="text-3xl font-black text-white">
+                            {method === 'First' ? '1' : '3'}
+                        </div>
+                        <p className="text-[10px] text-slate-500 mt-2 italic">
+                            {method === 'First' 
+                                ? 'Only the very first appearance in the episode contributes to the average.' 
+                                : 'Every time the agent enters the state, the return is added to the total.'}
+                        </p>
+                    </div>
+                    <div className="p-6 bg-slate-900 rounded-[2rem] border border-slate-800 flex flex-col justify-center">
+                        <h5 className="text-[10px] font-black text-emerald-400 uppercase mb-2">Convergence Info</h5>
+                        <p className="text-xs text-slate-400 leading-relaxed">
+                            Both methods are **guaranteed to converge** to the true value function, but Every-Visit is often preferred in practice as it uses more data from each episode.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
 
-                    {activeTab === 'lab' && (
-                        <SectionWrapper id="lab" title="Section 5 — Simulation Lab" icon={<FlaskConical size={20} className="text-purple-600" />} badge="Lab" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
-                            <div className="card p-8 text-center bg-slate-50 dark:bg-slate-900">
-                                <Calculator size={48} className="mx-auto text-slate-400 mb-4 opacity-50" />
-                                <h4 className="font-bold text-slate-600 mb-2">MC Statistics Tracker</h4>
-                                <p className="text-sm text-slate-500">Generate 1000 random episodes and watch how the running average of the state values settles towards the true value.</p>
-                                <button className="btn-primary mt-4 py-2 px-6">Generate Episodes</button>
-                            </div>
-                        </SectionWrapper>
-                    )}
+// ─── Main Topic Component ────────────────────────────────────────────────────
 
-                    {activeTab === 'insights' && (
-                        <SectionWrapper id="insights" title="Section 6 — Strategic Insights" icon={<Lightbulb size={20} className="text-amber-600" />} badge="Insights" badgeColor="bg-amber-100 text-amber-700" accentColor="border-amber-500">
-                            <div className="card p-4 bg-primary-50 dark:bg-primary-900/20 border-l-4 border-primary-500">
-                                <h4 className="font-bold text-sm mb-1">Law of Large Numbers</h4>
-                                <p className="text-xs text-slate-600 dark:text-slate-400">Monte Carlo methods are a direct application of the Law of Large Numbers. The more samples we have, the closer our estimate becomes to the mathematical expectation.</p>
-                            </div>
-                        </SectionWrapper>
-                    )}
-                </motion.div>
-            </AnimatePresence>
+export default function Topic12_MCAlgorithms() {
+    return (
+        <div className="max-w-4xl mx-auto pb-20 space-y-12">
+            
+            {/* SECTION 1: STORYTELLING */}
+            <SectionWrapper 
+                id="story" 
+                title="1. The Accountant's Choice" 
+                subtitle="First-Visit vs. Every-Visit"
+                icon={<GitBranch className="text-blue-600" size={24} />}
+                badge="Storytelling"
+                badgeColor="bg-blue-100 text-blue-700"
+                accentColor="border-blue-500"
+            >
+                <div className="space-y-6">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <Layers size={120} />
+                        </div>
+                        <h4 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2">
+                            📊 To Count or Not to Count?
+                        </h4>
+                        <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
+                            <p>
+                                Suppose you are learning to navigate a park. You walk in a circle and pass the same fountain three times before leaving. At the end of the day, you found 10 coins.
+                            </p>
+                            <p>
+                                **First-Visit MC** says: "The fountain was the start of the journey that led to 10 coins. I'll record that." It ignores the second and third times you passed the fountain.
+                            </p>
+                            <p>
+                                **Every-Visit MC** says: "Every time I was at the fountain, I was on a path that eventually resulted in coins. I'll record all three instances."
+                            </p>
+                            <p>
+                                Which one is better? Both work! But they reflect different mathematical philosophies about how much we can learn from a single "loop" in experience.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <InfoCard type="insight" title="The Statistical Advantage">
+                            Every-Visit MC provides more data points per episode, which can lead to faster learning in environments where you visit the same state often.
+                        </InfoCard>
+                        <InfoCard type="tip" title="Independence">
+                            First-Visit MC has simpler statistical properties because each sample is technically independent within the episode.
+                        </InfoCard>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 2: MATHEMATICAL MODELLING */}
+            <SectionWrapper 
+                id="math" 
+                title="2. Modelling the Algorithms" 
+                subtitle="The Logic of Averaging"
+                icon={<Calculator className="text-primary-600" size={24} />}
+                badge="Math Modelling"
+                badgeColor="bg-primary-100 text-primary-700"
+                accentColor="border-primary-500"
+            >
+                <div className="space-y-8">
+                    <div className="grid lg:grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                            <h5 className="font-black text-[10px] text-primary-500 uppercase tracking-widest">First-Visit Rule</h5>
+                            <MathBlock 
+                                formula="N(s) \leftarrow N(s) + 1 \text{ if } t = \min\{k : S_k = s\}"
+                                label="Initialization Check"
+                                explanation="Only update N(s) if this is the first time state s appears in the episode."
+                                interpretation="If we have seen S1 before in this sequence, we skip the math for this step. We only care about the very first time the agent entered S1."
+                                motivation="Ensures each update is based on a 'fresh' look at the return from that state."
+                                terms={[]}
+                            />
+                        </div>
+                        <div className="space-y-4">
+                            <h5 className="font-black text-[10px] text-emerald-500 uppercase tracking-widest">Every-Visit Rule</h5>
+                            <MathBlock 
+                                formula="N(S_t) \leftarrow N(S_t) + 1 \quad \forall t"
+                                label="Universal Update"
+                                explanation="Update N(s) for every single time step where the state was s."
+                                interpretation="No checks needed. If you are in S1, you update S1. Simple, aggressive, and data-efficient."
+                                motivation="Maximizes the amount of learning done from every second of experience."
+                                terms={[]}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
+                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Convergence Reality</h5>
+                        <p className="text-xs text-slate-400 leading-relaxed">
+                            As the number of episodes $k \to \infty$, both methods are guaranteed to converge to $v_\pi(s)$. In modern deep RL, variations of Every-Visit are the most common.
+                        </p>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 3: ACTIVITY BASED LEARNING */}
+            <SectionWrapper 
+                id="activity" 
+                title="3. Multi-Level Activities" 
+                subtitle="The Accountant's Choice"
+                icon={<Users className="text-emerald-600" size={24} />}
+                badge="Activity"
+                badgeColor="bg-emerald-100 text-emerald-700"
+                accentColor="border-emerald-500"
+            >
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Visit Logic Demo",
+                            objectives: "Differentiate between First-Visit and Every-Visit counting in a looping trajectory.",
+                            instructions: [
+                                "Open the 'Visit Comparison' in the Virtual Lab section.",
+                                "Select 'First-Visit'. Point out: 'Only the first S1 is blue. The others are ignored.'",
+                                "Select 'Every-Visit'. Show how all three S1 states become blue.",
+                                "Explain: 'First-Visit is statistically simpler; Every-Visit uses 300% more data here.'",
+                                "Ask: 'In a game where you go in circles, which method learns faster?'"
+                            ],
+                            inputs: "Interactive VisitLab component",
+                            outputs: "Visual highlight shift between counted and ignored states.",
+                            rubrics: ["Clarity of 'Independent' vs 'Data-efficient' concepts", "Correct identification of the S1 count", "Student engagement"],
+                            outcomes: "Students identify the core algorithmic trade-offs in MC state updates.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Loop Auditor Workshop",
+                            objectives: "Collaboratively calculate visit counts for complex state sequences.",
+                            instructions: [
+                                "Teacher draws a path on the board: $S_0 \to S_1 \to S_2 \to S_1 \to S_3 \to S_1 \to \text{Goal}$.",
+                                "Class Task: Calculate $N(S_1)$ for First-Visit and Every-Visit.",
+                                "Group Task: If the reward at the Goal is +100, calculate the total sum of returns added to $V(S_1)$ for both methods.",
+                                "Class reflects: 'Does Every-Visit bias the value because it adds the same +100 three times?'",
+                                "Conclusion: Both converge to the same value, but via different paths."
+                            ],
+                            inputs: "State sequence strings",
+                            outputs: "Manual N(s) and Sum(G) calculations",
+                            rubrics: ["Arithmetic accuracy", "Correct logic for ignoring subsequent visits", "Classroom participation"],
+                            outcomes: "Students master the numerical implementation of both algorithms.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Data Efficiency Debate",
+                            objectives: "Experience the trade-off between statistical purity and sample speed.",
+                            instructions: [
+                                "Divide class into 2 teams: Team Purity (First-Visit) and Team Speed (Every-Visit).",
+                                "Scenario: 'A robot learning to fold clothes'. It often repeats the same motion (state) within one episode.",
+                                "Team Purity: Argue why counting only the first visit prevents 'over-weighting' a single episode.",
+                                "Team Speed: Argue why ignoring 90% of your experience is a waste of expensive robot time.",
+                                "Output: A 'Pros vs. Cons' chart for both methods.",
+                                "Conclusion: 'Use Every-Visit when data is expensive; use First-Visit for theoretical simplicity.'"
+                            ],
+                            inputs: "Robot folding scenario",
+                            outputs: "Comparison matrix",
+                            rubrics: ["Understanding of 'Independence' vs 'Variance'", "Logical arguments", "Team coordination"],
+                            outcomes: "Students develop a nuanced engineering perspective on algorithm selection.",
+                            time: "20 Mins",
+                            materials: ["None"]
+                        },
+                        {
+                            level: 4,
+                            title: "Gaming Loop Audit",
+                            objectives: "Independently audit a gameplay loop to determine the best update strategy.",
+                            instructions: [
+                                "Task: Choose a game with frequent backtracking (e.g., 'Pac-Man' or 'Metroid').",
+                                "Audit: Identify a state (location) you visit multiple times in one 'life' (episode).",
+                                "Reflection: If you were an RL agent, would you learn better by counting every pass or just the first?",
+                                "Analysis: If you use Every-Visit in Pac-Man, does the 'Power Pellet' reward get over-counted? Why or why not?",
+                                "Propose: The best MC method for your chosen game."
+                            ],
+                            inputs: "Personal gaming experience",
+                            outputs: "Individual Algorithm Suitability Report (1 page)",
+                            rubrics: ["Correct use of 'Independence' and 'Efficiency' terms", "Logical game-loop analysis", "Originality"],
+                            outcomes: "Students demonstrate the ability to map algorithmic choices to complex environmental dynamics.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
+            </SectionWrapper>
+
+            {/* SECTION 4: PROJECT BASED LEARNING */}
+            <SectionWrapper 
+                id="project" 
+                title="4. Project: The Gridworld Scientist" 
+                subtitle="Comparing Algorithm Convergence"
+                icon={<Briefcase className="text-indigo-600" size={24} />}
+                badge="PBL"
+                badgeColor="bg-indigo-100 text-indigo-700"
+                accentColor="border-indigo-500"
+            >
+                <div className="space-y-6">
+                    <div className="card p-6 border-l-4 border-indigo-500 bg-indigo-50/30 dark:bg-indigo-900/10">
+                        <h5 className="font-bold mb-2 flex items-center gap-2"><Target size={18} /> The Efficiency Duel</h5>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            You are tasked with comparing First-Visit and Every-Visit MC in a windy gridworld. Because the wind blows the agent back frequently, it visits the same states many times. Your project is to plot the **Root Mean Square Error (RMSE)** of both methods over 1,000 episodes to see which one reaches the true value faster.
+                        </p>
+                    </div>
+
+                    <div className="grid sm:grid-cols-3 gap-4">
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-center">
+                            <Clock size={24} className="mx-auto mb-2 text-indigo-500" />
+                            <div className="text-[10px] font-black uppercase">Data</div>
+                            <p className="text-[8px] mt-1">Episode Trajectories</p>
+                        </div>
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-center text-primary-500">
+                            <Binary size={24} className="mx-auto mb-2" />
+                            <div className="text-[10px] font-black uppercase">Compute</div>
+                            <p className="text-[8px] mt-1">Incremental Averaging</p>
+                        </div>
+                        <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-center text-emerald-600">
+                            <Activity size={24} className="mx-auto mb-2" />
+                            <div className="text-[10px] font-black uppercase">Analysis</div>
+                            <p className="text-[8px] mt-1">Convergence Curve</p>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
+            <SectionWrapper 
+                id="questions" 
+                title="5. Quick Check" 
+                subtitle="Algorithmic Mastery"
+                icon={<HelpCircle className="text-purple-600" size={24} />}
+                badge="Questions"
+                badgeColor="bg-purple-100 text-purple-700"
+                accentColor="border-purple-500"
+            >
+                <div className="grid gap-4">
+                    {[
+                        { q: 'Explain the difference between First-Visit and Every-Visit MC.', a: 'First-Visit MC only uses the first occurrence of a state in an episode to update its value estimate; Every-Visit MC uses every occurrence of the state in that episode.' },
+                        { q: 'Which method is more data-efficient?', a: 'Every-Visit MC is generally more data-efficient because it extracts multiple value samples from a single episode if states are revisited.' },
+                        { q: 'Do both methods converge to the same value?', a: 'Yes, both methods are statistically guaranteed to converge to the true value function as the number of episodes approaches infinity.' }
+                    ].map((item, i) => (
+                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
+                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
+                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
+                        </div>
+                    ))}
+                </div>
+            </SectionWrapper>
+
+            {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
+            <SectionWrapper 
+                id="lab" 
+                title="6. Virtual Lab: Visit Comparison" 
+                subtitle="Count the Experience"
+                icon={<FlaskConical className="text-cyan-600" size={24} />}
+                badge="Virtual Lab"
+                badgeColor="bg-cyan-100 text-cyan-700"
+                accentColor="border-cyan-500"
+            >
+                <div className="space-y-6">
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Toggle between **First-Visit** and **Every-Visit** to see which states in the sequence are highlighted for an update. Notice how S1 is treated differently when it appears multiple times.
+                    </p>
+                    <VisitLab />
+                </div>
+            </SectionWrapper>
+
+            {/* FEEDBACK SECTION */}
+            <div className="bg-primary-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-primary-500/20">
+                <div className="max-w-xl mx-auto space-y-2">
+                    <h3 className="text-3xl font-black italic">Algorithms: Mastered!</h3>
+                    <p className="text-primary-100">
+                        You know how to count. Now, let's look at how we use these counts for the two main tasks of RL: Prediction and Control.
+                    </p>
+                </div>
+                <div className="flex justify-center gap-4">
+                    <button className="px-10 py-4 bg-white text-primary-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+                        NEXT: MC PREDICTION
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

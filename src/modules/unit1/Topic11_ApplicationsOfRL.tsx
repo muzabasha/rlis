@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Rocket, Cpu, Briefcase, Target, Zap, TrendingUp,
@@ -197,37 +198,89 @@ export default function Topic11_ApplicationsOfRL() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: The Industry Consultant"
+                title="3. Multi-Level Activities"
                 subtitle="Designing RL Solutions"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: RL in your Phone</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Teacher explains how Spotify "Discover Weekly" uses RL. "If I skip a song, what is the reward? (-1). If I add to a playlist? (+10). If I listen to the end? (+1). How does the agent learn my taste?"
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Brainstorm: RL for Campus</h4>
-                        </div>
-                        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200">
-                            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">Problem: The Canteen Queue is too long.</p>
-                            <p className="text-[10px] text-slate-500">Task: Define the Agent, State, and Reward for an RL-based queue management system.</p>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Industry Showcase Demo",
+                            objectives: "Survey the diverse fields where RL provides a competitive advantage over traditional methods.",
+                            instructions: [
+                                "Open the 'Application Showcase' in the Virtual Lab section.",
+                                "Select 'Quantitative Finance' and explain why ROI is a perfect RL reward signal.",
+                                "Select 'Personalized Medicine' and discuss the 'Patient Outcome' as a long-term goal.",
+                                "Show the 'Recommendation Systems' card and explain the Netflix/YouTube connection.",
+                                "Discuss how each industry maps back to the <S, A, P, R, γ> tuple."
+                            ],
+                            inputs: "Interactive ApplicationGrid component",
+                            outputs: "Detailed industry cards showing Rewards, Icons, and Use Cases.",
+                            rubrics: ["Clarity of industry mapping", "Connection to reward functions", "Student engagement"],
+                            outcomes: "Students identify the variety of domains where sequential decision-making (RL) is used.",
+                            time: "10 Mins",
+                            materials: ["Interactive Lab", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The CTR Reward Workshop",
+                            objectives: "Collaboratively calculate and evaluate the reward signal for a recommendation system.",
+                            instructions: [
+                                "Teacher presents a scenario: A user is shown 10 YouTube thumbnails.",
+                                "Teacher lists results: [Click, Skip, Click, Skip, Skip, Skip, Skip, Skip, Click, Skip].",
+                                "Guided Calculation: Total Impressions = 10. Total Clicks = 3. CTR = 3/10 = 0.30.",
+                                "Discussion: 'Is CTR a good enough reward? What if the user clicks but hates the video?'",
+                                "Class adds a 'Watch Time' weight to the formula: R = (0.5 * CTR) + (0.5 * WatchRatio)."
+                            ],
+                            inputs: "Simulated user interaction logs",
+                            outputs: "Composite Reward Formula on the board",
+                            rubrics: ["Mathematical accuracy", "Logic of composite rewards", "Classroom participation"],
+                            outcomes: "Students learn to design and calculate domain-specific reward signals.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Campus RL Consultant",
+                            objectives: "Experience the engineering process of formulating a real-world problem as an MDP.",
+                            instructions: [
+                                "Divide class into 4 groups: The Canteen Team, The Library Team, The Parking Team, The Exam Scheduler Team.",
+                                "Task: Each team must define <S, A, R> for their campus problem.",
+                                "Canteen: S = queue length, A = dynamic pricing/opening counters, R = total throughput/wait-time reduction.",
+                                "Library: S = book availability, A = reminder frequency, R = return rate.",
+                                "Teams pitch their 'Campus RL Solution' to the class."
+                            ],
+                            inputs: "Common campus operational problems",
+                            outputs: "Formal <S, A, R> Definitions on chart paper",
+                            rubrics: ["Correct MDP formulation", "Practicality of actions", "Team coordination"],
+                            outcomes: "Students bridge the gap between abstract math and real-world organizational efficiency.",
+                            time: "20 Mins",
+                            materials: ["Chart paper", "Markers"]
+                        },
+                        {
+                            level: 4,
+                            title: "App-Log RL Audit",
+                            objectives: "Independently audit a personal digital experience through the lens of RL application design.",
+                            instructions: [
+                                "Task: Open your favorite app (Instagram, Spotify, or Amazon).",
+                                "Identify 3 things the app 'Observed' about you today (State).",
+                                "Identify the 'Action' it took (e.g., what it recommended).",
+                                "Define the 'Reward' it received from you (e.g., like, purchase, or 5-second view).",
+                                "Self-Evaluation: Did the app's 'RL Agent' succeed in engaging you for more than 10 minutes?"
+                            ],
+                            inputs: "Student's own smartphone/app usage",
+                            outputs: "Individual 'App-RL Audit' Report",
+                            rubrics: ["Accuracy of State/Action identification", "Logic of Reward deduction", "Originality"],
+                            outcomes: "Students realize they are active participants in RL-driven economies every day.",
+                            time: "15 Mins",
+                            materials: ["Student Smartphone"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

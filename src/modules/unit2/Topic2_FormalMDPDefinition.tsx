@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Zap, TrendingUp, Clock, Briefcase, Layout,
@@ -214,38 +215,89 @@ export default function Topic2_FormalMDPDefinition() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: Dynamics Modeler"
-                subtitle="Calculating Probabilities"
+                title="3. Multi-Level Activities"
+                subtitle="Formalizing the Dynamics"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Class Challenge: The Rainy Day MDP</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            "If it is Sunny ($s$), and you take the action 'Walk' ($a$), there is a 90% chance you stay Dry ($s'$) and a 10% chance it starts Raining ($s''$). Write this as a transition probability."
-                            <br /><strong>Answer:</strong> {"$P(\\text{Dry} | \\text{Sunny}, \\text{Walk}) = 0.9$"}
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Interactive: Validating a Matrix</h4>
-                        </div>
-                        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 text-center font-mono text-xs">
-                            {"P = [[0.7, 0.3], [0.4, 0.6]]"}
-                            <div className="mt-2 text-emerald-500 font-bold">Valid: Row sums equal 1.0</div>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Transition Matrix Demo",
+                            objectives: "Visualize how different actions redistribute the probability of future states.",
+                            instructions: [
+                                "Open the 'Transition Explorer' in the Virtual Lab section.",
+                                "Select the 'Search' action and point out the 30% risk of battery drain.",
+                                "Switch to 'Wait' and show how the probability shifts back to 80% safety.",
+                                "Explain that the 'P' in the (S, A, P, R) tuple is actually a set of matrices, one for each action."
+                            ],
+                            inputs: "Interactive TransitionMatrixExplorer component",
+                            outputs: "Real-time probability bar charts for 'Search' vs 'Wait'.",
+                            rubrics: ["Clarity of matrix explanation", "Demonstration of stochasticity", "Student engagement"],
+                            outcomes: "Students identify that actions control the probability distribution of the next state.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Matrix Validation Workshop",
+                            objectives: "Collaboratively verify and correct transition matrices based on probability axioms.",
+                            instructions: [
+                                "Teacher writes a 2x2 matrix on the board with a missing value: [[0.7, ?], [0.4, 0.6]].",
+                                "Guided Question: 'What must the missing value be for the matrix to be valid? Why?'",
+                                "Class calculates: 1.0 - 0.7 = 0.3.",
+                                "Teacher introduces a 'Broken Matrix': [[0.7, 0.4], [0.1, 0.9]].",
+                                "Students identify why row 1 is invalid (sums to 1.1) and suggest a fix."
+                            ],
+                            inputs: "Incomplete and broken transition matrices",
+                            outputs: "Corrected 2x2 Transition Matrix on the board",
+                            rubrics: ["Mathematical accuracy", "Understanding of row-sum rule", "Classroom participation"],
+                            outcomes: "Students master the fundamental constraint of transition dynamics (row sums must equal 1.0).",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Rainy Day Modeler",
+                            objectives: "Experience the process of estimating real-world transition probabilities in a group setting.",
+                            instructions: [
+                                "Divide class into 4 teams. Each team must model the 'Weather MDP'.",
+                                "States: {Sunny, Rainy}. Action: {Walk Outside}.",
+                                "Task: Estimate the probability P(Rainy | Sunny, Walk) and P(Sunny | Sunny, Walk) based on 'Intuitive Seasonal Data'.",
+                                "Challenge: If it's Rainy now, and you 'Wait', what is the probability it stays Rainy vs becomes Sunny?",
+                                "Teams present their 2x2 Transition Matrix on chart paper."
+                            ],
+                            inputs: "Intuitive weather scenarios",
+                            outputs: "Complete Weather Transition Matrix",
+                            rubrics: ["Logical probability estimation", "Technical matrix formatting", "Team coordination"],
+                            outcomes: "Students bridge the gap between qualitative scenarios and quantitative MDP dynamics.",
+                            time: "20 Mins",
+                            materials: ["Chart paper", "Markers"]
+                        },
+                        {
+                            level: 4,
+                            title: "Personal Habit Tuple",
+                            objectives: "Independently formalize a daily personal decision as a 4-tuple MDP.",
+                            instructions: [
+                                "Task: Choose one daily habit (e.g., Checking Instagram, Going to the Gym, Drinking Coffee).",
+                                "Write down the 4-tuple (S, A, P, R) for this habit.",
+                                "Identify 2 States (e.g., Feeling Bored, Feeling Energetic).",
+                                "Identify 1 Action (e.g., Scroll Feed).",
+                                "Estimate the Transition: If you are 'Bored' and 'Scroll Feed', what is the probability you transition to 'Happy' vs 'More Bored'?",
+                                "Define the Reward: What 'Points' does your brain get?"
+                            ],
+                            inputs: "Personal daily routines",
+                            outputs: "Individual 'Habit MDP' Report (1 page)",
+                            rubrics: ["Correct use of 4-tuple notation", "Logical transition estimation", "Originality"],
+                            outcomes: "Students realize that MDPs are a universal language for modeling any purposeful behavior.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

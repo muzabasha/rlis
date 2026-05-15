@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
-import { 
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
+import ActivityLevels from '../../components/topic/ActivityLevels';
+import {
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     TrendingUp, GitMerge, Search, Target, Network, Layers, BarChart4, Play, Pause, RotateCcw, Briefcase
 } from 'lucide-react';
-import { 
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
+import {
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, Cell
 } from 'recharts';
 
@@ -20,11 +21,11 @@ import {
 function ConvergenceLab() {
     const [step, setStep] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
-    
+
     // Transition Matrix: 
     // P = [[0.8, 0.2], [0.4, 0.6]]
     // Initial State: [1, 0] (Start 100% Sunny)
-    
+
     const [dist, setDist] = useState([1.0, 0.0]);
 
     const P = [
@@ -93,7 +94,7 @@ function ConvergenceLab() {
                         <span>Time Step (t)</span>
                         <span className="text-xl text-primary-600 bg-primary-50 px-3 py-1 rounded-lg">{step}</span>
                     </div>
-                    
+
                     <div className="space-y-3">
                         {chartData.map((d, i) => (
                             <div key={i} className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 shadow-sm">
@@ -102,7 +103,7 @@ function ConvergenceLab() {
                                     <span className="text-xs font-black" style={{ color: d.color }}>{d.prob}%</span>
                                 </div>
                                 <div className="w-full h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
-                                    <motion.div 
+                                    <motion.div
                                         initial={false}
                                         animate={{ width: `${d.prob}%` }}
                                         transition={{ type: 'spring', bounce: 0 }}
@@ -144,11 +145,11 @@ function ConvergenceLab() {
 export default function Topic4_MarkovChainAnalysis() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Equilibrium Effect" 
+            <SectionWrapper
+                id="story"
+                title="1. The Equilibrium Effect"
                 subtitle="Where Does the Future Settle?"
                 icon={<BookOpen className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -188,9 +189,9 @@ export default function Topic4_MarkovChainAnalysis() {
             </SectionWrapper>
 
             {/* SECTION 2: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="2. The Math of Convergence" 
+            <SectionWrapper
+                id="math"
+                title="2. The Math of Convergence"
                 subtitle="n-Step Transitions & Stationary Distributions"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
@@ -200,7 +201,7 @@ export default function Topic4_MarkovChainAnalysis() {
                 <div className="space-y-8">
                     <div className="grid lg:grid-cols-2 gap-8">
                         <div className="space-y-6">
-                            <MathBlock 
+                            <MathBlock
                                 formula="\pi P = \pi"
                                 label="Stationary Distribution Equation"
                                 explanation="The distribution vector π multiplied by the transition matrix P results in the exact same distribution π."
@@ -212,7 +213,7 @@ export default function Topic4_MarkovChainAnalysis() {
                                 </p>
                             </div>
                         </div>
-                        
+
                         <div className="space-y-6">
                             <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
                                 <h5 className="font-bold text-slate-800 dark:text-white mb-4">Requirements for Stationarity</h5>
@@ -225,7 +226,7 @@ export default function Topic4_MarkovChainAnalysis() {
                         </div>
                     </div>
 
-                    <SymbolTable 
+                    <SymbolTable
                         symbols={[
                             { symbol: '\pi', meaning: 'Stationary distribution vector (a row vector of probabilities).' },
                             { symbol: 'P', meaning: 'State transition probability matrix.' },
@@ -237,46 +238,97 @@ export default function Topic4_MarkovChainAnalysis() {
             </SectionWrapper>
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="3. Activity: The Two-Day Forecast" 
-                subtitle="Calculating n-Step Transitions"
+            <SectionWrapper
+                id="activity"
+                title="3. Multi-Level Activities"
+                subtitle="Analyzing Long-Term Dynamics"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: Matrix Multiplication</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Teacher writes a 2x2 transition matrix P on the board. "If today is Sunny, what is the probability it is Rainy the <strong>day after tomorrow</strong>?" The teacher demonstrates squaring the matrix ($P \times P$) to find $P^2$, where the (Sunny, Rainy) cell gives the exact answer.
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Student Task: The Ergodic Check</h4>
-                        </div>
-                        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200">
-                            <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">Look at this rule: "If it is Sunny, it will ALWAYS be Rainy tomorrow. If it is Rainy, it will ALWAYS be Sunny tomorrow."</p>
-                            <p className="text-[10px] font-bold text-primary-600">Question: Does this chain settle down to a steady state?</p>
-                            <p className="text-[10px] text-slate-500 italic mt-1">Answer: No, it is "Periodic" (oscillates Sunny -&gt; Rainy -&gt; Sunny). Therefore, it cannot have a stable stationary distribution.</p>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Convergence Simulator Demo",
+                            objectives: "Observe how a distribution settles into a stationary state regardless of the initial starting point.",
+                            instructions: [
+                                "Open the 'Convergence Simulator' in the Virtual Lab section.",
+                                "Press Play and watch the 'Sunny' probability drop from 100% to ~66.7%.",
+                                "Explain that this 66.7% is the value where $\pi P = \pi$ holds.",
+                                "Ask: 'What would happen if we started 100% Rainy?' (Predict convergence to the same point)."
+                            ],
+                            inputs: "Interactive ConvergenceLab component",
+                            outputs: "Real-time probability bar charts showing equilibrium.",
+                            rubrics: ["Clarity of 'Equilibrium' explanation", "Demonstration of convergence speed", "Student engagement"],
+                            outcomes: "Students identify the stationary distribution as the fixed point of the system.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Ergodic Audit Workshop",
+                            objectives: "Collaboratively classify Markov Chains as Ergodic or Non-Ergodic based on their topology.",
+                            instructions: [
+                                "Teacher draws three state-transition diagrams on the board.",
+                                "Diagram A: Two disconnected groups (Irreducible check).",
+                                "Diagram B: A strict A->B->A cycle (Aperiodic check).",
+                                "Diagram C: A fully connected network.",
+                                "Guided Discussion: 'Which one will have a unique stationary distribution?'",
+                                "Students identify Diagram C as Ergodic and explain why A and B fail."
+                            ],
+                            inputs: "State-transition topology diagrams",
+                            outputs: "Classification of 3 chains (Irreducible, Aperiodic, Ergodic)",
+                            rubrics: ["Correct use of terminology", "Logical justification", "Classroom participation"],
+                            outcomes: "Students master the theoretical requirements for a Markov Chain to settle down.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Mini-PageRank Simulation",
+                            objectives: "Experience the fundamental logic of Google's search algorithm using a manual Markov Chain process.",
+                            instructions: [
+                                "Divide class into groups of 3 (Webpage A, B, and C).",
+                                "A links to B. B links to A and C. C links to A.",
+                                "Each group starts with 100 'Importance Points' on Page A.",
+                                "Task: Perform 3 steps of point distribution. (e.g., in step 1, A gives all 100 to B).",
+                                "Groups track the 'Score Distribution' after 3 steps and identify the 'Most Important' page."
+                            ],
+                            inputs: "3-page link topology",
+                            outputs: "Score Distribution Table [A, B, C] after 3 iterations",
+                            rubrics: ["Mathematical accuracy of flow", "Technical matrix mapping", "Team coordination"],
+                            outcomes: "Students understand that the Stationary Distribution represents the 'Relative Importance' of states.",
+                            time: "20 Mins",
+                            materials: ["Large paper sheets", "Score markers"]
+                        },
+                        {
+                            level: 4,
+                            title: "The n-Step Calculation Audit",
+                            objectives: "Independently calculate the exact probability of a state transition after 2 and 3 steps.",
+                            instructions: [
+                                "Task: Given $P = [[0.9, 0.1], [0.5, 0.5]]$.",
+                                "Calculate $P^2$ manually on paper.",
+                                "If starting in state 2, what is the probability of being in state 1 after 2 steps?",
+                                "Estimate $P^3$ and observe if the values are moving closer together or staying the same.",
+                                "Reflect: How many steps does it take for this matrix to 'forget' its starting state?"
+                            ],
+                            inputs: "2x2 Transition Matrix P",
+                            outputs: "Individual calculation report with $P^2$ values",
+                            rubrics: ["Matrix multiplication accuracy", "Correct cell interpretation", "Depth of reflection"],
+                            outcomes: "Students gain technical proficiency in calculating multi-step Markovian trajectories.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="4. Project: PageRank Algorithm" 
+            <SectionWrapper
+                id="project"
+                title="4. Project: PageRank Algorithm"
                 subtitle="How Google Uses Markov Chains"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -312,9 +364,9 @@ export default function Topic4_MarkovChainAnalysis() {
             </SectionWrapper>
 
             {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="5. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="5. Quick Check"
                 subtitle="Analytical Concepts"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -336,9 +388,9 @@ export default function Topic4_MarkovChainAnalysis() {
             </SectionWrapper>
 
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="6. Virtual Lab: Convergence Simulator" 
+            <SectionWrapper
+                id="lab"
+                title="6. Virtual Lab: Convergence Simulator"
                 subtitle="Watch the Probabilities Settle"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

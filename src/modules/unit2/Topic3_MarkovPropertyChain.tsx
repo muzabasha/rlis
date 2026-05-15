@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Zap, TrendingUp, Clock, Briefcase, Layout,
@@ -223,44 +224,87 @@ export default function Topic3_MarkovPropertyChain() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: The Memory Test"
-                subtitle="Identifying Markovian Systems"
+                title="3. Multi-Level Activities"
+                subtitle="Testing the Memoryless Property"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Class Challenge: Markov or Not?</h4>
-                        </div>
-                        <div className="grid sm:grid-cols-2 gap-4">
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200">
-                                <span className="text-[10px] font-bold text-blue-500 uppercase">Chess</span>
-                                <p className="text-xs font-bold">Markovian (The board tells you everything).</p>
-                            </div>
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200">
-                                <span className="text-[10px] font-bold text-red-500 uppercase">Poker</span>
-                                <p className="text-xs font-bold">Non-Markovian (History of betting matters).</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Interactive: State Augmentation</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            "If a system is non-Markovian, how do we fix it?"
-                            <br /><strong>Solution:</strong> We include history in the current state (e.g., instead of just "Position", use "Position + Velocity").
-                        </p>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Markov Chain Demo",
+                            objectives: "Observe how a sequence of states is generated using only the transition probabilities of the current state.",
+                            instructions: [
+                                "Open the 'Weather Markov Chain' in the Virtual Lab section.",
+                                "Run 10 steps and watch the 'Trajectory History' grow.",
+                                "Stop at a 'Rainy' state and ask the class: 'Does the probability of the next state change if the last 5 days were Sunny?'",
+                                "Explain that the 0.4 probability of Sunny remains constant, proving the property $P(S_{t+1}|S_t)$."
+                            ],
+                            inputs: "Interactive MarkovChainVisualizer component",
+                            outputs: "Visual weather trajectory and state toggle animations.",
+                            rubrics: ["Clarity of 'Memoryless' explanation", "Demonstration of fixed probabilities", "Student engagement"],
+                            outcomes: "Students visually confirm that the past path does not alter the current transition logic.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Multi-Step Matrix Workshop",
+                            objectives: "Collaboratively calculate the probability of the state 'the day after tomorrow' using matrix multiplication.",
+                            instructions: [
+                                "Teacher presents the matrix $P = [[0.8, 0.2], [0.4, 0.6]]$.",
+                                "Scenario: Today is Sunny ($S_0 = [1, 0]$).",
+                                "Task: Find $P(S_2)$ (the weather in two days).",
+                                "Guided Calculation: $P^2 = P \times P$. Calculate the top-left entry: $(0.8 \times 0.8) + (0.2 \times 0.4) = 0.64 + 0.08 = 0.72$.",
+                                "Class completes the full $2 \times 2$ matrix for $P^2$ on the board."
+                            ],
+                            inputs: "2x2 Transition Matrix data",
+                            outputs: "Completed 2-step Transition Matrix ($P^2$)",
+                            rubrics: ["Mathematical accuracy", "Understanding of state-to-state flow", "Classroom participation"],
+                            outcomes: "Students learn how to project Markovian systems into the future mathematically.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Markov Detective",
+                            objectives: "Experience the analytical process of determining if a system's current representation satisfies the Markov property.",
+                            instructions: [
+                                "Divide class into 4 teams. Each team gets a system: 1. A stock market price, 2. A person's hunger level, 3. A car's position on a highway, 4. A player's mood in a game.",
+                                "Team Task: Is this system Markovian if we ONLY look at the current value?",
+                                "Example: If I know the car is at 50km/h, do I know where it will be in 1 second? (No, I need its acceleration history).",
+                                "Teams must propose an 'Augmented State' to make it Markovian (e.g., adding 'Velocity' or 'Trend')."
+                            ],
+                            inputs: "Real-world dynamic systems",
+                            outputs: "System Analysis Poster: (Raw State -> Hidden History -> Markovian State)",
+                            rubrics: ["Correct identification of history-dependence", "Logic of state augmentation", "Team coordination"],
+                            outcomes: "Students develop the intuition needed to design 'Full' state representations for RL agents.",
+                            time: "20 Mins",
+                            materials: ["Chart paper", "Markers"]
+                        },
+                        {
+                            level: 4,
+                            title: "History to State Audit",
+                            objectives: "Independently transform a personal memory-dependent decision into a Markovian mathematical state.",
+                            instructions: [
+                                "Task: Think of a decision you make that depends on history (e.g., 'What should I eat for dinner?').",
+                                "Usually, this is non-Markovian because it depends on what you ate for the last 3 days.",
+                                "Rewrite this as a Markovian state: Create a 'State Vector' that includes the last 3 meals as features.",
+                                "State = [Current Hunger, Meal_t-1, Meal_t-2, Meal_t-3].",
+                                "Self-Evaluation: Does this new 'Augmented State' now contain all information needed to predict tonight's dinner?"
+                            ],
+                            inputs: "Personal meal history or habit",
+                            outputs: "Individual 'Augmented State' Definition Note",
+                            rubrics: ["Technical accuracy of state vector", "Explanation of 'History Folding'", "Originality"],
+                            outcomes: "Students internalize that any system can become Markovian if the state is rich enough.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

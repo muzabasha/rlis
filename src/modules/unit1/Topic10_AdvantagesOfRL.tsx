@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     TrendingUp, ShieldCheck, Zap, Target, Brain,
@@ -182,43 +183,84 @@ export default function Topic10_AdvantagesOfRL() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: Advantage Showdown"
-                subtitle="Classifying AI Strengths"
+                title="3. Multi-Level Activities"
+                subtitle="The Power of Autonomy"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Unlabeled Maze</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Teacher shows a complex maze. "In Supervised Learning, I give you the path. In RL, I only give you a treat at the exit. Which one allows you to find a shortcut I didn't see?"
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Interactive Scenario Sorting</h4>
-                        </div>
-                        <div className="grid sm:grid-cols-2 gap-4">
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 flex justify-between items-center">
-                                <span className="text-xs font-bold">AlphaGo winning against Lee Sedol</span>
-                                <span className="text-[10px] px-2 py-1 bg-blue-100 text-blue-700 rounded-md">Novel Strategy</span>
-                            </div>
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 flex justify-between items-center">
-                                <span className="text-xs font-bold">Robot walking on uneven sand</span>
-                                <span className="text-[10px] px-2 py-1 bg-emerald-100 text-emerald-700 rounded-md">Adaptability</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Efficiency Benchmarking Demo",
+                            objectives: "Demonstrate how RL agents find superior strategies compared to fixed classical rules.",
+                            instructions: [
+                                "Open the 'RL vs Classical Control' chart in the Virtual Lab section.",
+                                "Compare 'Discovery' score: Point out why RL is 85% while Classical is 10%.",
+                                "Explain that Classical systems can't 'discover'—they only follow what the engineer knew.",
+                                "Highlight the 'Adaptability' bar and explain how RL handles sensor noise better than fixed PID loops."
+                            ],
+                            inputs: "Interactive Benefit Comparison Chart",
+                            outputs: "Comparative performance bars for Adaptability, Complexity, and Discovery.",
+                            rubrics: ["Clarity of comparison", "Explanation of 'Scripting' limits", "Student engagement"],
+                            outcomes: "Students observe the objective superiority of RL in high-complexity discovery tasks.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Strategy Decoder Workshop",
+                            objectives: "Collaboratively identify which specific RL advantage applies to famous AI milestones.",
+                            instructions: [
+                                "Teacher presents 3 cases: AlphaGo's 'Move 37', OpenAI Five playing DOTA 2, and Tesla Autopilot.",
+                                "Class classifies each into: Novel Strategy, Adaptability, or Scalability.",
+                                "Guided Discussion: 'Why was Move 37 considered a novel strategy?' (It was a move no human pro had ever made).",
+                                "Discussion: 'How does Autopilot show Adaptability?' (Handling rain/construction)."
+                            ],
+                            inputs: "Brief case studies of AI successes",
+                            outputs: "Categorized Advantage Table on the whiteboard",
+                            rubrics: ["Conceptual accuracy", "Logical reasoning", "Classroom participation"],
+                            outcomes: "Students master the taxonomy of RL benefits in real-world engineering.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Smart Grid Architect",
+                            objectives: "Experience the advantage of RL in solving multi-objective optimization problems.",
+                            instructions: [
+                                "Divide class into 4 groups: The Profit Maximizers, The Carbon Reducers, The Battery Preservers, The RL Integration Team.",
+                                "Scenario: Managing a city's solar grid. Groups 1-3 propose a fixed rule (e.g., 'Sell all power at noon').",
+                                "The RL Team must explain how an RL agent would balance ALL THREE objectives simultaneously by looking at long-term battery health vs immediate profit.",
+                                "Compare the 'Fixed Rules' vs the 'RL Policy'. Who wins in a year-long simulation?"
+                            ],
+                            inputs: "Energy grid constraints (Price, Sunlight, Battery life)",
+                            outputs: "Proposed 'Rule-Based' vs 'RL-Based' management plans",
+                            rubrics: ["Multi-objective balancing", "Innovation", "Team coordination"],
+                            outcomes: "Students internalize the 'Delayed Gratification' advantage of RL (saving battery for later).",
+                            time: "20 Mins",
+                            materials: ["Planning sheets", "Post-its"]
+                        },
+                        {
+                            level: 4,
+                            title: "Life-Advantage Audit",
+                            objectives: "Independently identify an RL-style advantage in a personal skill acquisition process.",
+                            instructions: [
+                                "Task: Think of a skill you learned where 'Rules' weren't enough (e.g., Riding a bike, Playing an instrument, or a Video Game).",
+                                "Write 3 sentences: 1. Why couldn't a book teach you the exact 'Rule' to win? 2. What 'Novel Strategy' did you discover through trial and error? 3. How did you 'Adapt' to a changing situation?",
+                                "Self-Evaluation: Is your brain's 'RL Engine' more focused on short-term fun or long-term mastery?"
+                            ],
+                            inputs: "Personal memories of learning",
+                            outputs: "Personal 'Human RL' Audit Report",
+                            rubrics: ["Depth of reflection", "Application of RL terminology", "Originality"],
+                            outcomes: "Students bridge the gap between abstract machine learning theory and their own cognitive advantages.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

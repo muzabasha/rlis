@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import { 
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
     Target, LayoutGrid, Brain, Swords, Focus, CheckCircle2, XCircle
@@ -209,43 +210,88 @@ export default function Topic10_StateValueFunction() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
                 id="activity" 
-                title="3. Activity: Value of Tic-Tac-Toe" 
-                subtitle="Assigning Values to States"
+                title="3. Multi-Level Activities" 
+                subtitle="The Intuition of Evaluation"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Board Evaluation</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                            Let's say Win = +1, Loss = -1, Draw = 0. $\gamma = 1.0$. Assume you play perfectly (Optimal Policy).
-                        </p>
-                        <div className="grid sm:grid-cols-2 gap-4">
-                            <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
-                                <div className="font-mono text-xl mb-2 text-slate-700 dark:text-slate-300">
-                                    [X] [X] [ ]<br/>[O] [O] [ ]<br/>[ ] [ ] [ ]
-                                </div>
-                                <div className="text-[10px] font-bold text-primary-600 uppercase">State S1</div>
-                                <div className="mt-2 text-xs font-bold">V(S1) = +1</div>
-                                <p className="text-[10px] text-slate-500 text-center mt-1">You are X. It's your turn. You can immediately win.</p>
-                            </div>
-                            <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
-                                <div className="font-mono text-xl mb-2 text-slate-700 dark:text-slate-300">
-                                    [X] [O] [ ]<br/>[O] [X] [ ]<br/>[ ] [ ] [ ]
-                                </div>
-                                <div className="text-[10px] font-bold text-primary-600 uppercase">State S2</div>
-                                <div className="mt-2 text-xs font-bold">V(S2) = 0</div>
-                                <p className="text-[10px] text-slate-500 text-center mt-1">Early game. Assuming perfect opponent play, it will be a draw.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Value Heatmap Demo",
+                            objectives: "Observe the drastic change in state value when behavior shifts from random to optimal.",
+                            instructions: [
+                                "Open the 'Value Heatmap' in the Virtual Lab section.",
+                                "Toggle 'Random Policy'. Point out how even states next to the goal have low value (e.g., 0.5).",
+                                "Toggle 'Optimal Policy'. Watch the value of the same states jump to 9.0.",
+                                "Explain: 'The state didn't change, but the agent's ability to reach the goal changed.'"
+                            ],
+                            inputs: "Interactive GridworldValueLab component",
+                            outputs: "Dynamic heatmaps showing $V(s)$ across a 3x3 grid.",
+                            rubrics: ["Clarity of 'Policy-Value' dependency", "Demonstration of heatmap gradients", "Student engagement"],
+                            outcomes: "Students internalize that state value is a property of both the environment and the policy.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "Board Evaluation Workshop",
+                            objectives: "Collaboratively estimate the state value of specific Tic-Tac-Toe configurations.",
+                            instructions: [
+                                "Teacher draws a board: X has two in a row, O has one. It is X's turn.",
+                                "Guided Discussion: 'If Win=+1, Loss=-1. What is $V(s)$ for this board?'",
+                                "Students identify that since X can win immediately, $V(s) = +1$.",
+                                "Teacher draws a second board where O is about to win. What is $V(s)$ now?",
+                                "Students conclude $V(s) = -1$ (guaranteed loss)."
+                            ],
+                            inputs: "Tic-Tac-Toe state diagrams",
+                            outputs: "Numerical value assignments for 3 board states",
+                            rubrics: ["Correct use of win/loss scale", "Logic of future-looking evaluation", "Classroom participation"],
+                            outcomes: "Students master the concept of 'Evaluating' a state based on future potential outcomes.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Value Graph Design",
+                            objectives: "Experience the impact of 'Bottleneck' states on the value distribution of a network.",
+                            instructions: [
+                                "Divide class into 4 teams. Provide a graph of 5 rooms in a building. Only one room has a 'Goal' (+100).",
+                                "Group Task: Assign estimated 'Value' numbers to each room. $\gamma=0.9$.",
+                                "Teams must identify the 'Bottleneck' room (the only room that leads to the goal).",
+                                "Question: 'Why does the Bottleneck have higher value than a room that is larger but further away?'",
+                                "Teams present their 'Value Maps' on chart paper."
+                            ],
+                            inputs: "Building room topology",
+                            outputs: "Annotated Value Graph chart",
+                            rubrics: ["Logical use of discounting", "Correct identification of bottlenecks", "Team coordination"],
+                            outcomes: "Students realize that value flows backward from the goal through the graph.",
+                            time: "20 Mins",
+                            materials: ["Chart paper", "Markers"]
+                        },
+                        {
+                            level: 4,
+                            title: "Actionless Game Audit",
+                            objectives: "Independently analyze a game screen to identify high-value vs low-value states.",
+                            instructions: [
+                                "Task: Look at a screenshot of a game (e.g., Super Mario or Flappy Bird).",
+                                "Audit: Identify 3 physical positions (states).",
+                                "Audit: Label them $V_{High}$, $V_{Medium}$, and $V_{Low}$.",
+                                "Report: Why is the position right in front of a pipe $V_{Low}$? (High probability of 'Loss' reward).",
+                                "Reflect: How does your 'Policy' (skill level) change these values? (e.g., a pro player sees 'high value' in a risky jump)."
+                            ],
+                            inputs: "Game screenshots",
+                            outputs: "Individual State Value Audit Sheet",
+                            rubrics: ["Correct reward-state logic", "Depth of policy reflection", "Originality"],
+                            outcomes: "Students bridge the abstract concept of $V(s)$ with visual spatial reasoning in games.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

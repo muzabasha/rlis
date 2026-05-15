@@ -9,6 +9,8 @@ import TopicPage from './pages/TopicPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import DependencyGraphPage from './pages/DependencyGraphPage';
 import SearchPage from './pages/SearchPage';
+import QuestionBankPage from './pages/QuestionBankPage';
+import SampleProjectsPage from './pages/SampleProjectsPage';
 
 function PageLoader() {
     return (
@@ -45,6 +47,8 @@ export default function App() {
                         <Route path="/analytics" element={<AnalyticsPage />} />
                         <Route path="/dependency-graph" element={<DependencyGraphPage />} />
                         <Route path="/search" element={<SearchPage />} />
+                        <Route path="/question-bank" element={<QuestionBankPage />} />
+                        <Route path="/sample-projects" element={<SampleProjectsPage />} />
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </Suspense>

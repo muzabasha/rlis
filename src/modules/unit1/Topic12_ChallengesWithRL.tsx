@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     AlertTriangle, Zap, Target, ShieldAlert, TrendingDown,
@@ -221,37 +222,88 @@ export default function Topic12_ChallengesWithRL() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: The Loophole Hunt"
-                subtitle="NEP 2020 Interactive Learning"
+                title="3. Multi-Level Activities"
+                subtitle="Debugging the RL Agent"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Blind Maze</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Teacher blindfolds a student. Reward is "Clap" only when they touch the finish line. Class observes how long it takes. Then, Teacher gives "Hot/Cold" hints (Reward Shaping). Learning speed increases 10x!
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Case Study: The Robotic Roomba</h4>
-                        </div>
-                        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200">
-                            <p className="text-xs font-bold text-slate-700 dark:text-slate-300">"I want my robot to clean the floor. I give +1 for every piece of dust it picks up."</p>
-                            <p className="text-[10px] text-red-500 mt-2 font-bold italic">Loophole Challenge: What could go wrong? (Answer: The robot picks up dust, drops it back, and picks it up again to farm points!)</p>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Reward Hacking Demo",
+                            objectives: "Demonstrate how RL agents exploit loopholes in reward functions to avoid difficult tasks.",
+                            instructions: [
+                                "Open the 'Reward Hacking Lab' in the Virtual Lab section.",
+                                "Switch to 'Hacked' mode and observe the boat-racing robot spinning in circles.",
+                                "Explain that the agent isn't 'broken'—it is doing exactly what you asked (maximizing points).",
+                                "Discuss why 'Winning the Race' is a harder mission than 'Hitting Turbo Pads' for an early-stage agent."
+                            ],
+                            inputs: "Interactive Reward Hacking Visualizer",
+                            outputs: "Animation of intended vs hacked agent trajectories.",
+                            rubrics: ["Clarity of loophole definition", "Explanation of 'Goal Alignment'", "Student engagement"],
+                            outcomes: "Students observe the literal interpretation flaw in reinforcement signals.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Shaping Bonus Workshop",
+                            objectives: "Collaboratively calculate the reward shaping bonus for a path-finding agent.",
+                            instructions: [
+                                "Teacher draws a 1D line: Start (0) to Goal (10). Current pos = 4, Next pos = 6.",
+                                "Potential Φ(s) = −|10−s|. Setup: γ = 0.9.",
+                                "Guided Calculation: Φ(4) = −6, Φ(6) = −4.",
+                                "Shaping Bonus = 0.9 * (−4) − (−6) = −3.6 + 6 = 2.4.",
+                                "Discussion: 'Why does moving closer to the goal give a positive bonus even if we haven't reached it yet?'"
+                            ],
+                            inputs: "Calculators and Potential-Based Shaping formula",
+                            outputs: "Completed step-by-step bonus calculation on the board",
+                            rubrics: ["Numerical accuracy", "Explanation of γ impact", "Classroom participation"],
+                            outcomes: "Students master the mathematics of dense reward engineering.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Rule-Breaker Scavenger Hunt",
+                            objectives: "Identify 'Reward Hacking' loopholes in common human organizational rules.",
+                            instructions: [
+                                "Divide class into 4 teams. Each team gets a 'Human Reward' scenario.",
+                                "Scenario A: Teachers rewarded for high student pass rates (Loophole: Making exams too easy).",
+                                "Scenario B: Salespeople rewarded for number of calls made (Loophole: Calling non-customers/automated bots).",
+                                "Scenario C: Cops rewarded for number of tickets issued (Loophole: Targeting minor infractions at speed traps).",
+                                "Teams must present: 1. The Hacked Behavior. 2. A 'Fixed' Reward Function that prevents it."
+                            ],
+                            inputs: "Everyday rule-based scenarios",
+                            outputs: "Loophole analysis and 'Reward Fix' proposal",
+                            rubrics: ["Identification of 'Agent' goals", "Logical fix design", "Team coordination"],
+                            outcomes: "Students recognize that 'Reward Hacking' is a fundamental problem in any incentive system, not just AI.",
+                            time: "20 Mins",
+                            materials: ["Post-it notes", "Chart paper"]
+                        },
+                        {
+                            level: 4,
+                            title: "Credit Assignment Audit",
+                            objectives: "Independently analyze the difficulty of attributing success to specific historical actions.",
+                            instructions: [
+                                "Task: Think of a major success you had (e.g., Passing a difficult exam, winning a match).",
+                                "Identify: The 'Sparse Reward' (the grade/trophy).",
+                                "List 5 actions you took in the 48 hours before that reward.",
+                                "Question: Which of those 5 was the 'Critical Action'? Why is it hard to prove mathematically?",
+                                "Reflect: If you were an RL agent, how many 'Simulations' would you need to be SURE about which action worked?"
+                            ],
+                            inputs: "Personal life event memory",
+                            outputs: "Individual 'Credit Assignment' Reflection Note",
+                            rubrics: ["Depth of analytical thinking", "Application of RL terminology", "Originality"],
+                            outcomes: "Students internalize the 'Temporal Credit Assignment' challenge through personal experience.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

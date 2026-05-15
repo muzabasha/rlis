@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     Brain, GitBranch, Zap, Cpu, ChevronDown, ChevronRight,
     CheckCircle2, Circle, Clock, Lock, BookOpen, BarChart3,
-    Map, FlaskConical, HelpCircle, Lightbulb, Home
+    Map, FlaskConical, HelpCircle, Lightbulb, Home, Rocket
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
@@ -170,6 +170,7 @@ export default function Sidebar() {
             <div className="p-3 border-t border-slate-200 dark:border-slate-700 space-y-1">
                 {[
                     { to: '/question-bank', icon: <HelpCircle size={14} />, label: 'Question Bank' },
+                    { to: '/sample-projects', icon: <Rocket size={14} />, label: 'Sample Projects' },
                     { to: '/virtual-lab', icon: <FlaskConical size={14} />, label: 'Virtual Lab' },
                     { to: '/insights', icon: <Lightbulb size={14} />, label: 'Insights' },
                 ].map(item => (

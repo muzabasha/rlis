@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Target, Zap, TrendingUp, Clock, Briefcase, Users2, Layout,
@@ -216,48 +217,86 @@ export default function Topic2_NeedForRL() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: Training the Robot Dog"
-                subtitle="NEP 2020 Hands-on Discovery"
+                title="3. Multi-Level Activities"
+                subtitle="Understanding Autonomy"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Invisible Map</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Teacher puts a hidden object in the classroom. One student tries to find it. The class only claps ("Reward") when they get closer. This mimics how RL discovers the "Goal" without being told where it is.
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Interactive: Assigning Rewards</h4>
-                        </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                            {[
-                                { task: 'Sits', reward: '+10' },
-                                { task: 'Barks', reward: '-5' },
-                                { task: 'Jumps', reward: '+5' },
-                                { task: 'Bites', reward: '-100' },
-                                { task: 'Sleeps', reward: '0' },
-                                { task: 'Fetches', reward: '+50' }
-                            ].map(item => (
-                                <div key={item.task} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 flex justify-between items-center shadow-sm">
-                                    <span className="text-[10px] font-bold text-slate-500">{item.task}</span>
-                                    <span className={`text-xs font-black ${item.reward.includes('+') ? 'text-emerald-500' : 'text-red-500'}`}>{item.reward}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Discovery Maze Demo",
+                            objectives: "Demonstrate how an agent learns from failure when no pre-existing map is provided.",
+                            instructions: [
+                                "Open the 'Discovery Maze' in the Virtual Lab section.",
+                                "Move forward and hit a trap intentionally.",
+                                "Explain that the negative feedback (💀) is the only information the agent receives.",
+                                "Show how the 'History' (history markers) helps the agent 'learn' to avoid the trap in the next run."
+                            ],
+                            inputs: "Interactive Maze Visualizer",
+                            outputs: "Verbal walkthrough of the failure-restart-learning cycle.",
+                            rubrics: ["Clarity of explanation", "Engagement", "Demonstration of trap learning"],
+                            outcomes: "Students observe that RL is needed because it handles 'Discovery' without labels.",
+                            time: "10 Mins",
+                            materials: ["Digital Screen", "Virtual Lab"]
+                        },
+                        {
+                            level: 2,
+                            title: "Mars Rover Reward Workshop",
+                            objectives: "Collaboratively design a reward system for a complex autonomous mission.",
+                            instructions: [
+                                "Scenario: A Mars Rover must find ice, avoid craters, and maintain battery.",
+                                "Teacher lists 5 events on the board: Found Ice, Hit Rock, Low Battery, Fast Move, Goal Reached.",
+                                "Students suggest reward values (+/- points) for each.",
+                                "Discuss: 'Why should a crash be -100 but a rock hit only -5?' (Penalty scaling)."
+                            ],
+                            inputs: "List of rover events",
+                            outputs: "A balanced Reward Table on the whiteboard",
+                            rubrics: ["Logical consistency", "Justification of values", "Collaborative participation"],
+                            outcomes: "Students understand that the 'Need' for RL is met by designing correct feedback loops.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Clapping Discovery Game",
+                            objectives: "Experience RL-based learning in a social physical environment.",
+                            instructions: [
+                                "One student (The Agent) leaves the room.",
+                                "The class hides a small object (The Goal).",
+                                "The Agent returns and must find the object using ONLY claps from the class.",
+                                "Loud claps = Positive Reward; Soft claps = Negative Reward.",
+                                "Discuss: Did the Agent have a map? No. Did it learn from feedback? Yes."
+                            ],
+                            inputs: "Physical classroom space",
+                            outputs: "Successful discovery of the hidden object",
+                            rubrics: ["Agent's responsiveness to feedback", "Classroom coordination", "Debrief participation"],
+                            outcomes: "Students internalize the 'Need' for RL when explicit instructions are absent.",
+                            time: "20 Mins",
+                            materials: ["Small object (Key/Pen)"]
+                        },
+                        {
+                            level: 4,
+                            title: "Autonomy Reflection",
+                            objectives: "Independently analyze the failure points of traditional programming in dynamic tasks.",
+                            instructions: [
+                                "Task: Think of an 'Automatic Car Parking' system.",
+                                "Write 3 scenarios where 'Traditional IF-THEN' code would fail (e.g., unexpected dog, dynamic lighting).",
+                                "Explain how an RL agent would 'discover' a solution for these edge cases.",
+                                "Self-Evaluation: List 2 reasons why RL is 'Need-of-the-hour' for robotics."
+                            ],
+                            inputs: "Personal knowledge of automated systems",
+                            outputs: "Individual reflection note (Digital/Paper)",
+                            rubrics: ["Identification of edge cases", "Depth of reasoning", "Originality"],
+                            outcomes: "Students develop a critical understanding of RL's necessity in non-deterministic worlds.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

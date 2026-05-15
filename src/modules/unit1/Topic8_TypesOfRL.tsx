@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Share2, GitBranch, Target, Zap, TrendingUp,
@@ -212,45 +213,88 @@ export default function Topic8_TypesOfRL() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: Build the Tree"
+                title="3. Multi-Level Activities"
                 subtitle="Classifying the RL Universe"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Teacher Demo: The Video Game Test</h4>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Teacher shows a clip of a speedrunner playing Mario. "If the agent learns by watching this video, is it On-policy or Off-policy?" (Answer: Off-policy).
-                        </p>
-                    </div>
-
-                    {/* Level 2 */}
-                    <div className="p-6 rounded-3xl bg-primary-50/50 dark:bg-primary-900/10 border-2 border-primary-100 dark:border-primary-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center font-bold">L2</div>
-                            <h4 className="font-bold text-primary-900 dark:text-primary-100">Interactive Sorting</h4>
-                        </div>
-                        <div className="grid sm:grid-cols-2 gap-4">
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200">
-                                <span className="text-[10px] font-bold text-slate-400 uppercase">Scenario A</span>
-                                <p className="text-xs font-bold mt-1 text-slate-700 dark:text-slate-300">Robotic arm learning in a simulated physics engine.</p>
-                                <div className="mt-2 text-[10px] px-2 py-1 bg-amber-100 text-amber-700 rounded-md inline-block">Model-Based</div>
-                            </div>
-                            <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200">
-                                <span className="text-[10px] font-bold text-slate-400 uppercase">Scenario B</span>
-                                <p className="text-xs font-bold mt-1 text-slate-700 dark:text-slate-300">Self-driving car learning from historical human logs.</p>
-                                <div className="mt-2 text-[10px] px-2 py-1 bg-blue-100 text-blue-700 rounded-md inline-block">Off-Policy</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Taxonomy Explorer Demo",
+                            objectives: "Demonstrate the structural differences between Environment Models and Policy Update styles.",
+                            instructions: [
+                                "Open the 'RL Taxonomy' explorer in the Virtual Lab section.",
+                                "Select 'Model-Free' and explain why it relies on 'Hitting the ball' (Direct experience).",
+                                "Select 'Off-Policy' and explain why it allows 'Learning from videos' (Expert logs).",
+                                "Show the 'Key Algorithm' badge for each selection to link theory to practice (e.g., DQN, PPO).",
+                                "Point out that most real-world deep RL is Model-Free and Off-Policy."
+                            ],
+                            inputs: "Interactive RLHierarchy component",
+                            outputs: "Hierarchical category badges and descriptive tooltips.",
+                            rubrics: ["Clarity of taxonomy mapping", "Explanation of key algorithms", "Student engagement"],
+                            outcomes: "Students identify the high-level categories of RL and their representative algorithms.",
+                            time: "10 Mins",
+                            materials: ["Interactive Lab", "Digital Screen"]
+                        },
+                        {
+                            level: 2,
+                            title: "The SARSA vs Q-Learning Duel",
+                            objectives: "Collaboratively calculate the Q-value update for On-policy and Off-policy methods.",
+                            instructions: [
+                                "Teacher draws a 2-state chain on the board: S1 -> S2.",
+                                "Setup: Q(S1, right) = 5.0. Actual next action taken (exploratory) is 'Down' with Q(S2, down) = 2.0.",
+                                "However, the BEST action in S2 is 'Right' with Q(S2, right) = 8.0.",
+                                "Guided Calculation: Step 1 (SARSA) uses 2.0. Step 2 (Q-Learning) uses 8.0.",
+                                "Discuss: 'Why did Q-Learning update more aggressively?'"
+                            ],
+                            inputs: "Q-table values and α/γ hyperparameters",
+                            outputs: "Parallel Q-update calculations on the board",
+                            rubrics: ["Numerical accuracy", "Explanation of 'max' vs 'actual'", "Classroom participation"],
+                            outcomes: "Students master the fundamental mathematical difference between On-policy and Off-policy logic.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Cliff Walker Simulation",
+                            objectives: "Analyze the behavior of different RL types in a high-risk environment.",
+                            instructions: [
+                                "Divide class into two teams: Team On-Policy (SARSA) and Team Off-Policy (Q-Learning).",
+                                "Scenario: Navigating a narrow path next to a deep cliff.",
+                                "Team On-Policy must explain why they take the 'Long, Safe Path' away from the edge.",
+                                "Team Off-Policy must explain why they take the 'Short, Risky Path' right on the edge.",
+                                "Debrief: 'If this was a real million-dollar robot, which team would you hire?'"
+                            ],
+                            inputs: "Cliff-Walking scenario diagram",
+                            outputs: "Position statements on 'Safety' vs 'Efficiency'",
+                            rubrics: ["Understanding of risk modeling", "Logical persuasion", "Team coordination"],
+                            outcomes: "Students realize that 'optimal' path (Off-policy) isn't always 'safe' path (On-policy).",
+                            time: "20 Mins",
+                            materials: ["Cliff-Walking Diagram", "Posters"]
+                        },
+                        {
+                            level: 4,
+                            title: "Hobby Taxonomy Audit",
+                            objectives: "Independently map a personal hobby to the RL classification framework.",
+                            instructions: [
+                                "Task: Choose a hobby (e.g., Playing a musical instrument, Gaming, Cooking).",
+                                "Identify: Is your learning style mostly Model-Free (just doing it) or Model-Based (reading theory first)?",
+                                "Identify: Do you learn mostly On-Policy (learning from your own current mistakes) or Off-Policy (watching YouTube tutorials)?",
+                                "Write a 3-sentence summary of your 'Hybrid RL Profile'."
+                            ],
+                            inputs: "Self-reflection on learning habits",
+                            outputs: "Individual 'Personal RL Profile' Note",
+                            rubrics: ["Correct use of taxonomy terms", "Depth of self-analysis", "Originality"],
+                            outcomes: "Students internalize abstract RL categories by applying them to their own learning behaviors.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

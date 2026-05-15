@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Coins, Rocket, Waypoints, Search, Play, Pause, RotateCcw, TrendingUp
@@ -239,32 +240,87 @@ export default function Topic9_MarkovRewardProcess() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Activity: The Student Markov Process"
-                subtitle="Calculating Values Manually"
+                title="3. Multi-Level Activities"
+                subtitle="Evaluating the Stochastic Journey"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Class Task: Calculate the Bellman Update</h4>
-                        </div>
-                        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 text-sm">
-                            <p className="mb-2"><strong>State:</strong> Class ($R = -2$)</p>
-                            <p className="mb-2"><strong>Next State Probabilities:</strong> 50% to Facebook ($V = -1$), 50% to Pass ($V = +10$). $\gamma = 1$.</p>
-                            <p className="font-bold text-primary-600 mb-2">Calculate V(Class):</p>
-                            <div className="p-3 bg-slate-50 dark:bg-slate-900 font-mono rounded text-xs">
-                                V(Class) = -2 + 1.0 * [ (0.5 * -1) + (0.5 * 10) ]
-                                <br />V(Class) = -2 + [ -0.5 + 5.0 ]
-                                <br />V(Class) = -2 + 4.5 = 2.5
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "MRP Trajectory Demo",
+                            objectives: "Observe how rewards accumulate and decay along a single sample path through the state space.",
+                            instructions: [
+                                "Open the 'Student MRP Simulator' in the Virtual Lab section.",
+                                "Press 'Play' and watch the current state bounce between Class and Facebook.",
+                                "Trace the 'Current Math' panel: show how the step count 't' increases the discount power.",
+                                "Explain that even though 'Class' has a constant reward of -2, its contribution to the return shrinks every step."
+                            ],
+                            inputs: "Interactive MRPSimulatorLab component",
+                            outputs: "Real-time state transitions and discounted reward tallies.",
+                            rubrics: ["Clarity of 'Return Accumulation' explanation", "Demonstration of path stochasticity", "Student engagement"],
+                            outcomes: "Students differentiate between a static state reward and its time-discounted contribution.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Bellman Update Workshop",
+                            objectives: "Collaboratively solve a one-step Bellman expectation equation for a specific state.",
+                            instructions: [
+                                "Teacher presents a 2-state system: {A, B}.",
+                                "Rewards: $R_A = +10, R_B = -5$. Transition: A goes to B (100% chance). $\gamma = 0.9$.",
+                                "Guided Calculation: 'If we know $V(B) = -5$, what is $V(A)$?'",
+                                "Class calculates: $V(A) = R_A + \gamma V(B) = 10 + 0.9(-5) = 10 - 4.5 = 5.5$.",
+                                "Teacher asks: 'Why is $V(A)$ lower than its immediate reward?' (Because B is a bad place to go)."
+                            ],
+                            inputs: "2-state system graph with rewards and next-state values",
+                            outputs: "Calculated Value $V(s)$ on the board",
+                            rubrics: ["Correct application of Bellman equation", "Mathematical accuracy", "Classroom participation"],
+                            outcomes: "Students master the technical recursive logic of state evaluation.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Treasure Map Design",
+                            objectives: "Experience the transition from a Markov Chain to an MRP by layering rewards onto an existing topology.",
+                            instructions: [
+                                "Divide class into 4 teams. Provide them with the 'Weather Markov Chain' (Sunny, Rainy).",
+                                "Task: Transform it into an MRP for a 'Coffee Shop'.",
+                                "Rule: Sunny leads to +100 profit. Rainy leads to -50 profit (no customers).",
+                                "Group Task: Calculate the 'Value' of a Sunny Day vs a Rainy Day over a 2-day horizon with $\gamma = 0.8$.",
+                                "Teams present their 'Value Estimates' for both states."
+                            ],
+                            inputs: "Base Markov Chain (Weather topology)",
+                            outputs: "Coffee Shop MRP Diagram with Value Annotations",
+                            rubrics: ["Logical reward assignment", "Matrix-Value mapping", "Team coordination"],
+                            outcomes: "Students understand that state value depends on both current reward and future transition probabilities.",
+                            time: "20 Mins",
+                            materials: ["Chart paper", "Markers"]
+                        },
+                        {
+                            level: 4,
+                            title: "Game Environment Audit",
+                            objectives: "Independently evaluate a non-controllable game environment as a formal MRP.",
+                            instructions: [
+                                "Task: Think of a simple 'Passive' game element (e.g., A slot machine, a board game like Snakes & Ladders, or a screen saver).",
+                                "Audit: Identify 3 states and their immediate rewards (e.g., State: 'On a Ladder' -> Reward: +10).",
+                                "Report: Which state has the highest 'Value'? Is it the one with the highest immediate reward, or the one that leads to more rewards?",
+                                "Reflect: Why is it important to know the 'Value' even if you can't change your actions? (Answer: Evaluation precedes Control)."
+                            ],
+                            inputs: "Passive game scenarios",
+                            outputs: "Individual State Value Evaluation Report (1 page)",
+                            rubrics: ["Correct state/reward identification", "Logical justification of 'Value'", "Originality"],
+                            outcomes: "Students realize that 'Value' is a measure of potential, distinct from immediate gratification.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}

@@ -26,7 +26,7 @@ const topicComponents: Record<string, React.LazyExoticComponent<() => JSX.Elemen
     u1t13: lazy(() => import('../modules/unit1/Topic13_RLvsDLvsML')),
 
     // Unit 2
-    u2t1: lazy(() => import('../modules/unit2/Topic1_MDPKeyComponents')),
+    u2t1: lazy(() => import('../modules/unit2/Topic1_MDPComponents')),
     u2t2: lazy(() => import('../modules/unit2/Topic2_FormalMDPDefinition')),
     u2t3: lazy(() => import('../modules/unit2/Topic3_MarkovPropertyChain')),
     u2t4: lazy(() => import('../modules/unit2/Topic4_MarkovChainAnalysis')),
@@ -37,7 +37,7 @@ const topicComponents: Record<string, React.LazyExoticComponent<() => JSX.Elemen
     u2t9: lazy(() => import('../modules/unit2/Topic9_MarkovRewardProcess')),
     u2t10: lazy(() => import('../modules/unit2/Topic10_StateValueFunction')),
     u2t11: lazy(() => import('../modules/unit2/Topic11_ActionValueFunction')),
-    u2t12: lazy(() => import('../modules/unit2/Topic12_OptimalPolicyMDP')),
+    u2t12: lazy(() => import('../modules/unit2/Topic12_OptimalPolicy')),
     u2t13: lazy(() => import('../modules/unit2/Topic13_MDPExamples')),
 
     // Unit 3

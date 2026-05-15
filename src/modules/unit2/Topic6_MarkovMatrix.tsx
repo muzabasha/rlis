@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import ActivityLevels from '../../components/topic/ActivityLevels';
 import { 
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
     Grid3X3, ArrowRight, Zap, Target, Briefcase, Activity, CheckCircle2, XCircle
@@ -239,40 +240,87 @@ export default function Topic6_MarkovMatrix() {
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
                 id="activity" 
-                title="3. Activity: The Matrix Validator" 
-                subtitle="Spot the Fake Matrix"
+                title="3. Multi-Level Activities" 
+                subtitle="The Rules of Stochastic Grids"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <div className="space-y-6">
-                    {/* Level 1 */}
-                    <div className="p-6 rounded-3xl bg-emerald-50/50 dark:bg-emerald-900/10 border-2 border-emerald-100 dark:border-emerald-900/30">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">L1</div>
-                            <h4 className="font-bold text-emerald-900 dark:text-emerald-100">Find the Error</h4>
-                        </div>
-                        <div className="grid sm:grid-cols-2 gap-6">
-                            <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border-2 border-red-200">
-                                <div className="text-center font-mono text-lg mb-2 text-slate-700 dark:text-slate-300">
-                                    [ 0.6 , 0.5 ]<br/>
-                                    [ 0.2 , 0.8 ]
-                                </div>
-                                <div className="text-[10px] text-red-500 font-bold text-center">INVALID</div>
-                                <p className="text-[10px] text-center mt-1 text-slate-500">Row 1 sums to 1.1! Probabilities can't exceed 100%.</p>
-                            </div>
-                            <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border-2 border-emerald-200">
-                                <div className="text-center font-mono text-lg mb-2 text-slate-700 dark:text-slate-300">
-                                    [ 0.3 , 0.7 ]<br/>
-                                    [ 1.0 , 0.0 ]
-                                </div>
-                                <div className="text-[10px] text-emerald-500 font-bold text-center">VALID</div>
-                                <p className="text-[10px] text-center mt-1 text-slate-500">Rows sum to 1.0. Row 2 means: "If in state 2, you ALWAYS go to state 1".</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ActivityLevels 
+                    levels={[
+                        {
+                            level: 1,
+                            title: "Matrix Validator Demo",
+                            objectives: "Verify the row-sum constraint and non-negativity property of a Markov Matrix.",
+                            instructions: [
+                                "Open the 'Matrix Power Calculator' in the Virtual Lab section.",
+                                "Intentionally enter 0.6 and 0.6 in Row 1 to trigger the validation error.",
+                                "Explain why 1.2 is impossible (you can't have 120% probability of transitions).",
+                                "Adjust the values to 0.7 and 0.3 to show a valid 'Right Stochastic' row."
+                            ],
+                            inputs: "Interactive MatrixPowerLab component",
+                            outputs: "Real-time error/success messages and color-coded validation.",
+                            rubrics: ["Clarity of 'Stochastic' definition", "Demonstration of Row-Sum rule", "Student engagement"],
+                            outcomes: "Students identify the critical constraints that define a valid transition matrix.",
+                            time: "10 Mins",
+                            materials: ["Interactive Component", "Projector"]
+                        },
+                        {
+                            level: 2,
+                            title: "The Broken Spreadsheet Workshop",
+                            objectives: "Collaboratively identify and fix errors in a 3x3 Markov Matrix.",
+                            instructions: [
+                                "Teacher displays a 3x3 matrix with three deliberate errors (Negative number, Row sum = 0.9, Row sum = 1.1).",
+                                "Guided Discussion: 'Team, row 2 sums to 1.1. If we know the first two values are 0.4 and 0.4, what MUST the third value be?'",
+                                "Students calculate: $1.0 - 0.4 - 0.4 = 0.2$.",
+                                "Repeat for the negative entry and the zero-sum row."
+                            ],
+                            inputs: "Incorrect 3x3 Transition Matrix data",
+                            outputs: "Corrected 3x3 Matrix on the board",
+                            rubrics: ["Mathematical accuracy", "Logic of constraint satisfaction", "Classroom participation"],
+                            outcomes: "Students master the technical properties of Markovian data structures.",
+                            time: "15 Mins",
+                            materials: ["Whiteboard", "Markers"]
+                        },
+                        {
+                            level: 3,
+                            title: "The Traffic Light Logic Design",
+                            objectives: "Experience the process of translating descriptive rules into a formal matrix structure in a group setting.",
+                            instructions: [
+                                "Divide class into 4 teams. Scenario: Design a matrix for a 'Smart Traffic Light' (Green, Yellow, Red).",
+                                "Rule 1: Green always goes to Yellow ($P=1.0$).",
+                                "Rule 2: Yellow always goes to Red ($P=1.0$).",
+                                "Rule 3: Red has a 0.8 chance of staying Red and 0.2 chance of turning Green.",
+                                "Group Task: Draw the 3x3 Matrix on chart paper and ensure all rows sum to 1.0."
+                            ],
+                            inputs: "Descriptive urban infrastructure rules",
+                            outputs: "3x3 Traffic Light Transition Matrix",
+                            rubrics: ["Correct mapping of 'From-To' states", "Matrix formatting accuracy", "Team coordination"],
+                            outcomes: "Students bridge the gap between real-world logic and linear algebraic representation.",
+                            time: "20 Mins",
+                            materials: ["Chart paper", "Markers"]
+                        },
+                        {
+                            level: 4,
+                            title: "Absorbing State Design",
+                            objectives: "Independently design a matrix containing an 'Absorbing State' (a state you can enter but never leave).",
+                            instructions: [
+                                "Task: Design a 2x2 matrix for a 'Game Over' scenario.",
+                                "States: {Playing, Game Over}.",
+                                "Rule: Once you reach 'Game Over', you stay there forever.",
+                                "Individual Task: Write the row for 'Game Over' in the matrix. (Answer: [0, 1]).",
+                                "Reflect: What happens to the stationary distribution of a system with an absorbing state? (The probability eventually collects entirely in that state)."
+                            ],
+                            inputs: "Game state scenario",
+                            outputs: "Individual 2x2 Absorbing Matrix Note",
+                            rubrics: ["Correct use of 1.0 for self-loop", "Depth of reflection on 'Stationarity'", "Technical accuracy"],
+                            outcomes: "Students understand the concept of 'Terminal States' in RL and their matrix representation.",
+                            time: "15 Mins",
+                            materials: ["Student Workbook"]
+                        }
+                    ]}
+                />
             </SectionWrapper>
 
             {/* SECTION 4: PROJECT BASED LEARNING */}
