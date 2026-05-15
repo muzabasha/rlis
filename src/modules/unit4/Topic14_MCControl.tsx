@@ -4,6 +4,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
+import MonteCarloLab from '../../components/labs/MonteCarloLab';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
     Trophy, Bot, Zap, Binary, Layers, Eye, ChevronRight,
@@ -12,73 +13,6 @@ import {
     Shield, Move, MousePointer2, User, Layout, Map,
     RefreshCw, ArrowUpRight
 } from 'lucide-react';
-
-// ─── Interactive Components for Topic 14 ─────────────────────────────────────
-
-/**
- * GPI Loop: Visualizing Generalized Policy Iteration
- */
-function GPILab() {
-    const [phase, setPhase] = useState<'Evaluation' | 'Improvement'>('Evaluation');
-    const [cycleCount, setCycleCount] = useState(0);
-
-    const toggle = () => {
-        setPhase(prev => prev === 'Evaluation' ? 'Improvement' : 'Evaluation');
-        if (phase === 'Improvement') setCycleCount(c => c + 1);
-    };
-
-    return (
-        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl space-y-8">
-            <div className="flex flex-col md:flex-row gap-8 items-center justify-between">
-                
-                {/* Loop Visualizer */}
-                <div className="relative w-64 h-64 flex items-center justify-center">
-                    <motion.div 
-                        animate={{ rotate: phase === 'Evaluation' ? 0 : 180 }}
-                        className="absolute inset-0 border-4 border-dashed border-primary-100 dark:border-primary-900/30 rounded-full"
-                    />
-                    
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={phase}
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className={`p-10 rounded-full border-4 shadow-xl z-10 flex flex-col items-center text-center ${
-                                phase === 'Evaluation' ? 'bg-blue-600 border-blue-400' : 'bg-emerald-600 border-emerald-400'
-                            }`}
-                        >
-                            {phase === 'Evaluation' ? <Search size={32} className="text-white mb-2" /> : <Trophy size={32} className="text-white mb-2" />}
-                            <span className="text-white font-black text-xs uppercase">{phase}</span>
-                        </motion.div>
-                    </AnimatePresence>
-                </div>
-
-                {/* Insight Panel */}
-                <div className="flex-1 space-y-4">
-                    <div className="flex justify-between items-center mb-4">
-                        <h4 className="font-bold text-slate-800 dark:text-white">Policy Iteration #{cycleCount + 1}</h4>
-                        <span className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-[10px] font-black">GPI CYCLE</span>
-                    </div>
-
-                    <div className="p-6 bg-slate-50 dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800">
-                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            {phase === 'Evaluation' 
-                                ? 'We are playing episodes using the current policy and averaging returns to find the Q-values.' 
-                                : 'We are making the policy "Greedy" with respect to the new Q-values. The agent will now choose the highest value action.'}
-                        </p>
-                    </div>
-
-                    <button 
-                        onClick={toggle}
-                        className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-xs hover:bg-black transition-all flex items-center justify-center gap-2 shadow-lg"
-                    >
-                        <RefreshCw size={16} /> SWITCH TO NEXT PHASE
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-}
 
 // ─── Main Topic Component ────────────────────────────────────────────────────
 
@@ -311,8 +245,8 @@ export default function Topic14_MCControl() {
             {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
             <SectionWrapper 
                 id="lab" 
-                title="6. Virtual Lab: The GPI Loop" 
-                subtitle="Mastering the Cycle"
+                title="6. Virtual Lab: Monte Carlo Control" 
+                subtitle="Experience the GPI Loop"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
                 badgeColor="bg-cyan-100 text-cyan-700"
@@ -320,9 +254,9 @@ export default function Topic14_MCControl() {
             >
                 <div className="space-y-6">
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Experience the fundamental loop of Reinforcement Learning. Switch between **Evaluation** (gathering data) and **Improvement** (updating the rules) to see how an agent moves toward a perfect strategy.
+                        Adjust parameters like $\epsilon$ and $\gamma$ to see how they affect the agent's learning speed and final performance. Watch the Q-table update in real-time after each episode!
                     </p>
-                    <GPILab />
+                    <MonteCarloLab />
                 </div>
             </SectionWrapper>
 
