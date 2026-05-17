@@ -1,8 +1,8 @@
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
@@ -25,6 +25,12 @@ function DungeonLab() {
     const [qValues, setQValues] = useState([0, 0, 0, 0, 0]);
     const [status, setStatus] = useState<'Exploring' | 'Won' | 'Dead'>('Exploring');
     const [rewardHistory, setRewardHistory] = useState<number[]>([]);
+    const [logs, setLogs] = useState<string[]>([]);
+    const [challenges, setChallenges] = useState<LabChallenge[]>([
+        { id: 'survivor', quest: 'Dungeon Survivor', target: 'Reach the Exit safely', isCompleted: false },
+        { id: 'greedy_path', quest: 'Greedy Path Finder', target: 'Reach the Exit with total score > 0', isCompleted: false },
+        { id: 'pain_learner', quest: 'Learning from Pain', target: 'Fall into Lava to initialize Q-warning values', isCompleted: false }
+    ]);
 
     const grid = [
         { type: 'Start', icon: User, reward: 0 },
@@ -55,22 +61,84 @@ function DungeonLab() {
         setQValues(newQValues);
 
         setPos(nextPos);
-        setRewardHistory(prev => [...prev, reward]);
+        const newRewardHistory = [...rewardHistory, reward];
+        setRewardHistory(newRewardHistory);
+        
+        const totalScore = newRewardHistory.reduce((a, b) => a + b, 0);
 
-        if (grid[nextPos].type === 'Exit') setStatus('Won');
-        if (grid[nextPos].type === 'Lava') setStatus('Dead');
+        // Streaming Log
+        const logMsg = `[Step ${newRewardHistory.length}] Moved state ${pos} → ${nextPos} (${grid[nextPos].type}) | Reward: ${reward >= 0 ? '+' : ''}${reward} | Q-Update: Q(${pos}) = ${currentQ} → ${newQValues[pos].toFixed(1)} | Total Score: ${totalScore}`;
+        setLogs(prev => [...prev, logMsg]);
+
+        let finalStatus: 'Exploring' | 'Won' | 'Dead' = 'Exploring';
+        if (grid[nextPos].type === 'Exit') {
+            finalStatus = 'Won';
+            setStatus('Won');
+            setLogs(prev => [...prev, `🎉 HUZZAH! Gambler reached the Exit safely! Total Score: ${totalScore}`]);
+            
+            setChallenges(prev => prev.map(c => {
+                if (c.id === 'survivor') return { ...c, isCompleted: true };
+                if (c.id === 'greedy_path' && totalScore > 0) return { ...c, isCompleted: true };
+                return c;
+            }));
+        }
+        if (grid[nextPos].type === 'Lava') {
+            finalStatus = 'Dead';
+            setStatus('Dead');
+            setLogs(prev => [...prev, `💀 CRASH! Gambler fell into a Lava Pit. Received -50 reward.`]);
+            setChallenges(prev => prev.map(c => c.id === 'pain_learner' ? { ...c, isCompleted: true } : c));
+        }
     };
 
     const reset = () => {
         setPos(0);
         setStatus('Exploring');
         setRewardHistory([]);
+        setLogs(prev => [...prev, `🔄 Simulation Reset. Gambler returned to State 0.`]);
+    };
+
+    const fullReset = () => {
+        setPos(0);
+        setStatus('Exploring');
+        setRewardHistory([]);
+        setQValues([0, 0, 0, 0, 0]);
+        setLogs([]);
+        setChallenges(prev => prev.map(c => ({ ...c, isCompleted: false })));
     };
 
     return (
-        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl space-y-8">
-            <div className="flex flex-col gap-8">
-                
+        <VirtualLabShell
+            title="Dungeon Crawler Workspace"
+            description="Manual Bellman Value iteration Sandbox"
+            objective="Manually navigate the gambler to the exit. Observe how Q-values propagate backwards in real-time."
+            badge="Interactive Lab"
+            telemetry={[
+                { label: 'Current Square', value: `State ${pos}` },
+                { label: 'Status', value: status, color: status === 'Won' ? 'text-emerald-450' : status === 'Dead' ? 'text-red-450' : 'text-cyan-400' },
+                { label: 'Total Score', value: rewardHistory.reduce((a, b) => a + b, 0), color: 'text-amber-400', highlight: true }
+            ]}
+            tips={[
+                'Click "MOVE RIGHT" to advance the agent step-by-step.',
+                'Watch the numbers above the cells — these are the Q-value estimates of reaching the exit.',
+                'Fall into the lava once to see how the negative reinforcement propagates backwards to warn the agent.'
+            ]}
+            challenges={challenges}
+            logs={logs}
+            notebook={[
+                {
+                    task: 'Successfully navigate to the Exit (State 4) once. Look at the new Q-value at State 3.',
+                    question: 'What is the updated value of Q(3) and why is it positive even though State 3 itself yields no immediate gold?',
+                    hint: 'The Q-update looks ahead: Q(3) incorporates the discounted exit reward (+100 * gamma).'
+                },
+                {
+                    task: 'Reset and walk directly into the Lava pit (State 2). Inspect Q(1) immediately.',
+                    question: 'Why does a negative value at Q(1) serve as an automated shield warning for a greedy agent?',
+                    hint: 'A greedy policy picks max Q. Since Q(1) is negative, other paths are favored.'
+                }
+            ]}
+            onReset={fullReset}
+        >
+            <div className="space-y-6">
                 {/* Grid Visualizer */}
                 <div className="flex justify-between items-center gap-2 p-6 bg-slate-900 rounded-[2.5rem] relative overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-800 to-slate-900 opacity-50" />
@@ -80,63 +148,64 @@ function DungeonLab() {
                         const isUserHere = pos === i;
                         return (
                             <div key={i} className="flex flex-col items-center gap-3 z-10">
-                                <div className={`text-[8px] font-black uppercase tracking-widest ${isUserHere ? 'text-primary-400' : 'text-slate-500'}`}>
+                                <div className={`text-[10px] font-mono font-black uppercase tracking-widest ${isUserHere ? 'text-cyan-400' : 'text-slate-400'}`}>
                                     {qValues[i]}
                                 </div>
                                 <motion.div 
                                     animate={{ 
-                                        scale: isUserHere ? 1.2 : 1,
-                                        borderColor: isUserHere ? '#3b82f6' : 'rgba(255,255,255,0.1)'
+                                        scale: isUserHere ? 1.15 : 1,
+                                        borderColor: isUserHere ? '#06b6d4' : 'rgba(255,255,255,0.1)'
                                     }}
-                                    className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl border-2 flex items-center justify-center relative ${
-                                        cell.type === 'Lava' ? 'bg-red-900/20' : cell.type === 'Exit' ? 'bg-emerald-900/20' : 'bg-slate-800/50'
+                                    className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl border-2 flex items-center justify-center relative transition-all ${
+                                        cell.type === 'Lava' ? 'bg-red-950/40 border-red-500/20' : cell.type === 'Exit' ? 'bg-emerald-950/40 border-emerald-500/20' : 'bg-slate-800/50'
                                     }`}
                                 >
                                     <Icon size={24} className={cell.type === 'Lava' ? 'text-red-500' : cell.type === 'Exit' ? 'text-emerald-500' : 'text-slate-400'} />
                                     {isUserHere && (
                                         <motion.div 
                                             layoutId="user"
-                                            className="absolute inset-0 bg-primary-500/20 rounded-2xl flex items-center justify-center"
+                                            className="absolute inset-0 bg-cyan-500/20 rounded-2xl flex items-center justify-center"
                                         >
-                                            <div className="w-4 h-4 bg-primary-500 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.8)]" />
+                                            <div className="w-4 h-4 bg-cyan-500 rounded-full shadow-[0_0_15px_rgba(6,182,212,0.8)]" />
                                         </motion.div>
                                     )}
                                 </motion.div>
-                                <div className="text-[8px] font-bold text-slate-500">{cell.type}</div>
+                                <div className="text-[8px] font-bold text-slate-500 uppercase tracking-wide">{cell.type}</div>
                             </div>
                         );
                     })}
                 </div>
 
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-slate-50 dark:bg-slate-900/40 p-5 rounded-3xl border border-slate-100 dark:border-slate-800/80">
                     <div className="space-y-1 text-center md:text-left">
                         <h4 className="font-bold text-slate-800 dark:text-white flex items-center justify-center md:justify-start gap-2">
-                            {status === 'Exploring' && <Search size={18} className="text-primary-500" />}
-                            {status === 'Won' && <Trophy size={18} className="text-emerald-500" />}
+                            {status === 'Exploring' && <Search size={18} className="text-cyan-500" />}
+                            {status === 'Won' && <Trophy size={18} className="text-emerald-500 animate-bounce" />}
                             {status === 'Dead' && <Skull size={18} className="text-red-500" />}
-                            Status: {status}
+                            Dungeon Status: <span className="uppercase font-black text-cyan-600">{status}</span>
                         </h4>
-                        <p className="text-[10px] text-slate-500 font-medium">Accumulated Reward: {rewardHistory.reduce((a, b) => a + b, 0)}</p>
+                        <p className="text-[10px] text-slate-500 font-medium">Step Reward: {rewardHistory.length > 0 ? rewardHistory[rewardHistory.length - 1] : 0}</p>
                     </div>
 
-                    <div className="flex gap-4">
+                    <div className="flex gap-3">
                         <button 
                             onClick={moveRight}
                             disabled={status !== 'Exploring'}
-                            className="px-8 py-4 bg-primary-600 text-white rounded-2xl font-black shadow-lg shadow-primary-500/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 disabled:opacity-30 disabled:hover:scale-100"
+                            className="px-8 py-4 bg-cyan-500 text-slate-950 hover:bg-cyan-400 rounded-2xl font-black shadow-lg shadow-cyan-500/10 active:scale-95 transition-all flex items-center gap-2 disabled:opacity-30 disabled:hover:scale-100"
                         >
                             MOVE RIGHT <StepForward size={18} />
                         </button>
                         <button 
                             onClick={reset}
-                            className="p-4 bg-slate-100 dark:bg-slate-700 rounded-2xl text-slate-500 hover:bg-slate-200 transition-colors"
+                            className="p-4 bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-2xl transition-colors"
+                            title="Restart Episode"
                         >
                             <RotateCcw size={18} />
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </VirtualLabShell>
     );
 }
 
@@ -369,12 +438,12 @@ export default function Topic11_GamblerDungeon() {
                             <div className="text-[10px] font-bold text-slate-400 uppercase">Sensors</div>
                             <p className="text-[8px] mt-1">Detecting Unstable Rock</p>
                         </div>
-                        <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-center">
+                        <div className="p-4 bg-white dark:bg-slate-850 rounded-xl border border-slate-100 dark:border-slate-750 text-center">
                             <Search size={24} className="mx-auto mb-2 text-indigo-500" />
                             <div className="text-[10px] font-bold text-slate-400 uppercase">Process</div>
                             <p className="text-[8px] mt-1">Updating Safety Q-Table</p>
                         </div>
-                        <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-center text-emerald-600">
+                        <div className="p-4 bg-white dark:bg-slate-850 rounded-xl border border-slate-100 dark:border-slate-750 text-center text-emerald-600">
                             <CheckCircle2 size={24} className="mx-auto mb-2" />
                             <div className="text-[10px] font-bold uppercase">Result</div>
                             <p className="text-[8px] mt-1">Safe Extraction</p>
@@ -415,34 +484,23 @@ export default function Topic11_GamblerDungeon() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
-                <VirtualLabShell
-                    title="Gambler's Problem Solver"
-                    description="Solve the classic gambler staking problem"
-                    objective="Set the coin-flip probability (p_h) and run Value Iteration to find the optimal staking policy."
-                    badge="Interactive Lab"
-                    tips={['p_h=0.5: symmetric game — interesting policy emerges',
-                'p_h>0.5: favourable odds — conservative policy is optimal',
-                'Watch the value function — it has a distinctive wavy shape']}
-                >
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                    <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                         Manually move the gambler across the dungeon. Watch how the **Q-Values** (the numbers above the cells) update in real-time as you encounter gold or lava. Try to "train" the agent so that the highest numbers lead to the exit!
                     </p>
                     <DungeonLab />
-                </VirtualLabShell>
-            
                 </div>
             </SectionWrapper>
 
             {/* FEEDBACK SECTION */}
-            <div className="bg-primary-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-primary-500/20">
+            <div className="bg-cyan-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-cyan-500/20">
                 <div className="max-w-xl mx-auto space-y-2">
                     <h3 className="text-3xl font-black italic">Dungeon Escaped!</h3>
-                    <p className="text-primary-100">
+                    <p className="text-cyan-100">
                         You've seen Q-Learning solve a survival task. Now, let's explore where else this technology is changing the world.
                     </p>
                 </div>
                 <div className="flex justify-center gap-4">
-                    <button className="px-10 py-4 bg-white text-primary-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+                    <button className="px-10 py-4 bg-white text-cyan-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
                         NEXT: Q-LEARNING APPLICATIONS
                     </button>
                 </div>
