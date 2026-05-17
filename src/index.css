@@ -215,11 +215,125 @@
   scrollbar-color: #334155 transparent;
 }
 
-/* Projector mode overrides */
+/* Projector mode overrides for classroom projection and last-bench accessibility */
 .projector-mode {
-  font-size: 22px !important;
+  font-size: 24px !important;
+  line-height: 1.8 !important;
 }
 
-.projector-mode h1 { font-size: 48px !important; }
-.projector-mode h2 { font-size: 40px !important; }
-.projector-mode h3 { font-size: 32px !important; }
+.projector-mode p,
+.projector-mode li,
+.projector-mode div:not(.katex *):not(button *),
+.projector-mode span:not(.katex *),
+.projector-mode button:not(.katex *),
+.projector-mode textarea,
+.projector-mode input {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important; /* Thicker font weight for high visibility */
+  letter-spacing: 0.02em !important;
+}
+
+.projector-mode h1 { font-size: 3.25rem !important; font-weight: 900 !important; }
+.projector-mode h2 { font-size: 2.75rem !important; font-weight: 900 !important; }
+.projector-mode h3 { font-size: 2.35rem !important; font-weight: 800 !important; }
+.projector-mode h4 { font-size: 2rem !important; font-weight: 800 !important; }
+.projector-mode h5 { font-size: 1.7rem !important; font-weight: 800 !important; }
+.projector-mode h6 { font-size: 1.45rem !important; font-weight: 800 !important; }
+
+/* KaTeX equations scaling for classroom readability */
+.projector-mode .katex {
+  font-size: 1.55em !important;
+  font-weight: 700 !important;
+}
+.projector-mode .katex-display > .katex {
+  font-size: 1.95em !important;
+}
+
+/* Thicker high-contrast borders and sharp backgrounds for washed-out projector bulbs */
+.projector-mode .card,
+.projector-mode .border,
+.projector-mode .border-2,
+.projector-mode .border-cyan-200,
+.projector-mode .border-slate-800 {
+  border-width: 3.5px !important;
+  border-color: #06b6d4 !important; /* Deep Cyan */
+  box-shadow: 0 10px 30px -5px rgba(6, 182, 212, 0.45) !important;
+}
+
+.projector-mode .bg-slate-950,
+.projector-mode .bg-slate-900,
+.projector-mode .bg-slate-850,
+.projector-mode .bg-slate-800 {
+  background-color: #020617 !important; /* Force extremely dark solid background */
+}
+
+/* Contrast enhancement for text */
+.projector-mode .text-slate-400,
+.projector-mode .text-slate-500,
+.projector-mode .text-slate-600,
+.projector-mode .text-slate-700,
+.projector-mode .text-cyan-400,
+.projector-mode .text-indigo-400,
+.projector-mode .text-amber-400 {
+  color: #f8fafc !important; /* Pure slate white for absolute readability */
+  text-shadow: 0 0 1px rgba(255,255,255,0.5);
+}
+
+.projector-mode .text-slate-800,
+.projector-mode .text-slate-850,
+.projector-mode .text-slate-900 {
+  color: #020617 !important; /* Solid jet black on light backgrounds */
+  font-weight: 800 !important;
+}
+
+/* Visualizer adjustments */
+.projector-mode button.rounded-lg,
+.projector-mode .grid button,
+.projector-mode .grid button span {
+  padding: 1.5rem 1rem !important;
+  font-size: 2rem !important;
+  font-weight: 900 !important;
+  border-width: 3.5px !important;
+}
+
+/* Telemetry box updates */
+.projector-mode .px-3.5.py-1.5,
+.projector-mode .px-3.py-1.5,
+.projector-mode .flex.gap-4.flex-wrap > div {
+  padding: 0.85rem 1.5rem !important;
+  border-width: 3px !important;
+  border-color: #06b6d4 !important;
+  margin: 0.25rem !important;
+}
+
+.projector-mode .px-3.5.py-1.5 span,
+.projector-mode .px-3.py-1.5 span,
+.projector-mode .flex.gap-4.flex-wrap > div span {
+  font-size: 1.45rem !important;
+  font-weight: 900 !important;
+}
+
+/* Console logs updates */
+.projector-mode .font-mono,
+.projector-mode .bg-slate-950.rounded-2xl.border.border-slate-800.p-4.font-mono span {
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+  line-height: 1.9 !important;
+  color: #22d3ee !important; /* Intense neon cyan for console logs */
+}
+
+/* Tabs readability */
+.projector-mode .flex.bg-slate-950\/80 button {
+  padding: 0.85rem 1.5rem !important;
+  font-size: 1.2rem !important;
+  border-width: 3px !important;
+}
+
+/* Custom interactive components sizing inside simulations */
+.projector-mode input[type="range"] {
+  height: 12px !important;
+}
+.projector-mode svg {
+  transform: scale(1.15); /* Enlarge chart nodes slightly */
+}
+
