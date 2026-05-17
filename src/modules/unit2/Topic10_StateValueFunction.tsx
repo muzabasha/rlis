@@ -1,6 +1,6 @@
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -12,6 +12,40 @@ import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
     Target, LayoutGrid, Brain, Swords, Focus, CheckCircle2, XCircle
 } from 'lucide-react';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "State Value Function Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "State Value Function Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the State Value Function simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing State Value Function Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"State Value Function\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Interactive Components ──────────────────────────────────────────────────
 
@@ -392,7 +426,7 @@ export default function Topic10_StateValueFunction() {
                     tips={['High value = good position (close to reward)',
                 'Value propagates from the goal backward through the grid',
                 'Try different discount factors and see how the "reach" of value changes']}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Explore a 3x3 Gridworld. The top right is a Goal (+10). The middle right is a Fire Trap (-10). Toggle the policy to see how the mathematical <strong>Value</strong> of the physical grid spaces changes drastically based on how the agent behaves.
                     </p>

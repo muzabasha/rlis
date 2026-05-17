@@ -1,6 +1,6 @@
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,40 @@ import {
     Target, Zap, TrendingUp, Clock, Briefcase, Users2, Layout,
     Compass, Map, Award, Move, MousePointer2, AlertTriangle, Play, RotateCcw
 } from 'lucide-react';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "Need For R L Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "Need For R L Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the Need For R L simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing Need For R L Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"Need For R L\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Interactive Components for Topic 2 ──────────────────────────────────────
 
@@ -401,7 +435,7 @@ export default function Topic2_NeedForRL() {
                     badge="Interactive Lab"
                     tips={['Note how the agent has no teacher — it discovers the path through reward signals',
                 'Compare how many steps you need vs a random agent']}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Help the robot reach the goal! You don't know where the traps are. Every time you hit a trap, the agent learns and restarts. This is how RL "discovers" the safe path.
                     </p>

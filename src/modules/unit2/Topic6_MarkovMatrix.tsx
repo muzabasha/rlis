@@ -1,6 +1,6 @@
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -12,6 +12,40 @@ import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
     Grid3X3, ArrowRight, Zap, Target, Briefcase, Activity, CheckCircle2, XCircle
 } from 'lucide-react';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "Markov Matrix Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "Markov Matrix Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the Markov Matrix simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing Markov Matrix Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"Markov Matrix\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Interactive Components ──────────────────────────────────────────────────
 
@@ -451,7 +485,7 @@ export default function Topic6_MarkovMatrix() {
                     badge="Interactive Lab"
                     tips={['P^n gives you the probability of going from state i to state j in exactly n steps',
                 'As n→∞, P^n converges to the stationary distribution (for ergodic chains)']}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Edit the 2x2 transition matrix below. As long as the rows sum to 1.0, you can increase the power $n$ to see the $P^n$ matrix. Notice how, at high powers, all rows become identical—revealing the Stationary Distribution!
                     </p>

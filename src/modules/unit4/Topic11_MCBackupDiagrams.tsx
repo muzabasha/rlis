@@ -1,6 +1,6 @@
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,6 +17,40 @@ import {
     Shield, Move, MousePointer2, User, Layout, Map,
     History, ArrowDown, Flag
 } from 'lucide-react';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "M C Backup Diagrams Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "M C Backup Diagrams Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the M C Backup Diagrams simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing M C Backup Diagrams Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"M C Backup Diagrams\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Main Topic Component ────────────────────────────────────────────────────
 
@@ -289,7 +323,7 @@ export default function Topic11_MCBackupDiagrams() {
                     badge="Interactive Lab"
                     tips={['TD updates immediately after each step — MC waits until episode end',
                 'TD has lower variance but higher bias than MC']}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Experience the "Narrow and Deep" nature of Monte Carlo. Step through a trajectory, then watch the **G-value** flow backwards from the terminal state to all previous states in the path.
                     </p>

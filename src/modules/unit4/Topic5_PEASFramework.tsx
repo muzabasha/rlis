@@ -1,6 +1,6 @@
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -14,6 +14,40 @@ import {
     Activity, Settings, Cpu, HardDrive, Briefcase,
     Shield, Move, MousePointer2, User
 } from 'lucide-react';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "P E A S Framework Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "P E A S Framework Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the P E A S Framework simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing P E A S Framework Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"P E A S Framework\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Interactive Components for Topic 5 ──────────────────────────────────────
 
@@ -337,7 +371,7 @@ export default function Topic5_PEASFramework() {
                     badge="Interactive Lab"
                     tips={['Every robotic system can be described with PEAS',
                 'Missing a sensor in S means the agent is partially observable']}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Select different agent archetypes to see how their PEAS components are defined. Notice how shifting the environment (e.g., from a road to a hospital) completely changes the required sensors and actuators.
                     </p>

@@ -1,6 +1,6 @@
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,40 @@ import {
     RefreshCw, TrendingUp, Target, Briefcase, Zap, Binary, Layers,
     Eye, ChevronRight, Play, RotateCcw, Brain, Activity
 } from 'lucide-react';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "Bellman Equation Value Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "Bellman Equation Value Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the Bellman Equation Value simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing Bellman Equation Value Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"Bellman Equation Value\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Interactive Components for Topic 4 ─────────────────────────────────────
 
@@ -372,7 +406,7 @@ export default function Topic4_BellmanEquationValue() {
                     badge="Interactive Lab"
                     tips={['The Bellman equation is recursive — it expresses V(s) in terms of V(s\')',
                 'Iterating the Bellman equation (Value Iteration) converges to V*']}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         In this lab, you act as the Bellman Equation. You have one current state and three possible successor states ($s'_1, s'_2, s'_3$). Change the values of the next states or the discount factor to see how the "Current Value" updates automatically.
                     </p>

@@ -1,6 +1,6 @@
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -12,6 +12,40 @@ import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, 
     MessageSquare, Type, Search, Network, Brain, Activity, Zap
 } from 'lucide-react';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "Markov Matrices In M L Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "Markov Matrices In M L Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the Markov Matrices In M L simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing Markov Matrices In M L Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"Markov Matrices In M L\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Interactive Components ──────────────────────────────────────────────────
 
@@ -417,7 +451,7 @@ export default function Topic7_MarkovMatricesInML() {
                     badge="Interactive Lab"
                     tips={['PageRank is literally a Markov chain — each page is a state',
                 'The "Random Surfer" model: with probability d, the surfer follows a link; with 1-d, they jump randomly']}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         This lab runs a small Markov Matrix trained on computer science text. When you press Start, it will use the probabilities defined in the matrix rows to sample the next word, chaining them together to form a sentence.
                     </p>

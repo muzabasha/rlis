@@ -6,7 +6,7 @@ import { MathBlock } from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import QuizCard from '../../components/topic/QuizCard';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Briefcase,
     Zap, Award, Layers, GitBranch, Binary
@@ -15,6 +15,40 @@ import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, Cell
 } from 'recharts';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "Formal M D P Definition Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "Formal M D P Definition Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the Formal M D P Definition simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing Formal M D P Definition Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"Formal M D P Definition\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Interactive Components for Topic 2 ──────────────────────────────────────
 
@@ -401,7 +435,7 @@ export default function Topic2_FormalMDPDefinition() {
                         'All rows in the transition matrix must sum to 1.0',
                         'Stochastic transitions mean the agent cannot predict the exact next state'
                     ]}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Toggle between actions to see how the Transition Matrix changes. Notice how <strong>Searching</strong> has a higher risk of battery drain (Low Energy) compared to <strong>Waiting</strong>.
                     </p>

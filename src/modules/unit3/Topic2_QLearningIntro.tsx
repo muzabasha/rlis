@@ -1,6 +1,6 @@
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,40 @@ import {
     Zap, TrendingUp, Target, Briefcase, Binary, Layers,
     Eye, ChevronRight, Play, RotateCcw, Brain, Activity, Search
 } from 'lucide-react';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "Q Learning Intro Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "Q Learning Intro Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the Q Learning Intro simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing Q Learning Intro Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"Q Learning Intro\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Interactive Components for Topic 2 ─────────────────────────────────────
 
@@ -404,7 +438,7 @@ export default function Topic2_QLearningIntro() {
                     tips={['Start with all zeros — the agent knows nothing',
                 'Use Step mode to trace a single SARS update carefully',
                 'After ~20 episodes, the table starts showing clear patterns']}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         This lab simulates a small 2-state world. Every time you click **Simulate Step**, the agent takes an action, receives a reward, and updates its Q-Table using the TD error. Watch how the numbers slowly shift from zero to meaningful "Quality" scores.
                     </p>

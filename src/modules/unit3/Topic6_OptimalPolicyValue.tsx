@@ -1,6 +1,6 @@
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,40 @@ import {
     Trophy, Target, Briefcase, Zap, Binary, Layers, Eye, ChevronRight,
     Play, RotateCcw, TrendingUp, Search, Brain
 } from 'lucide-react';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "Optimal Policy Value Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "Optimal Policy Value Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the Optimal Policy Value simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing Optimal Policy Value Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"Optimal Policy Value\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Interactive Components for Topic 6 ─────────────────────────────────────
 
@@ -361,7 +395,7 @@ export default function Topic6_OptimalPolicyValue() {
                     badge="Interactive Lab"
                     tips={['Value Iteration sweeps all states, updating values using the Bellman Optimality Equation',
                 'Convergence is guaranteed when max|V_new - V_old| < threshold']}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Observe the difference between a "Suboptimal" policy and an "Optimal" policy. Notice how the state values ($V(s)$) are significantly higher when the agent makes perfect choices. 
                     </p>

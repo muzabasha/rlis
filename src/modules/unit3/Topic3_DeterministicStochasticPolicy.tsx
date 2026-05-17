@@ -6,13 +6,47 @@ import { MathBlock } from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import QuizCard from '../../components/topic/QuizCard';
 import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
-import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical,
     Target, Briefcase, Zap, Binary,
     Shuffle, CheckCircle2, Play
 } from 'lucide-react';
+
+
+// ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
+const challenges: LabChallenge[] = [
+    {
+        "id": "concept_explore",
+        "quest": "Deterministic Stochastic Policy Discovery",
+        "target": "Interact with the visualizer and observe transition steps",
+        "isCompleted": false
+    },
+    {
+        "id": "worksheet_complete",
+        "quest": "Deterministic Stochastic Policy Workbook",
+        "target": "Submit answers to all guided worksheet reflection questions",
+        "isCompleted": false
+    }
+];
+const notebook: NotebookEntry[] = [
+    {
+        "task": "Perform 5 separate step cycles on the Deterministic Stochastic Policy simulator.",
+        "question": "Based on your experiment, how does this concept influence long-term state-action values under stochastic conditions?",
+        "hint": "Consider factors like the discount factor (gamma), immediate rewards, and next-state expectations."
+    },
+    {
+        "task": "Change the parameters to their minimum and maximum settings and compare results.",
+        "question": "What primary edge-case did you observe when parameters were set to extreme boundary values?",
+        "hint": "For example, consider what happens when exploration is completely shut off, or when rewards are purely negative."
+    }
+];
+const logs: string[] = [
+    "🤖 [System] Initializing Deterministic Stochastic Policy Experiential Simulator...",
+    "📡 [Telemetry] Connecting data streams... Connected.",
+    "💡 [Pedagogy] Concept: \"Deterministic Stochastic Policy\" model has been loaded and initialized. Ready for student interaction."
+];
 
 // ─── Interactive Components for Topic 3 ─────────────────────────────────────
 
@@ -401,7 +435,7 @@ graph LR
                         'Deterministic policies always return the exact same action for a given state.',
                         'Stochastic policies map states to probability distributions over actions.'
                     ]}
-                >
+                 challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Toggle between **Deterministic** and **Stochastic** modes. In stochastic mode, adjust the probability and press **Execute Policy** multiple times. Notice how the outcome varies even though the state remains the same.
                     </p>
