@@ -1,10 +1,62 @@
 import React, { useEffect, useRef, useState, useId } from 'react';
 import { Maximize2, Minimize2, RefreshCw, ZoomIn, ZoomOut } from 'lucide-react';
-
 interface InteractiveDiagramProps {
     title: string;
     description: string;
     chart: string;
+}
+
+interface ParsedNode {
+    id: string;
+    label: string;
+}
+
+interface ParsedTransition {
+    from: string;
+    to: string;
+    label?: string;
+}
+
+function parseMermaidChart(chartStr: string): { nodes: ParsedNode[]; transitions: ParsedTransition[] } {
+    const nodesMap = new Map<string, string>();
+    const transitions: ParsedTransition[] = [];
+
+    const lines = chartStr.split('\n');
+
+    // Matches patterns like: A[Agent], B("State 1"), C{"Decision"}
+    const nodeRegex = /([A-Za-z0-9_-]+)\s*(?:\[["']?([^\]"']+)["']?\]|\(["']?([^\)"']+)["']?\)|\{\{["']?([^\}"']+)["']?\}\}|\(["']?([^"]+)["']?\)|\{["']?([^}]+)["']?\})/g;
+
+    // Matches patterns like: ID1 -->|Label| ID2 or ID1 --> ID2
+    const transitionRegex = /([A-Za-z0-9_-]+)\s*(?:--+>|==+>)\s*(?:\|([^|]+)\|)?\s*([A-Za-z0-9_-]+)/g;
+
+    lines.forEach(line => {
+        let match;
+        while ((match = nodeRegex.exec(line)) !== null) {
+            const id = match[1];
+            const label = match[2] || match[3] || match[4] || match[5] || match[6] || id;
+            nodesMap.set(id, label.trim());
+        }
+
+        let transMatch;
+        while ((transMatch = transitionRegex.exec(line)) !== null) {
+            const from = transMatch[1];
+            const label = transMatch[2] ? transMatch[2].trim() : undefined;
+            const to = transMatch[3];
+            transitions.push({ from, to, label });
+        }
+    });
+
+    transitions.forEach(t => {
+        if (!nodesMap.has(t.from)) {
+            nodesMap.set(t.from, t.from);
+        }
+        if (!nodesMap.has(t.to)) {
+            nodesMap.set(t.to, t.to);
+        }
+    });
+
+    const nodes = Array.from(nodesMap.entries()).map(([id, label]) => ({ id, label }));
+    return { nodes, transitions };
 }
 
 export default function InteractiveDiagram({ title, description, chart }: InteractiveDiagramProps) {
@@ -13,6 +65,7 @@ export default function InteractiveDiagram({ title, description, chart }: Intera
     const [zoom, setZoom] = useState(1);
     const [renderKey, setRenderKey] = useState(0);
     const uid = useId().replace(/:/g, '');
+    const { nodes, transitions } = parseMermaidChart(chart);
 
     useEffect(() => {
         let cancelled = false;
@@ -154,6 +207,63 @@ export default function InteractiveDiagram({ title, description, chart }: Intera
                                 {description}
                             </p>
                         </div>
+
+                        {/* Dynamic Architectural Breakdown */}
+                        {nodes.length > 0 && (
+                            <div className="p-5 rounded-2xl bg-indigo-50/20 dark:bg-indigo-950/5 border border-indigo-200/20 dark:border-indigo-900/10 space-y-3.5 shadow-inner">
+                                <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
+                                    <span className="p-1.5 bg-indigo-500/10 rounded-lg border border-indigo-500/20">
+                                        <span className="text-xs">⛓️</span>
+                                    </span>
+                                    <h5 className="text-xs font-black uppercase tracking-wider">Dynamic Node Breakdown</h5>
+                                </div>
+                                
+                                {/* Nodes List */}
+                                <div className="space-y-1.5">
+                                    <span className="text-[10px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider">Active Entities</span>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {nodes.map(node => (
+                                            <span 
+                                                key={node.id} 
+                                                className="px-2.5 py-1 text-[10px] font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-lg border border-slate-200/50 dark:border-slate-700 shadow-sm flex items-center gap-1.5"
+                                            >
+                                                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-sm" />
+                                                {node.label}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Transitions List */}
+                                {transitions.length > 0 && (
+                                    <div className="space-y-2 pt-2 border-t border-slate-200/50 dark:border-slate-800/80">
+                                        <span className="text-[10px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider">State Transitions & Flow Paths</span>
+                                        <div className="space-y-1.5">
+                                            {transitions.map((trans, i) => {
+                                                const fromNode = nodes.find(n => n.id === trans.from)?.label || trans.from;
+                                                const toNode = nodes.find(n => n.id === trans.to)?.label || trans.to;
+                                                return (
+                                                    <div 
+                                                        key={i} 
+                                                        className="text-[10px] text-slate-600 dark:text-slate-300 font-medium flex items-center gap-1.5 flex-wrap p-2 rounded-xl bg-slate-50/50 dark:bg-slate-900/40 border border-slate-200/30 dark:border-slate-800/50"
+                                                    >
+                                                        <span className="font-bold text-slate-800 dark:text-slate-200">{fromNode}</span>
+                                                        <span className="text-indigo-500 font-bold">➔</span>
+                                                        {trans.label && (
+                                                            <span className="px-1.5 py-0.5 text-[8px] font-black bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded border border-indigo-500/20 font-mono">
+                                                                {trans.label}
+                                                            </span>
+                                                        )}
+                                                        <span className="text-indigo-500 font-bold">➔</span>
+                                                        <span className="font-bold text-slate-800 dark:text-slate-200">{toNode}</span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
 
                         {/* Interactive Pointers & Walkthrough Box */}
                         <div className="p-5 rounded-2xl bg-indigo-50/30 dark:bg-indigo-950/10 border border-indigo-200/30 dark:border-indigo-900/20 space-y-3 flex-1 flex flex-col justify-between">
