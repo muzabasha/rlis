@@ -9,41 +9,8 @@ import { useNavigate } from 'react-router-dom';
 const virtualLabs = [
     {
         id: 'lab1',
-        title: 'Monte Carlo Sampling Sandbox',
-        description: 'Interactive visualization of random sampling for approximating Pi and integrating complex functions.',
-        unit: 4,
-        co: 'CO5',
-        type: 'Simulation',
-        icon: <Target size={24} />,
-        color: 'emerald',
-        route: '/topic/u4t11' // Mapping to the topic where it's embedded or a standalone route
-    },
-    {
-        id: 'lab2',
-        title: 'Markov Decision Process Explorer',
-        description: 'Build your own gridworld, set transition probabilities, and watch the agent navigate the stochastic environment.',
-        unit: 2,
-        co: 'CO3',
-        type: 'Experiential',
-        icon: <Activity size={24} />,
-        color: 'violet',
-        route: '/topic/u2t5'
-    },
-    {
-        id: 'lab3',
-        title: 'Q-Learning Convergence Visualizer',
-        description: 'Watch the Q-table update in real-time as an agent explores a maze. Tweak epsilon, alpha, and gamma parameters.',
-        unit: 3,
-        co: 'CO4',
-        type: 'Gamified',
-        icon: <Zap size={24} />,
-        color: 'amber',
-        route: '/topic/u3t10'
-    },
-    {
-        id: 'lab4',
         title: 'Multi-Armed Bandit Arena',
-        description: 'Play against different bandit algorithms (Epsilon-Greedy, UCB, Thompson Sampling) in a casino simulation.',
+        description: 'Explore the classic exploration vs. exploitation dilemma. Play against Bandit algorithms like Epsilon-Greedy, UCB, and Thompson Sampling in a virtual casino.',
         unit: 1,
         co: 'CO1',
         type: 'Gamified',
@@ -52,28 +19,73 @@ const virtualLabs = [
         route: '/topic/u1t9'
     },
     {
-        id: 'lab5',
-        title: 'Off-Policy vs On-Policy Racing',
-        description: 'Compare Q-Learning (Off-Policy) and SARSA (On-Policy) side-by-side in a cliff walking environment.',
-        unit: 3,
-        co: 'CO5',
+        id: 'lab2',
+        title: 'Markov Decision Process Explorer',
+        description: 'Design and build your own stochastic Gridworld environment. Define transition matrices and observe the agent navigate the state space.',
+        unit: 2,
+        co: 'CO3',
+        type: 'Experiential',
+        icon: <Activity size={24} />,
+        color: 'violet',
+        route: '/topic/u2t1'
+    },
+    {
+        id: 'lab3',
+        title: 'Markov Reward Process Chain',
+        description: 'Visualize transition chains, calculate rewards, and study how value functions discount future expectations over time.',
+        unit: 2,
+        co: 'CO3',
         type: 'Simulation',
         icon: <Settings size={24} />,
-        color: 'pink',
+        color: 'emerald',
+        route: '/topic/u2t9'
+    },
+    {
+        id: 'lab4',
+        title: 'Q-Learning Convergence Sandbox',
+        description: 'Watch the Q-table update in real-time as an agent explores a state-action grid. Tweak epsilon, alpha, and gamma parameters to witness mathematical convergence.',
+        unit: 3,
+        co: 'CO4',
+        type: 'Simulation',
+        icon: <Zap size={24} />,
+        color: 'amber',
         route: '/topic/u3t8'
     },
     {
-        id: 'lab6',
-        title: 'Policy Gradient Lunar Lander',
-        description: 'Train a neural network using REINFORCE to safely land a spacecraft on the moon with real-time physics.',
-        unit: 4,
-        co: 'CO6',
-        type: 'Experiential',
+        id: 'lab5',
+        title: 'The Gambler\'s Dungeon Adventure',
+        description: 'Step into a fully gamified stochastic playground. Learn to optimize action policies while surviving a monster-infested dungeon with real-time stats and quests.',
+        unit: 3,
+        co: 'CO4',
+        type: 'Gamified',
         icon: <PlayCircle size={24} />,
+        color: 'pink',
+        route: '/topic/u3t11'
+    },
+    {
+        id: 'lab6',
+        title: 'Monte Carlo Sampling Engine',
+        description: 'Witness Monte Carlo estimation in action. Generate complete episode trajectories and average their returns to approximate true state values without a transition model.',
+        unit: 4,
+        co: 'CO5',
+        type: 'Experiential',
+        icon: <Target size={24} />,
         color: 'indigo',
+        route: '/topic/u4t10'
+    },
+    {
+        id: 'lab7',
+        title: 'Monte Carlo GLIE Control Loop',
+        description: 'Optimize policies using Generalized Policy Iteration (GPI) and Greedy in the Limit with Infinite Exploration (GLIE) with full telemetry visualizers.',
+        unit: 4,
+        co: 'CO5',
+        type: 'Experiential',
+        icon: <Lightbulb size={24} />,
+        color: 'rose',
         route: '/topic/u4t14'
     }
 ];
+
 
 export default function VirtualLabPage() {
     const navigate = useNavigate();
@@ -141,6 +153,7 @@ export default function VirtualLabPage() {
                             blue: 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 border-blue-200 dark:border-blue-800/50',
                             pink: 'bg-pink-50 text-pink-600 dark:bg-pink-900/20 dark:text-pink-400 border-pink-200 dark:border-pink-800/50',
                             indigo: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/20 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800/50',
+                            rose: 'bg-rose-50 text-rose-600 dark:bg-rose-900/20 dark:text-rose-400 border-rose-200 dark:border-rose-800/50',
                         };
 
                         const themeClass = colorMap[lab.color];
