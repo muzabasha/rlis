@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -18,7 +22,7 @@ import {
 export default function Topic12_MCAlgorithms() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic12_mcalgorithms" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -30,6 +34,19 @@ export default function Topic12_MCAlgorithms() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "The algorithm for the patient agent: 'I'll just wait until I reach the end to see if my life choices were optimal.'"
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Layers size={120} />
@@ -108,6 +125,18 @@ export default function Topic12_MCAlgorithms() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="M C Algorithms Architecture"
+                description="First-visit vs Every-visit Monte Carlo."
+                chart={`graph TD
+    State[State S visited]
+    State --> Check{First visit in episode?}
+    Check -- Yes --> First[First-Visit MC Update]
+    Check -- No --> Every[Every-Visit MC Update]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -252,10 +281,7 @@ export default function Topic12_MCAlgorithms() {
                         { q: 'Which method is more data-efficient?', a: 'Every-Visit MC is generally more data-efficient because it extracts multiple value samples from a single episode if states are revisited.' },
                         { q: 'Do both methods converge to the same value?', a: 'Yes, both methods are statistically guaranteed to converge to the true value function as the number of episodes approaches infinity.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -271,10 +297,20 @@ export default function Topic12_MCAlgorithms() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="First-Visit vs Every-Visit Lab"
+                    description="Compare MC estimation methods"
+                    objective="Run both First-Visit and Every-Visit MC on the same MRP. Compare the resulting value estimates."
+                    badge="Interactive Lab"
+                    tips={['Both converge to V(s) asymptotically',
+                'Every-Visit uses more data but has correlated samples']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Toggle between **First-Visit** and **Every-Visit** to see how the "Accounting" changes when an agent visits the same state multiple times in one episode.
                     </p>
                     <MCAlgoComparisonLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

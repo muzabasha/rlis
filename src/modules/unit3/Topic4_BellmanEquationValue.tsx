@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -109,7 +113,7 @@ function BellmanBackupLab() {
 export default function Topic4_BellmanEquationValue() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit3-topic4_bellmanequationvalue" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -121,6 +125,19 @@ export default function Topic4_BellmanEquationValue() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Richard Bellman invented this in the 1950s, probably while trying to optimally navigate his way to the coffee machine."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <TrendingUp size={120} />
@@ -185,6 +202,17 @@ export default function Topic4_BellmanEquationValue() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Bellman Equation Value Architecture"
+                description="The recursive Bellman Equation for Value Functions."
+                chart={`graph TD
+    V[V(s)] --> |Equals| Sum[Reward R + &gamma; * V(s')]
+    Sum --> |Averaged over| Trans[Transition Probabilities]
+    Trans --> NextS[Next States s']`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -321,10 +349,7 @@ export default function Topic4_BellmanEquationValue() {
                         { q: 'What is a "Backup" diagram?', a: 'A graphical representation of the Bellman Equation, showing how value flows from successor states (leaves) back to the current state (root).' },
                         { q: 'Can we solve the Bellman Equation for infinite states?', a: 'Exactly solving it with matrix inversion is impossible for infinite states; instead, we use iterative methods like Value Iteration or function approximation (Deep RL).' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -340,10 +365,20 @@ export default function Topic4_BellmanEquationValue() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Bellman Backup Calculator"
+                    description="Compute Bellman updates step by step"
+                    objective="Enter state values and see the Bellman backup equation compute the new value. Observe convergence over iterations."
+                    badge="Interactive Lab"
+                    tips={['The Bellman equation is recursive — it expresses V(s) in terms of V(s\')',
+                'Iterating the Bellman equation (Value Iteration) converges to V*']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         In this lab, you act as the Bellman Equation. You have one current state and three possible successor states ($s'_1, s'_2, s'_3$). Change the values of the next states or the discount factor to see how the "Current Value" updates automatically.
                     </p>
                     <BellmanBackupLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

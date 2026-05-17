@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -92,7 +96,7 @@ function PolicyNavigator() {
 export default function Topic1_PolicyInMDP() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit3-topic1_policyinmdp" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -104,6 +108,19 @@ export default function Topic1_PolicyInMDP() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "A policy is just a giant flowchart of 'If X, do Y', except X is 'everything' and Y is 'hopefully not crash'."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Map size={120} />
@@ -176,6 +193,17 @@ export default function Topic1_PolicyInMDP() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Policy In M D P Architecture"
+                description="Mapping states to actions via policies."
+                chart={`graph LR
+    S((State Space)) --> Pi{Policy &pi;}
+    Pi --> |Determines| A[Action Space]
+    A --> |Executes in| E((Environment))`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -310,10 +338,7 @@ export default function Topic1_PolicyInMDP() {
                         { q: 'Is a policy dependent on the history of states?', a: 'No, due to the Markov Property, a policy depends only on the current state, not on the sequence of states that preceded it.' },
                         { q: 'What is an "Optimal Policy"?', a: 'An optimal policy is one that maximizes the expected return (cumulative discounted reward) from every state.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -329,10 +354,20 @@ export default function Topic1_PolicyInMDP() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Policy Visualizer"
+                    description="Display and compare stochastic policies"
+                    objective="Visualize the policy as arrows on a gridworld. Switch between random, greedy, and optimal policies."
+                    badge="Interactive Lab"
+                    tips={['A deterministic policy has one arrow per state',
+                'A stochastic policy shows multiple arrows with different opacities (probabilities)']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         In this lab, you can see how an agent's policy maps different **States** to specific **Actions**. Select a state to see which action the policy recommends and what its "Confidence" (Q-Value) is.
                     </p>
                     <PolicyNavigator />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

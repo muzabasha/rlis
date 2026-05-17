@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import { MathBlock } from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
+import QuizCard from '../../components/topic/QuizCard';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import {
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
-    Target, Briefcase, Zap, Binary, Layers,
-    Eye, ChevronRight, Shuffle, CheckCircle2, AlertCircle, Play
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical,
+    Target, Briefcase, Zap, Binary,
+    Shuffle, CheckCircle2, Play
 } from 'lucide-react';
 
 // ─── Interactive Components for Topic 3 ─────────────────────────────────────
@@ -127,6 +131,7 @@ function PolicyTypeLab() {
 export default function Topic3_DeterministicStochasticPolicy() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
+            <TopicProgressTracker topicId="unit3-topic3-deterministicstochasticpolicy" />
             
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
@@ -139,6 +144,19 @@ export default function Topic3_DeterministicStochasticPolicy() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Deterministic policies are like choosing standard vanilla ice cream every single time. Stochastic policies are like letting a hyperactive monkey spin the flavor wheel."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Shuffle size={120} />
@@ -192,7 +210,7 @@ export default function Topic3_DeterministicStochasticPolicy() {
                             interpretation="There is zero randomness. If you are in state s, you will ALWAYS take action a."
                             motivation="Simplifies computation and is the goal of most 'exploitation' phases."
                             terms={[
-                                { term: 'a', name: 'Action', meaning: 'The single output of the policy.', range: '\mathcal{A}', example: 'Move North' },
+                                { term: 'a', name: 'Action', meaning: 'The single output of the policy.', range: '\\mathcal{A}', example: 'Move North' },
                             ]}
                         />
 
@@ -203,7 +221,7 @@ export default function Topic3_DeterministicStochasticPolicy() {
                             interpretation="You might take action A with 70% probability and action B with 30%."
                             motivation="Essential for exploration and for games where being predictable is a weakness."
                             terms={[
-                                { term: '\pi(a|s)', name: 'Prob Density', meaning: 'The likelihood of choosing a in s.', range: '0 \to 1', example: '0.7 for Action A' },
+                                { term: '\\pi(a|s)', name: 'Prob Density', meaning: 'The likelihood of choosing a in s.', range: '0 \\to 1', example: '0.7 for Action A' },
                             ]}
                         />
                     </div>
@@ -216,6 +234,18 @@ export default function Topic3_DeterministicStochasticPolicy() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Deterministic vs Stochastic Policy Architecture"
+                description="Difference between deterministic and stochastic policies."
+                chart={`
+graph LR
+    S((State s)) --> |Deterministic &pi;(s)| A1[Action a=100%]
+    S2((State s)) --> |Stochastic &pi;(a|s)| A2[Action a1=70%]
+    S2 --> |Stochastic &pi;(a|s)| A3[Action a2=30%]
+`.trim()}
+            />
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -346,10 +376,7 @@ export default function Topic3_DeterministicStochasticPolicy() {
                         { q: 'What is a stochastic policy?', a: 'A stochastic policy defines a probability distribution over actions for each state. The agent samples an action from this distribution.' },
                         { q: 'When is a stochastic policy absolutely necessary?', a: 'In multi-agent adversarial games (like Poker or Rock-Paper-Scissors) and in certain partially observable environments (POMDPs).' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -365,10 +392,21 @@ export default function Topic3_DeterministicStochasticPolicy() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Policy Simulator"
+                    description="Experience policy stochastics and determinism"
+                    objective="Toggle between deterministic and stochastic modes. Observe the variance of selected actions."
+                    badge="Interactive Lab"
+                    tips={[
+                        'Deterministic policies always return the exact same action for a given state.',
+                        'Stochastic policies map states to probability distributions over actions.'
+                    ]}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Toggle between **Deterministic** and **Stochastic** modes. In stochastic mode, adjust the probability and press **Execute Policy** multiple times. Notice how the outcome varies even though the state remains the same.
                     </p>
                     <PolicyTypeLab />
+                </VirtualLabShell>
                 </div>
             </SectionWrapper>
 

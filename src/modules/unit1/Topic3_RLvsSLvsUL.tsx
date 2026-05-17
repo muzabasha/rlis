@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -131,7 +135,7 @@ function ParadigmSwitcherLab() {
 export default function Topic3_RLvsSLvsUL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-
+            <TopicProgressTracker topicId="unit1-topic3_rlvsslvsul" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
                 id="story"
@@ -143,6 +147,19 @@ export default function Topic3_RLvsSLvsUL() {
                 accentColor="border-violet-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Supervised Learning is a helicopter parent. Unsupervised is a neglectful parent. RL is giving a toddler a candy every time they do the dishes."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-violet-50 dark:bg-violet-900/20 p-8 rounded-[2.5rem] border border-violet-100 dark:border-violet-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Network size={120} />
@@ -260,6 +277,20 @@ export default function Topic3_RLvsSLvsUL() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="R Lvs S Lvs U L Architecture"
+                description="Comparing the three main paradigms of Machine Learning."
+                chart={`graph TD
+    A[Machine Learning] --> SL[Supervised]
+    A --> UL[Unsupervised]
+    A --> RL[Reinforcement]
+    SL --> |Labels provided| SL_Out[Predict/Classify]
+    UL --> |No labels| UL_Out[Cluster/Structure]
+    RL --> |Delayed Rewards| RL_Out[Optimal Policy]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
@@ -402,10 +433,7 @@ export default function Topic3_RLvsSLvsUL() {
                         { q: 'What is the goal of Unsupervised Learning?', a: 'To discover hidden patterns or groupings in unlabeled data without any external reward or guidance.' },
                         { q: 'Why is RL considered "Learning through Trial and Error"?', a: 'Because the agent must take actions to discover which ones yield the highest rewards, often failing before succeeding.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -421,10 +449,20 @@ export default function Topic3_RLvsSLvsUL() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Paradigm Comparator"
+                    description="Compare the three ML paradigms live"
+                    objective="Run the same dataset through SL, UL, and RL frameworks. Observe the different outputs each produces."
+                    badge="Interactive Lab"
+                    tips={['Supervised Learning needs labelled data — notice the accuracy increase with more labels',
+                'RL only uses reward signals, no labels at all']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Toggle between the three paradigms to see how they differ in their reliance on labels, their autonomy, and their ability to explore new solutions.
                     </p>
                     <ParadigmSwitcherLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

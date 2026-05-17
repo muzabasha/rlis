@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -79,7 +83,7 @@ function TermSensitivityLab() {
 export default function Topic9_QLearningTerms() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit3-topic9_qlearningterms" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -91,6 +95,19 @@ export default function Topic9_QLearningTerms() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Alpha, Gamma, Epsilon... sounds like a frat house, but it's actually the secret sauce to artificial intelligence."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Settings size={120} />
@@ -152,6 +169,18 @@ export default function Topic9_QLearningTerms() {
                     ]} />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Q Learning Terms Architecture"
+                description="Hyperparameters in Q-Learning."
+                chart={`graph TD
+    Params[Q-Learning Hyperparameters]
+    Params --> Alpha[Learning Rate &alpha;: How fast to replace old values]
+    Params --> Gamma[Discount &gamma;: Importance of future rewards]
+    Params --> Epsilon[Exploration &epsilon;: Randomness]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -294,10 +323,7 @@ export default function Topic9_QLearningTerms() {
                         { q: 'Why do we usually set Alpha (\u03B1) to a small value (e.g., 0.1)?', a: 'A small Alpha ensures that the agent\'s estimates change slowly and stably. If Alpha is too high, one lucky or unlucky experience can ruin the entire Q-table.' },
                         { q: 'What is the "TD Target" in the update rule?', a: 'The TD Target is the term [r + \u03B3 max Q(s\', a\')]. It represents the "new estimate" of what the action is worth.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -313,10 +339,21 @@ export default function Topic9_QLearningTerms() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Hyperparameter Tuner"
+                    description="Observe the effect of α, γ, ε on learning"
+                    objective="Adjust learning rate (α), discount factor (γ), and exploration rate (ε). Observe convergence speed and final policy quality."
+                    badge="Interactive Lab"
+                    tips={['High α = fast but unstable learning',
+                'High γ = agent values long-term rewards more',
+                'Decay ε to transition from exploration to exploitation']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Adjust the sliders for **Alpha** and **Gamma** to see how they change the "Personality" of the agent. Notice the tooltips that describe the behavior profile of each setting.
                     </p>
                     <TermSensitivityLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

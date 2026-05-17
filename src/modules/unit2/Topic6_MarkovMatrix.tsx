@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -155,7 +159,7 @@ function MatrixPowerLab() {
 export default function Topic6_MarkovMatrix() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit2-topic6_markovmatrix" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -167,6 +171,19 @@ export default function Topic6_MarkovMatrix() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "A grid of numbers that tells you exactly how likely you are to transition from 'Productive' to 'Watching Cat Videos'."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Activity size={120} />
@@ -236,6 +253,18 @@ export default function Topic6_MarkovMatrix() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Markov Matrix Architecture"
+                description="State transition probability matrix."
+                chart={`graph LR
+    P[Transition Matrix P] --> Row1[Row 1: Probabilities from State 1]
+    P --> Row2[Row 2: Probabilities from State 2]
+    Note over Row1: Sum of probabilities = 1
+    Note over Row2: Sum of probabilities = 1`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -399,10 +428,7 @@ export default function Topic6_MarkovMatrix() {
                         { q: 'Can a transition matrix have a column that sums to more than 1?', a: 'Yes. The row sums must equal 1 (since you must go somewhere from a given state), but column sums can be anything (many states can lead to the same destination state).' },
                         { q: 'If state A is an "absorbing state", what does its row look like in the matrix?', a: 'The entry P_{AA} will be 1.0, and all other entries in that row will be 0.0. Once you enter the state, you never leave.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -418,10 +444,20 @@ export default function Topic6_MarkovMatrix() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Matrix Power Calculator"
+                    description="Compute n-step transition probabilities"
+                    objective="Raise the transition matrix to the power of n and observe how n-step reachability changes."
+                    badge="Interactive Lab"
+                    tips={['P^n gives you the probability of going from state i to state j in exactly n steps',
+                'As n→∞, P^n converges to the stationary distribution (for ergodic chains)']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Edit the 2x2 transition matrix below. As long as the rows sum to 1.0, you can increase the power $n$ to see the $P^n$ matrix. Notice how, at high powers, all rows become identical—revealing the Stationary Distribution!
                     </p>
                     <MatrixPowerLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

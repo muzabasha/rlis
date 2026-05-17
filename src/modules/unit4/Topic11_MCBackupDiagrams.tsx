@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -19,7 +23,7 @@ import {
 export default function Topic11_MCBackupDiagrams() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic11_mcbackupdiagrams" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -31,6 +35,19 @@ export default function Topic11_MCBackupDiagrams() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Unlike TD backups that look one step ahead, MC backups wait until the end of the game to figure out if it was a good idea."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <ArrowDown size={120} />
@@ -92,6 +109,20 @@ export default function Topic11_MCBackupDiagrams() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="M C Backup Diagrams Architecture"
+                description="Monte Carlo vs TD Backup Diagrams."
+                chart={`graph TD
+    subgraph Monte Carlo
+        S_MC((S)) --> |Entire Episode| R_MC[Final Return G]
+    end
+    subgraph Temporal Difference
+        S_TD((S)) --> |One Step| S_Next((S'))
+    end`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -235,10 +266,7 @@ export default function Topic11_MCBackupDiagrams() {
                         { q: 'What does a "Circle" and a "Small Dot" represent in an RL backup diagram?', a: 'A circle represents a State (S), and a small solid dot represents an Action (A) taken from that state.' },
                         { q: 'Why do MC backup diagrams always end at a terminal state?', a: 'Because MC methods calculate the value of a state based on the complete return G, which can only be determined once the episode has reached its conclusion.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -254,10 +282,20 @@ export default function Topic11_MCBackupDiagrams() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Backup Depth Comparator"
+                    description="Compare TD vs MC backup depth"
+                    objective="Visualize and compare 1-step TD backup vs full Monte Carlo backup on the same trajectory."
+                    badge="Interactive Lab"
+                    tips={['TD updates immediately after each step — MC waits until episode end',
+                'TD has lower variance but higher bias than MC']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Experience the "Narrow and Deep" nature of Monte Carlo. Step through a trajectory, then watch the **G-value** flow backwards from the terminal state to all previous states in the path.
                     </p>
                     <MCBackupLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

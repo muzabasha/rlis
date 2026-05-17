@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import { MathBlock } from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
+import QuizCard from '../../components/topic/QuizCard';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
 import {
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
-    Zap, TrendingUp, Clock, Briefcase, Layout,
-    Compass, Map, Award, Move, MousePointer2, Layers, GitBranch, Binary
+    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Briefcase,
+    Zap, Award, Layers, GitBranch, Binary
 } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -105,6 +107,7 @@ function TransitionMatrixExplorer() {
 export default function Topic2_FormalMDPDefinition() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
+            <TopicProgressTracker topicId="unit2-topic2_formalmdpdefinition" />
 
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
@@ -117,6 +120,19 @@ export default function Topic2_FormalMDPDefinition() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "The 4-tuple is the DNA of reinforcement learning. Change one value, and your robot goes from a champion stock trader to a vacuum cleaner."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Briefcase size={120} />
@@ -360,10 +376,7 @@ export default function Topic2_FormalMDPDefinition() {
                         { q: 'What is a Transition Probability Matrix?', a: 'A matrix where each element P[i][j] represents the probability of moving from state i to state j under a specific action.' },
                         { q: 'What is the "Finite" requirement in a Finite MDP?', a: 'It means the sets S, A, and R must have a finite number of elements, allowing for exact computation.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -379,10 +392,21 @@ export default function Topic2_FormalMDPDefinition() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Transition Matrix Explorer"
+                    description="Visualize stochastic state transitions"
+                    objective="Toggle actions and see how the transition probability matrix changes. Verify probabilities sum to 1."
+                    badge="Interactive Lab"
+                    tips={[
+                        'All rows in the transition matrix must sum to 1.0',
+                        'Stochastic transitions mean the agent cannot predict the exact next state'
+                    ]}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Toggle between actions to see how the Transition Matrix changes. Notice how <strong>Searching</strong> has a higher risk of battery drain (Low Energy) compared to <strong>Waiting</strong>.
                     </p>
                     <TransitionMatrixExplorer />
+                </VirtualLabShell>
                 </div>
             </SectionWrapper>
 

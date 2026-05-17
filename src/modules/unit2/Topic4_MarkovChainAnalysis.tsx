@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -145,7 +149,7 @@ function ConvergenceLab() {
 export default function Topic4_MarkovChainAnalysis() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-
+            <TopicProgressTracker topicId="unit2-topic4_markovchainanalysis" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
                 id="story"
@@ -157,6 +161,19 @@ export default function Topic4_MarkovChainAnalysis() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Analyzing a Markov Chain is like predicting the weather: mostly sunny, followed by a 30% chance of an existential crisis."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <TrendingUp size={120} />
@@ -236,6 +253,18 @@ export default function Topic4_MarkovChainAnalysis() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Markov Chain Analysis Architecture"
+                description="Analyzing sequence probabilities in a Markov Chain."
+                chart={`graph TD
+    StateA((A)) -->|0.7| StateA
+    StateA -->|0.3| StateB((B))
+    StateB -->|0.5| StateA
+    StateB -->|0.5| StateB`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
@@ -379,10 +408,7 @@ export default function Topic4_MarkovChainAnalysis() {
                         { q: 'What is an Ergodic Markov Chain?', a: 'A Markov chain that is both irreducible (any state can reach any other) and aperiodic (does not get trapped in cycles). It guarantees a unique stationary distribution.' },
                         { q: 'How do you find the probability of transitioning from state i to j in 3 steps?', a: 'By raising the transition matrix P to the power of 3 (P³) and looking at the (i, j) entry.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -398,10 +424,20 @@ export default function Topic4_MarkovChainAnalysis() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Chain Convergence Simulator"
+                    description="Watch state probabilities reach steady state"
+                    objective="Run the Markov Chain forward and observe the distribution converge to the stationary distribution."
+                    badge="Interactive Lab"
+                    tips={['After ~15 steps the probabilities stop changing — this is the stationary distribution',
+                'Try starting from different initial states — they all converge to the same distribution']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         This system starts 100% in the Sunny state. Press play to watch how the state probabilities evolve over time. Notice that after about 10-15 steps, the probabilities stop changing—they have reached the <strong>Stationary Distribution</strong>.
                     </p>
                     <ConvergenceLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

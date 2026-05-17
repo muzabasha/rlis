@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -134,7 +138,7 @@ function QTableLab() {
 export default function Topic2_QLearningIntro() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit3-topic2_qlearningintro" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -146,6 +150,19 @@ export default function Topic2_QLearningIntro() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Q-Learning: where an agent stumbles around blindly until it accidentally does something smart, then writes it down."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Search size={120} />
@@ -209,6 +226,17 @@ export default function Topic2_QLearningIntro() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Q Learning Intro Architecture"
+                description="Introduction to Model-Free Temporal Difference learning."
+                chart={`graph TD
+    NoModel[No Transition Model Needed] --> Experience[Learn directly from (S, A, R, S')]
+    Experience --> Q[Update Q-table directly]
+    Q --> Optimal[Converge to Q*]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -352,10 +380,7 @@ export default function Topic2_QLearningIntro() {
                         { q: 'Why is Q-Learning considered Model-Free?', a: 'Because it learns directly from interactions with the environment without needing an explicit transition probability matrix P(s\'|s,a).' },
                         { q: 'What is the role of the Temporal Difference (TD) error?', a: 'The TD error is the difference between the estimated value and the newly observed value. It acts as the "signal" that tells the agent how to adjust its Q-values.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -371,10 +396,21 @@ export default function Topic2_QLearningIntro() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Q-Table Explorer"
+                    description="Watch Q-values grow from zero"
+                    objective="Step through Q-Learning updates manually. See how the Q-table fills with meaningful values episode by episode."
+                    badge="Interactive Lab"
+                    tips={['Start with all zeros — the agent knows nothing',
+                'Use Step mode to trace a single SARS update carefully',
+                'After ~20 episodes, the table starts showing clear patterns']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         This lab simulates a small 2-state world. Every time you click **Simulate Step**, the agent takes an action, receives a reward, and updates its Q-Table using the TD error. Watch how the numbers slowly shift from zero to meaningful "Quality" scores.
                     </p>
                     <QTableLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

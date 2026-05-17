@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -105,7 +109,7 @@ function EpsilonProbabilityVisualizer() {
 export default function Topic15_EpsilonGreedy() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic15_epsilongreedy" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -117,6 +121,19 @@ export default function Topic15_EpsilonGreedy() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Epsilon-greedy: spending 90% of your time being smart, and 10% of your time doing something completely random just in case."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Compass size={120} />
@@ -195,6 +212,19 @@ export default function Topic15_EpsilonGreedy() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Epsilon Greedy Architecture"
+                description="Soft Policies for guaranteed exploration."
+                chart={`graph LR
+    S[State] --> Choice{Roll Die (0 to 1)}
+    Choice -- "< Epsilon" --> Random[Pick Random Action]
+    Choice -- "> Epsilon" --> Greedy[Pick Best Action max Q]
+    Random --> Execute
+    Greedy --> Execute`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -335,10 +365,7 @@ export default function Topic15_EpsilonGreedy() {
                         { q: 'Why is \u03B5-greedy necessary for Monte Carlo Control?', a: 'Because Monte Carlo Control requires that all state-action pairs are visited infinitely often to guarantee convergence. A pure greedy policy might stop exploring and miss the optimal strategy.' },
                         { q: 'What happens to the policy as \u03B5 approaches 0?', a: 'The policy becomes increasingly "Greedy," eventually only choosing the action with the highest estimated value.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -354,10 +381,21 @@ export default function Topic15_EpsilonGreedy() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Probability Balancer"
+                    description="Visualize ε-greedy probability distribution"
+                    objective="Adjust ε and the number of actions. See how probability mass is distributed between exploitation and exploration."
+                    badge="Interactive Lab"
+                    tips={['Every action always has probability ≥ ε/|A|',
+                'At ε=0, all probability goes to the best action',
+                'At ε=1, all actions are equally likely']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Adjust the $\epsilon$ slider to see how the mathematical probability is distributed across actions. Watch how the "Exploration Budget" grows and shrinks.
                     </p>
                     <EpsilonProbabilityVisualizer />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

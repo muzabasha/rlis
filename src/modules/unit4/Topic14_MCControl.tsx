@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -19,7 +23,7 @@ import {
 export default function Topic14_MCControl() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic14_mccontrol" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -31,6 +35,19 @@ export default function Topic14_MCControl() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Using random rollouts to steer the ship. It works surprisingly well, assuming you have infinite time and no real-world consequences."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Rocket size={120} />
@@ -94,6 +111,18 @@ export default function Topic14_MCControl() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="M C Control Architecture"
+                description="Optimizing policies via Monte Carlo Exploring Starts."
+                chart={`graph TD
+    Init[Initialize random Q] --> Generate[Generate Episode with Exploring Starts]
+    Generate --> Eval[Policy Evaluation: Q = avg(Returns)]
+    Eval --> Impr[Policy Improvement: Greedy]
+    Impr --> Generate`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -234,10 +263,7 @@ export default function Topic14_MCControl() {
                         { q: 'Why do we estimate Q-values instead of V-values in MC Control?', a: 'Because Q-values allow for policy improvement without needing a model of the environment. If we only had V, we wouldn\'t know which action leads to which state and reward.' },
                         { q: 'What happens if we make the policy 100% greedy too early?', a: 'The agent might get stuck in a "Sub-optimal" strategy because it stopped exploring. It assumes its current best is the absolute best, even if a better path exists.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -253,10 +279,21 @@ export default function Topic14_MCControl() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="GLIE Control Simulator"
+                    description="On-policy MC Control with exploring starts"
+                    objective="Run MC Control and watch the policy improve episode by episode. Observe Q-values and policy arrows update together."
+                    badge="Interactive Lab"
+                    tips={['GLIE = Greedy in the Limit with Infinite Exploration',
+                'Policy improvement step: make policy greedy with respect to current Q',
+                'Run for many episodes to reach near-optimal policy']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Adjust parameters like $\epsilon$ and $\gamma$ to see how they affect the agent's learning speed and final performance. Watch the Q-table update in real-time after each episode!
                     </p>
                     <MonteCarloLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

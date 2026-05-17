@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -92,7 +96,7 @@ function LifecycleLab() {
 export default function Topic10_WorkingOfQLearning() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit3-topic10_workingofqlearning" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -104,6 +108,19 @@ export default function Topic10_WorkingOfQLearning() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Initialize with zeros, act randomly, update slowly, and eventually look like a genius."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Binary size={120} />
@@ -173,6 +190,21 @@ export default function Topic10_WorkingOfQLearning() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Working Of Q Learning Architecture"
+                description="The Off-Policy nature of Q-Learning updates."
+                chart={`graph TD
+    Target[Target = R + &gamma; * max_a Q(S', a)]
+    Current[Current = Q(S, A)]
+    Error[TD Error = Target - Current]
+    Update[Q(S, A) += &alpha; * TD Error]
+    Target --> Error
+    Current --> Error
+    Error --> Update`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -318,10 +350,7 @@ export default function Topic10_WorkingOfQLearning() {
                         { q: 'What marks the end of an episode in the Q-learning cycle?', a: 'An episode ends when the agent reaches a "Terminal State" (like a goal square or a crash). The agent is then reset to a start state to begin a new episode.' },
                         { q: 'What is the role of the learning rate in the working loop?', a: 'It determines how much of the new information (the TD Error) is actually applied to the Q-table. A small learning rate makes the process more stable but slower.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -337,10 +366,21 @@ export default function Topic10_WorkingOfQLearning() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="TD Error Microscope"
+                    description="Inspect the Temporal Difference error in real-time"
+                    objective="Watch the TD error (target - current) drive Q-value updates. Observe how errors shrink as learning progresses."
+                    badge="Interactive Lab"
+                    tips={['Large TD error = the agent was very surprised by the outcome',
+                'Converged Q-learning has TD errors close to 0',
+                'Positive error = outcome better than expected → increase Q']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         In this lab, you can step through the internal logic of a single Q-Learning interaction. Click **Next Step** to advance through the loop from Initialization to Learning.
                     </p>
                     <LifecycleLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

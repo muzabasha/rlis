@@ -1,3 +1,6 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -188,7 +191,7 @@ function ElementLab() {
 export default function Topic4_ElementsOfRL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-
+            <TopicProgressTracker topicId="unit1-topic4_elementsofrl" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
                 id="story"
@@ -200,6 +203,19 @@ export default function Topic4_ElementsOfRL() {
                 accentColor="border-amber-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "An agent, an environment, and a reward signal walk into a bar. The agent tries to maximise the drinks, the environment throws the agent out, and the reward is -100."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-3xl border border-amber-100 dark:border-amber-800">
                         <h4 className="text-lg font-bold text-amber-900 dark:text-amber-100 mb-4 flex items-center gap-2">
                             👨‍🍳 Meet Boulot, the Robot Chef
@@ -363,6 +379,19 @@ export default function Topic4_ElementsOfRL() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Elements Of R L Architecture"
+                description="The fundamental tuple of Reinforcement Learning."
+                chart={`graph LR
+    A((Agent)) -->|Action| E[Environment]
+    E -->|Reward| A
+    E -->|Next State| A
+    style A fill:#c7d2fe,stroke:#4f46e5
+    style E fill:#e2e8f0,stroke:#64748b`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper

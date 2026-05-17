@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -153,7 +157,7 @@ function MRPSimulatorLab() {
 export default function Topic9_MarkovRewardProcess() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-
+            <TopicProgressTracker topicId="unit2-topic9_markovrewardprocess" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
                 id="story"
@@ -165,6 +169,19 @@ export default function Topic9_MarkovRewardProcess() {
                 accentColor="border-emerald-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "An MRP is an MDP but the agent is on autopilot and just along for the ride, collecting coins."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-emerald-50 dark:bg-emerald-900/20 p-8 rounded-[2.5rem] border border-emerald-100 dark:border-emerald-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Waypoints size={120} />
@@ -236,6 +253,17 @@ export default function Topic9_MarkovRewardProcess() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Markov Reward Process Architecture"
+                description="Adding rewards to a standard Markov Chain."
+                chart={`graph LR
+    S1((State 1)) -->|P12| S2((State 2))
+    S1 -.->|R1| Reward((+5))
+    S2 -.->|R2| Reward2((-1))`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
@@ -372,10 +400,7 @@ export default function Topic9_MarkovRewardProcess() {
                         { q: 'Explain the Bellman Equation for an MRP in plain English.', a: 'The value of a state is equal to the immediate reward you get for being there, plus the average of the discounted values of all the places you might end up next.' },
                         { q: 'Can an agent choose its actions in an MRP?', a: 'No. An MRP models autonomous environments. The agent is a passive observer along for the ride.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -391,10 +416,20 @@ export default function Topic9_MarkovRewardProcess() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="MRP Value Estimator"
+                    description="Estimate state values via Monte Carlo simulation"
+                    objective="Run episodes through the MRP and watch the estimated state values converge to the true values."
+                    badge="Interactive Lab"
+                    tips={['More episodes = better value estimates',
+                'The Law of Large Numbers guarantees convergence']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Hit Play to watch a passive agent transition through the "Student" MRP. Notice how negative rewards (Class, Facebook) reduce the total return until the agent hits the "Sleep" absorbing state, ending the episode.
                     </p>
                     <MRPSimulatorLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

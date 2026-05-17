@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -114,7 +118,7 @@ function ActionValueGrid() {
 export default function Topic11_ActionValueFunction() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit2-topic11_actionvaluefunction" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -126,6 +130,19 @@ export default function Topic11_ActionValueFunction() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Q-values: answering the eternal question of 'If I do this dumb thing right now, how much will I regret it later?'"
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Zap size={120} />
@@ -222,6 +239,17 @@ export default function Topic11_ActionValueFunction() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Action Value Function Architecture"
+                description="The Q-value formulation."
+                chart={`graph TD
+    Q[Q(s,a)] --> E[Expected Return G_t]
+    E --> Cond[Given S_t = s, A_t = a]
+    Cond --> Pi[Following policy &pi; thereafter]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -383,10 +411,7 @@ export default function Topic11_ActionValueFunction() {
                         { q: 'How does Q(s, a) differ from V(s)?', a: 'V(s) evaluates a state on average under a policy. Q(s, a) evaluates a specific starting action in that state, regardless of what the policy might prefer initially.' },
                         { q: 'If Q(s, a1) = 10 and Q(s, a2) = 5, what should a rational agent do?', a: 'The agent should choose action a1 (Greedy action) because it leads to a higher expected long-term return.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -402,10 +427,20 @@ export default function Topic11_ActionValueFunction() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Q-Table Inspector"
+                    description="Explore action values for each state"
+                    objective="Observe Q(s,a) values updating in real-time. Click any state to see its action-value breakdown."
+                    badge="Interactive Lab"
+                    tips={['Q(s,a) tells you: "How good is action a from state s?"',
+                'The optimal policy is: always pick the action with the highest Q value']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Select different actions in the grid below. See how the mathematical <strong>Q-Value</strong> for each direction allows the agent to decide which way is "best" even before it moves.
                     </p>
                     <ActionValueGrid />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -125,7 +129,7 @@ function AgentLogicLab() {
 export default function Topic6_AgentTypesReflex() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic6_agenttypesreflex" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -137,6 +141,19 @@ export default function Topic6_AgentTypesReflex() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Simple reflex agents are the knee-jerk reactors of the AI world. 'See fire, run away.' No thinking required."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Cpu size={120} />
@@ -200,6 +217,18 @@ export default function Topic6_AgentTypesReflex() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Agent Types Reflex Architecture"
+                description="Simple Reflex Agent Architecture."
+                chart={`graph TD
+    Sen[Sensors] --> State[What the world is like now]
+    State --> Rules[Condition-Action Rules]
+    Rules --> Action[What action I should do now]
+    Action --> Act[Actuators]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -288,10 +317,7 @@ export default function Topic6_AgentTypesReflex() {
                         { q: 'How does a Model-Based Agent handle hidden information?', a: 'It maintains an "internal state" that tracks the parts of the world it can\'t currently see, using its history and knowledge of how the world evolves.' },
                         { q: 'Define a "Goal-Based Agent".', a: 'An agent that uses goal information (the desired future state) to guide its decisions, allowing it to choose between multiple paths to reach a specific destination.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -307,10 +333,20 @@ export default function Topic6_AgentTypesReflex() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Reflex Agent Sandbox"
+                    description="Build and test condition-action rules"
+                    objective="Add IF-THEN rules to a reflex agent and test it in a simple grid environment. See where it fails."
+                    badge="Interactive Lab"
+                    tips={['Reflex agents have no memory — they cannot handle sequences',
+                'Try a scenario requiring 2 steps to solve — the reflex agent will fail']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Select an agent type to see how information flows from the **Percept** to the **Action**. Notice how complex agents add more "layers" of processing to handle uncertainty.
                     </p>
                     <AgentLogicLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

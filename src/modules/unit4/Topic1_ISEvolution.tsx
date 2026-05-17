@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -98,7 +102,7 @@ function EvolutionLab() {
 export default function Topic1_ISEvolution() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic1_isevolution" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -110,6 +114,19 @@ export default function Topic1_ISEvolution() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Intelligent Systems evolved from rigid rule-books to flexible learners that can outsmart us at our own games."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Cpu size={120} />
@@ -172,6 +189,18 @@ export default function Topic1_ISEvolution() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="I S Evolution Architecture"
+                description="Timeline of Intelligent Systems evolution."
+                chart={`graph LR
+    Logic[Rule-Based Expert Systems] --> Prob[Probabilistic Models]
+    Prob --> ML[Machine Learning]
+    ML --> RL[Reinforcement Learning]
+    RL --> AGI[Towards AGI]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -314,10 +343,7 @@ export default function Topic1_ISEvolution() {
                         { q: 'Why was the 1956 Dartmouth Workshop significant?', a: 'It was the founding event of the field of Artificial Intelligence, where the term was first coined and the major research goals were established.' },
                         { q: 'How does Legg-Hutter define intelligence?', a: 'Intelligence is defined as the capability of an agent to achieve goals in a wide range of environments, formalized as a weighted sum of returns.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -333,10 +359,20 @@ export default function Topic1_ISEvolution() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="AI Evolution Timeline"
+                    description="Interact with key milestones in AI history"
+                    objective="Click on timeline events to see the architecture and performance of each milestone system."
+                    badge="Interactive Lab"
+                    tips={['Notice how each breakthrough built on the previous one',
+                'Deep RL (2013+) combined neural networks with Q-Learning']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Explore how the core technology and definition of intelligence have shifted over the decades. Click through the eras to see the change in math and focus.
                     </p>
                     <EvolutionLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

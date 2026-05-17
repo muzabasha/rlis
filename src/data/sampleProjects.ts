@@ -129,7 +129,7 @@ export const sampleProjects: Project[] = [
             'Use Genetic Algorithms for sequence discovery.'
         ],
         outcome: 'Agent discovers 10+ hit combos automatically.',
-        skeleton: `import retro\nenv = retro.make(game='StreetFighterIISpecialChampionEdition-Genesis')\n# Combo discovery logic`
+        skeleton: `import retro\nenv = retro.make(game="StreetFighterIISpecialChampionEdition-Genesis')\n# Combo discovery logic`
     },
     {
         id: 'p9',

@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -129,7 +133,7 @@ function ApplicationLab() {
 export default function Topic12_QLearningApplications() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit3-topic12_qlearningapplications" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -141,6 +145,19 @@ export default function Topic12_QLearningApplications() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "From beating Atari games to optimizing traffic lights, Q-learning is everywhere, judging your suboptimal decisions."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Network size={120} />
@@ -204,6 +221,17 @@ export default function Topic12_QLearningApplications() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Q Learning Applications Architecture"
+                description="Where Q-Learning is used practically."
+                chart={`graph TD
+    QL[Q-Learning] --> Robotics[Path Planning]
+    QL --> Comms[Network Routing Optimization]
+    QL --> Games[Solving Atari / Discrete Games]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -347,10 +375,7 @@ export default function Topic12_QLearningApplications() {
                         { q: 'What is "Reward Hacking"?', a: 'When an agent finds a way to get a high reward without actually solving the intended problem (e.g., a cleaner robot moving dirt in circles because it gets a reward for every "cleaning action").' },
                         { q: 'Can Q-Learning be used for stock trading?', a: 'Yes. State: [Price history, Volume]. Action: [Buy, Sell, Hold]. Reward: [Profit/Loss]. However, the market is highly non-stationary, making it a difficult MDP.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -366,10 +391,20 @@ export default function Topic12_QLearningApplications() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Application Playground"
+                    description="Q-Learning on real-world inspired tasks"
+                    objective="Choose a domain (Traffic, Inventory, Robot Arm) and train a Q-Learning agent. Compare reward curves across domains."
+                    badge="Interactive Lab"
+                    tips={['Traffic control has sparse rewards — the agent only learns when it improves wait times',
+                'Inventory management has well-shaped rewards — learning is fast']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Select an industry sector on the left to see how the abstract concepts of **States, Actions, and Rewards** translate into real business logic and physical control.
                     </p>
                     <ApplicationLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

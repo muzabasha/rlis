@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -19,7 +23,7 @@ import {
 export default function Topic13_MCPrediction() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic13_mcprediction" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -31,6 +35,19 @@ export default function Topic13_MCPrediction() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Predicting the value of a state by just playing it out a thousand times. The ultimate 'let's see what happens' approach."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Search size={120} />
@@ -94,6 +111,18 @@ export default function Topic13_MCPrediction() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="M C Prediction Architecture"
+                description="Estimating Value Functions using MC."
+                chart={`graph TD
+    Generate[Generate episodes using Policy]
+    Generate --> Sum[Sum returns for each state G(s)]
+    Sum --> Count[Count visits N(s)]
+    Count --> Divide[V(s) = G(s)/N(s)]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -237,10 +266,7 @@ export default function Topic13_MCPrediction() {
                         { q: 'How does MC Prediction handle uncertainty in the environment?', a: 'By averaging the returns from many different episodes, the random variations in environment transitions cancel out, leaving the true expected value.' },
                         { q: 'Why do we use an incremental update formula?', a: 'To save memory and computation time; it allows us to update our estimate using only the current return and the previous average, without re-calculating the sum of all past returns.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -256,10 +282,21 @@ export default function Topic13_MCPrediction() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Value Convergence Tracker"
+                    description="Watch V(s) converge episode by episode"
+                    objective="Track the estimate of V(s) for a specific state across episodes. Observe the Law of Large Numbers in action."
+                    badge="Interactive Lab"
+                    tips={['Convergence is noisy but guaranteed',
+                'Increase the number of episodes to reduce variance',
+                'Compare estimates with the true value computed by Dynamic Programming']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Select a policy and generate episode samples to see how the predicted value $V(s)$ changes. Notice how **Risky** policies cause higher variance in the short term but eventually settle.
                     </p>
                     <MCPredictionLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

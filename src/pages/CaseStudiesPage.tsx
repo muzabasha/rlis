@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Briefcase, Building2, Target, Lightbulb, ShieldAlert,
-    Wrench, Clock, DollarSign, Globe, Award, ChevronRight, X, Layers
+    Wrench, Clock, DollarSign, Globe, Award, ChevronRight, X, Layers, Beaker, Play, Terminal, Zap
 } from 'lucide-react';
 import { caseStudies, CaseStudy } from '../data/caseStudies';
+import { useNavigate } from 'react-router-dom';
 
 const unitColors: Record<number, { bg: string, text: string, border: string, iconBg: string }> = {
     1: { bg: 'bg-blue-50 dark:bg-blue-900/10', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-200 dark:border-blue-800', iconBg: 'bg-blue-100 dark:bg-blue-900/30' },
@@ -14,8 +15,16 @@ const unitColors: Record<number, { bg: string, text: string, border: string, ico
 };
 
 export default function CaseStudiesPage() {
+    const navigate = useNavigate();
     const [selectedUnit, setSelectedUnit] = useState<number | null>(null);
     const [activeStudy, setActiveStudy] = useState<CaseStudy | null>(null);
+
+    const unitLabRoutes: Record<number, string> = {
+        1: '/topic/u1t9',
+        2: '/topic/u2t5',
+        3: '/topic/u3t10',
+        4: '/topic/u4t14',
+    };
 
     const units = [1, 2, 3, 4];
     const filteredStudies = selectedUnit
@@ -31,7 +40,7 @@ export default function CaseStudiesPage() {
                 </div>
                 <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">Real-World Case Studies</h1>
                 <p className="text-lg text-slate-600 dark:text-slate-400">
-                    Deep dive into 16 comprehensive industry applications of Reinforcement Learning and Intelligent Systems.
+                    Deep dive into 16 comprehensive industry applications of Reinforcement Learning and Intelligent Systems. Focus on <strong>Learn by Doing</strong> with interactive Virtual Labs.
                 </p>
             </div>
 
@@ -88,10 +97,19 @@ export default function CaseStudiesPage() {
                                 <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">{study.title}</h3>
                                 <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-3 leading-relaxed">{study.problemStatement}</p>
                             </div>
-                            <div className="pt-6 mt-auto">
+                            <div className="pt-6 mt-auto flex items-center justify-between">
                                 <div className={`flex items-center gap-2 font-bold text-xs uppercase tracking-wider transition-colors ${theme.text} group-hover:opacity-80`}>
                                     Read Case Study <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                                 </div>
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        navigate(unitLabRoutes[study.unit] || '/virtual-lab');
+                                    }}
+                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-slate-900 dark:bg-white text-white dark:text-slate-900 opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 hover:scale-105`}
+                                >
+                                    <Beaker size={12} /> Virtual Lab
+                                </button>
                             </div>
                         </motion.div>
                     );
@@ -130,7 +148,8 @@ export default function CaseStudiesPage() {
                             </div>
 
                             {/* Modal Body */}
-                            <div className="p-6 md:p-10 grid md:grid-cols-2 gap-12">
+                            <div className="p-6 md:p-10 flex flex-col gap-10">
+                                <div className="grid md:grid-cols-2 gap-12">
                                 {/* Left Column */}
                                 <div className="space-y-8">
                                     <section>
@@ -238,6 +257,39 @@ export default function CaseStudiesPage() {
                                         </div>
                                     </section>
                                 </div>
+                                </div>
+
+                                {/* Virtual Lab CTA */}
+                                <section className="relative overflow-hidden rounded-[2rem] bg-slate-900 text-white p-8 md:p-10 mt-4 shadow-2xl group">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <div className="absolute -right-20 -top-20 w-64 h-64 bg-indigo-500/30 rounded-full blur-3xl group-hover:bg-indigo-500/40 transition-colors duration-700"></div>
+                                    <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-pink-500/30 rounded-full blur-3xl group-hover:bg-pink-500/40 transition-colors duration-700"></div>
+                                    
+                                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                                        <div className="space-y-4 max-w-xl">
+                                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-bold uppercase tracking-widest text-indigo-300">
+                                                <Zap size={14} className="text-amber-400" /> Learn by Doing
+                                            </div>
+                                            <h3 className="text-2xl md:text-3xl font-black tracking-tight">Interactive Virtual Lab</h3>
+                                            <p className="text-slate-300 text-sm md:text-base leading-relaxed">
+                                                Stop reading and start building. Launch the interactive virtual lab to experiment with the algorithms, adjust parameters, and see real-time visualizations for <strong>{activeStudy.title}</strong>.
+                                            </p>
+                                            <div className="flex flex-wrap gap-3 pt-2">
+                                                <span className="flex items-center gap-1.5 text-xs font-medium text-slate-400"><Terminal size={14} /> Live Code Editor</span>
+                                                <span className="flex items-center gap-1.5 text-xs font-medium text-slate-400"><Play size={14} /> Real-time Simulation</span>
+                                            </div>
+                                        </div>
+                                        <button 
+                                            onClick={() => navigate(unitLabRoutes[activeStudy.unit] || '/virtual-lab')}
+                                            className="flex-shrink-0 relative overflow-hidden group/btn bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
+                                        >
+                                            <span className="relative z-10 flex items-center gap-2">
+                                                <Beaker size={20} className="text-indigo-600" /> Launch Lab Environment
+                                            </span>
+                                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 to-pink-100 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
+                                        </button>
+                                    </div>
+                                </section>
                             </div>
                         </motion.div>
                     </motion.div>

@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -160,7 +164,7 @@ function RLLoopVisualizer() {
 export default function Topic6_WorkingOfRL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-
+            <TopicProgressTracker topicId="unit1-topic6_workingofrl" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
                 id="story"
@@ -172,6 +176,19 @@ export default function Topic6_WorkingOfRL() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "It's basically an endless loop of 'mess around and find out', mathematically formalized."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute -bottom-4 -right-4 opacity-10">
                             <RefreshCw size={200} />
@@ -273,6 +290,21 @@ export default function Topic6_WorkingOfRL() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Working Of R L Architecture"
+                description="The step-by-step control loop of an RL agent."
+                chart={`sequenceDiagram
+    participant A as Agent
+    participant E as Environment
+    A->>E: Execute Action (A_t)
+    E-->>A: Yield Reward (R_{t+1})
+    E-->>A: Transition State (S_{t+1})
+    Note over A: Update Knowledge
+    Note over A: Select Next Action`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
@@ -415,10 +447,7 @@ export default function Topic6_WorkingOfRL() {
                         { q: 'Explain the difference between S_t and S_{t+1}.', a: 'S_t is the current state observed by the agent before taking an action. S_{t+1} is the state the environment transitions into after the action.' },
                         { q: 'Is the reward R_t always positive?', a: 'No. Rewards can be positive (pleasure), negative (pain/cost), or zero (neutral).' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -434,10 +463,21 @@ export default function Topic6_WorkingOfRL() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="RL Loop Visualizer"
+                    description="Step through the Agent-Environment cycle"
+                    objective="Use Step mode to manually tick through the RL control loop. Observe state, action, reward, and next state at each tick."
+                    badge="Interactive Lab"
+                    tips={['Press Step once and trace the full SARS tuple',
+                'Use Run to watch continuous learning unfold',
+                'Increase speed for long-horizon convergence']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Adjust the animation speed to see how the agent updates its internal "Brain" after receiving a reward. In high-speed systems, this happens thousands of times per second.
                     </p>
                     <RLLoopVisualizer />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

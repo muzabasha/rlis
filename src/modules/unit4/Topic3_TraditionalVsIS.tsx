@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -83,7 +87,7 @@ function ResponseLab() {
 export default function Topic3_TraditionalVsIS() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic3_traditionalvsis" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -95,6 +99,19 @@ export default function Topic3_TraditionalVsIS() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Traditional systems are like a strict math teacher. Intelligent Systems are like a jazz musician improvising."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Settings size={120} />
@@ -170,6 +187,24 @@ export default function Topic3_TraditionalVsIS() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Traditional Vs I S Architecture"
+                description="Static Programming versus Intelligent Systems."
+                chart={`graph LR
+    subgraph Traditional
+        Data1[Data] --> Alg[Algorithm]
+        Rules1[Rules] --> Alg
+        Alg --> Ans1[Answers]
+    end
+    subgraph Intelligent System
+        Data2[Data] --> ML[Machine Learning]
+        Ans2[Answers] --> ML
+        ML --> Rules2[Rules & Patterns]
+    end`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -313,10 +348,7 @@ export default function Topic3_TraditionalVsIS() {
                         { q: 'What is "Explicit Programming"?', a: 'The process of a human coder writing down every specific instruction and rule the system must follow to solve a problem.' },
                         { q: 'In what scenarios should you choose a traditional system over an intelligent one?', a: 'When the rules are well-defined, the data is structured, and 100% predictability/traceability is required (e.g., medical billing or safety-critical logic gates).' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -332,10 +364,20 @@ export default function Topic3_TraditionalVsIS() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Rule Engine vs ML Comparator"
+                    description="Compare rigid rules vs learned patterns"
+                    objective="Design rules manually vs let ML learn from data. Observe where each approach breaks down."
+                    badge="Interactive Lab"
+                    tips={['Rules are brittle — they fail on edge cases',
+                'ML systems handle edge cases better but need training data']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         In this simulation, watch how a Traditional System handles unexpected data vs. an Intelligent System. Click **Unexpected Input** to see which one breaks!
                     </p>
                     <ResponseLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

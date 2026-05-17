@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -156,7 +160,7 @@ function RobotCaseLab() {
 export default function Topic5_RecyclingRobotCase() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit3-topic5_recyclingrobotcase" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -245,6 +249,22 @@ export default function Topic5_RecyclingRobotCase() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Recycling Robot Case Architecture"
+                description="State machine for the Recycling Robot case study."
+                chart={`stateDiagram-v2
+    [*] --> High
+    High --> High : Search (prob alpha)
+    High --> Low : Search (prob 1-alpha)
+    High --> High : Wait
+    Low --> Low : Wait
+    Low --> High : Recharge
+    Low --> Rescue : Search (prob 1-beta)
+    Rescue --> High : (Penalty -3)`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -388,10 +408,7 @@ export default function Topic5_RecyclingRobotCase() {
                         { q: 'What represents the "Reward" in the Recycling Robot case?', a: 'The reward is the number of cans collected. Searching gives a high reward (+R_search), Waiting gives a small reward (+R_wait), and being rescued gives a negative reward (-3).' },
                         { q: 'Is the Recycling Robot MDP episodic or continuing?', a: 'It is typically modelled as a continuing task because the robot keeps operating day after day without a natural "Terminal State".' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -407,10 +424,21 @@ export default function Topic5_RecyclingRobotCase() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Robot Command Center"
+                    description="Operate the Recycling Robot directly"
+                    objective="Act as the policy! Choose Search, Wait, or Recharge and try to maximize total reward without getting rescued."
+                    badge="Interactive Lab"
+                    tips={['Getting rescued costs -3 reward — avoid it at Low energy',
+                'Recharge has 0 immediate reward but prevents -3 penalty',
+                'Can you beat 50 total reward in 20 steps?']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         In this lab, you are the policy! Click the actions to see how the robot's energy state changes. Try to collect as many cans as possible without needing a rescue (which drains your total reward).
                     </p>
                     <RobotCaseLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

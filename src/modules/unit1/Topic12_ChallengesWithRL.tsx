@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -114,7 +118,7 @@ function RewardHackingLab() {
 export default function Topic12_ChallengesWithRL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-
+            <TopicProgressTracker topicId="unit1-topic12_challengeswithrl" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
                 id="story"
@@ -126,6 +130,19 @@ export default function Topic12_ChallengesWithRL() {
                 accentColor="border-red-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Reward hacking: like when you tell an AI to clean a room, and it just sets the house on fire so there's no room left to clean."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-red-50 dark:bg-red-900/20 p-8 rounded-[2.5rem] border border-red-100 dark:border-red-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Flame size={120} />
@@ -218,6 +235,19 @@ export default function Topic12_ChallengesWithRL() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Challenges With R L Architecture"
+                description="Technical hurdles in modern RL implementations."
+                chart={`graph TD
+    C[Key Challenges] --> SE[Sample Inefficiency]
+    C --> RH[Reward Hacking]
+    C --> EE[Exploration vs Exploitation]
+    C --> SG[Sim-to-Real Gap]
+    SG --> |Fails in real world| Crash[Robotics Failure]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
@@ -357,10 +387,7 @@ export default function Topic12_ChallengesWithRL() {
                         { q: 'Explain "Reward Hacking" with an example.', a: 'When an agent finds a way to get high rewards by exploiting flaws in the reward function instead of solving the task (e.g., a cleaner robot moving dirt in circles).' },
                         { q: 'Define "Sparse Rewards".', a: 'A situation where the agent receives a reward signal very infrequently, making it hard to know if it is making progress.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -376,10 +403,20 @@ export default function Topic12_ChallengesWithRL() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Reward Hacking Sandbox"
+                    description="See RL fail in surprising ways"
+                    objective="Design a reward function and watch the agent find unexpected loopholes that satisfy the reward without achieving the goal."
+                    badge="Interactive Lab"
+                    tips={['Classic: "Clean the room" → agent hides objects under the rug',
+                'Try to design a reward that cannot be hacked!']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Toggle between Intended Learning and Reward Hacking to see how an agent's logic can "break" if the reward isn't designed perfectly.
                     </p>
                     <RewardHackingLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

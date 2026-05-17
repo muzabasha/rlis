@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -108,7 +112,7 @@ function GridworldExplorer() {
 export default function Topic1_MDPKeyComponents() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-
+            <TopicProgressTracker topicId="unit2-topic1_mdpcomponents" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
                 id="story"
@@ -120,6 +124,19 @@ export default function Topic1_MDPKeyComponents() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Markov Decision Processes sound intimidating until you realize it's just 'Where am I, what can I do, and where's my treat?'"
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Map size={120} />
@@ -213,6 +230,18 @@ export default function Topic1_MDPKeyComponents() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="M D P Components Architecture"
+                description="Visualizing the 5 essential components of an MDP."
+                chart={`graph LR
+    S((States S)) -->|Transition P| S_prime((Next State S'))
+    A[Actions A] -.->|Triggers| S_prime
+    S_prime --> R{Reward R}
+    Gamma[Discount Factor &gamma;] -.->|Weights| R`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
@@ -361,10 +390,7 @@ export default function Topic1_MDPKeyComponents() {
                         { q: 'What is the "Tuple" used to define an MDP?', a: 'An MDP is defined by the 5-tuple (S, A, P, R, γ), representing States, Actions, Transitions, Rewards, and Discount Factor.' },
                         { q: 'Explain the role of Transition Probability P.', a: 'It defines the dynamics of the environment by specifying the probability of moving from state s to state s\' after taking action a.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -380,10 +406,20 @@ export default function Topic1_MDPKeyComponents() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="MDP Component Explorer"
+                    description="Build an MDP from scratch interactively"
+                    objective="Define states, actions, and rewards for a custom scenario. Observe how the 5-tuple determines agent behaviour."
+                    badge="Interactive Lab"
+                    tips={['The transition function is the "physics" of your environment',
+                'Reward shaping changes what the agent considers optimal']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Click on the grid cells to see how each position in a "Gridworld" is defined as a <strong>State</strong> with specific rewards and available <strong>Actions</strong>.
                     </p>
                     <GridworldExplorer />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

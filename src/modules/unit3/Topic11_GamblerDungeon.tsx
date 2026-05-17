@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -141,7 +145,7 @@ function DungeonLab() {
 export default function Topic11_GamblerDungeon() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit3-topic11_gamblerdungeon" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -153,6 +157,19 @@ export default function Topic11_GamblerDungeon() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "The Gambler's Problem: teaching AI why going to Vegas with your life savings is a mathematically terrible idea."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Skull size={120} />
@@ -227,6 +244,17 @@ export default function Topic11_GamblerDungeon() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Gambler Dungeon Architecture"
+                description="State space representation of the Gambler's Problem."
+                chart={`graph LR
+    0((0: Lose)) <-- |Tails| 1((1)) --> |Heads| 2((2))
+    2 <-- |Tails| 3((3)) --> |Heads| 4((4))
+    3 -.-> 100((100: Win))`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -371,10 +399,7 @@ export default function Topic11_GamblerDungeon() {
                         { q: 'How does the gambler "look ahead" without a map?', a: 'By using the max Q-value of the next state in its update rule. This "backs up" the value of the exit through the intermediate squares.' },
                         { q: 'What happens to the Q-values after the gambler has explored for 1000 episodes?', a: 'The Q-values will converge, creating a smooth gradient of increasing values that lead directly to the exit.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -390,10 +415,21 @@ export default function Topic11_GamblerDungeon() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Gambler's Problem Solver"
+                    description="Solve the classic gambler staking problem"
+                    objective="Set the coin-flip probability (p_h) and run Value Iteration to find the optimal staking policy."
+                    badge="Interactive Lab"
+                    tips={['p_h=0.5: symmetric game — interesting policy emerges',
+                'p_h>0.5: favourable odds — conservative policy is optimal',
+                'Watch the value function — it has a distinctive wavy shape']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Manually move the gambler across the dungeon. Watch how the **Q-Values** (the numbers above the cells) update in real-time as you encounter gold or lava. Try to "train" the agent so that the highest numbers lead to the exit!
                     </p>
                     <DungeonLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

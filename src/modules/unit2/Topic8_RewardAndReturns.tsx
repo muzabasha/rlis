@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -135,7 +139,7 @@ function ReturnCalculatorLab() {
 export default function Topic8_RewardAndReturns() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit2-topic8_rewardandreturns" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -147,6 +151,19 @@ export default function Topic8_RewardAndReturns() {
                 accentColor="border-amber-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Returns are just delayed gratification. It's like eating broccoli now so you get dessert later."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-amber-50 dark:bg-amber-900/20 p-8 rounded-[2.5rem] border border-amber-100 dark:border-amber-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Coins size={120} />
@@ -227,6 +244,18 @@ export default function Topic8_RewardAndReturns() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Reward And Returns Architecture"
+                description="The concept of cumulative discounted returns."
+                chart={`graph LR
+    R1[R_{t+1}] --> Sum[Return G_t]
+    R2[R_{t+2} * &gamma;] --> Sum
+    R3[R_{t+3} * &gamma;^2] --> Sum
+    R4[... * &gamma;^n] --> Sum`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -365,10 +394,7 @@ export default function Topic8_RewardAndReturns() {
                         { q: 'What happens if Gamma (\u03B3) is set to 0?', a: 'The agent becomes "myopic" or entirely greedy. It will only care about maximizing the immediate reward for the very next step, ignoring all long-term consequences.' },
                         { q: 'What happens if Gamma (\u03B3) is set to 1?', a: 'The agent becomes "far-sighted". It treats a reward received 100 steps from now as equally valuable as a reward received right now. (Can cause infinite sums if the task never ends).' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -384,10 +410,20 @@ export default function Topic8_RewardAndReturns() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Return Calculator"
+                    description="Compute discounted returns for reward sequences"
+                    objective="Input a sequence of rewards and γ value. See how the discounted return G_t changes with different discount factors."
+                    badge="Interactive Lab"
+                    tips={['γ=0.99 makes the agent very far-sighted — it values future rewards almost as much as immediate ones',
+                'γ=0.1 makes the agent myopic — it mostly cares about the next step']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         A massive treasure of 500 points awaits the agent 5 steps into the future. Adjust the discount factor ($\gamma$) to see how much that distant treasure is "worth" to the agent right now at $t=0$.
                     </p>
                     <ReturnCalculatorLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

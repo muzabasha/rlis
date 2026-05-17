@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -110,7 +114,7 @@ function LearningAgentLab() {
 export default function Topic9_EnvironmentsDetailed() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic9_environmentsdetailed" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -122,6 +126,19 @@ export default function Topic9_EnvironmentsDetailed() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Fully observable vs partially observable: the difference between playing chess and playing poker blindfolded."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <GraduationCap size={120} />
@@ -184,6 +201,16 @@ export default function Topic9_EnvironmentsDetailed() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Environments Detailed Architecture"
+                description="Impact of environment complexity on agent design."
+                chart={`graph TD
+    Simple[Fully Observable, Deterministic] --> Exact[Search Algorithms / A*]
+    Complex[Partially Observable, Stochastic] --> Prob[POMDPs & RL]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -272,10 +299,7 @@ export default function Topic9_EnvironmentsDetailed() {
                         { q: 'What is the specific role of the "Problem Generator"?', a: 'It suggests actions that will lead to new and informative experiences, ensuring the agent continues to explore rather than getting stuck in its current routine.' },
                         { q: 'Why is the "Critic" separate from the "Learning Element"?', a: 'So that the evaluation standard remains objective and fixed, preventing the agent from "lying" to itself about its own performance to make its learning look better.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -291,10 +315,20 @@ export default function Topic9_EnvironmentsDetailed() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Environment Complexity Ladder"
+                    description="Scale from simple to complex environments"
+                    objective="Run the same agent in increasingly complex environments. Observe when the agent fails and why."
+                    badge="Interactive Lab"
+                    tips={['Simple agents fail in complex environments',
+                'POMDP environments require belief-state tracking']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Explore the internal structure that allows an AI to learn from its environment. Click each component to see its specific role in the "Learning Loop."
                     </p>
                     <LearningAgentLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

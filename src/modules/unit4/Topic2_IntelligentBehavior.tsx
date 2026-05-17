@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -112,7 +116,7 @@ function BehaviorLab() {
 export default function Topic2_IntelligentBehavior() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic2_intelligentbehavior" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -124,6 +128,19 @@ export default function Topic2_IntelligentBehavior() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Defining 'intelligence' is hard. For a thermostat, it's turning off at 72 degrees. For a human, it's not pressing 'Reply All'."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Activity size={120} />
@@ -186,6 +203,19 @@ export default function Topic2_IntelligentBehavior() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Intelligent Behavior Architecture"
+                description="What constitutes intelligence in machines."
+                chart={`graph TD
+    IB[Intelligent Behavior]
+    IB --> Perceive[Perception]
+    IB --> Reason[Reasoning & Planning]
+    IB --> Act[Actuation]
+    IB --> Learn[Learning from Experience]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -329,10 +359,7 @@ export default function Topic2_IntelligentBehavior() {
                         { q: 'What is the role of "Autonomy" in an intelligent system?', a: 'Autonomy allows a system to make decisions based on its own experience and perception, rather than relying solely on pre-programmed knowledge from its creator.' },
                         { q: 'Can a system be intelligent without learning?', a: 'Yes (e.g., Expert Systems), but it will be brittle. Modern intelligence almost always requires learning to handle real-world uncertainty.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -348,10 +375,20 @@ export default function Topic2_IntelligentBehavior() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Turing Test Simulator"
+                    description="Test machine intelligence criteria"
+                    objective="Define your criteria for intelligence and score different AI systems against them."
+                    badge="Interactive Lab"
+                    tips={['Is the Turing Test sufficient for intelligence?',
+                'Consider: chess AI passes some criteria but fails others']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Compare different systems by their "Intelligence Profile." Notice how a specialized agent like AlphaGo scores perfectly in Reasoning but low in Adaptability compared to a general agent.
                     </p>
                     <BehaviorLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

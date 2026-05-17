@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -108,7 +112,7 @@ function PEASLab() {
 export default function Topic5_PEASFramework() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit4-topic5_peasframework" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -120,6 +124,19 @@ export default function Topic5_PEASFramework() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Performance, Environment, Actuators, Sensors. It's like the anatomy of a robot, but without the messy biology."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Target size={120} />
@@ -188,6 +205,19 @@ export default function Topic5_PEASFramework() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="P E A S Framework Architecture"
+                description="Performance, Environment, Actuators, Sensors framework."
+                chart={`graph TD
+    Task[Task Environment]
+    Task --> P[Performance Measure: Goals]
+    Task --> E[Environment: Surroundings]
+    Task --> A[Actuators: Output mechanisms]
+    Task --> S[Sensors: Input data]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -284,10 +314,7 @@ export default function Topic5_PEASFramework() {
                         { q: 'Why is it important to define the Environment before the Actuators?', a: 'Because the actuators must be capable of interacting with the specific environment (e.g., you can\'t use wheels as actuators in a deep-sea environment).' },
                         { q: 'Give an example of a Performance Measure for an automated stock trader.', a: 'Total profit over a 12-month period, adjusted for risk (e.g., Sharpe Ratio) and transaction costs.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -303,10 +330,20 @@ export default function Topic5_PEASFramework() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="PEAS Designer"
+                    description="Build a PEAS specification for any agent"
+                    objective="Choose an agent type and fill in its PEAS components. Validate that your specification is complete and consistent."
+                    badge="Interactive Lab"
+                    tips={['Every robotic system can be described with PEAS',
+                'Missing a sensor in S means the agent is partially observable']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Select different agent archetypes to see how their PEAS components are defined. Notice how shifting the environment (e.g., from a road to a hospital) completely changes the required sensors and actuators.
                     </p>
                     <PEASLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

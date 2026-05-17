@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -73,7 +77,7 @@ function AIComparisonRadar() {
 export default function Topic13_RLvsDLvsML() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-
+            <TopicProgressTracker topicId="unit1-topic13_rlvsdlvsml" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
                 id="story"
@@ -85,6 +89,19 @@ export default function Topic13_RLvsDLvsML() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Machine Learning is the family. Deep Learning is the trendy cousin. RL is the wild child doing parkour in the backyard."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute -bottom-4 -right-4 opacity-10">
                             <Share2 size={200} />
@@ -209,6 +226,19 @@ export default function Topic13_RLvsDLvsML() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="R Lvs D Lvs M L Architecture"
+                description="Where RL fits in the broader AI landscape."
+                chart={`graph TD
+    AI[Artificial Intelligence] --> ML[Machine Learning]
+    ML --> DL[Deep Learning]
+    ML --> RL[Reinforcement Learning]
+    DL -.-> |Combined| DRL[Deep Reinforcement Learning]
+    RL -.-> |Combined| DRL`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
@@ -342,10 +372,7 @@ export default function Topic13_RLvsDLvsML() {
                         { q: 'Can RL exist without Deep Learning?', a: 'Yes! Basic RL (like Q-learning) uses tables. Deep RL only happens when we use neural networks to handle complex state spaces.' },
                         { q: 'Why is RL more autonomous than SL?', a: 'Because SL requires a human to label every example, whereas RL discovers its own strategy by trying different actions.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -361,10 +388,20 @@ export default function Topic13_RLvsDLvsML() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="AI Paradigm Map"
+                    description="Position algorithms in the AI landscape"
+                    objective="Place different algorithms (SVM, CNN, DQN, PPO) on the ML/DL/RL taxonomy map and observe their relationships."
+                    badge="Interactive Lab"
+                    tips={['DQN is where Deep Learning meets RL',
+                'Not all RL uses deep learning — tabular Q-Learning is pure RL']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Use the Radar Chart to compare the core characteristics of ML, DL, and RL. Notice how RL excels in autonomy and exploration.
                     </p>
                     <AIComparisonRadar />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

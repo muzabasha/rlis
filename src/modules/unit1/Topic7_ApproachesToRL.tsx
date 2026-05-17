@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -90,7 +94,7 @@ function ApproachComparisonChart() {
 export default function Topic7_ApproachesToRL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-
+            <TopicProgressTracker topicId="unit1-topic7_approachestorl" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
                 id="story"
@@ -102,6 +106,19 @@ export default function Topic7_ApproachesToRL() {
                 accentColor="border-blue-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "Value-based is like checking price tags. Policy-based is like acting on pure vibes."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-[2.5rem] border border-blue-100 dark:border-blue-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <BrainCircuit size={120} />
@@ -233,6 +250,20 @@ export default function Topic7_ApproachesToRL() {
                     </div>
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Approaches To R L Architecture"
+                description="Value-based vs Policy-based approaches."
+                chart={`graph TD
+    RL[RL Approaches] --> V[Value Based]
+    RL --> P[Policy Based]
+    RL --> AC[Actor-Critic]
+    V --> V1[Learn Q-values]
+    P --> P1[Learn Probabilities directly]
+    AC --> AC1[Combine both]`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper
@@ -379,10 +410,7 @@ export default function Topic7_ApproachesToRL() {
                         { q: 'When is a Policy-Based approach preferred over Value-Based?', a: 'When the action space is continuous or high-dimensional, and when the optimal policy is stochastic (like in Rock-Paper-Scissors).' },
                         { q: 'What is "Planning" in the context of Model-Based RL?', a: 'Planning is the process of using the internal environment model to simulate possible futures and pick the best action without actual physical execution.' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -398,10 +426,20 @@ export default function Topic7_ApproachesToRL() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Value vs Policy Sandbox"
+                    description="Compare value-based and policy-based approaches"
+                    objective="Run both approaches on the same gridworld and compare convergence speed, stability, and policy quality."
+                    badge="Interactive Lab"
+                    tips={['Value-based methods (Q-Learning) are more sample-efficient on small discrete spaces',
+                'Policy-based methods handle continuous actions better']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Use the interactive radar to understand which approach to pick for your specific problem. Move the focus to see how different parameters change for each strategist.
                     </p>
                     <ApproachComparisonChart />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 

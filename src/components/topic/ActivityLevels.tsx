@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Users, User, UserPlus, Presentation, Clock, Package, Target, ClipboardList, PlayCircle, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Users, User, UserPlus, Presentation, Clock, Package, Target, ClipboardList, PlayCircle, CheckCircle2, Play, Check } from 'lucide-react';
 
 interface ActivityLevelProps {
     level: 1 | 2 | 3 | 4;
@@ -23,6 +23,20 @@ const levelConfig = {
 };
 
 export function ActivityLevel({ level, title, objectives, instructions, inputs, outputs, rubrics, outcomes, time, materials }: ActivityLevelProps) {
+    const [started, setStarted] = useState(false);
+    const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+
+    const toggleStep = (index: number) => {
+        if (!started) return;
+        setCompletedSteps(prev => 
+            prev.includes(index) 
+                ? prev.filter(i => i !== index)
+                : [...prev, index]
+        );
+    };
+
+    const progress = instructions.length > 0 ? (completedSteps.length / instructions.length) * 100 : 0;
+    const isCompleted = progress === 100;
     const config = levelConfig[level];
     const colorClass = {
         blue: 'border-blue-200 bg-blue-50/30 text-blue-700 dark:border-blue-900/30 dark:bg-blue-900/10 dark:text-blue-300',
@@ -42,8 +56,8 @@ export function ActivityLevel({ level, title, objectives, instructions, inputs, 
         <div className={`p-6 rounded-3xl border-2 ${colorClass} space-y-6 relative overflow-hidden`}>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-2xl ${iconBg} text-white flex items-center justify-center shadow-lg`}>
-                        {config.icon}
+                    <div className={`w-10 h-10 rounded-2xl ${iconBg} text-white flex items-center justify-center shadow-lg ${isCompleted ? 'ring-4 ring-green-500 ring-offset-2 dark:ring-offset-slate-900' : ''} transition-all`}>
+                        {isCompleted ? <Check size={20} className="text-white" /> : config.icon}
                     </div>
                     <div>
                         <h4 className="text-[10px] font-black uppercase tracking-[0.2em] opacity-60">{config.label}</h4>
@@ -60,7 +74,17 @@ export function ActivityLevel({ level, title, objectives, instructions, inputs, 
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            {/* Interactive Progress Bar */}
+            <div className="h-2 w-full bg-black/5 dark:bg-white/10 rounded-full overflow-hidden mt-4">
+                <motion.div 
+                    className={`h-full ${isCompleted ? 'bg-green-500' : iconBg}`}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 0.5 }}
+                />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 mt-4">
                 <div className="space-y-4">
                     <div className="space-y-2">
                         <h5 className="flex items-center gap-2 text-xs font-black uppercase tracking-wider opacity-70">
@@ -69,18 +93,37 @@ export function ActivityLevel({ level, title, objectives, instructions, inputs, 
                         <p className="text-sm leading-relaxed font-medium">{objectives}</p>
                     </div>
 
-                    <div className="space-y-2">
-                        <h5 className="flex items-center gap-2 text-xs font-black uppercase tracking-wider opacity-70">
-                            <PlayCircle size={14} /> Instructions
-                        </h5>
-                        <ul className="space-y-2">
-                            {instructions.map((inst, i) => (
-                                <li key={i} className="flex gap-3 text-sm">
-                                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-white/50 dark:bg-black/20 flex items-center justify-center font-bold text-[10px]">{i + 1}</span>
-                                    <span className="leading-relaxed">{inst}</span>
-                                </li>
-                            ))}
-                        </ul>
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                            <h5 className="flex items-center gap-2 text-xs font-black uppercase tracking-wider opacity-70">
+                                <PlayCircle size={14} /> Interactive Instructions
+                            </h5>
+                            {!started && (
+                                <button 
+                                    onClick={() => setStarted(true)}
+                                    className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 text-white shadow-md hover:scale-105 active:scale-95 transition-all ${iconBg}`}
+                                >
+                                    <Play size={12} /> Start Activity
+                                </button>
+                            )}
+                        </div>
+                        <div className={`space-y-2 ${!started ? 'opacity-50 pointer-events-none filter blur-[1px]' : ''} transition-all duration-500`}>
+                            {instructions.map((inst, i) => {
+                                const isStepDone = completedSteps.includes(i);
+                                return (
+                                    <div 
+                                        key={i} 
+                                        onClick={() => toggleStep(i)}
+                                        className={`flex gap-3 text-sm p-3 rounded-xl border-2 cursor-pointer transition-all ${isStepDone ? 'border-green-500/50 bg-green-50/50 dark:bg-green-900/20' : 'border-transparent hover:border-black/10 dark:hover:border-white/10 hover:bg-black/5 dark:hover:bg-white/5'}`}
+                                    >
+                                        <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center font-bold text-[10px] transition-colors ${isStepDone ? 'bg-green-500 text-white shadow-sm' : 'bg-black/10 dark:bg-white/20 text-current'}`}>
+                                            {isStepDone ? <Check size={12} /> : i + 1}
+                                        </div>
+                                        <span className={`leading-relaxed ${isStepDone ? 'line-through opacity-50' : ''}`}>{inst}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
 

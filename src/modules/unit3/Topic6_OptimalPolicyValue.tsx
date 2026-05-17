@@ -1,3 +1,7 @@
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
+import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
+import VirtualLabShell from '../../components/topic/VirtualLabShell';
+import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
@@ -89,7 +93,7 @@ function OptimalityLab() {
 export default function Topic6_OptimalPolicyValue() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
-            
+            <TopicProgressTracker topicId="unit3-topic6_optimalpolicyvalue" />
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -101,6 +105,19 @@ export default function Topic6_OptimalPolicyValue() {
                 accentColor="border-amber-500"
             >
                 <div className="space-y-6">
+                    <div className="mt-2 mb-6 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800 shadow-sm flex items-start gap-4 transform hover:scale-[1.02] transition-transform">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm text-2xl">
+                            🎭
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-indigo-900 dark:text-indigo-100 text-sm uppercase tracking-wider mb-1 flex items-center gap-2">
+                                Fun Fact / Comic Relief
+                            </h5>
+                            <p className="text-indigo-700 dark:text-indigo-300 font-medium italic leading-relaxed">
+                                "The math behind making the absolute best choices, which we humans almost never do."
+                            </p>
+                        </div>
+                    </div>
                     <div className="bg-amber-50 dark:bg-amber-900/20 p-8 rounded-[2.5rem] border border-amber-100 dark:border-amber-800 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <Target size={120} />
@@ -167,6 +184,17 @@ export default function Topic6_OptimalPolicyValue() {
                     />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram 
+                title="Optimal Policy Value Architecture"
+                description="Bellman Optimality Equations."
+                chart={`graph TD
+    V_star[V*(s)] --> |Max over a| Q_star[Q*(s,a)]
+    Q_star --> |R + &gamma; &Sigma; P * V*(s')| Next[Next State Values]
+    Next --> V_star`}
+            />
+
 
             {/* SECTION 3: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
@@ -310,10 +338,7 @@ export default function Topic6_OptimalPolicyValue() {
                         { q: 'Can there be multiple optimal policies?', a: 'Yes. Multiple different policies can lead to the same optimal value function v* if several actions lead to the same maximum return.' },
                         { q: 'If you have v*(s), how do you find the optimal policy?', a: 'To find the optimal policy from v*(s), you need the transition model p(s\'|s,a). If you have q*(s,a), you don\'t need the model; the optimal policy is just \u03C0*(s) = argmax_a q*(s,a).' }
                     ].map((item, i) => (
-                        <div key={i} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:border-purple-500 transition-colors">
-                            <div className="font-bold text-slate-800 dark:text-white mb-2 text-sm italic">Q: {item.q}</div>
-                            <div className="text-xs text-slate-500 border-l-2 border-slate-100 dark:border-slate-700 pl-4">{item.a}</div>
-                        </div>
+                        <QuizCard key={i} question={item.q} answer={item.a} />
                     ))}
                 </div>
             </SectionWrapper>
@@ -329,10 +354,20 @@ export default function Topic6_OptimalPolicyValue() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
+                <VirtualLabShell
+                    title="Bellman Optimality Solver"
+                    description="Solve for V* and π* via value iteration"
+                    objective="Run Value Iteration and watch V*(s) converge. Extract the greedy policy and verify it is optimal."
+                    badge="Interactive Lab"
+                    tips={['Value Iteration sweeps all states, updating values using the Bellman Optimality Equation',
+                'Convergence is guaranteed when max|V_new - V_old| < threshold']}
+                >
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         Observe the difference between a "Suboptimal" policy and an "Optimal" policy. Notice how the state values ($V(s)$) are significantly higher when the agent makes perfect choices. 
                     </p>
                     <OptimalityLab />
+                </VirtualLabShell>
+            
                 </div>
             </SectionWrapper>
 
