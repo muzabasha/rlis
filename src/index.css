@@ -297,8 +297,8 @@
 }
 
 /* Telemetry box updates */
-.projector-mode .px-3.5.py-1.5,
-.projector-mode .px-3.py-1.5,
+.projector-mode .px-3\.5.py-1\.5,
+.projector-mode .px-3.py-1\.5,
 .projector-mode .flex.gap-4.flex-wrap > div {
   padding: 0.85rem 1.5rem !important;
   border-width: 3px !important;
@@ -306,8 +306,8 @@
   margin: 0.25rem !important;
 }
 
-.projector-mode .px-3.5.py-1.5 span,
-.projector-mode .px-3.py-1.5 span,
+.projector-mode .px-3\.5.py-1\.5 span,
+.projector-mode .px-3.py-1\.5 span,
 .projector-mode .flex.gap-4.flex-wrap > div span {
   font-size: 1.45rem !important;
   font-weight: 900 !important;
