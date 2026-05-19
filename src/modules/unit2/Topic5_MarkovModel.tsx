@@ -236,7 +236,7 @@ export default function Topic5_MarkovModel() {
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
-                title="7. Motivation & Application Challenge"
+                title="2. Motivation & Application Challenge"
                 subtitle="Why study this topic?"
                 icon={<Lightbulb className="text-amber-500" size={24} />}
                 badge="Motivation"
@@ -302,7 +302,7 @@ export default function Topic5_MarkovModel() {
 {/* SECTION 3: MATHEMATICAL MODELLING */}
             <SectionWrapper 
                 id="math" 
-                title="7. Expanding the Tuple" 
+                title="3. Expanding the Tuple" 
                 subtitle="How Math Changes with Observability"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
@@ -354,7 +354,7 @@ export default function Topic5_MarkovModel() {
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
                 id="activity" 
-                title="7. Multi-Level Activities" 
+                title="4. Multi-Level Activities" 
                 subtitle="Classifying Complex Environments"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -439,7 +439,7 @@ export default function Topic5_MarkovModel() {
             {/* SECTION 5: PROJECT BASED LEARNING */}
             <SectionWrapper 
                 id="project" 
-                title="7. Project: Speech Recognition" 
+                title="5. Project: Speech Recognition" 
                 subtitle="The Power of HMMs"
                 icon={<BookOpen className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -483,7 +483,7 @@ export default function Topic5_MarkovModel() {
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
             <SectionWrapper 
                 id="questions" 
-                title="7. Quick Check" 
+                title="6. Quick Check" 
                 subtitle="Taxonomy Definitions"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"

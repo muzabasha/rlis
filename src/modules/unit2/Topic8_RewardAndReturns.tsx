@@ -247,7 +247,7 @@ export default function Topic8_RewardAndReturns() {
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
-                title="7. Motivation & Application Challenge"
+                title="2. Motivation & Application Challenge"
                 subtitle="Why study this topic?"
                 icon={<Lightbulb className="text-amber-500" size={24} />}
                 badge="Motivation"
@@ -313,7 +313,7 @@ export default function Topic8_RewardAndReturns() {
 {/* SECTION 3: MATHEMATICAL MODELLING */}
             <SectionWrapper 
                 id="math" 
-                title="7. The Return Equation" 
+                title="3. The Return Equation" 
                 subtitle="Discounting the Future"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
@@ -375,7 +375,7 @@ export default function Topic8_RewardAndReturns() {
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
                 id="activity" 
-                title="7. Multi-Level Activities" 
+                title="4. Multi-Level Activities" 
                 subtitle="Calculating Cumulative Value"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -462,7 +462,7 @@ export default function Topic8_RewardAndReturns() {
             {/* SECTION 5: PROJECT BASED LEARNING */}
             <SectionWrapper 
                 id="project" 
-                title="7. Project: Financial Returns" 
+                title="5. Project: Financial Returns" 
                 subtitle="RL Math in Economics"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -496,7 +496,7 @@ export default function Topic8_RewardAndReturns() {
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
             <SectionWrapper 
                 id="questions" 
-                title="7. Quick Check" 
+                title="6. Quick Check" 
                 subtitle="Reward Concepts"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"

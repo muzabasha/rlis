@@ -253,7 +253,7 @@ export default function Topic6_AgentTypesReflex() {
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
-                title="7. Motivation & Application Challenge"
+                title="2. Motivation & Application Challenge"
                 subtitle="Why study this topic?"
                 icon={<Lightbulb className="text-amber-500" size={24} />}
                 badge="Motivation"
@@ -319,7 +319,7 @@ export default function Topic6_AgentTypesReflex() {
 {/* SECTION 3: MATHEMATICAL MODELLING */}
             <SectionWrapper 
                 id="math" 
-                title="7. Modelling the Agent Function" 
+                title="3. Modelling the Agent Function" 
                 subtitle="Quantifying Information Flow"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
@@ -364,7 +364,7 @@ export default function Topic6_AgentTypesReflex() {
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
                 id="activity" 
-                title="7. Activity: Brain Selector" 
+                title="4. Activity: Brain Selector" 
                 subtitle="Match the Logic to the Task"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -397,7 +397,7 @@ export default function Topic6_AgentTypesReflex() {
             {/* SECTION 5: PROJECT BASED LEARNING */}
             <SectionWrapper 
                 id="project" 
-                title="7. Project: The Smart Thermostat" 
+                title="5. Project: The Smart Thermostat" 
                 subtitle="Refining the Reflex"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -435,7 +435,7 @@ export default function Topic6_AgentTypesReflex() {
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
             <SectionWrapper 
                 id="questions" 
-                title="7. Quick Check" 
+                title="6. Quick Check" 
                 subtitle="Agent Architecture"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"

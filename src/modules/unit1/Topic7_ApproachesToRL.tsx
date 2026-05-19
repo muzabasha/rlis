@@ -220,7 +220,7 @@ export default function Topic7_ApproachesToRL() {
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
-                title="7. Motivation & Application Challenge"
+                title="2. Motivation & Application Challenge"
                 subtitle="Why study this topic?"
                 icon={<Lightbulb className="text-amber-500" size={24} />}
                 badge="Motivation"
@@ -286,7 +286,7 @@ export default function Topic7_ApproachesToRL() {
 {/* SECTION 3: MATHEMATICAL MODELLING */}
             <SectionWrapper
                 id="math"
-                title="7. Mathematical Formalization"
+                title="3. Mathematical Formalization"
                 subtitle="Equations for Every Strategist"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
@@ -390,7 +390,7 @@ export default function Topic7_ApproachesToRL() {
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="7. Multi-Level Activities"
+                title="4. Multi-Level Activities"
                 subtitle="Mastering the Three Strategists"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -478,7 +478,7 @@ export default function Topic7_ApproachesToRL() {
             {/* SECTION 5: PROJECT BASED LEARNING */}
             <SectionWrapper
                 id="project"
-                title="7. Project: Pendulum Battle"
+                title="5. Project: Pendulum Battle"
                 subtitle="Value vs Policy vs Model"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -519,7 +519,7 @@ export default function Topic7_ApproachesToRL() {
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
             <SectionWrapper
                 id="questions"
-                title="7. Examination Focus"
+                title="6. Examination Focus"
                 subtitle="Targeting Core Concepts"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"

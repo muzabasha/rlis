@@ -244,7 +244,7 @@ export default function Topic4_ISApplications() {
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
-                title="7. Motivation & Application Challenge"
+                title="2. Motivation & Application Challenge"
                 subtitle="Why study this topic?"
                 icon={<Lightbulb className="text-amber-500" size={24} />}
                 badge="Motivation"
@@ -310,7 +310,7 @@ export default function Topic4_ISApplications() {
 {/* SECTION 3: MATHEMATICAL MODELLING */}
             <SectionWrapper 
                 id="math" 
-                title="7. The Cross-Domain Formula" 
+                title="3. The Cross-Domain Formula" 
                 subtitle="Generalizing the Solution"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
@@ -353,7 +353,7 @@ export default function Topic4_ISApplications() {
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
                 id="activity" 
-                title="7. Activity: Domain Mapping" 
+                title="4. Activity: Domain Mapping" 
                 subtitle="Solving Industry Problems"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -393,7 +393,7 @@ export default function Topic4_ISApplications() {
             {/* SECTION 5: PROJECT BASED LEARNING */}
             <SectionWrapper 
                 id="project" 
-                title="7. Project: The Smart Grid" 
+                title="5. Project: The Smart Grid" 
                 subtitle="Engineering Sustainability"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -431,7 +431,7 @@ export default function Topic4_ISApplications() {
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
             <SectionWrapper 
                 id="questions" 
-                title="7. Quick Check" 
+                title="6. Quick Check" 
                 subtitle="Applied Knowledge"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"

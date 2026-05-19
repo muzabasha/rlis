@@ -269,7 +269,7 @@ export default function Topic9_MarkovRewardProcess() {
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
-                title="7. Motivation & Application Challenge"
+                title="2. Motivation & Application Challenge"
                 subtitle="Why study this topic?"
                 icon={<Lightbulb className="text-amber-500" size={24} />}
                 badge="Motivation"
@@ -335,7 +335,7 @@ export default function Topic9_MarkovRewardProcess() {
 {/* SECTION 3: MATHEMATICAL MODELLING */}
             <SectionWrapper
                 id="math"
-                title="7. The Bellman Equation for MRPs"
+                title="3. The Bellman Equation for MRPs"
                 subtitle="The Mathematical Heart of Evaluation"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
@@ -387,7 +387,7 @@ export default function Topic9_MarkovRewardProcess() {
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="7. Multi-Level Activities"
+                title="4. Multi-Level Activities"
                 subtitle="Evaluating the Stochastic Journey"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -473,7 +473,7 @@ export default function Topic9_MarkovRewardProcess() {
             {/* SECTION 5: PROJECT BASED LEARNING */}
             <SectionWrapper
                 id="project"
-                title="7. Project: PageRank with Taxation"
+                title="5. Project: PageRank with Taxation"
                 subtitle="Google's Secret MRP"
                 icon={<Rocket className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -506,7 +506,7 @@ export default function Topic9_MarkovRewardProcess() {
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
             <SectionWrapper
                 id="questions"
-                title="7. Quick Check"
+                title="6. Quick Check"
                 subtitle="MRP Concepts"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"

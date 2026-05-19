@@ -60,6 +60,38 @@ function SafeInline({ math }: { math: string }) {
     }
 }
 
+/**
+ * Automatically parses mathematical terms (subscripts, superscripts, LaTeX commands,
+ * function calls, and Greek letters) in plain text and renders them dynamically as SafeInline KaTeX.
+ */
+function formatMathText(text: string | undefined): React.ReactNode | string {
+    if (!text) return '';
+
+    // Regex to capture:
+    // 1. Math terms with subscripts/superscripts (e.g. S_t, R_{t+1}, d^n)
+    // 2. LaTeX commands (e.g. \pi^*, \alpha)
+    // 3. Function representations (e.g. Q(s,a), V(s))
+    // 4. Standalone Greek letters (e.g. γ, π, ε)
+    const mathRegex = /(\b[a-zA-Z0-9γππαδεΦφθβλP_]+(?:_[a-zA-Z0-9+=\-{}*']+|\^[a-zA-Z0-9+=\-{}*']+)+\b|\\[a-zA-Z_]+(?:{[a-zA-Z0-9+=\-{}*']+})?|\b[QPVqv]\([a-zA-Z0-9,\s|'_^+*\-={}]+\)|[γππαδεΦφθβλ])/g;
+
+    const parts = text.split(mathRegex);
+    if (parts.length === 1) {
+        return text;
+    }
+
+    return (
+        <>
+            {parts.map((part, i) => {
+                if (i % 2 === 0) {
+                    return part;
+                } else {
+                    return <SafeInline key={i} math={part} />;
+                }
+            })}
+        </>
+    );
+}
+
 // ─── Main MathBlock ───────────────────────────────────────────────────────────
 
 export function MathBlock({
@@ -99,7 +131,7 @@ export function MathBlock({
             {/* ── Short explanation ── */}
             {explanation && (
                 <p className="px-4 pb-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {explanation}
+                    {formatMathText(explanation)}
                 </p>
             )}
 
@@ -124,7 +156,7 @@ export function MathBlock({
                             {interpretation && (
                                 <div>
                                     <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">What this equation says</p>
-                                    <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{interpretation}</p>
+                                    <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{formatMathText(interpretation)}</p>
                                 </div>
                             )}
 
@@ -132,7 +164,7 @@ export function MathBlock({
                             {motivation && (
                                 <div className="bg-white/70 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200/60 dark:border-slate-700/40">
                                     <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Why we need it</p>
-                                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{motivation}</p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{formatMathText(motivation)}</p>
                                 </div>
                             )}
 
@@ -159,7 +191,7 @@ export function MathBlock({
                                                             </span>
                                                         </td>
                                                         <td className="py-2.5 px-3 font-semibold text-slate-700 dark:text-slate-300 text-xs">{t.name}</td>
-                                                        <td className="py-2.5 px-3 text-slate-600 dark:text-slate-400 text-xs leading-relaxed">{t.meaning}</td>
+                                                        <td className="py-2.5 px-3 text-slate-600 dark:text-slate-400 text-xs leading-relaxed">{formatMathText(t.meaning)}</td>
                                                         <td className="py-2.5 px-3 text-slate-500 dark:text-slate-500 text-xs font-mono">{t.range ?? '—'}</td>
                                                     </tr>
                                                 ))}
@@ -174,7 +206,7 @@ export function MathBlock({
                                                     <span className={`text-xs font-mono font-bold ${c.label} shrink-0`}>
                                                         <SafeInline math={t.term} />
                                                     </span>
-                                                    <span className="text-xs text-slate-500 dark:text-slate-400">{t.example}</span>
+                                                    <span className="text-xs text-slate-500 dark:text-slate-400">{formatMathText(t.example)}</span>
                                                 </div>
                                             ))}
                                         </div>
