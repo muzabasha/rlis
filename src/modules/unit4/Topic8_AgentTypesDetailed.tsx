@@ -3,16 +3,46 @@ import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
 import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {
+    motion,
+    AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import { MathBlock,
+    SymbolTable } from '../../components/topic/MathBlock';
 import {
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
-    Bot, Settings, Zap, Binary, Layers, Eye, ChevronRight,
-    Play, RotateCcw, Search, Brain, Globe, Rocket,
-    Activity, Cpu, HardDrive, Target, Briefcase,
-    Shield, Move, MousePointer2, User, Layout, Map
+    BookOpen,
+    Calculator,
+    Users,
+    HelpCircle,
+    FlaskConical,
+    Lightbulb,
+    Bot,
+    Settings,
+    Zap,
+    Binary,
+    Layers,
+    Eye,
+    ChevronRight,
+    Play,
+    RotateCcw,
+    Search,
+    Brain,
+    Globe,
+    Rocket,
+    Activity,
+    Cpu,
+    HardDrive,
+    Target,
+    Briefcase,
+    Shield,
+    Move,
+    MousePointer2,
+    User,
+    Layout,
+    Map,
+    CheckCircle2,
+    AlertTriangle
 } from 'lucide-react';
 
 
@@ -206,10 +236,77 @@ export default function Topic8_AgentTypesDetailed() {
                 </div>
             </SectionWrapper>
 
-            {/* SECTION 2: MATHEMATICAL MODELLING */}
+            
+            {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
+            <SectionWrapper
+                id="motivation"
+                title="7. Motivation & Application Challenge"
+                subtitle="Why study this topic?"
+                icon={<Lightbulb className="text-amber-500" size={24} />}
+                badge="Motivation"
+                badgeColor="bg-amber-100 text-amber-700"
+                accentColor="border-amber-500"
+            >
+                <div className="space-y-6">
+                    {/* APPLICATION CHALLENGE CARD */}
+                    <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 p-6 rounded-3xl border border-amber-100 dark:border-amber-900 shadow-sm flex items-start gap-4 animate-fade-in">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm text-2xl">
+                            🚀
+                        </div>
+                        <div className="space-y-2">
+                            <h5 className="font-bold text-amber-900 dark:text-amber-100 text-base">
+                                Application-Specific Challenge
+                            </h5>
+                            <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+                                Choosing between reflex, model-based, goal-based, or utility-based agent architectures for a complex automated driving assistant.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* THE NEED TO STUDY */}
+                    <div className="bg-white dark:bg-slate-800/40 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                        <h5 className="font-bold text-slate-800 dark:text-slate-200 text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <Target className="text-primary-500" size={16} />
+                            The Need to Study this Topic
+                        </h5>
+                        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            Crucial to know how to select and scale the agent's internal reasoning architecture to match the environment's complexity.
+                        </p>
+                    </div>
+
+                    {/* ADVANTAGES & DISADVANTAGES */}
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="bg-emerald-50/50 dark:bg-emerald-950/10 p-5 rounded-2xl border border-emerald-100 dark:border-emerald-900 shadow-sm flex gap-3 hover:scale-[1.01] transition-all">
+                            <CheckCircle2 className="text-emerald-500 flex-shrink-0 mt-0.5" size={18} />
+                            <div>
+                                <h6 className="font-bold text-emerald-950 dark:text-emerald-400 text-xs uppercase tracking-wider mb-1">
+                                    Advantages
+                                </h6>
+                                <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed">
+                                    Provides a comprehensive roadmap of agent designs from basic reactive reflexes to self-optimizing utility systems.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="bg-rose-50/50 dark:bg-rose-950/10 p-5 rounded-2xl border border-rose-100 dark:border-rose-900 shadow-sm flex gap-3 hover:scale-[1.01] transition-all">
+                            <AlertTriangle className="text-rose-500 flex-shrink-0 mt-0.5" size={18} />
+                            <div>
+                                <h6 className="font-bold text-rose-900 dark:text-rose-400 text-xs uppercase tracking-wider mb-1">
+                                    Disadvantages / Bottlenecks
+                                </h6>
+                                <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed">
+                                    Advanced agent architectures (like utility-based) require enormous computing power to plan decisions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+{/* SECTION 3: MATHEMATICAL MODELLING */}
             <SectionWrapper 
                 id="math" 
-                title="2. The Utility Function" 
+                title="7. The Utility Function" 
                 subtitle="Quantifying Happiness"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
@@ -250,10 +347,10 @@ export default function Topic8_AgentTypesDetailed() {
             />
 
 
-            {/* SECTION 3: ACTIVITY BASED LEARNING */}
+            {/* SECTION 4: ACTIVITY BASED LEARNING */}
             <SectionWrapper 
                 id="activity" 
-                title="3. Activity: Brain Upgrade" 
+                title="7. Activity: Brain Upgrade" 
                 subtitle="Evolution of a Delivery Drone"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -287,10 +384,10 @@ export default function Topic8_AgentTypesDetailed() {
                 </div>
             </SectionWrapper>
 
-            {/* SECTION 4: PROJECT BASED LEARNING */}
+            {/* SECTION 5: PROJECT BASED LEARNING */}
             <SectionWrapper 
                 id="project" 
-                title="4. Project: The Smart Thermostat (Advanced)" 
+                title="7. Project: The Smart Thermostat (Advanced)" 
                 subtitle="From On/Off to Optimization"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -325,10 +422,10 @@ export default function Topic8_AgentTypesDetailed() {
                 </div>
             </SectionWrapper>
 
-            {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
+            {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
             <SectionWrapper 
                 id="questions" 
-                title="5. Quick Check" 
+                title="7. Quick Check" 
                 subtitle="Brain Archetypes"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -346,10 +443,10 @@ export default function Topic8_AgentTypesDetailed() {
                 </div>
             </SectionWrapper>
 
-            {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
+            {/* SECTION 7: LEARN BY DOING (VIRTUAL LAB) */}
             <SectionWrapper 
                 id="lab" 
-                title="6. Virtual Lab: Agent Brain Comparison" 
+                title="7. Virtual Lab: Agent Brain Comparison" 
                 subtitle="Analyze Internal Architectures"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"

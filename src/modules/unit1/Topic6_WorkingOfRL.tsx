@@ -3,16 +3,38 @@ import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
 import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/topic/VirtualLabShell';
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {
+    motion,
+    AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import { MathBlock,
+    SymbolTable } from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
-    BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
-    RefreshCw, Play, ArrowRight, Brain, Globe, Zap,
-    Target, Clock, Briefcase, ShieldAlert, Users2, Layout,
-    Pause, SkipForward, Info
+    BookOpen,
+    Calculator,
+    Users,
+    HelpCircle,
+    FlaskConical,
+    Lightbulb,
+    RefreshCw,
+    Play,
+    ArrowRight,
+    Brain,
+    Globe,
+    Zap,
+    Target,
+    Clock,
+    Briefcase,
+    ShieldAlert,
+    Users2,
+    Layout,
+    Pause,
+    SkipForward,
+    Info,
+    CheckCircle2,
+    AlertTriangle
 } from 'lucide-react';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -257,10 +279,77 @@ export default function Topic6_WorkingOfRL() {
                 </div>
             </SectionWrapper>
 
-            {/* SECTION 2: MATHEMATICAL MODELLING */}
+            
+            {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
+            <SectionWrapper
+                id="motivation"
+                title="7. Motivation & Application Challenge"
+                subtitle="Why study this topic?"
+                icon={<Lightbulb className="text-amber-500" size={24} />}
+                badge="Motivation"
+                badgeColor="bg-amber-100 text-amber-700"
+                accentColor="border-amber-500"
+            >
+                <div className="space-y-6">
+                    {/* APPLICATION CHALLENGE CARD */}
+                    <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 p-6 rounded-3xl border border-amber-100 dark:border-amber-900 shadow-sm flex items-start gap-4 animate-fade-in">
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm text-2xl">
+                            🚀
+                        </div>
+                        <div className="space-y-2">
+                            <h5 className="font-bold text-amber-900 dark:text-amber-100 text-base">
+                                Application-Specific Challenge
+                            </h5>
+                            <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+                                An automated HVAC thermostat must continuously sense temperature (state), adjust cooling (action), and receive energy efficiency scores (reward) in a closed loop.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* THE NEED TO STUDY */}
+                    <div className="bg-white dark:bg-slate-800/40 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                        <h5 className="font-bold text-slate-800 dark:text-slate-200 text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <Target className="text-primary-500" size={16} />
+                            The Need to Study this Topic
+                        </h5>
+                        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            Essential to understand the step-by-step telemetry of the closed-loop agent-environment interaction.
+                        </p>
+                    </div>
+
+                    {/* ADVANTAGES & DISADVANTAGES */}
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="bg-emerald-50/50 dark:bg-emerald-950/10 p-5 rounded-2xl border border-emerald-100 dark:border-emerald-900 shadow-sm flex gap-3 hover:scale-[1.01] transition-all">
+                            <CheckCircle2 className="text-emerald-500 flex-shrink-0 mt-0.5" size={18} />
+                            <div>
+                                <h6 className="font-bold text-emerald-900 dark:text-emerald-400 text-xs uppercase tracking-wider mb-1">
+                                    Advantages
+                                </h6>
+                                <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed">
+                                    Simulates real-time, online continuous adaptation to external environmental perturbations.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="bg-rose-50/50 dark:bg-rose-950/10 p-5 rounded-2xl border border-rose-100 dark:border-rose-900 shadow-sm flex gap-3 hover:scale-[1.01] transition-all">
+                            <AlertTriangle className="text-rose-500 flex-shrink-0 mt-0.5" size={18} />
+                            <div>
+                                <h6 className="font-bold text-rose-900 dark:text-rose-400 text-xs uppercase tracking-wider mb-1">
+                                    Disadvantages / Bottlenecks
+                                </h6>
+                                <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed">
+                                    A single delay or latency in the state feedback loop can destabilize the control system completely.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+{/* SECTION 3: MATHEMATICAL MODELLING */}
             <SectionWrapper
                 id="math"
-                title="2. The Formal Interaction Loop"
+                title="7. The Formal Interaction Loop"
                 subtitle="From Words to Equations"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
@@ -340,10 +429,10 @@ export default function Topic6_WorkingOfRL() {
             />
 
 
-            {/* SECTION 3: ACTIVITY BASED LEARNING */}
+            {/* SECTION 4: ACTIVITY BASED LEARNING */}
             <SectionWrapper
                 id="activity"
-                title="3. Multi-Level Activities"
+                title="7. Multi-Level Activities"
                 subtitle="Stepping through the RL Loop"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
@@ -427,10 +516,10 @@ export default function Topic6_WorkingOfRL() {
                 />
             </SectionWrapper>
 
-            {/* SECTION 4: PROJECT BASED LEARNING */}
+            {/* SECTION 5: PROJECT BASED LEARNING */}
             <SectionWrapper
                 id="project"
-                title="4. Project: Smart Traffic"
+                title="7. Project: Smart Traffic"
                 subtitle="Optimizing the Urban Loop"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -465,10 +554,10 @@ export default function Topic6_WorkingOfRL() {
                 </div>
             </SectionWrapper>
 
-            {/* SECTION 5: MODEL 2 MARK QUESTIONS */}
+            {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
             <SectionWrapper
                 id="questions"
-                title="5. Quick Check"
+                title="7. Quick Check"
                 subtitle="Essential Examination Points"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -486,10 +575,10 @@ export default function Topic6_WorkingOfRL() {
                 </div>
             </SectionWrapper>
 
-            {/* SECTION 6: LEARN BY DOING (VIRTUAL LAB) */}
+            {/* SECTION 7: LEARN BY DOING (VIRTUAL LAB) */}
             <SectionWrapper
                 id="lab"
-                title="6. Virtual Lab: The Cycle Explorer"
+                title="7. Virtual Lab: The Cycle Explorer"
                 subtitle="Fine-tuning the Interaction"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
