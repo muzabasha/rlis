@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {
     Brain, GitBranch, Zap, Cpu, ArrowRight, BookOpen,
     Target, Users, FlaskConical, BarChart3, Award, Clock,
-    CheckCircle2, Star, Lightbulb, Code2
+    CheckCircle2, Star, Lightbulb, Code2, Calculator, Briefcase, HelpCircle
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { units, courseOutcomes } from '../data/courseData';
@@ -38,6 +38,25 @@ const item = {
 export default function HomePage() {
     const navigate = useNavigate();
     const { totalProgress, getProgress } = useApp();
+    const [activeUnitId, setActiveUnitId] = React.useState('unit1');
+
+    const getVisitedSections = (topicId: string) => {
+        try {
+            const progressKey = `rlis_progress_${topicId}`;
+            return JSON.parse(localStorage.getItem(progressKey) || '[]');
+        } catch {
+            return [];
+        }
+    };
+
+    const getVisitedCount = (topicId: string) => {
+        const isTopicComplete = getProgress(topicId)?.completed;
+        if (isTopicComplete) return 7;
+        const visited = getVisitedSections(topicId);
+        const hasStory = visited.includes('story');
+        const adjustedLength = visited.length + (hasStory ? 1 : 0);
+        return Math.min(adjustedLength, 7);
+    };
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
@@ -149,73 +168,181 @@ export default function HomePage() {
                 </div>
             </motion.section>
 
-            {/* Units */}
+            {/* Interactive Course Explorer */}
             <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="mb-12"
+                className="mb-16 animate-fade-in"
             >
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                    <BookOpen size={24} className="text-primary-600" />
-                    Course Modules
-                </h2>
-                <div className="grid sm:grid-cols-2 gap-6">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                    <div>
+                        <h2 className="text-3xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+                            <BookOpen size={28} className="text-primary-600" />
+                            NEP 2020 Course Explorer
+                        </h2>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                            Select a unit below and click on any core learning component icon to jump directly into that specific section.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Glassmorphic Unit Switcher */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8 bg-slate-100/50 dark:bg-slate-800/40 p-2 rounded-3xl border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-xl">
                     {units.map((unit, idx) => {
                         const config = unitConfig[idx];
                         const Icon = config.icon;
+                        const isActive = activeUnitId === unit.id;
                         const completedTopics = unit.topics.filter(t => getProgress(t.id)?.completed).length;
                         const progress = Math.round((completedTopics / unit.topics.length) * 100);
 
                         return (
-                            <motion.div
+                            <button
                                 key={unit.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 * idx }}
-                                className={`card card-hover p-6 border ${config.border} cursor-pointer`}
-                                onClick={() => navigate(`/topic/${config.firstTopic}`)}
+                                onClick={() => setActiveUnitId(unit.id)}
+                                className={`relative flex flex-col items-start text-left p-4 rounded-2xl transition-all duration-300 ${
+                                    isActive
+                                        ? `bg-gradient-to-br ${config.color} text-white shadow-xl shadow-primary-500/10`
+                                        : 'hover:bg-slate-200/50 dark:hover:bg-slate-700/40 text-slate-700 dark:text-slate-300'
+                                }`}
                             >
-                                <div className="flex items-start gap-4 mb-4">
-                                    <div className={`w-12 h-12 bg-gradient-to-br ${config.color} rounded-2xl flex items-center justify-center shadow-sm`}>
-                                        <Icon size={22} className="text-white" />
+                                <div className="flex items-center gap-3 mb-2 w-full">
+                                    <div className={`p-2 rounded-xl ${
+                                        isActive ? 'bg-white/20 text-white' : `${config.bg} ${config.text}`
+                                    }`}>
+                                        <Icon size={18} />
                                     </div>
-                                    <div className="flex-1">
-                                        <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Unit {unit.order}</div>
-                                        <h3 className={`text-lg font-bold ${config.text}`}>{unit.title}</h3>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-2 mb-4">
-                                    {unit.topics.slice(0, 3).map(topic => (
-                                        <div key={topic.id} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-                                            {getProgress(topic.id)?.completed
-                                                ? <CheckCircle2 size={14} className="text-emerald-500 flex-shrink-0" />
-                                                : <div className="w-3.5 h-3.5 rounded-full border-2 border-slate-300 dark:border-slate-600 flex-shrink-0" />
-                                            }
-                                            <span className="truncate">{topic.title}</span>
+                                    <div className="flex-1 min-w-0">
+                                        <div className={`text-[10px] font-bold uppercase tracking-wider ${
+                                            isActive ? 'text-white/80' : 'text-slate-400'
+                                        }`}>
+                                            Unit {unit.order}
                                         </div>
-                                    ))}
-                                    {unit.topics.length > 3 && (
-                                        <div className="text-xs text-slate-400 pl-5">+{unit.topics.length - 3} more topics</div>
-                                    )}
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                    <div className="flex-1 mr-4">
-                                        <div className="progress-bar">
-                                            <div className="progress-fill" style={{ width: `${progress}%` }} />
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-1 text-sm font-semibold text-slate-600 dark:text-slate-400">
-                                        <span>{completedTopics}/{unit.topics.length}</span>
-                                        <ArrowRight size={14} />
+                                        <div className="text-xs font-black truncate">{unit.title}</div>
                                     </div>
                                 </div>
-                            </motion.div>
+                                <div className="w-full flex items-center justify-between text-[11px] mt-1 font-bold">
+                                    <span className={isActive ? 'text-white/80' : 'text-slate-400'}>
+                                        {completedTopics}/{unit.topics.length} Completed
+                                    </span>
+                                    <span>{progress}%</span>
+                                </div>
+                                <div className="w-full h-1 bg-slate-200/30 dark:bg-slate-700/30 rounded-full overflow-hidden mt-1.5">
+                                    <div
+                                        className={`h-full ${isActive ? 'bg-white' : 'bg-primary-500'}`}
+                                        style={{ width: `${progress}%` }}
+                                    />
+                                </div>
+                            </button>
                         );
                     })}
                 </div>
+
+                {/* Topics List with Interactive Component Docks */}
+                <motion.div
+                    key={activeUnitId}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="grid gap-4"
+                >
+                    {units.find(u => u.id === activeUnitId)?.topics.map((topic) => {
+                        const topicProgress = getProgress(topic.id);
+                        const visitedSections = getVisitedSections(topic.id);
+                        const isCompleted = topicProgress?.completed;
+                        const visitedCount = getVisitedCount(topic.id);
+                        const percentProgress = Math.round((visitedCount / 7) * 100);
+
+                        return (
+                            <div
+                                key={topic.id}
+                                className="group relative bg-white/70 dark:bg-slate-800/60 backdrop-blur-md rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-5 hover:border-primary-500/50 dark:hover:border-primary-500/50 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+                            >
+                                {/* Left Side: Topic Info */}
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary-600 bg-primary-50 dark:bg-primary-950/40 px-2.5 py-1 rounded-md">
+                                            Topic {topic.order}
+                                        </span>
+                                        <span className={`text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-md ${
+                                            topic.difficulty === 'beginner'
+                                                ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600'
+                                                : topic.difficulty === 'intermediate'
+                                                ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-600'
+                                                : 'bg-red-50 dark:bg-red-950/40 text-red-600'
+                                        }`}>
+                                            {topic.difficulty}
+                                        </span>
+                                        <span className="text-xs font-semibold text-slate-400 flex items-center gap-1">
+                                            <Clock size={12} /> {topic.duration}
+                                        </span>
+                                        <span className="text-xs font-semibold text-slate-400 flex items-center gap-1">
+                                            <Target size={12} /> {topic.coMapping.join(', ')}
+                                        </span>
+                                    </div>
+                                    <h3
+                                        onClick={() => navigate(`/topic/${topic.id}`)}
+                                        className="text-lg font-black text-slate-800 dark:text-slate-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors cursor-pointer leading-tight mb-2 group-hover:translate-x-1 transition-transform duration-200 inline-block"
+                                    >
+                                        {topic.title}
+                                    </h3>
+
+                                    {/* Sub-progress line */}
+                                    <div className="flex items-center gap-3 mt-1 max-w-xs">
+                                        <div className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                                            <div
+                                                className="h-full bg-gradient-to-r from-primary-500 to-violet-500 rounded-full transition-all duration-500"
+                                                style={{ width: `${percentProgress}%` }}
+                                            />
+                                        </div>
+                                        <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                                            {visitedCount}/7 Components
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Right Side: 7 Interactive Component Buttons Dock */}
+                                <div className="flex items-center gap-2.5 flex-wrap bg-slate-50/50 dark:bg-slate-900/40 p-2.5 rounded-2xl border border-slate-100 dark:border-slate-800/80">
+                                    {[
+                                        { id: 'story', label: 'Story', desc: 'Storytelling Analogy', icon: BookOpen, color: 'hover:bg-blue-500 hover:text-white text-blue-500 hover:shadow-blue-500/20' },
+                                        { id: 'motivation', label: 'Motivation', desc: 'Pedagogical Focus', icon: Lightbulb, color: 'hover:bg-amber-500 hover:text-white text-amber-500 hover:shadow-amber-500/20' },
+                                        { id: 'math', label: 'Math', desc: 'Formula Breakdown', icon: Calculator, color: 'hover:bg-red-500 hover:text-white text-red-500 hover:shadow-red-500/20' },
+                                        { id: 'activity', label: 'Activity', desc: '4-Level Activities', icon: Users, color: 'hover:bg-emerald-500 hover:text-white text-emerald-500 hover:shadow-emerald-500/20' },
+                                        { id: 'project', label: 'Project', desc: 'PBL Sample Projects', icon: Briefcase, color: 'hover:bg-violet-500 hover:text-white text-violet-500 hover:shadow-violet-500/20' },
+                                        { id: 'questions', label: 'Quiz', desc: 'Assessments & Checking', icon: HelpCircle, color: 'hover:bg-purple-500 hover:text-white text-purple-500 hover:shadow-purple-500/20' },
+                                        { id: 'lab', label: 'Lab', desc: 'Virtual Lab Simulator', icon: FlaskConical, color: 'hover:bg-cyan-500 hover:text-white text-cyan-500 hover:shadow-cyan-500/20' }
+                                    ].map(comp => {
+                                        const CompIcon = comp.icon;
+                                        const isVisited = isCompleted || visitedSections.includes(comp.id) || (comp.id === 'motivation' && visitedSections.includes('story'));
+
+                                        return (
+                                            <div key={comp.id} className="group/tooltip relative">
+                                                <button
+                                                    onClick={() => navigate(`/topic/${topic.id}#${comp.id}`)}
+                                                    className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 relative ${comp.color} hover:scale-110 active:scale-95 shadow-sm hover:shadow-md ${
+                                                        isVisited
+                                                            ? 'bg-slate-100 dark:bg-slate-800 border-2 border-emerald-500/60'
+                                                            : 'bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600'
+                                                    }`}
+                                                >
+                                                    <CompIcon size={18} />
+                                                    {isVisited && (
+                                                        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-900" />
+                                                    )}
+                                                </button>
+                                                {/* Tooltip */}
+                                                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2.5 px-3 py-1.5 bg-slate-950 dark:bg-slate-900 text-white text-[11px] font-black rounded-xl opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border border-slate-800 z-30">
+                                                    <span className="block text-primary-400 font-extrabold uppercase tracking-widest text-[9px] mb-0.5">{comp.label}</span>
+                                                    <span>{comp.desc}</span>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </motion.div>
             </motion.section>
 
             {/* Features */}

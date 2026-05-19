@@ -134,6 +134,20 @@ export default function TopicPage() {
     const prevTopic = topicIndex > 0 ? allTopics[topicIndex - 1] : null;
     const nextTopic = topicIndex < allTopics.length - 1 ? allTopics[topicIndex + 1] : null;
 
+    React.useEffect(() => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            // Wait slightly for lazy loaded content to mount
+            const timer = setTimeout(() => {
+                const el = document.getElementById(hash);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 400);
+            return () => clearTimeout(timer);
+        }
+    }, [topicId]);
+
     if (!topic || !unit) {
         return (
             <div className="max-w-4xl mx-auto px-4 py-8">
