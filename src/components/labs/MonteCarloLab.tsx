@@ -5,6 +5,7 @@ import {
     BarChart3, Info, ChevronRight, Zap, Target, Brain,
     ArrowRight, History, Layers, Cpu, RefreshCw
 } from 'lucide-react';
+import { useApp } from '../../context/AppContext';
 import { 
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, 
     ResponsiveContainer, AreaChart, Area 
@@ -41,6 +42,7 @@ const move = (s: State, a: Action): State => {
 // ─── Main Component ─────────────────────────────────────────────────────────
 
 export default function MonteCarloLab() {
+    const { projectorMode } = useApp();
     // --- State: Simulation Params ---
     const [epsilon, setEpsilon] = useState(0.2);
     const [gamma, setGamma] = useState(0.9);
@@ -291,7 +293,7 @@ export default function MonteCarloLab() {
                         </div>
 
                         {/* Grid */}
-                        <div className="grid grid-cols-4 gap-3 w-full max-w-[500px] aspect-square">
+                        <div className={`grid grid-cols-4 gap-3 w-full aspect-square transition-all ${projectorMode ? 'max-w-[550px]' : 'max-w-[500px]'}`}>
                             {Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_, i) => {
                                 const [r, c] = getCoords(i);
                                 const isGoal = i === GOAL_STATE;
@@ -307,18 +309,32 @@ export default function MonteCarloLab() {
                                         className={`relative rounded-2xl border-2 flex items-center justify-center transition-all ${
                                             isGoal ? 'bg-emerald-500 border-emerald-300 shadow-lg shadow-emerald-500/20' :
                                             isHole ? 'bg-rose-500 border-rose-300 shadow-lg shadow-rose-500/20' :
-                                            'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700'
-                                        }`}
+                                            projectorMode
+                                                ? 'bg-white dark:bg-slate-900 border-slate-350 dark:border-slate-650'
+                                                : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700'
+                                        } ${projectorMode ? 'border-[3px]' : 'border-2'}`}
                                     >
-                                        <div className="absolute inset-2 flex items-center justify-center text-[10px] text-slate-200 dark:text-slate-700 font-mono">
+                                        <div className={`absolute inset-2 flex items-center justify-center font-mono ${
+                                            projectorMode 
+                                            ? 'text-xs text-slate-450 dark:text-slate-400 font-extrabold' 
+                                            : 'text-[10px] text-slate-200 dark:text-slate-700'
+                                        }`}>
                                             {i}
                                         </div>
 
                                         {/* Q-Value Overlay */}
                                         {!isGoal && !isHole && (
-                                            <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 p-1 opacity-20 group hover:opacity-100 transition-opacity">
+                                            <div className={`absolute inset-0 grid grid-cols-2 grid-rows-2 p-1 transition-opacity ${
+                                                projectorMode 
+                                                ? 'opacity-90 font-black' 
+                                                : 'opacity-20 group-hover:opacity-100'
+                                            }`}>
                                                 {qValues.map((v, ai) => (
-                                                    <div key={ai} className="flex items-center justify-center text-[8px] font-bold text-primary-500">
+                                                    <div key={ai} className={`flex items-center justify-center font-black ${
+                                                        projectorMode 
+                                                        ? 'text-[11px] text-primary-600 dark:text-cyan-400' 
+                                                        : 'text-[8px] text-primary-500'
+                                                    }`}>
                                                         {v.toFixed(1)}
                                                     </div>
                                                 ))}
@@ -327,7 +343,11 @@ export default function MonteCarloLab() {
 
                                         {/* Best Action Arrow */}
                                         {!isGoal && !isHole && maxQ !== 0 && (
-                                            <div className="text-slate-300 dark:text-slate-600 text-2xl font-black">
+                                            <div className={`font-black ${
+                                                projectorMode 
+                                                ? 'text-slate-400 dark:text-slate-500 text-3xl opacity-35' 
+                                                : 'text-slate-300 dark:text-slate-600 text-2xl'
+                                            }`}>
                                                 {ACTION_LABELS[bestAction]}
                                             </div>
                                         )}

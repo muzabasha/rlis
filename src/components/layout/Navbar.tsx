@@ -80,11 +80,18 @@ export default function Navbar() {
                     {/* Projector mode */}
                     <button
                         onClick={toggleProjectorMode}
-                        className={`p-2 rounded-lg transition-colors ${projectorMode ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400' : 'hover:bg-slate-100 dark:hover:bg-slate-700'}`}
+                        className={`p-2 rounded-lg transition-all relative ${
+                            projectorMode 
+                            ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20 scale-105' 
+                            : 'hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-350'
+                        }`}
                         aria-label="Toggle projector mode"
-                        title="Projector Mode"
+                        title="Projector Mode (Classroom Presentation)"
                     >
-                        <Maximize2 size={18} />
+                        <Monitor size={18} className={projectorMode ? 'animate-pulse' : ''} />
+                        {projectorMode && (
+                            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border border-amber-500 animate-pulse" />
+                        )}
                     </button>
 
                     {/* Dark mode */}

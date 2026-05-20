@@ -134,4 +134,7 @@ export interface AppState {
     currentTopic: string;
     progress: Record<string, ProgressData>;
     fontSize: 'normal' | 'large' | 'xlarge';
+    projectorScale?: 'normal' | 'large' | 'huge';
+    laserPointerEnabled?: boolean;
+    washoutProtection?: boolean;
 }

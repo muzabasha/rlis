@@ -10,6 +10,9 @@ interface AppContextType extends AppState {
     markTopicComplete: (topicId: string) => void;
     setFontSize: (size: 'normal' | 'large' | 'xlarge') => void;
     getProgress: (topicId: string) => ProgressData | undefined;
+    setProjectorScale: (scale: 'normal' | 'large' | 'huge') => void;
+    toggleLaserPointer: () => void;
+    toggleWashoutProtection: () => void;
     totalProgress: number;
 }
 
@@ -21,6 +24,9 @@ const defaultState: AppState = {
     currentTopic: 'u1t1',
     progress: {},
     fontSize: 'normal',
+    projectorScale: 'large',
+    laserPointerEnabled: false,
+    washoutProtection: false,
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -43,10 +49,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
         } else {
             document.documentElement.classList.remove('dark');
         }
+        
+        // Projector Mode Classes Sync
+        document.body.classList.remove('projector-scale-normal', 'projector-scale-large', 'projector-scale-huge');
         if (state.projectorMode) {
             document.body.classList.add('projector-mode');
+            document.body.classList.add(`projector-scale-${state.projectorScale ?? 'large'}`);
+            
+            if (state.washoutProtection) {
+                document.body.classList.add('projector-washout-on');
+            } else {
+                document.body.classList.remove('projector-washout-on');
+            }
+
+            if (state.laserPointerEnabled) {
+                document.body.classList.add('projector-laser-on');
+            } else {
+                document.body.classList.remove('projector-laser-on');
+            }
         } else {
-            document.body.classList.remove('projector-mode');
+            document.body.classList.remove('projector-mode', 'projector-washout-on', 'projector-laser-on');
         }
     }, [state]);
 
@@ -56,6 +78,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const setCurrentUnit = (id: string) => setState(s => ({ ...s, currentUnit: id }));
     const setCurrentTopic = (id: string) => setState(s => ({ ...s, currentTopic: id }));
     const setFontSize = (size: 'normal' | 'large' | 'xlarge') => setState(s => ({ ...s, fontSize: size }));
+    const setProjectorScale = (scale: 'normal' | 'large' | 'huge') => setState(s => ({ ...s, projectorScale: scale }));
+    const toggleLaserPointer = () => setState(s => ({ ...s, laserPointerEnabled: !s.laserPointerEnabled }));
+    const toggleWashoutProtection = () => setState(s => ({ ...s, washoutProtection: !s.washoutProtection }));
 
     const markTopicComplete = (topicId: string) => {
         setState(s => ({
@@ -89,6 +114,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
             markTopicComplete,
             setFontSize,
             getProgress,
+            setProjectorScale,
+            toggleLaserPointer,
+            toggleWashoutProtection,
             totalProgress,
         }}>
             {children}
