@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     Play, Pause, RotateCcw, ChevronRight, Gauge, Settings2,
     Info, Download, TrendingUp, Cpu, X, BookOpen, Terminal, Trophy,
-    FileSpreadsheet, Sparkles, CheckCircle, HelpCircle, Send, Award, Crown, CheckSquare, Presentation
+    FileSpreadsheet, Sparkles, CheckCircle, HelpCircle, Send, Award, Crown, CheckSquare, Presentation,
+    Zap, Contrast, Keyboard
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
@@ -275,12 +276,22 @@ export default function VirtualLabShell({
 }: VirtualLabShellProps) {
     const storageKey = `rlis_lab_${title.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
     const detectedCO = detectUnitAndCO(title, co, cognitiveLevel);
-    const { projectorMode, toggleProjectorMode } = useApp();
+    const { 
+        projectorMode, 
+        toggleProjectorMode,
+        projectorScale,
+        setProjectorScale,
+        laserPointerEnabled,
+        toggleLaserPointer,
+        washoutProtection,
+        toggleWashoutProtection
+    } = useApp();
 
     const [activeTab, setActiveTab] = useState<'simulation' | 'notebook' | 'terminal' | 'quests' | 'discussion'>('simulation');
     const [showTips, setShowTips] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
-    
+    const [showHelpModal, setShowHelpModal] = useState(false);
+
     // ─── Persistent States ───────────────────────────────────────────────────
     const [answers, setAnswers] = useState<Record<number, string>>(() => {
         try {
@@ -431,6 +442,123 @@ export default function VirtualLabShell({
         localStorage.removeItem(`${storageKey}_challenges`);
         localStorage.removeItem(`${storageKey}_logs`);
     };
+
+    // Keyboard presenter remote listener
+    useEffect(() => {
+        if (!projectorMode) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Guard: Ignore shortcuts when focused in inputs/textareas (e.g. Guided Notebook inputs)
+            const activeEl = document.activeElement;
+            const isTyping = activeEl && (
+                activeEl.tagName === 'INPUT' || 
+                activeEl.tagName === 'TEXTAREA' || 
+                activeEl.getAttribute('contenteditable') === 'true'
+            );
+            if (isTyping) return;
+
+            const key = e.key.toLowerCase();
+
+            // Tab Swapping: 1 - 5
+            if (key === '1') {
+                setActiveTab('simulation');
+                addLog("📋 Presenter Hotkey: Switched view to Simulation Sandbox.");
+            } else if (key === '2') {
+                setActiveTab('notebook');
+                addLog("📋 Presenter Hotkey: Switched view to Guided Workbook.");
+            } else if (key === '3') {
+                setActiveTab('terminal');
+                addLog("📋 Presenter Hotkey: Switched view to Lab Console.");
+            } else if (key === '4') {
+                setActiveTab('quests');
+                addLog("📋 Presenter Hotkey: Switched view to Quest Achievements.");
+            } else if (key === '5') {
+                setActiveTab('discussion');
+                addLog("📋 Presenter Hotkey: Switched view to Class Discussion Board.");
+            }
+            // Tab Cycle: ArrowRight / ArrowLeft (or PageDown / PageUp)
+            else if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                const tabs: ('simulation' | 'notebook' | 'terminal' | 'quests' | 'discussion')[] = [
+                    'simulation', 'notebook', 'terminal', 'quests', 'discussion'
+                ];
+                const currentIdx = tabs.indexOf(activeTab);
+                const nextIdx = (currentIdx + 1) % tabs.length;
+                setActiveTab(tabs[nextIdx]);
+                addLog(`📋 Presenter Hotkey: Swapped to next view (${tabs[nextIdx]}).`);
+                e.preventDefault();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                const tabs: ('simulation' | 'notebook' | 'terminal' | 'quests' | 'discussion')[] = [
+                    'simulation', 'notebook', 'terminal', 'quests', 'discussion'
+                ];
+                const currentIdx = tabs.indexOf(activeTab);
+                const prevIdx = (currentIdx - 1 + tabs.length) % tabs.length;
+                setActiveTab(tabs[prevIdx]);
+                addLog(`📋 Presenter Hotkey: Swapped to previous view (${tabs[prevIdx]}).`);
+                e.preventDefault();
+            }
+            // Sim Controls: Space to Run/Pause
+            else if (e.key === ' ') {
+                if (onToggleRun) {
+                    handleToggleRun();
+                    e.preventDefault();
+                }
+            }
+            // Sim Controls: S to Step
+            else if (key === 's') {
+                if (onStep && !isRunning) {
+                    handleStep();
+                }
+            }
+            // Sim Controls: R to Reset
+            else if (key === 'r') {
+                if (onReset) {
+                    handleReset();
+                }
+            }
+            // Laser Pointer: L
+            else if (key === 'l') {
+                toggleLaserPointer();
+                addLog(`📋 Presenter Hotkey: Glow Laser Pointer turned ${!laserPointerEnabled ? 'ON' : 'OFF'}.`);
+            }
+            // Washout Shield: W
+            else if (key === 'w') {
+                toggleWashoutProtection();
+                addLog(`📋 Presenter Hotkey: Washout Contrast Shield turned ${!washoutProtection ? 'ON' : 'OFF'}.`);
+            }
+            // Projector Scale: [ and ]
+            else if (e.key === '[') {
+                const scales: ('normal' | 'large' | 'huge')[] = ['normal', 'large', 'huge'];
+                const currentIdx = scales.indexOf(projectorScale || 'large');
+                const prevIdx = Math.max(0, currentIdx - 1);
+                setProjectorScale(scales[prevIdx]);
+                addLog(`📋 Presenter Hotkey: Decreased Pedagogical Text Scale to ${scales[prevIdx].toUpperCase()}.`);
+            } else if (e.key === ']') {
+                const scales: ('normal' | 'large' | 'huge')[] = ['normal', 'large', 'huge'];
+                const currentIdx = scales.indexOf(projectorScale || 'large');
+                const nextIdx = Math.min(scales.length - 1, currentIdx + 1);
+                setProjectorScale(scales[nextIdx]);
+                addLog(`📋 Presenter Hotkey: Increased Pedagogical Text Scale to ${scales[nextIdx].toUpperCase()}.`);
+            }
+            // Help Modal: ?
+            else if (e.key === '?' || e.key === '/') {
+                setShowHelpModal(prev => !prev);
+            }
+            // Exit Projector Mode: Esc
+            else if (e.key === 'Escape') {
+                toggleProjectorMode();
+                addLog("📋 Presenter Hotkey: Exiting Projector Mode.");
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [
+        projectorMode, activeTab, isRunning, onToggleRun, onStep, onReset, 
+        laserPointerEnabled, washoutProtection, projectorScale, 
+        toggleLaserPointer, toggleWashoutProtection, setProjectorScale, toggleProjectorMode, addLog
+    ]);
 
     const handleAnswerChange = (index: number, value: string) => {
         const newAnswers = { ...answers, [index]: value };
@@ -1139,6 +1267,272 @@ Generated by RLIS Experiential Learning platform.
                     )}
                 </div>
             )}
+
+            {/* Projector Mode Unified Presenter Floating Deck & Telemetry Pill */}
+            <AnimatePresence>
+                {projectorMode && (
+                    <motion.div
+                        initial={{ y: 150, x: '-50%', opacity: 0 }}
+                        animate={{ y: 0, x: '-50%', opacity: 1 }}
+                        exit={{ y: 150, x: '-50%', opacity: 0 }}
+                        transition={{ type: 'spring', damping: 20, stiffness: 100 }}
+                        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9995] flex flex-col items-center gap-3 w-[90%] max-w-4xl pointer-events-auto"
+                    >
+                        {/* 1. Floating Telemetry Strip Pill */}
+                        {telemetry.length > 0 && (
+                            <div className="glass border border-primary-500/20 dark:border-cyan-400/25 rounded-2xl py-1.5 px-4 flex gap-4 overflow-x-auto max-w-full shadow-lg items-center text-slate-950 dark:text-cyan-400 select-none">
+                                <div className="flex items-center gap-1.5 flex-shrink-0 text-primary-600 dark:text-cyan-400">
+                                    <Cpu size={12} className="animate-pulse" />
+                                    <span className="text-[9px] font-black uppercase tracking-widest">Presenter Telemetry</span>
+                                </div>
+                                <div className="flex gap-3 text-[10px] font-bold">
+                                    {telemetry.map((t, idx) => (
+                                        <div key={idx} className="flex items-center gap-1 bg-slate-200/50 dark:bg-slate-900/60 px-2.5 py-0.5 rounded-lg border border-slate-300/30 dark:border-slate-800">
+                                            <span className="text-slate-500 dark:text-slate-400">{t.label}:</span>
+                                            <span className={t.highlight ? 'text-emerald-500 font-extrabold' : t.color || 'text-slate-800 dark:text-white font-mono'}>
+                                                {typeof t.value === 'number' ? t.value.toFixed(2) : t.value}
+                                                {t.unit && <span className="text-slate-400 dark:text-slate-500 text-[8px] font-sans font-bold ml-0.5">{t.unit}</span>}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 2. Main Presenter Remote Deck */}
+                        <div className="glass border-2 border-cyan-400/30 dark:border-cyan-400/35 rounded-3xl p-3 flex items-center justify-between gap-5 w-full shadow-2xl presenter-remote-glow text-slate-900 dark:text-white select-none">
+                            {/* A. VISUAL TOOLS */}
+                            <div className="flex items-center gap-1.5 bg-slate-200/40 dark:bg-slate-900/45 p-1 rounded-2xl border border-slate-300/20 dark:border-slate-800">
+                                {/* Scaling Indicator */}
+                                <button
+                                    onClick={() => {
+                                        const scales: ('normal' | 'large' | 'huge')[] = ['normal', 'large', 'huge'];
+                                        const currentIdx = scales.indexOf(projectorScale || 'large');
+                                        const nextIdx = (currentIdx + 1) % scales.length;
+                                        setProjectorScale(scales[nextIdx]);
+                                        addLog(`📺 Pedagogical Text Scale set to ${scales[nextIdx].toUpperCase()}.`);
+                                    }}
+                                    className="p-2 rounded-xl text-[10px] font-black uppercase tracking-wider bg-white dark:bg-slate-850 border border-slate-300/40 dark:border-slate-700 hover:text-cyan-400 transition-colors flex items-center gap-1 min-w-[70px] justify-center"
+                                    title="Cycle Text Scaling Factors ([ or ])"
+                                >
+                                    <span>Scale:</span>
+                                    <span className="text-cyan-500 font-extrabold">{projectorScale === 'normal' ? '1x' : projectorScale === 'large' ? '1.35x' : '1.55x'}</span>
+                                </button>
+
+                                {/* Laser pointer toggle */}
+                                <button
+                                    onClick={toggleLaserPointer}
+                                    className={`p-2 rounded-xl border transition-all ${
+                                        laserPointerEnabled
+                                            ? 'bg-rose-500 text-white border-rose-400'
+                                            : 'bg-white dark:bg-slate-850 border-slate-350/40 dark:border-slate-700 text-slate-500 hover:text-rose-400'
+                                    }`}
+                                    title="Toggle Laser Pointer (L)"
+                                >
+                                    <Zap size={14} className={laserPointerEnabled ? 'animate-bounce text-white' : ''} />
+                                </button>
+
+                                {/* Washout protect toggle */}
+                                <button
+                                    onClick={toggleWashoutProtection}
+                                    className={`p-2 rounded-xl border transition-all ${
+                                        washoutProtection
+                                            ? 'bg-cyan-500 text-slate-950 border-cyan-400'
+                                            : 'bg-white dark:bg-slate-850 border-slate-350/40 dark:border-slate-700 text-slate-500 hover:text-cyan-400'
+                                    }`}
+                                    title="Toggle Washout Protection (W)"
+                                >
+                                    <Contrast size={14} className={washoutProtection ? 'animate-spin text-slate-950' : ''} style={{ animationDuration: '4s' }} />
+                                </button>
+                            </div>
+
+                            {/* B. TAB SWAPPER / NAVIGATION SLIDES */}
+                            <div className="flex items-center gap-1 bg-slate-200/40 dark:bg-slate-900/45 p-1 rounded-2xl border border-slate-300/20 dark:border-slate-800 flex-1 justify-center max-w-lg">
+                                {([
+                                    { id: 'simulation', icon: <Cpu size={14} />, label: 'Sandbox', hotkey: '1' },
+                                    { id: 'notebook', icon: <BookOpen size={14} />, label: 'Workbook', hotkey: '2' },
+                                    { id: 'terminal', icon: <Terminal size={14} />, label: 'Console', hotkey: '3' },
+                                    { id: 'quests', icon: <Trophy size={14} />, label: 'Quests', hotkey: '4' },
+                                    { id: 'discussion', icon: <Presentation size={14} />, label: 'Debate', hotkey: '5' }
+                                ] as const).map((tab) => {
+                                    const active = activeTab === tab.id;
+                                    return (
+                                        <button
+                                            key={tab.id}
+                                            onClick={() => {
+                                                setActiveTab(tab.id);
+                                                addLog(`📺 Presenter Remote: Switched view to ${tab.label}.`);
+                                            }}
+                                            className={`flex-1 py-1.5 px-2 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 ${
+                                                active
+                                                    ? 'bg-cyan-500 text-slate-950 border border-cyan-400 shadow-md shadow-cyan-500/20'
+                                                    : 'text-slate-550 dark:text-slate-450 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-250 dark:hover:bg-slate-800/40'
+                                            }`}
+                                            title={`Switch to ${tab.label} slide (${tab.hotkey})`}
+                                        >
+                                            {tab.icon}
+                                            <span className="hidden sm:inline">{tab.label}</span>
+                                            <span className={`keycap hidden md:inline-flex ${active ? 'keycap-light border-slate-300' : 'opacity-65'}`}>{tab.hotkey}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            {/* C. SIMULATION CONTROLS */}
+                            <div className="flex items-center gap-1.5 bg-slate-200/40 dark:bg-slate-900/45 p-1 rounded-2xl border border-slate-300/20 dark:border-slate-800">
+                                {onToggleRun && (
+                                    <button
+                                        onClick={handleToggleRun}
+                                        className={`p-2 px-3 rounded-xl border transition-all text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 ${
+                                            isRunning
+                                                ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                                                : 'bg-emerald-500 text-slate-950 border-emerald-400 hover:bg-emerald-400 shadow-lg shadow-emerald-500/20'
+                                        }`}
+                                        title="Play/Pause Simulation (Space)"
+                                    >
+                                        {isRunning ? <Pause size={12} className="animate-pulse" /> : <Play size={12} />}
+                                        <span className="hidden md:inline">{isRunning ? 'Pause' : 'Run'}</span>
+                                        <span className={`keycap ${isRunning ? '' : 'keycap-light'}`}>Space</span>
+                                    </button>
+                                )}
+
+                                {showStepBtn && onStep && !isRunning && (
+                                    <button
+                                        onClick={handleStep}
+                                        className="p-2 px-2.5 bg-white dark:bg-slate-850 border border-slate-300/40 dark:border-slate-700 hover:text-cyan-400 rounded-xl text-[10px] font-black uppercase tracking-wider flex items-center gap-1 transition-colors"
+                                        title="Step Telemetry Single Tick (S)"
+                                    >
+                                        <ChevronRight size={12} />
+                                        <span className="hidden md:inline">Step</span>
+                                        <span className="keycap">S</span>
+                                    </button>
+                                )}
+
+                                {onReset && (
+                                    <button
+                                        onClick={handleReset}
+                                        className="p-2 bg-white dark:bg-slate-850 border border-slate-350/40 dark:border-slate-700 hover:text-rose-400 rounded-xl text-[10px] font-black uppercase tracking-wider transition-colors"
+                                        title="Reset Sandbox Parameters (R)"
+                                    >
+                                        <RotateCcw size={12} />
+                                    </button>
+                                )}
+                            </div>
+
+                            {/* D. HELP CHEAT SHEET BUTTON & EXIT */}
+                            <div className="flex items-center gap-1">
+                                <button
+                                    onClick={() => setShowHelpModal(true)}
+                                    className="p-2 bg-slate-200/50 dark:bg-slate-900 text-slate-500 hover:text-cyan-400 rounded-xl border border-slate-300/30 dark:border-slate-800"
+                                    title="Keyboard Shortcuts Cheatsheet (?)"
+                                >
+                                    <Keyboard size={14} />
+                                </button>
+                                <button
+                                    onClick={handleToggleProjector}
+                                    className="p-2 bg-rose-500/10 hover:bg-rose-500/25 text-rose-400 border border-rose-500/20 rounded-xl font-black text-[10px] uppercase tracking-wider"
+                                    title="Exit Projector Mode (Esc)"
+                                >
+                                    Exit
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Keyboard shortcuts Cheatsheet Modal Overlay */}
+            <AnimatePresence>
+                {showHelpModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[9999] flex items-center justify-center p-4"
+                        onClick={() => setShowHelpModal(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            className="bg-white dark:bg-slate-900 border-2 border-cyan-400/40 dark:border-cyan-400/35 rounded-3xl p-6 max-w-md w-full shadow-2xl text-slate-900 dark:text-white space-y-4"
+                            onClick={e => e.stopPropagation()}
+                        >
+                            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                                <div className="flex items-center gap-2">
+                                    <Keyboard className="text-cyan-500" size={20} />
+                                    <h4 className="font-black text-sm tracking-wide uppercase">Presenter Remote Keyboard Guides</h4>
+                                </div>
+                                <button onClick={() => setShowHelpModal(false)} className="text-slate-400 hover:text-slate-100 p-1">
+                                    <X size={18} />
+                                </button>
+                            </div>
+
+                            <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">
+                                Drive your interactive reinforcement learning classroom lectures without ever using a mouse! These high-fidelity keyboard hotkeys are bound globally while Projector Mode is enabled.
+                            </p>
+
+                            <div className="space-y-2.5 pt-2">
+                                <div className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 dark:border-slate-850">
+                                    <span className="font-bold text-slate-650 dark:text-slate-350">Swap Views / Tab Slides</span>
+                                    <div className="flex gap-1">
+                                        <span className="keycap keycap-light">1</span>
+                                        <span className="text-slate-400">-</span>
+                                        <span className="keycap keycap-light">5</span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 dark:border-slate-850">
+                                    <span className="font-bold text-slate-650 dark:text-slate-350">Cycle Tab Slides</span>
+                                    <div className="flex gap-1.5 items-center">
+                                        <span className="keycap">←</span>
+                                        <span className="text-[10px] text-slate-400 font-black">/</span>
+                                        <span className="keycap">→</span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 dark:border-slate-850">
+                                    <span className="font-bold text-slate-650 dark:text-slate-350">Play / Pause Simulation</span>
+                                    <span className="keycap keycap-light px-3">Space</span>
+                                </div>
+                                <div className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 dark:border-slate-850">
+                                    <span className="font-bold text-slate-650 dark:text-slate-350">Single telemetric step</span>
+                                    <span className="keycap">S</span>
+                                </div>
+                                <div className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 dark:border-slate-850">
+                                    <span className="font-bold text-slate-650 dark:text-slate-350">Reset simulation parameters</span>
+                                    <span className="keycap">R</span>
+                                </div>
+                                <div className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 dark:border-slate-850">
+                                    <span className="font-bold text-slate-650 dark:text-slate-350">Toggle Glow Laser pointer</span>
+                                    <span className="keycap">L</span>
+                                </div>
+                                <div className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 dark:border-slate-850">
+                                    <span className="font-bold text-slate-650 dark:text-slate-350">Toggle Washout Contrast protection</span>
+                                    <span className="keycap">W</span>
+                                </div>
+                                <div className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 dark:border-slate-850">
+                                    <span className="font-bold text-slate-650 dark:text-slate-350">Increase / Decrease text size</span>
+                                    <div className="flex gap-1.5 items-center">
+                                        <span className="keycap">[</span>
+                                        <span className="text-[10px] text-slate-400 font-black">/</span>
+                                        <span className="keycap">]</span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center justify-between text-xs py-1.5">
+                                    <span className="font-bold text-slate-650 dark:text-slate-350">Exit Projector Mode</span>
+                                    <span className="keycap px-2">Esc</span>
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={() => setShowHelpModal(false)}
+                                className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-slate-950 rounded-2xl font-black text-xs uppercase tracking-wider transition-colors shadow-md shadow-cyan-500/10 active:scale-95"
+                            >
+                                Got it, let's present!
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
