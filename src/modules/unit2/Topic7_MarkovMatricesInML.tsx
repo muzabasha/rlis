@@ -5,13 +5,16 @@ import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import {
     motion,
-    AnimatePresence } from 'framer-motion';
+    AnimatePresence
+} from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock,
-    SymbolTable } from '../../components/topic/MathBlock';
+import {
+    MathBlock,
+    SymbolTable
+} from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
-import { 
+import {
     BookOpen,
     Calculator,
     Users,
@@ -89,7 +92,7 @@ function TextGeneratorLab() {
     const generateNextWord = () => {
         const lastWord = generatedText[generatedText.length - 1];
         const options = transitions[lastWord];
-        
+
         if (!options) {
             setGeneratedText(prev => [...prev, '.']);
             setIsGenerating(false);
@@ -139,7 +142,7 @@ function TextGeneratorLab() {
                     </h4>
                     <p className="text-[10px] text-slate-500 font-medium">Watch a Markov Chain construct sentences word by word.</p>
                 </div>
-                <button 
+                <button
                     onClick={handleGenerate}
                     disabled={isGenerating}
                     className="px-4 py-2 bg-primary-600 text-white text-sm font-bold rounded-xl shadow-md hover:bg-primary-700 disabled:opacity-50 transition-colors"
@@ -151,21 +154,20 @@ function TextGeneratorLab() {
             <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 min-h-[120px] flex flex-wrap gap-2 items-start content-start shadow-inner">
                 <AnimatePresence>
                     {generatedText.map((word, i) => (
-                        <motion.span 
+                        <motion.span
                             key={i}
                             initial={{ opacity: 0, y: 10, scale: 0.8 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
-                            className={`px-3 py-1.5 rounded-lg text-sm font-bold shadow-sm ${
-                                word === '.' 
-                                ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' 
-                                : 'bg-primary-50 text-primary-700 dark:bg-primary-900/20 dark:text-primary-300'
-                            }`}
+                            className={`px-3 py-1.5 rounded-lg text-sm font-bold shadow-sm ${word === '.'
+                                    ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'
+                                    : 'bg-primary-50 text-primary-700 dark:bg-primary-900/20 dark:text-primary-300'
+                                }`}
                         >
                             {word}
                         </motion.span>
                     ))}
                     {isGenerating && (
-                        <motion.span 
+                        <motion.span
                             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                             className="px-3 py-1.5 flex items-center gap-1"
                         >
@@ -209,9 +211,9 @@ export default function Topic7_MarkovMatricesInML() {
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
             <TopicProgressTracker topicId="unit2-topic7_markovmatricesinml" />
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. Predicting the Next Move" 
+            <SectionWrapper
+                id="story"
+                title="1. Predicting the Next Move"
                 subtitle="How ML Uses Markov Matrices"
                 icon={<Brain className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -263,7 +265,7 @@ export default function Topic7_MarkovMatricesInML() {
                 </div>
             </SectionWrapper>
 
-            
+
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
@@ -330,45 +332,72 @@ export default function Topic7_MarkovMatricesInML() {
                 </div>
             </SectionWrapper>
 
-{/* SECTION 3: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="3. Sequence Probability" 
+            {/* SECTION 3: MATHEMATICAL MODELLING */}
+            <SectionWrapper
+                id="math"
+                title="3. Sequence Probability"
                 subtitle="Calculating the Likelihood of Data"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="\mathbb{P}(w_1 w_2 \dots w_n) \approx \prod_{i=1}^{n} \mathbb{P}(w_i | w_{i-1})"
-                                label="Markov Approximation (Bigram)"
-                                explanation="The probability of an entire sentence is approximated by multiplying the transition probabilities between adjacent words."
-                            />
-                            <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                                <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Network size={16} /> Learning the Matrix</h5>
-                                <p className="text-xs text-slate-400 leading-relaxed">
-                                    {"To find $P_{ij}$ (Prob of word $j$ following word $i$), the ML model simply divides the count of the pair $(i, j)$ by the total occurrences of word $i$."}
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="P_{ij} = \frac{\text{Count}(i \rightarrow j)}{\sum_k \text{Count}(i \rightarrow k)}"
-                                label="Maximum Likelihood Estimation"
-                                explanation="This is how the machine 'learns'. It counts occurrences in the training data to build the transition matrix."
-                            />
-                        </div>
-                    </div>
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\mathbb{P}(w_1,w_2,\ldots,w_n) \approx \prod_{i=1}^{n} \mathbb{P}(w_i \mid w_{i-1})"
+                        label="Bigram (1st-Order Markov) Language Model"
+                        accent="blue"
+                        explanation="The probability of an entire word sequence is approximated by the product of consecutive word-pair transition probabilities. Each word depends only on the previous word — the Markov property applied to language."
+                        interpretation="This equation is the mathematical foundation of autocomplete, spell-checkers, and early speech recognition. Instead of computing the exponentially large joint probability P(w₁,...,wₙ), we decompose it into n simple conditional probabilities. The Markov assumption makes this tractable — we only need to store an n_vocab × n_vocab transition matrix."
+                        motivation="Without the Markov approximation, computing P(sentence) would require storing probabilities for every possible sequence of words — computationally infeasible. The bigram model reduces this to O(V²) storage where V is the vocabulary size, enabling practical NLP systems."
+                        terms={[
+                            { term: '\\mathbb{P}(w_1,\\ldots,w_n)', name: 'Sentence Probability', meaning: 'The joint probability of the entire word sequence. Exponentially hard to compute directly.', range: '[0,1]', example: 'P("I love ML") — very small number, but computable via bigrams.' },
+                            { term: '\\prod_{i=1}^{n}', name: 'Product over words', meaning: 'Multiply the conditional probabilities for each word given the previous word. The chain rule of probability.', range: '[0,1]', example: 'P("I")×P("love"|"I")×P("ML"|"love").' },
+                            { term: '\\mathbb{P}(w_i \\mid w_{i-1})', name: 'Bigram Probability', meaning: 'Probability of word w_i given the immediately preceding word w_{i-1}. This is one entry in the transition matrix.', range: '[0,1]', example: 'P("Birthday"|"Happy") = 0.45 (very common pair).' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Compute P("I love ML") using bigram model. Transition probs: P("love"|"I")=0.3, P("ML"|"love")=0.4.',
+                            steps: [
+                                'P("I") = 0.05  (frequency of "I" as sentence start)',
+                                'P("love"|"I") = 0.30',
+                                'P("ML"|"love") = 0.40',
+                                'P("I love ML") ≈ 0.05 × 0.30 × 0.40 = 0.006',
+                            ],
+                            result: 'P("I love ML") ≈ 0.006 = 0.6%. The sentence is plausible but not the most common sequence.',
+                        }}
+                    />
+
+                    <MathBlock
+                        formula="P_{ij} = \frac{\text{Count}(w_i \to w_j)}{\displaystyle\sum_{k} \text{Count}(w_i \to w_k)} = \frac{C(w_i,\,w_j)}{C(w_i)}"
+                        label="Maximum Likelihood Estimation — Learning the Matrix from Data"
+                        accent="violet"
+                        explanation="The transition probability from word i to word j is estimated by dividing the count of the bigram (i,j) by the total count of word i in the training corpus. This is how ML 'learns' the Markov matrix."
+                        interpretation="This is the bridge between data and mathematics. The machine reads millions of sentences, counts every word pair, and normalises to get probabilities. The resulting matrix encodes the statistical patterns of the language. This same principle applies to DNA sequences, stock prices, and user behaviour — any sequential data."
+                        motivation="MLE is the simplest and most interpretable way to learn a Markov model. It is provably optimal (minimises KL divergence from the true distribution) given enough data. Understanding MLE is essential for understanding how all probabilistic ML models are trained."
+                        terms={[
+                            { term: 'C(w_i,w_j)', name: 'Bigram Count', meaning: 'Number of times word w_j immediately follows word w_i in the training corpus.', range: '\\mathbb{Z}^+', example: 'C("Happy","Birthday") = 1,247 occurrences in 1M sentences.' },
+                            { term: 'C(w_i)', name: 'Unigram Count', meaning: 'Total number of times word w_i appears in the corpus (as the first word of any bigram).', range: '\\mathbb{Z}^+', example: 'C("Happy") = 2,800 total occurrences.' },
+                            { term: 'P_{ij}', name: 'Learned Transition Probability', meaning: 'The MLE estimate of P(w_j|w_i). Converges to the true probability as corpus size → ∞.', range: '[0,1]', example: 'P("Birthday"|"Happy") = 1247/2800 = 0.445.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Training corpus: "The cat sat. The cat ate. The dog sat." Count bigrams for "The":',
+                            steps: [
+                                'C("The","cat") = 2,  C("The","dog") = 1',
+                                'C("The") = 3  (total occurrences of "The")',
+                                'P("cat"|"The") = 2/3 = 0.667',
+                                'P("dog"|"The") = 1/3 = 0.333',
+                                'Row sum: 0.667 + 0.333 = 1.000 ✓',
+                            ],
+                            result: 'The "The" row of the transition matrix: [cat=0.667, dog=0.333]. Learned purely from counting.',
+                        }}
+                    />
+
+                    <TextGeneratorLab />
                 </div>
             </SectionWrapper>
 
             {/* INTERACTIVE DIAGRAM */}
-            <InteractiveDiagram 
+            <InteractiveDiagram
                 title="Markov Matrices In M L Architecture"
                 description="Applying transition matrices in algorithms like PageRank."
                 chart={`graph TD
@@ -379,16 +408,16 @@ export default function Topic7_MarkovMatricesInML() {
 
 
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="4. Multi-Level Activities" 
+            <SectionWrapper
+                id="activity"
+                title="4. Multi-Level Activities"
                 subtitle="Becoming the Bigram Model"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <ActivityLevels 
+                <ActivityLevels
                     levels={[
                         {
                             level: 1,
@@ -466,9 +495,9 @@ export default function Topic7_MarkovMatricesInML() {
             </SectionWrapper>
 
             {/* SECTION 5: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="5. Project: DNA Sequence Analysis" 
+            <SectionWrapper
+                id="project"
+                title="5. Project: DNA Sequence Analysis"
                 subtitle="Finding Genetic Anomalies"
                 icon={<Zap className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -497,9 +526,9 @@ export default function Topic7_MarkovMatricesInML() {
             </SectionWrapper>
 
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="6. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="6. Quick Check"
                 subtitle="ML Integration"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -518,9 +547,9 @@ export default function Topic7_MarkovMatricesInML() {
             </SectionWrapper>
 
             {/* SECTION 7: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="7. Virtual Lab: Text Generator" 
+            <SectionWrapper
+                id="lab"
+                title="7. Virtual Lab: Text Generator"
                 subtitle="Watch the Matrix Create Sentences"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
@@ -528,20 +557,20 @@ export default function Topic7_MarkovMatricesInML() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
-                <VirtualLabShell
-                    title="PageRank Simulator"
-                    description="Apply Markov matrices to real ML algorithms"
-                    objective="Build a small web graph and watch PageRank iterate to a stable page importance ranking."
-                    badge="Interactive Lab"
-                    tips={['PageRank is literally a Markov chain — each page is a state',
-                'The "Random Surfer" model: with probability d, the surfer follows a link; with 1-d, they jump randomly']}
-                 challenges={challenges} notebook={notebook} logs={logs}>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                        This lab runs a small Markov Matrix trained on computer science text. When you press Start, it will use the probabilities defined in the matrix rows to sample the next word, chaining them together to form a sentence.
-                    </p>
-                    <TextGeneratorLab />
-                </VirtualLabShell>
-            
+                    <VirtualLabShell
+                        title="PageRank Simulator"
+                        description="Apply Markov matrices to real ML algorithms"
+                        objective="Build a small web graph and watch PageRank iterate to a stable page importance ranking."
+                        badge="Interactive Lab"
+                        tips={['PageRank is literally a Markov chain — each page is a state',
+                            'The "Random Surfer" model: with probability d, the surfer follows a link; with 1-d, they jump randomly']}
+                        challenges={challenges} notebook={notebook} logs={logs}>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            This lab runs a small Markov Matrix trained on computer science text. When you press Start, it will use the probabilities defined in the matrix rows to sample the next word, chaining them together to form a sentence.
+                        </p>
+                        <TextGeneratorLab />
+                    </VirtualLabShell>
+
                 </div>
             </SectionWrapper>
 

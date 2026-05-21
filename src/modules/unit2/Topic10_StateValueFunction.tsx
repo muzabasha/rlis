@@ -4,13 +4,16 @@ import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/t
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import {
-    motion } from 'framer-motion';
+    motion
+} from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock,
-    SymbolTable } from '../../components/topic/MathBlock';
+import {
+    MathBlock,
+    SymbolTable
+} from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
-import { 
+import {
     BookOpen,
     Calculator,
     Users,
@@ -65,21 +68,21 @@ const logs: string[] = [
 
 function GridworldValueLab() {
     const [policy, setPolicy] = useState<'Random' | 'Optimal'>('Random');
-    
+
     // 3x3 Gridworld
     // Values vary based on the policy chosen.
     // Goal is top-right (index 2). Trap is middle-right (index 5).
-    
+
     const randomValues = [
-        0.1,  0.5,  10.0,
+        0.1, 0.5, 10.0,
         -0.2, -0.8, -10.0,
         -0.5, -0.6, -0.9
     ];
 
     const optimalValues = [
-        8.1,  9.0,  10.0,
-        7.2,  8.1, -10.0,
-        6.4,  7.2,  6.4
+        8.1, 9.0, 10.0,
+        7.2, 8.1, -10.0,
+        6.4, 7.2, 6.4
     ];
 
     const currentValues = policy === 'Random' ? randomValues : optimalValues;
@@ -87,7 +90,7 @@ function GridworldValueLab() {
     const getColor = (val: number, isGoal: boolean, isTrap: boolean) => {
         if (isGoal) return 'bg-emerald-500 text-white';
         if (isTrap) return 'bg-red-500 text-white';
-        
+
         // Heatmap logic for regular states
         if (val > 8) return 'bg-emerald-300 text-emerald-900';
         if (val > 5) return 'bg-emerald-100 text-emerald-900';
@@ -107,13 +110,13 @@ function GridworldValueLab() {
                     <p className="text-[10px] text-slate-500 font-medium">How policy changes the value of states.</p>
                 </div>
                 <div className="flex gap-2">
-                    <button 
+                    <button
                         onClick={() => setPolicy('Random')}
                         className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${policy === 'Random' ? 'bg-slate-800 text-white border-slate-800 shadow-md' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
                     >
                         Random Policy
                     </button>
-                    <button 
+                    <button
                         onClick={() => setPolicy('Optimal')}
                         className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${policy === 'Optimal' ? 'bg-primary-600 text-white border-primary-600 shadow-md' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
                     >
@@ -129,7 +132,7 @@ function GridworldValueLab() {
                         const isGoal = i === 2;
                         const isTrap = i === 5;
                         return (
-                            <motion.div 
+                            <motion.div
                                 key={i}
                                 layout
                                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -150,13 +153,13 @@ function GridworldValueLab() {
                             {policy} Policy Selected
                         </h5>
                         <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                            {policy === 'Random' 
+                            {policy === 'Random'
                                 ? "Under a Random Policy, the agent moves blindly. Even if it starts right next to the goal (V(s1)), it might randomly walk into the fire. Thus, the value of almost every state is very low or negative."
                                 : "Under an Optimal Policy, the agent knows exactly where the goal is. It moves directly towards it and avoids the fire. Thus, the states close to the goal become highly valuable!"
                             }
                         </p>
                     </div>
-                    
+
                     <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-900/30 text-xs text-amber-800 dark:text-amber-200 font-medium italic">
                         Crucial Insight: The physical state (grid square) didn't change. But its <strong>Value</strong> changed dramatically because the agent's <strong>behavior</strong> changed.
                     </div>
@@ -173,9 +176,9 @@ export default function Topic10_StateValueFunction() {
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
             <TopicProgressTracker topicId="unit2-topic10_statevaluefunction" />
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. Evaluating the Board" 
+            <SectionWrapper
+                id="story"
+                title="1. Evaluating the Board"
                 subtitle="How Good is This Position?"
                 icon={<Target className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -205,7 +208,7 @@ export default function Topic10_StateValueFunction() {
                         </h4>
                         <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
                             <p>
-                                If you pause a chess game in the middle, who is winning? A novice might just count the pieces. But a Grandmaster looks at the board and instantly "feels" the value of the position. 
+                                If you pause a chess game in the middle, who is winning? A novice might just count the pieces. But a Grandmaster looks at the board and instantly "feels" the value of the position.
                             </p>
                             <p>
                                 They might be down a knight, but they know that from this exact <strong>State</strong>, they have a forced checkmate in 5 moves. Therefore, the <strong>Value</strong> of that specific state is extremely high.
@@ -227,7 +230,7 @@ export default function Topic10_StateValueFunction() {
                 </div>
             </SectionWrapper>
 
-            
+
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
@@ -294,53 +297,72 @@ export default function Topic10_StateValueFunction() {
                 </div>
             </SectionWrapper>
 
-{/* SECTION 3: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="3. The Value Equation" 
+            {/* SECTION 3: MATHEMATICAL MODELLING */}
+            <SectionWrapper
+                id="math"
+                title="3. The Value Equation"
                 subtitle="The Core Equation of RL"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="v_\pi(s) = \mathbb{E}_\pi [G_t | S_t = s]"
-                                label="State-Value Definition"
-                                explanation="The expected Return (G_t), given that we start in state s, and follow policy π."
-                            />
-                            <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                                <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Focus size={16} /> Expanding Bellman</h5>
-                                <p className="text-xs text-slate-400 leading-relaxed">
-                                    Just like in MRPs, we can break this down recursively. The value of a state is the immediate reward we get, plus the discounted value of the next state we land in.
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="v_\pi(s) = \sum_{a} \pi(a|s) \sum_{s', r} p(s', r | s, a) [r + \gamma v_\pi(s')]"
-                                label="Bellman Expectation Equation for V(s)"
-                                explanation="We sum over all actions our policy might take, and then sum over all next states the environment might drop us into."
-                            />
-                        </div>
-                    </div>
-
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: 'v_\pi(s)', meaning: 'The state-value function under policy \u03C0.' },
-                            { symbol: '\pi(a|s)', meaning: 'The policy: probability of taking action a in state s.' },
-                            { symbol: 'p(s\', r | s, a)', meaning: 'The environment dynamics: probability of next state and reward.' }
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="v_\pi(s) = \mathbb{E}_\pi\!\left[G_t \mid S_t = s\right] = \mathbb{E}_\pi\!\left[\sum_{k=0}^{\infty}\gamma^k R_{t+k+1} \;\middle|\; S_t=s\right]"
+                        label="State-Value Function V_π(s) — Definition"
+                        accent="blue"
+                        explanation="v_π(s) is the expected total discounted reward when starting in state s and following policy π forever. It answers: 'How good is it to be in this state?'"
+                        interpretation="The state-value function is the agent's long-term intuition. A high v_π(s) means state s is a good place to be — the agent expects to accumulate a lot of reward from here. A low v_π(s) means the state is bad. The agent uses value functions to compare states and improve its policy."
+                        motivation="Without v_π(s), the agent cannot plan. It would have to re-evaluate every possible future from scratch at each step. The value function compresses all future information into a single number per state, enabling efficient decision-making."
+                        terms={[
+                            { term: 'v_\\pi(s)', name: 'State-Value Function', meaning: 'Expected total discounted reward starting from state s, following policy π forever.', range: '\\mathbb{R}', example: 'v_π(near_goal)=9.5, v_π(start)=3.2 — being near the goal is much better.' },
+                            { term: '\\mathbb{E}_\\pi', name: 'Expectation under π', meaning: 'Average over all trajectories the agent might experience when following policy π from state s.', range: '\\mathbb{R}', example: 'If 60% of trajectories give G=10 and 40% give G=5: E[G]=0.6×10+0.4×5=8.' },
+                            { term: 'S_t=s', name: 'Conditioning on state', meaning: 'We fix the starting state to s. The expectation averages over all future randomness.', range: '\\mathcal{S}', example: 'v_π((2,3)) = expected return when starting at grid position (2,3).' },
                         ]}
+                        numericalExample={{
+                            setup: '3-state chain: s₁→s₂→s₃(goal). Rewards: r(s₁→s₂)=0, r(s₂→s₃)=+10. γ=0.9. Deterministic policy: always move right.',
+                            steps: [
+                                'v_π(s₃) = 0  (terminal state, no future rewards)',
+                                'v_π(s₂) = r(s₂→s₃) + γ·v_π(s₃) = 10 + 0.9×0 = 10',
+                                'v_π(s₁) = r(s₁→s₂) + γ·v_π(s₂) = 0 + 0.9×10 = 9',
+                            ],
+                            result: 'v_π(s₁)=9, v_π(s₂)=10, v_π(s₃)=0. Value propagates backwards from the goal.',
+                        }}
                     />
+
+                    <MathBlock
+                        formula="v_\pi(s) = \sum_{a \in \mathcal{A}} \pi(a|s) \sum_{s' \in \mathcal{S}} \mathcal{P}(s'|s,a)\Bigl[\mathcal{R}(s,a,s') + \gamma\, v_\pi(s')\Bigr]"
+                        label="Bellman Expectation Equation for V_π — Expanded Form"
+                        accent="violet"
+                        explanation="The value of state s equals the expected immediate reward plus the discounted value of the next state, averaged over all actions (weighted by policy π) and all next states (weighted by transition probabilities)."
+                        interpretation="This is the Bellman expectation equation — the fundamental recursive relationship that defines the value function. It has two layers of expectation: (1) over actions via the policy π(a|s), and (2) over next states via the transition dynamics P(s'|s,a). This equation forms a linear system that can be solved exactly for small MDPs."
+                        motivation="The Bellman equation is the foundation of policy evaluation — the first step of policy iteration. It allows us to compute v_π(s) for any fixed policy π, which we then use to improve the policy. Without this equation, we cannot systematically improve policies."
+                        terms={[
+                            { term: '\\sum_a \\pi(a|s)', name: 'Policy Expectation', meaning: 'Weighted sum over all actions, where weights are the policy probabilities π(a|s).', range: '[0,1]', example: 'π(left|s)=0.3, π(right|s)=0.7: weighted sum = 0.3×Q(s,left) + 0.7×Q(s,right).' },
+                            { term: '\\sum_{s\'} \\mathcal{P}(s\'|s,a)', name: 'Transition Expectation', meaning: 'Weighted sum over all next states, where weights are transition probabilities.', range: '[0,1]', example: 'P(s₁|s,a)=0.8, P(s₂|s,a)=0.2: weighted sum = 0.8×v(s₁) + 0.2×v(s₂).' },
+                            { term: '\\mathcal{R}(s,a,s\')', name: 'Transition Reward', meaning: 'Reward received for the specific transition from s to s\' via action a.', range: '\\mathbb{R}', example: 'R((2,3),right,(2,4))=−0.1, R((2,3),right,goal)=+10.' },
+                            { term: '\\gamma\\,v_\\pi(s\')', name: 'Discounted Next Value', meaning: 'The value of the next state, discounted by γ. Captures all future rewards beyond the immediate step.', range: '\\mathbb{R}', example: 'γ=0.9, v_π(s₂)=10 → γ·v_π(s₂) = 9.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Grid world. State s=(2,3). Policy: π(right|s)=0.7, π(up|s)=0.3. Transitions: right→(2,4) with p=0.9, r=−0.1; right→(1,3) with p=0.1, r=−0.1. v_π(2,4)=8, v_π(1,3)=3. γ=0.9.',
+                            steps: [
+                                'Q(s,right) = 0.9×(−0.1+0.9×8) + 0.1×(−0.1+0.9×3)',
+                                '           = 0.9×7.1 + 0.1×2.6 = 6.39 + 0.26 = 6.65',
+                                'Q(s,up) = ... = 4.2  (similar calculation)',
+                                'v_π(s) = π(right|s)×Q(s,right) + π(up|s)×Q(s,up)',
+                                '       = 0.7×6.65 + 0.3×4.2 = 4.655 + 1.26 = 5.915',
+                            ],
+                            result: 'v_π((2,3)) = 5.915. This is the expected return from state (2,3) under the given stochastic policy.',
+                        }}
+                    />
+
+                    <GridworldValueLab />
                 </div>
             </SectionWrapper>
 
             {/* INTERACTIVE DIAGRAM */}
-            <InteractiveDiagram 
+            <InteractiveDiagram
                 title="State Value Function Architecture"
                 description="Estimating the value of being in a specific state."
                 chart={`graph TD
@@ -351,16 +373,16 @@ export default function Topic10_StateValueFunction() {
 
 
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="4. Multi-Level Activities" 
+            <SectionWrapper
+                id="activity"
+                title="4. Multi-Level Activities"
                 subtitle="The Intuition of Evaluation"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <ActivityLevels 
+                <ActivityLevels
                     levels={[
                         {
                             level: 1,
@@ -438,9 +460,9 @@ export default function Topic10_StateValueFunction() {
             </SectionWrapper>
 
             {/* SECTION 5: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="5. Project: Chess AI Evaluation" 
+            <SectionWrapper
+                id="project"
+                title="5. Project: Chess AI Evaluation"
                 subtitle="How Engines See the Board"
                 icon={<Brain className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -468,9 +490,9 @@ export default function Topic10_StateValueFunction() {
             </SectionWrapper>
 
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="6. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="6. Quick Check"
                 subtitle="Value Function Theory"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -489,9 +511,9 @@ export default function Topic10_StateValueFunction() {
             </SectionWrapper>
 
             {/* SECTION 7: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="7. Virtual Lab: Value Heatmap" 
+            <SectionWrapper
+                id="lab"
+                title="7. Virtual Lab: Value Heatmap"
                 subtitle="See How Policy Dictates Value"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
@@ -499,21 +521,21 @@ export default function Topic10_StateValueFunction() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
-                <VirtualLabShell
-                    title="Value Function Heatmap"
-                    description="Visualize V(s) across a gridworld"
-                    objective="Run policy evaluation and watch the value function propagate backward from goal states."
-                    badge="Interactive Lab"
-                    tips={['High value = good position (close to reward)',
-                'Value propagates from the goal backward through the grid',
-                'Try different discount factors and see how the "reach" of value changes']}
-                 challenges={challenges} notebook={notebook} logs={logs}>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Explore a 3x3 Gridworld. The top right is a Goal (+10). The middle right is a Fire Trap (-10). Toggle the policy to see how the mathematical <strong>Value</strong> of the physical grid spaces changes drastically based on how the agent behaves.
-                    </p>
-                    <GridworldValueLab />
-                </VirtualLabShell>
-            
+                    <VirtualLabShell
+                        title="Value Function Heatmap"
+                        description="Visualize V(s) across a gridworld"
+                        objective="Run policy evaluation and watch the value function propagate backward from goal states."
+                        badge="Interactive Lab"
+                        tips={['High value = good position (close to reward)',
+                            'Value propagates from the goal backward through the grid',
+                            'Try different discount factors and see how the "reach" of value changes']}
+                        challenges={challenges} notebook={notebook} logs={logs}>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            Explore a 3x3 Gridworld. The top right is a Goal (+10). The middle right is a Fire Trap (-10). Toggle the policy to see how the mathematical <strong>Value</strong> of the physical grid spaces changes drastically based on how the agent behaves.
+                        </p>
+                        <GridworldValueLab />
+                    </VirtualLabShell>
+
                 </div>
             </SectionWrapper>
 

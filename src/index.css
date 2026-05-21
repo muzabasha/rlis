@@ -467,3 +467,167 @@
   color: #000000 !important;
   font-weight: 900 !important;
 }
+
+/* ==========================================================================
+   PREMIUM DYNAMIC STYLING & INTERACTIVE PRESENTATION CLASSES
+   ========================================================================== */
+
+/* Thematic Ambient Glow Background */
+@keyframes ambient-breathe {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.28;
+  }
+  33% {
+    transform: translate(6% , -8%) scale(1.12) rotate(120deg);
+    opacity: 0.38;
+  }
+  66% {
+    transform: translate(-4%, 6%) scale(0.9) rotate(240deg);
+    opacity: 0.22;
+  }
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  mix-blend-mode: plus-lighter;
+  animation: ambient-breathe 22s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .ambient-orb {
+  mix-blend-mode: screen;
+  filter: blur(130px);
+}
+
+/* Glassmorphism Evolved */
+.glass-premium {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.dark .glass-premium {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 3D Realistic Keycaps CSS */
+.keycap-3d {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #475569 0%, #334155 40%, #1e293b 100%);
+  border: 1px solid #64748b;
+  border-bottom: 4px solid #0f172a;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 3px 8px;
+  text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.8);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.08s ease;
+  min-width: 28px;
+  min-height: 28px;
+  user-select: none;
+  cursor: default;
+}
+
+.keycap-3d-active {
+  transform: translateY(3px) !important;
+  border-bottom: 1px solid #0f172a !important;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  background: linear-gradient(to bottom, #3b82f6 0%, #2563eb 100%) !important;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5) !important;
+  border-color: #60a5fa !important;
+}
+
+/* Projector-washout and light mode specific overrides for 3D keycaps */
+.projector-washout-on .keycap-3d,
+.projector-washout-on:not(.dark) .keycap-3d {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  border-bottom-width: 5px !important;
+  text-shadow: none !important;
+  box-shadow: 0 4px 0 #000000 !important;
+  font-weight: 900 !important;
+}
+
+.projector-washout-on .keycap-3d-active,
+.projector-washout-on:not(.dark) .keycap-3d-active {
+  transform: translateY(3px) !important;
+  border-bottom-width: 2px !important;
+  box-shadow: 0 1px 0 #000000 !important;
+  background: #00ffff !important;
+}
+
+/* Syllabus & revision flip cards */
+.flip-card-container {
+  perspective: 1000px;
+  height: 180px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card-flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* Ambient breathe light container placement in layouts */
+.content-ambient-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Focus Reading Mode Overrides */
+.focus-reading-mode header {
+  transform: translateY(-100%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out !important;
+}
+
+.focus-reading-mode main {
+  padding-top: 1.5rem !important;
+  margin-left: 0 !important;
+  transition: padding-top 0.3s ease-in-out, margin-left 0.3s ease-in-out !important;
+}
+
+

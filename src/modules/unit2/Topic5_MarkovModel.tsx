@@ -5,13 +5,16 @@ import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import {
     motion,
-    AnimatePresence } from 'framer-motion';
+    AnimatePresence
+} from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock,
-    SymbolTable } from '../../components/topic/MathBlock';
+import {
+    MathBlock,
+    SymbolTable
+} from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
-import { 
+import {
     BookOpen,
     Calculator,
     Users,
@@ -148,7 +151,7 @@ function ModelTaxonomyLab() {
                 {/* Result Display */}
                 <div className={`flex-1 p-8 rounded-3xl border-2 flex flex-col items-center justify-center text-center transition-colors duration-500 ${details.bg} ${details.border}`}>
                     <AnimatePresence mode="wait">
-                        <motion.div 
+                        <motion.div
                             key={currentModel}
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
@@ -177,9 +180,9 @@ export default function Topic5_MarkovModel() {
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
             <TopicProgressTracker topicId="unit2-topic5_markovmodel" />
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Four Kingdoms of Markov" 
+            <SectionWrapper
+                id="story"
+                title="1. The Four Kingdoms of Markov"
                 subtitle="Classifying Stochastic Systems"
                 icon={<BookOpen className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -232,7 +235,7 @@ export default function Topic5_MarkovModel() {
                 </div>
             </SectionWrapper>
 
-            
+
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
@@ -299,48 +302,64 @@ export default function Topic5_MarkovModel() {
                 </div>
             </SectionWrapper>
 
-{/* SECTION 3: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="3. Expanding the Tuple" 
+            {/* SECTION 3: MATHEMATICAL MODELLING */}
+            <SectionWrapper
+                id="math"
+                title="3. Expanding the Tuple"
                 subtitle="How Math Changes with Observability"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="\langle S, P \rangle"
-                                label="Markov Chain"
-                                explanation="Just States (S) and Transition Probabilities (P). Autonomous and visible."
-                            />
-                            <MathBlock 
-                                formula="\langle S, P, Y, O \rangle"
-                                label="Hidden Markov Model (HMM)"
-                                explanation="Y = Set of Observations. O = Observation Probabilities (Emission matrix)."
-                            />
-                        </div>
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="\langle S, A, P, R \rangle"
-                                label="Markov Decision Process"
-                                explanation="We add Actions (A) and Rewards (R) to give the agent control and goals."
-                            />
-                            <MathBlock 
-                                formula="\langle S, A, P, R, \Omega, O \rangle"
-                                label="POMDP"
-                                explanation="The most complex. We have Actions, Rewards, plus Observations (\Omega) and Observation Probabilities (O)."
-                            />
-                        </div>
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\text{MC} = \langle \mathcal{S},\,\mathbf{P} \rangle \;\xrightarrow{+\text{Actions}}\; \text{MDP} = \langle \mathcal{S},\mathcal{A},\mathbf{P},\mathcal{R},\gamma \rangle \;\xrightarrow{+\text{Hidden}}\; \text{POMDP}"
+                        label="The Markov Model Taxonomy — Tuple Evolution"
+                        accent="blue"
+                        explanation="Each Markov model is an extension of the previous one. Adding actions gives control (MDP). Adding hidden states gives partial observability (POMDP). The tuple grows with complexity."
+                        interpretation="This progression shows how the mathematical formalism scales with real-world complexity. A simple weather model needs only ⟨S,P⟩. A chess-playing agent needs ⟨S,A,P,R,γ⟩. A self-driving car with noisy sensors needs the full POMDP tuple. Understanding this hierarchy helps you choose the right model for any problem."
+                        motivation="Knowing which tuple to use determines which algorithms are applicable. MC → analytical solutions. MDP → dynamic programming, Q-learning. POMDP → belief-state methods, particle filters. Choosing the wrong model leads to either over-engineering or under-performance."
+                        terms={[
+                            { term: '\\mathcal{S}', name: 'State Space', meaning: 'Set of all possible states. Present in all four models.', range: 'Finite or \\mathbb{R}^n', example: 'Weather: {Sunny, Rainy}. Chess: all board configurations.' },
+                            { term: '\\mathbf{P}', name: 'Transition Matrix', meaning: 'Probability of state transitions. Present in all four models.', range: '[0,1]^{|S|\\times|S|}', example: 'P(Rainy|Sunny)=0.2.' },
+                            { term: '\\mathcal{A}', name: 'Action Space', meaning: 'Set of decisions the agent can make. Added in MDP and POMDP.', range: 'Finite or \\mathbb{R}^m', example: 'Robot: {move_left, move_right, stop}.' },
+                            { term: '\\mathcal{R}', name: 'Reward Function', meaning: 'Scalar feedback signal. Added in MDP and POMDP to define the objective.', range: '\\mathbb{R}', example: 'R(goal_state)=+100, R(obstacle)=−50.' },
+                            { term: '\\Omega,\\,O', name: 'Observations & Emission', meaning: 'In POMDP: Ω is the set of possible observations; O(o|s,a) is the probability of observing o in state s after action a.', range: '[0,1]', example: 'Noisy sensor: O(see_wall|near_wall,move)=0.9.' },
+                        ]}
+                    />
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <MathBlock
+                            formula="\langle \mathcal{S},\,\mathbf{P},\,\mathcal{Y},\,\mathbf{O} \rangle"
+                            label="Hidden Markov Model (HMM)"
+                            accent="violet"
+                            explanation="Y = set of observable emissions. O = emission probability matrix O(y|s). The true state s is hidden; only observation y is visible."
+                            interpretation="In an HMM, the system evolves through hidden states (e.g., the actual word being spoken) but we only observe noisy emissions (e.g., audio waveforms). The Viterbi algorithm finds the most likely hidden state sequence given the observations."
+                            terms={[
+                                { term: '\\mathcal{Y}', name: 'Observation Set', meaning: 'All possible observable outputs (emissions) from the hidden states.', range: 'Finite', example: 'Speech: Y = {phoneme_1, ..., phoneme_44}.' },
+                                { term: '\\mathbf{O}', name: 'Emission Matrix', meaning: 'O(y|s) = probability of observing y when in hidden state s.', range: '[0,1]', example: 'O(audio_A|state_A)=0.8.' },
+                            ]}
+                        />
+                        <MathBlock
+                            formula="\langle \mathcal{S},\mathcal{A},\mathbf{P},\mathcal{R},\boldsymbol{\Omega},\mathbf{O} \rangle"
+                            label="POMDP — Partially Observable MDP"
+                            accent="amber"
+                            explanation="The most general model. Adds observations Ω and emission probabilities O to the MDP tuple. The agent maintains a belief state b(s) = P(true state = s | history)."
+                            interpretation="In a POMDP, the agent cannot directly observe the true state. Instead, it maintains a belief state — a probability distribution over all possible states. Actions update both the true state (via P) and the belief state (via Bayes' rule and O). Most real-world AI problems are POMDPs."
+                            terms={[
+                                { term: '\\boldsymbol{\\Omega}', name: 'Observation Space', meaning: 'Set of all possible observations the agent can receive.', range: 'Finite or \\mathbb{R}^k', example: 'Robot: Ω = {wall_detected, open_space, goal_visible}.' },
+                                { term: 'b(s)', name: 'Belief State', meaning: 'Probability distribution over true states, updated after each observation using Bayes\' rule.', range: '[0,1]^{|S|}', example: 'b = [0.3, 0.5, 0.2] — 30% chance in state 1, 50% in state 2, 20% in state 3.' },
+                            ]}
+                        />
                     </div>
+
+                    <ModelTaxonomyLab />
                 </div>
             </SectionWrapper>
 
             {/* INTERACTIVE DIAGRAM */}
-            <InteractiveDiagram 
+            <InteractiveDiagram
                 title="Markov Model Architecture"
                 description="Generic Markov Model architecture."
                 chart={`graph LR
@@ -352,16 +371,16 @@ export default function Topic5_MarkovModel() {
 
 
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="4. Multi-Level Activities" 
+            <SectionWrapper
+                id="activity"
+                title="4. Multi-Level Activities"
                 subtitle="Classifying Complex Environments"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <ActivityLevels 
+                <ActivityLevels
                     levels={[
                         {
                             level: 1,
@@ -437,9 +456,9 @@ export default function Topic5_MarkovModel() {
             </SectionWrapper>
 
             {/* SECTION 5: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="5. Project: Speech Recognition" 
+            <SectionWrapper
+                id="project"
+                title="5. Project: Speech Recognition"
                 subtitle="The Power of HMMs"
                 icon={<BookOpen className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -481,9 +500,9 @@ export default function Topic5_MarkovModel() {
             </SectionWrapper>
 
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="6. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="6. Quick Check"
                 subtitle="Taxonomy Definitions"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -502,9 +521,9 @@ export default function Topic5_MarkovModel() {
             </SectionWrapper>
 
             {/* SECTION 7: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="7. Virtual Lab: Taxonomy Explorer" 
+            <SectionWrapper
+                id="lab"
+                title="7. Virtual Lab: Taxonomy Explorer"
                 subtitle="Identify the Right Model"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
@@ -512,20 +531,20 @@ export default function Topic5_MarkovModel() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
-                <VirtualLabShell
-                    title="Markov Model Builder"
-                    description="Construct and simulate custom Markov models"
-                    objective="Set transition probabilities between states and observe long-run behaviour patterns."
-                    badge="Interactive Lab"
-                    tips={['Absorbing states (probability 1 self-loop) represent terminal conditions',
-                'Ergodic chains visit all states — check if yours is ergodic']}
-                 challenges={challenges} notebook={notebook} logs={logs}>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Adjust the parameters of <strong>Control</strong> and <strong>Observability</strong> to discover which mathematical framework is required to model your system.
-                    </p>
-                    <ModelTaxonomyLab />
-                </VirtualLabShell>
-            
+                    <VirtualLabShell
+                        title="Markov Model Builder"
+                        description="Construct and simulate custom Markov models"
+                        objective="Set transition probabilities between states and observe long-run behaviour patterns."
+                        badge="Interactive Lab"
+                        tips={['Absorbing states (probability 1 self-loop) represent terminal conditions',
+                            'Ergodic chains visit all states — check if yours is ergodic']}
+                        challenges={challenges} notebook={notebook} logs={logs}>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            Adjust the parameters of <strong>Control</strong> and <strong>Observability</strong> to discover which mathematical framework is required to model your system.
+                        </p>
+                        <ModelTaxonomyLab />
+                    </VirtualLabShell>
+
                 </div>
             </SectionWrapper>
 

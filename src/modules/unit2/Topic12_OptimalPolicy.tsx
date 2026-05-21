@@ -5,11 +5,14 @@ import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import {
     motion,
-    AnimatePresence } from 'framer-motion';
+    AnimatePresence
+} from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock,
-    SymbolTable } from '../../components/topic/MathBlock';
+import {
+    MathBlock,
+    SymbolTable
+} from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -121,11 +124,10 @@ function PolicyLab() {
                             <button
                                 key={i}
                                 onClick={() => toggleAction(i)}
-                                className={`rounded-lg flex flex-col items-center justify-center transition-all ${
-                                    i === 2 
-                                    ? 'bg-emerald-500 text-white shadow-lg' 
-                                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-primary-50 dark:hover:bg-primary-900/20 border border-slate-200 dark:border-slate-700 shadow-sm'
-                                }`}
+                                className={`rounded-lg flex flex-col items-center justify-center transition-all ${i === 2
+                                        ? 'bg-emerald-500 text-white shadow-lg'
+                                        : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-primary-50 dark:hover:bg-primary-900/20 border border-slate-200 dark:border-slate-700 shadow-sm'
+                                    }`}
                             >
                                 <span className="text-[10px] text-slate-400 mb-1">s{i}</span>
                                 <span className="text-xl font-black">{i === 2 ? '🏁' : p}</span>
@@ -137,7 +139,7 @@ function PolicyLab() {
 
             <AnimatePresence>
                 {isOptimal && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="bg-emerald-500 text-white p-6 rounded-2xl flex items-center gap-4 shadow-xl shadow-emerald-500/20"
@@ -161,9 +163,9 @@ export default function Topic12_OptimalPolicyMDP() {
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
             <TopicProgressTracker topicId="unit2-topic12_optimalpolicy" />
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Master Plan" 
+            <SectionWrapper
+                id="story"
+                title="1. The Master Plan"
                 subtitle="The Search for Perfection"
                 icon={<Trophy className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -193,13 +195,13 @@ export default function Topic12_OptimalPolicyMDP() {
                         </h4>
                         <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
                             <p>
-                                In every Reinforcement Learning problem, there exists a "perfect" way to behave. 
+                                In every Reinforcement Learning problem, there exists a "perfect" way to behave.
                             </p>
                             <p>
                                 Think of a GPS navigation system. There might be 1,000 ways to get to your destination, but there is usually one path that is the fastest. That "Fastest Path" for every possible location is the <strong>Optimal Policy ($\pi^*$)</strong>.
                             </p>
                             <p>
-                                Finding this policy is the "Holy Grail" of RL. We don't just want a policy that works; we want the one that is mathematically impossible to beat. 
+                                Finding this policy is the "Holy Grail" of RL. We don't just want a policy that works; we want the one that is mathematically impossible to beat.
                             </p>
                             <p>
                                 <strong>The Theorem:</strong> For any finite MDP, there is always at least one deterministic optimal policy that is as good as or better than all other possible policies.
@@ -218,7 +220,7 @@ export default function Topic12_OptimalPolicyMDP() {
                 </div>
             </SectionWrapper>
 
-            
+
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
@@ -285,260 +287,275 @@ export default function Topic12_OptimalPolicyMDP() {
                 </div>
             </SectionWrapper>
 
-{/* SECTION 3: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="3. Bellman Optimality" 
+            {/* SECTION 3: MATHEMATICAL MODELLING */}
+            <SectionWrapper
+                id="math"
+                title="3. Bellman Optimality"
                 subtitle="The Equations of Perfection"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <MathBlock 
-                        formula="v_*(s) = \max_{\pi} v_\pi(s)"
-                        label="Optimal State-Value Function"
-                        accent="blue"
-                        explanation="The maximum possible value a state can have under any policy."
-                        interpretation="v_*(s) represents the absolute highest return you can expect from state s if you act perfectly from now on. It is the upper bound of performance."
-                        motivation="Knowing v_*(s) gives us a benchmark. If our current policy yields v_\pi(s) = 5 and we know v_*(s) = 10, we know we have room to improve."
-                        terms={[
-                            { term: 'v_*(s)', name: 'Optimal Value', meaning: 'The best possible expected return from state s.', range: '\\mathbb{R}', example: 'v_*(goal_room) = 100.' },
-                            { term: '\\max_\\pi', name: 'Policy Maximization', meaning: 'Searching over all possible ways of behaving to find the one that yields the most reward.', range: '\\Pi', example: 'Comparing "run", "walk", and "stay" strategies.' },
-                        ]}
-                    />
+                <div className="space-y-6">
+                            <MathBlock
+                                formula="v_*(s) = \max_{\pi}\, v_\pi(s) = \max_{a}\sum_{s'}\mathcal{P}(s'|s,a)\Bigl[\mathcal{R}(s,a,s') + \gamma\, v_*(s')\Bigr]"
+                                label="Bellman Optimality Equation for V*(s)"
+                                accent="blue"
+                                explanation="The optimal state value equals the value of the best action — the one that maximises expected immediate reward plus discounted optimal next-state value."
+                                interpretation="This is the master equation of RL. It says: the best possible value of state s is achieved by picking the single best action at each step. Unlike the Bellman expectation equation (which averages over a policy), the optimality equation uses max — making it nonlinear. This nonlinearity is why we need iterative algorithms like value iteration rather than direct matrix inversion."
+                                motivation="Solving this equation gives V*(s) for all states, from which the optimal policy is trivially extracted: π*(s) = argmax_a Q*(s,a). Every RL algorithm — Q-learning, value iteration, policy gradient — is ultimately trying to solve this equation."
+                                terms={[
+                                    { term: 'v_*(s)', name: 'Optimal Value Function', meaning: 'The maximum expected return achievable from state s over all possible policies. The upper bound of performance.', range: '\\mathbb{R}', example: 'v_*(near_goal)=9.8 — the best any policy can do from this state.' },
+                                    { term: '\\max_a', name: 'Action Maximisation', meaning: 'Choose the single best action — the one that maximises the bracketed expression. This is the greedy operator.', range: '\\mathcal{A}', example: 'max(Q*(s,left)=3, Q*(s,right)=9) = 9 → choose right.' },
+                                    { term: '\\mathcal{P}(s\'|s,a)', name: 'Transition Probability', meaning: 'Probability of reaching state s\' when taking action a in state s.', range: '[0,1]', example: 'P(goal|near_goal,right)=0.9.' },
+                                    { term: '\\gamma\\,v_*(s\')', name: 'Discounted Optimal Future', meaning: 'The optimal value of the next state, discounted by γ. Assumes optimal behaviour from s\' onwards.', range: '\\mathbb{R}', example: 'γ=0.9, v_*(s\')=10 → contribution = 9.' },
+                                ]}
+                                numericalExample={{
+                                    setup: 'State s. Two actions: a1 (r=2, leads to s\' with v_*(s\')=10) and a2 (r=5, leads to s\'\' with v_*(s\'\')=1). γ=0.9.',
+                                    steps: [
+                                        'Q*(s,a1) = 2 + 0.9×10 = 2 + 9 = 11',
+                                        'Q*(s,a2) = 5 + 0.9×1  = 5 + 0.9 = 5.9',
+                                        'v_*(s) = max(11, 5.9) = 11',
+                                        'π*(s) = a1  (choose the action with highest Q*)',
+                                    ],
+                                    result: 'v_*(s)=11, π*(s)=a1. Despite a2 having higher immediate reward (+5 vs +2), a1 is optimal because it leads to a much better future state.',
+                                }}
+                            />
 
-                    <MathBlock 
-                        formula="q_*(s, a) = \max_{\pi} q_\pi(s, a)"
-                        label="Optimal Action-Value Function"
-                        accent="violet"
-                        explanation="The maximum possible value for taking action a in state s."
-                        interpretation="q_*(s, a) tells you the best you can possibly do if you are forced to take action a right now, but get to act perfectly thereafter. This is the core of Q-Learning."
-                        motivation="If we know q_*(s, a) for all actions, finding the optimal policy becomes trivial: just pick the action with the highest q_*!"
-                        terms={[
-                            { term: 'q_*(s, a)', name: 'Optimal Q-Value', meaning: 'The best return starting with action a in state s.', range: '\\mathbb{R}', example: 'q_*(start, move_right) = 9.8.' },
-                        ]}
-                    />
+                            <MathBlock
+                                formula="q_*(s,a) = \sum_{s'}\mathcal{P}(s'|s,a)\Bigl[\mathcal{R}(s,a,s') + \gamma\max_{a'}q_*(s',a')\Bigr]"
+                                label="Bellman Optimality Equation for Q*(s,a)"
+                                accent="violet"
+                                explanation="The optimal Q-value equals the expected immediate reward plus the discounted best Q-value achievable in the next state."
+                                interpretation="This is the equation that Q-learning directly approximates. The key term is max_{a'} Q*(s',a') — it assumes optimal behaviour from the next state onwards. This is what makes Q-learning off-policy: the update uses the greedy next action regardless of what the agent actually did."
+                                motivation="Q*(s,a) is more useful than V*(s) for practical RL because it directly tells us which action to take without needing the transition model P. Once Q* is known, π*(s) = argmax_a Q*(s,a) — no model needed."
+                                terms={[
+                                    { term: 'q_*(s,a)', name: 'Optimal Action-Value', meaning: 'Best expected return when taking action a in state s, then acting optimally forever after.', range: '\\mathbb{R}', example: 'q_*(start,right)=9.8 — going right from start is nearly optimal.' },
+                                    { term: '\\max_{a\'} q_*(s\',a\')', name: 'Greedy Next Q', meaning: 'The highest Q-value achievable in the next state — assumes optimal future behaviour.', range: '\\mathbb{R}', example: 'max(q_*(s\',left)=4, q_*(s\',right)=7.5) = 7.5.' },
+                                ]}
+                                numericalExample={{
+                                    setup: 'Q-learning update. s=(2,3), a=right, r=−0.1, s\'=(2,4). max Q*(s\',·)=7.5. γ=0.9.',
+                                    steps: [
+                                        'Q*(s,a) = r + γ·max_{a\'} Q*(s\',a\')',
+                                        '        = −0.1 + 0.9×7.5',
+                                        '        = −0.1 + 6.75',
+                                        '        = 6.65',
+                                    ],
+                                    result: 'Q*((2,3),right) = 6.65. This is the target value Q-learning tries to converge to.',
+                                }}
+                            />
 
-                    <MathBlock 
-                        formula="v_*(s) = \max_a \sum_{s', r} p(s', r | s, a) [r + \gamma v_*(s')]"
-                        label="Bellman Optimality Equation"
-                        accent="amber"
-                        explanation="The value of a state under an optimal policy must equal the expected return from the best action from that state."
-                        interpretation="This is a recursive definition of perfection. It says: 'The best I can do from here is to pick the action that leads to the best immediate reward plus the best possible future value.' It removes the dependency on a specific policy \u03C0 and instead uses the 'max' operator."
-                        motivation="This is the equation that algorithms like Value Iteration solve. It allows us to compute the optimal values without ever explicitly defining a policy during the calculation."
-                        terms={[
-                            { term: '\\max_a', name: 'Action Maximization', meaning: 'The agent chooses the single best action to maximize reward.', range: '\\mathcal{A}', example: 'Picking between +10 and -5 rewards.' },
-                            { term: '\\gamma v_*(s\')', name: 'Optimal Future', meaning: 'We assume that in the next state s\', we will also act optimally.', range: '\\mathbb{R}', example: 'If γ=0.9 and v_*(s\')=10, the future component is 9.' },
-                        ]}
-                        numericalExample={{
-                            setup: 'A state s where 2 actions are possible. Action 1: r=2, leads to s\' where v_*(s\')=10. Action 2: r=5, leads to s\'\' where v_*(s\'\')=1. \u03B3=0.9.',
-                            steps: [
-                                'Q(s, a1) = 2 + 0.9*(10) = 11',
-                                'Q(s, a2) = 5 + 0.9*(1) = 5.9',
-                                'v_*(s) = max(11, 5.9) = 11',
-                                '\u03C0^*(s) = a1'
-                            ],
-                            result: 'The optimal value for the state is 11, achieved by taking action a1.',
-                        }}
-                    />
-                </div>
-            </SectionWrapper>
+                            <MathBlock
+                                formula="\pi^*(s) = \arg\max_{a}\, q_*(s,a) = \arg\max_{a}\sum_{s'}\mathcal{P}(s'|s,a)\Bigl[\mathcal{R}(s,a,s') + \gamma\, v_*(s')\Bigr]"
+                                label="Optimal Policy — Greedy with Respect to Q*"
+                                accent="emerald"
+                                explanation="The optimal policy always takes the action with the highest Q* value. It is deterministic and greedy with respect to the optimal value function."
+                                interpretation="Once Q* is known, the optimal policy is trivially extracted by taking the argmax at each state. This is a deterministic policy — no randomness needed. The optimal policy is unique (up to ties) for any finite MDP. This is the end goal of all RL algorithms."
+                                motivation="This equation shows that the hard part of RL is learning Q* — once that is done, the optimal policy is free. This is why Q-learning focuses entirely on learning Q* rather than directly learning π*."
+                                terms={[
+                                    { term: '\\pi^*(s)', name: 'Optimal Policy', meaning: 'The best possible action to take in state s. Deterministic and greedy with respect to Q*.', range: '\\mathcal{A}', example: 'π*((2,3)) = right (if Q*((2,3),right) is highest).' },
+                                    { term: '\\arg\\max_a', name: 'Argmax', meaning: 'Returns the action a that achieves the maximum value, not the maximum value itself.', range: '\\mathcal{A}', example: 'argmax(Q=3,Q=9,Q=5) = action 2 (not 9).' },
+                                ]}
+                            />
 
-            {/* INTERACTIVE DIAGRAM */}
-            <InteractiveDiagram 
-                title="Optimal Policy Architecture"
-                description="Defining the best possible policy."
-                chart={`graph LR
+                            <PolicyLab />
+                        </div>
+                    </SectionWrapper>
+
+                    {/* INTERACTIVE DIAGRAM */}
+                    <InteractiveDiagram
+                        title="Optimal Policy Architecture"
+                        description="Defining the best possible policy."
+                        chart={`graph LR
     Pi1[Policy 1] --> V1[V_pi1(s)]
     Pi2[Policy 2] --> V2[V_pi2(s)]
     Pi_star[Policy *] --> V_star[V*(s) >= V_pi(s) for all pi]
     V_star -.-> |Determines| Optimal[Optimal Behavior]`}
-            />
+                    />
 
 
-            {/* SECTION 4: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="4. Multi-Level Activities" 
-                subtitle="Engineering Perfection"
-                icon={<Users className="text-emerald-600" size={24} />}
-                badge="Activity"
-                badgeColor="bg-emerald-100 text-emerald-700"
-                accentColor="border-emerald-500"
-            >
-                <ActivityLevels 
-                    levels={[
-                        {
-                            level: 1,
-                            title: "Policy Sandbox Demo",
-                            objectives: "Observe how a policy (a mapping from state to action) determines the efficiency of reaching a goal.",
-                            instructions: [
-                                "Open the 'Policy Sandbox' in the Virtual Lab section.",
-                                "Deliberately set a 'Suboptimal Policy' (e.g., pointing the arrows away from the goal).",
-                                "Trace the resulting path mentally. Show how it takes more steps or never reaches the finish.",
-                                "Now, click to set the 'Optimal Policy' arrows. Watch for the 'Convergence Reached' badge.",
-                                "Explain: 'Optimality means there is no faster way to get from $s_6$ to $s_2$.'"
-                            ],
-                            inputs: "Interactive PolicyLab component",
-                            outputs: "Visual policy grid and 'Convergence' status indicator.",
-                            rubrics: ["Clarity of 'Policy efficiency' explanation", "Demonstration of boundary discovery", "Student engagement"],
-                            outcomes: "Students define an optimal policy as one that maximizes return for all states.",
-                            time: "10 Mins",
-                            materials: ["Interactive Component", "Projector"]
-                        },
-                        {
-                            level: 2,
-                            title: "Bellman Optimality Workshop",
-                            objectives: "Collaboratively calculate the optimal value $v_*(s)$ using the max-action operator.",
-                            instructions: [
-                                "Teacher presents state $S$. Two actions: {Safe, Gamble}.",
-                                "Safe: Reward $r=+5$, leads to $s_{End}$ where $V_*=0$. Total = 5.",
-                                "Gamble: 50% chance of +20 ($s_{End}$), 50% chance of -10 ($s_{End}$).",
-                                "Guided Calculation: $Q_*(S, \text{Safe}) = 5 + 0 = 5$. $Q_*(S, \text{Gamble}) = 0.5(20) + 0.5(-10) = 5$.",
-                                "Teacher asks: 'Since both Q-values are 5, are both actions part of an optimal policy?'",
-                                "Class concludes: Yes, optimal policies are not necessarily unique."
-                            ],
-                            inputs: "Action-reward probability data",
-                            outputs: "Calculated Optimal Value $v_*(s)$ on the board",
-                            rubrics: ["Correct use of the 'max' operator", "Probability weight calculation", "Classroom participation"],
-                            outcomes: "Students master the technical application of the Bellman Optimality Equation.",
-                            time: "15 Mins",
-                            materials: ["Whiteboard", "Markers"]
-                        },
-                        {
-                            level: 3,
-                            title: "The Perfect Intersection Design",
-                            objectives: "Experience the design of an optimal logic for a multi-variable control system.",
-                            instructions: [
-                                "Divide class into 4 teams. Provide a diagram of a 3-way intersection (A, B, C).",
-                                "Task: Create a 'Policy Table' for 4 states: {A busy}, {B busy}, {C busy}, {All empty}.",
-                                "Rule: Transition time between lights takes 2 seconds. The Goal is zero queue length.",
-                                "Group Task: Design the policy that minimizes the 'Max Wait Time' for any single car.",
-                                "Teams present their 'Optimal Logic' and defend it against 'Suboptimal' edge cases."
-                            ],
-                            inputs: "3-way intersection topology and state definitions",
-                            outputs: "Traffic Control Policy Table",
-                            rubrics: ["Efficiency of the logic", "Handling of edge cases", "Team coordination"],
-                            outcomes: "Students understand that 'Optimal' often means balancing competing future rewards.",
-                            time: "20 Mins",
-                            materials: ["Chart paper", "Markers"]
-                        },
-                        {
-                            level: 4,
-                            title: "Life Routine Audit",
-                            objectives: "Independently audit a personal routine to identify if it is currently 'Optimal' according to RL theory.",
-                            instructions: [
-                                "Task: Choose a recurring task (e.g., Your morning routine, your route to college, or your method for studying).",
-                                "Audit: Define the 'State' (Time left, energy level) and 'Action' (The specific sub-task).",
-                                "Reflection: Is there a sequence of actions that would get you to the 'Goal' (Ready for class) faster or with less stress?",
-                                "Report: If you found a better sequence, why weren't you using it before? (e.g., lack of exploration, high transition cost).",
-                                "Calculate: Estimate your current $V(s)$ vs the $V_*(s)$ of your new proposed routine."
-                            ],
-                            inputs: "Personal daily routines",
-                            outputs: "Individual Routine Optimization Note (1 page)",
-                            rubrics: ["Correct use of RL terminology", "Logical justification of 'Optimality'", "Originality"],
-                            outcomes: "Students apply the mathematical rigorousness of MDPs to improve personal efficiency.",
-                            time: "15 Mins",
-                            materials: ["Student Workbook"]
-                        }
-                    ]}
-                />
-            </SectionWrapper>
+                    {/* SECTION 4: ACTIVITY BASED LEARNING */}
+                    <SectionWrapper
+                        id="activity"
+                        title="4. Multi-Level Activities"
+                        subtitle="Engineering Perfection"
+                        icon={<Users className="text-emerald-600" size={24} />}
+                        badge="Activity"
+                        badgeColor="bg-emerald-100 text-emerald-700"
+                        accentColor="border-emerald-500"
+                    >
+                        <ActivityLevels
+                            levels={[
+                                {
+                                    level: 1,
+                                    title: "Policy Sandbox Demo",
+                                    objectives: "Observe how a policy (a mapping from state to action) determines the efficiency of reaching a goal.",
+                                    instructions: [
+                                        "Open the 'Policy Sandbox' in the Virtual Lab section.",
+                                        "Deliberately set a 'Suboptimal Policy' (e.g., pointing the arrows away from the goal).",
+                                        "Trace the resulting path mentally. Show how it takes more steps or never reaches the finish.",
+                                        "Now, click to set the 'Optimal Policy' arrows. Watch for the 'Convergence Reached' badge.",
+                                        "Explain: 'Optimality means there is no faster way to get from $s_6$ to $s_2$.'"
+                                    ],
+                                    inputs: "Interactive PolicyLab component",
+                                    outputs: "Visual policy grid and 'Convergence' status indicator.",
+                                    rubrics: ["Clarity of 'Policy efficiency' explanation", "Demonstration of boundary discovery", "Student engagement"],
+                                    outcomes: "Students define an optimal policy as one that maximizes return for all states.",
+                                    time: "10 Mins",
+                                    materials: ["Interactive Component", "Projector"]
+                                },
+                                {
+                                    level: 2,
+                                    title: "Bellman Optimality Workshop",
+                                    objectives: "Collaboratively calculate the optimal value $v_*(s)$ using the max-action operator.",
+                                    instructions: [
+                                        "Teacher presents state $S$. Two actions: {Safe, Gamble}.",
+                                        "Safe: Reward $r=+5$, leads to $s_{End}$ where $V_*=0$. Total = 5.",
+                                        "Gamble: 50% chance of +20 ($s_{End}$), 50% chance of -10 ($s_{End}$).",
+                                        "Guided Calculation: $Q_*(S, \text{Safe}) = 5 + 0 = 5$. $Q_*(S, \text{Gamble}) = 0.5(20) + 0.5(-10) = 5$.",
+                                        "Teacher asks: 'Since both Q-values are 5, are both actions part of an optimal policy?'",
+                                        "Class concludes: Yes, optimal policies are not necessarily unique."
+                                    ],
+                                    inputs: "Action-reward probability data",
+                                    outputs: "Calculated Optimal Value $v_*(s)$ on the board",
+                                    rubrics: ["Correct use of the 'max' operator", "Probability weight calculation", "Classroom participation"],
+                                    outcomes: "Students master the technical application of the Bellman Optimality Equation.",
+                                    time: "15 Mins",
+                                    materials: ["Whiteboard", "Markers"]
+                                },
+                                {
+                                    level: 3,
+                                    title: "The Perfect Intersection Design",
+                                    objectives: "Experience the design of an optimal logic for a multi-variable control system.",
+                                    instructions: [
+                                        "Divide class into 4 teams. Provide a diagram of a 3-way intersection (A, B, C).",
+                                        "Task: Create a 'Policy Table' for 4 states: {A busy}, {B busy}, {C busy}, {All empty}.",
+                                        "Rule: Transition time between lights takes 2 seconds. The Goal is zero queue length.",
+                                        "Group Task: Design the policy that minimizes the 'Max Wait Time' for any single car.",
+                                        "Teams present their 'Optimal Logic' and defend it against 'Suboptimal' edge cases."
+                                    ],
+                                    inputs: "3-way intersection topology and state definitions",
+                                    outputs: "Traffic Control Policy Table",
+                                    rubrics: ["Efficiency of the logic", "Handling of edge cases", "Team coordination"],
+                                    outcomes: "Students understand that 'Optimal' often means balancing competing future rewards.",
+                                    time: "20 Mins",
+                                    materials: ["Chart paper", "Markers"]
+                                },
+                                {
+                                    level: 4,
+                                    title: "Life Routine Audit",
+                                    objectives: "Independently audit a personal routine to identify if it is currently 'Optimal' according to RL theory.",
+                                    instructions: [
+                                        "Task: Choose a recurring task (e.g., Your morning routine, your route to college, or your method for studying).",
+                                        "Audit: Define the 'State' (Time left, energy level) and 'Action' (The specific sub-task).",
+                                        "Reflection: Is there a sequence of actions that would get you to the 'Goal' (Ready for class) faster or with less stress?",
+                                        "Report: If you found a better sequence, why weren't you using it before? (e.g., lack of exploration, high transition cost).",
+                                        "Calculate: Estimate your current $V(s)$ vs the $V_*(s)$ of your new proposed routine."
+                                    ],
+                                    inputs: "Personal daily routines",
+                                    outputs: "Individual Routine Optimization Note (1 page)",
+                                    rubrics: ["Correct use of RL terminology", "Logical justification of 'Optimality'", "Originality"],
+                                    outcomes: "Students apply the mathematical rigorousness of MDPs to improve personal efficiency.",
+                                    time: "15 Mins",
+                                    materials: ["Student Workbook"]
+                                }
+                            ]}
+                        />
+                    </SectionWrapper>
 
-            {/* SECTION 5: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="5. Project: Traffic Light Control" 
-                subtitle="The Search for the Perfect Green"
-                icon={<Briefcase className="text-indigo-600" size={24} />}
-                badge="PBL"
-                badgeColor="bg-indigo-100 text-indigo-700"
-                accentColor="border-indigo-500"
-            >
-                <div className="space-y-6">
-                    <div className="card p-6 border-l-4 border-indigo-500 bg-indigo-50/30 dark:bg-indigo-900/10">
-                        <h5 className="font-bold mb-2 flex items-center gap-2"><Crown size={18} /> Optimization Task</h5>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            You are designing an AI to control traffic lights at a 4-way intersection. 
-                            <strong>State:</strong> Number of cars waiting in each lane. 
-                            <strong>Action:</strong> Which light to turn green. 
-                            <strong>Reward:</strong> Negative of the total waiting time.
-                        </p>
+                    {/* SECTION 5: PROJECT BASED LEARNING */}
+                    <SectionWrapper
+                        id="project"
+                        title="5. Project: Traffic Light Control"
+                        subtitle="The Search for the Perfect Green"
+                        icon={<Briefcase className="text-indigo-600" size={24} />}
+                        badge="PBL"
+                        badgeColor="bg-indigo-100 text-indigo-700"
+                        accentColor="border-indigo-500"
+                    >
+                        <div className="space-y-6">
+                            <div className="card p-6 border-l-4 border-indigo-500 bg-indigo-50/30 dark:bg-indigo-900/10">
+                                <h5 className="font-bold mb-2 flex items-center gap-2"><Crown size={18} /> Optimization Task</h5>
+                                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                                    You are designing an AI to control traffic lights at a 4-way intersection.
+                                    <strong>State:</strong> Number of cars waiting in each lane.
+                                    <strong>Action:</strong> Which light to turn green.
+                                    <strong>Reward:</strong> Negative of the total waiting time.
+                                </p>
+                            </div>
+
+                            <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 shadow-sm">
+                                <h6 className="font-bold text-xs mb-3 text-indigo-600 uppercase">Characteristics of the Optimal Policy:</h6>
+                                <ul className="text-xs space-y-2 text-slate-500 list-disc pl-4">
+                                    <li>It doesn't just clear the busiest lane immediately if that would cause a massive pile-up elsewhere later.</li>
+                                    <li>It learns the "rhythm" of traffic—anticipating cars that aren't even at the intersection yet.</li>
+                                    <li>It achieves the <strong>Absolute Minimum</strong> average wait time possible for that intersection geometry.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </SectionWrapper>
+
+                    {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
+                    <SectionWrapper
+                        id="questions"
+                        title="6. Quick Check"
+                        subtitle="Optimality Theory"
+                        icon={<HelpCircle className="text-purple-600" size={24} />}
+                        badge="Questions"
+                        badgeColor="bg-purple-100 text-purple-700"
+                        accentColor="border-purple-500"
+                    >
+                        <div className="grid gap-4">
+                            {[
+                                { q: 'Can there be more than one optimal policy for an MDP?', a: 'Yes. Multiple policies can achieve the same maximum expected return (e.g., in a grid where two different paths are exactly the same length).' },
+                                { q: 'Does every finite MDP have an optimal policy?', a: 'Yes. It is a fundamental theorem of MDPs that at least one optimal policy always exists.' },
+                                { q: 'How is the optimal policy related to the optimal action-value function?', a: 'The optimal policy is to always choose an action a that maximizes q_*(s, a) for the current state s.' }
+                            ].map((item, i) => (
+                                <QuizCard key={i} question={item.q} answer={item.a} />
+                            ))}
+                        </div>
+                    </SectionWrapper>
+
+                    {/* SECTION 7: LEARN BY DOING (VIRTUAL LAB) */}
+                    <SectionWrapper
+                        id="lab"
+                        title="7. Virtual Lab: Policy Sandbox"
+                        subtitle="Build the Optimal Strategy"
+                        icon={<FlaskConical className="text-cyan-600" size={24} />}
+                        badge="Virtual Lab"
+                        badgeColor="bg-cyan-100 text-cyan-700"
+                        accentColor="border-cyan-500"
+                    >
+                        <div className="space-y-6">
+                            <VirtualLabShell
+                                title="Policy Optimizer"
+                                description="Converge to the optimal policy via iteration"
+                                objective="Run policy iteration and observe the policy stabilize. Compare the initial random policy vs the optimal one."
+                                badge="Interactive Lab"
+                                tips={['Policy Evaluation → Policy Improvement → repeat until stable',
+                                    'The algorithm is guaranteed to converge to the optimal policy']}
+                                challenges={challenges} notebook={notebook} logs={logs}>
+                                <PolicyLab />
+                            </VirtualLabShell>
+
+                        </div>
+                    </SectionWrapper>
+
+                    {/* FEEDBACK SECTION */}
+                    <div className="bg-primary-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-primary-500/20">
+                        <div className="max-w-xl mx-auto space-y-2">
+                            <h3 className="text-3xl font-black italic">Optimality Achieved!</h3>
+                            <p className="text-primary-100">
+                                You've reached the summit of MDP theory. Now, let's look at some real-world examples where these optimal policies make a difference.
+                            </p>
+                        </div>
+                        <div className="flex justify-center gap-4">
+                            <button className="px-10 py-4 bg-white text-primary-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+                                NEXT: MDP EXAMPLES
+                            </button>
+                        </div>
                     </div>
-
-                    <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 shadow-sm">
-                        <h6 className="font-bold text-xs mb-3 text-indigo-600 uppercase">Characteristics of the Optimal Policy:</h6>
-                        <ul className="text-xs space-y-2 text-slate-500 list-disc pl-4">
-                            <li>It doesn't just clear the busiest lane immediately if that would cause a massive pile-up elsewhere later.</li>
-                            <li>It learns the "rhythm" of traffic—anticipating cars that aren't even at the intersection yet.</li>
-                            <li>It achieves the <strong>Absolute Minimum</strong> average wait time possible for that intersection geometry.</li>
-                        </ul>
-                    </div>
                 </div>
-            </SectionWrapper>
-
-            {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="6. Quick Check" 
-                subtitle="Optimality Theory"
-                icon={<HelpCircle className="text-purple-600" size={24} />}
-                badge="Questions"
-                badgeColor="bg-purple-100 text-purple-700"
-                accentColor="border-purple-500"
-            >
-                <div className="grid gap-4">
-                    {[
-                        { q: 'Can there be more than one optimal policy for an MDP?', a: 'Yes. Multiple policies can achieve the same maximum expected return (e.g., in a grid where two different paths are exactly the same length).' },
-                        { q: 'Does every finite MDP have an optimal policy?', a: 'Yes. It is a fundamental theorem of MDPs that at least one optimal policy always exists.' },
-                        { q: 'How is the optimal policy related to the optimal action-value function?', a: 'The optimal policy is to always choose an action a that maximizes q_*(s, a) for the current state s.' }
-                    ].map((item, i) => (
-                        <QuizCard key={i} question={item.q} answer={item.a} />
-                    ))}
-                </div>
-            </SectionWrapper>
-
-            {/* SECTION 7: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="7. Virtual Lab: Policy Sandbox" 
-                subtitle="Build the Optimal Strategy"
-                icon={<FlaskConical className="text-cyan-600" size={24} />}
-                badge="Virtual Lab"
-                badgeColor="bg-cyan-100 text-cyan-700"
-                accentColor="border-cyan-500"
-            >
-                <div className="space-y-6">
-                <VirtualLabShell
-                    title="Policy Optimizer"
-                    description="Converge to the optimal policy via iteration"
-                    objective="Run policy iteration and observe the policy stabilize. Compare the initial random policy vs the optimal one."
-                    badge="Interactive Lab"
-                    tips={['Policy Evaluation → Policy Improvement → repeat until stable',
-                'The algorithm is guaranteed to converge to the optimal policy']}
-                 challenges={challenges} notebook={notebook} logs={logs}>
-                    <PolicyLab />
-                </VirtualLabShell>
-            
-                </div>
-            </SectionWrapper>
-
-            {/* FEEDBACK SECTION */}
-            <div className="bg-primary-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-primary-500/20">
-                <div className="max-w-xl mx-auto space-y-2">
-                    <h3 className="text-3xl font-black italic">Optimality Achieved!</h3>
-                    <p className="text-primary-100">
-                        You've reached the summit of MDP theory. Now, let's look at some real-world examples where these optimal policies make a difference.
-                    </p>
-                </div>
-                <div className="flex justify-center gap-4">
-                    <button className="px-10 py-4 bg-white text-primary-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
-                        NEXT: MDP EXAMPLES
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
+                );
 }

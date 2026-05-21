@@ -4,13 +4,16 @@ import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/t
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import {
-    motion } from 'framer-motion';
+    motion
+} from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock,
-    SymbolTable } from '../../components/topic/MathBlock';
+import {
+    MathBlock,
+    SymbolTable
+} from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
-import { 
+import {
     BookOpen,
     Calculator,
     Users,
@@ -26,8 +29,8 @@ import {
     CheckCircle2,
     AlertTriangle
 } from 'lucide-react';
-import { 
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
+import {
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, Cell, ReferenceLine
 } from 'recharts';
 
@@ -69,15 +72,15 @@ const logs: string[] = [
 
 function ReturnCalculatorLab() {
     const [gamma, setGamma] = useState(0.9);
-    
+
     // Future rewards: time t+1, t+2, t+3, t+4, t+5
     const rewards = [10, 20, 50, 100, 500];
-    
+
     // Calculate discounted rewards
     const chartData = rewards.map((r, i) => {
         const discount = Math.pow(gamma, i);
         return {
-            timeStep: `t+${i+1}`,
+            timeStep: `t+${i + 1}`,
             originalReward: r,
             discount: parseFloat(discount.toFixed(3)),
             discountedReward: parseFloat((r * discount).toFixed(1)),
@@ -90,7 +93,7 @@ function ReturnCalculatorLab() {
     return (
         <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-8">
             <div className="flex flex-col md:flex-row gap-8">
-                
+
                 {/* Controls and Stats */}
                 <div className="flex-1 space-y-6">
                     <div className="space-y-1">
@@ -107,12 +110,12 @@ function ReturnCalculatorLab() {
                                 <span className="text-xs font-bold text-slate-400 uppercase">Discount Factor (γ)</span>
                                 <span className="text-2xl font-black text-primary-600 bg-primary-50 px-3 py-1 rounded-lg">{gamma.toFixed(2)}</span>
                             </div>
-                            <input 
-                                type="range" 
-                                min="0" 
-                                max="1" 
+                            <input
+                                type="range"
+                                min="0"
+                                max="1"
                                 step="0.05"
-                                value={gamma} 
+                                value={gamma}
                                 onChange={(e) => setGamma(parseFloat(e.target.value))}
                                 className="w-full accent-primary-600"
                             />
@@ -128,7 +131,7 @@ function ReturnCalculatorLab() {
                                 {totalReturn.toFixed(1)}
                             </div>
                             <p className="text-[10px] text-slate-500 mt-2">
-                                Without discounting (γ=1), the return would be {rewards.reduce((a,b)=>a+b,0)}.
+                                Without discounting (γ=1), the return would be {rewards.reduce((a, b) => a + b, 0)}.
                             </p>
                         </div>
                     </div>
@@ -141,7 +144,7 @@ function ReturnCalculatorLab() {
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                             <XAxis dataKey="timeStep" tick={{ fontSize: 12, fontWeight: 700, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                             <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                            <Tooltip 
+                            <Tooltip
                                 contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
                                 formatter={(value: number, name: string) => [value, name === 'discountedReward' ? 'Present Value' : 'Original Reward']}
                             />
@@ -154,7 +157,7 @@ function ReturnCalculatorLab() {
                     </ResponsiveContainer>
                 </div>
             </div>
-            
+
             {/* Value Table */}
             <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left">
@@ -189,9 +192,9 @@ export default function Topic8_RewardAndReturns() {
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
             <TopicProgressTracker topicId="unit2-topic8_rewardandreturns" />
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Marshmallow Test" 
+            <SectionWrapper
+                id="story"
+                title="1. The Marshmallow Test"
                 subtitle="Immediate vs. Delayed Gratification"
                 icon={<Gift className="text-amber-600" size={24} />}
                 badge="Storytelling"
@@ -243,7 +246,7 @@ export default function Topic8_RewardAndReturns() {
                 </div>
             </SectionWrapper>
 
-            
+
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
@@ -310,58 +313,72 @@ export default function Topic8_RewardAndReturns() {
                 </div>
             </SectionWrapper>
 
-{/* SECTION 3: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="3. The Return Equation" 
+            {/* SECTION 3: MATHEMATICAL MODELLING */}
+            <SectionWrapper
+                id="math"
+                title="3. The Return Equation"
                 subtitle="Discounting the Future"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots"
-                                label="Discounted Return"
-                                explanation="The total return at time t. Future rewards are multiplied by a discount factor gamma."
-                            />
-                            <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                                <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><TrendingDown size={16} /> Why Discount?</h5>
-                                <p className="text-xs text-slate-400 leading-relaxed">
-                                    If a task goes on forever (infinite horizon), the sum of rewards could reach infinity, breaking the math. Discounting ensures the sum converges to a finite number, and gives the agent a sense of urgency.
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div className="space-y-6">
-                            <MathBlock 
-                                formula="G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}"
-                                label="Compact Notation"
-                                explanation="The mathematical summation form of the Discounted Return equation."
-                            />
-                            <MathBlock 
-                                formula="G_t = R_{t+1} + \gamma G_{t+1}"
-                                label="Recursive Return"
-                                explanation="A crucial property: The return right now is just the immediate reward plus the discounted return of the NEXT step."
-                            />
-                        </div>
-                    </div>
-
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: 'G_t', meaning: 'The Return (Goal) at time step t.' },
-                            { symbol: 'R_{t+1}', meaning: 'The immediate reward received after taking an action at time t.' },
-                            { symbol: '\gamma', meaning: 'Gamma. The Discount Factor (0 \u2264 \u03B3 \u2264 1).' }
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots"
+                        label="Discounted Return — The Agent's Objective"
+                        accent="blue"
+                        explanation="G_t is the total discounted reward from time step t onwards. The agent's goal is to maximise E[G_t]. Future rewards are multiplied by γ^k, making them worth less than immediate rewards."
+                        interpretation="The return G_t is the 'score' the agent accumulates from time t to the end of the episode. The discount factor γ encodes the agent's patience — γ=0 means only the next reward matters; γ→1 means all future rewards are equally valued. Most real-world RL uses γ=0.9 to 0.99."
+                        motivation="Without G_t, we cannot define what 'good behaviour' means over time. A greedy agent maximising only R_{t+1} will sacrifice long-term success for short-term gain — like a chess player who captures a pawn but loses the queen three moves later."
+                        terms={[
+                            { term: 'G_t', name: 'Return at time t', meaning: 'Total discounted reward from step t to end of episode. The primary quantity RL maximises.', range: '\\mathbb{R}', example: 'G₀=7.86 means the agent expects to accumulate 7.86 total reward from the start.' },
+                            { term: '\\gamma^k', name: 'Discount at step k', meaning: 'Exponential decay applied to reward k steps in the future. Ensures G_t is finite for infinite horizons.', range: '(0,1]', example: 'γ=0.9, k=5: γ⁵=0.59. A reward of 10 five steps away is worth 5.9 now.' },
+                            { term: 'R_{t+k+1}', name: 'Future Reward', meaning: 'Reward received k+1 steps after time t. Summed over all future steps to form the return.', range: '\\mathbb{R}', example: 'R_{t+3} is the reward 3 steps from now.' },
+                            { term: '\\sum_{k=0}^{\\infty}', name: 'Infinite Sum', meaning: 'Sum over all future time steps. Converges to a finite value when γ<1 because γ^k→0 as k→∞.', range: '\\mathbb{R}', example: 'If all rewards = 1 and γ=0.9: G_t = 1/(1−0.9) = 10.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Rewards: R₁=2, R₂=0, R₃=5, R₄=1. γ=0.9. Compute G₁.',
+                            steps: [
+                                'G₁ = R₂ + γ·R₃ + γ²·R₄',
+                                '   = 0 + 0.9×5 + 0.81×1',
+                                '   = 0 + 4.5 + 0.81',
+                                '   = 5.31',
+                            ],
+                            result: 'G₁ = 5.31. Even with R₂=0, the agent has high return because it anticipates the +5 reward at step 3.',
+                        }}
                     />
+
+                    <MathBlock
+                        formula="G_t = R_{t+1} + \gamma\, G_{t+1}"
+                        label="Recursive Return — Bellman Decomposition"
+                        accent="violet"
+                        explanation="The return at time t equals the immediate reward plus the discounted return from the next step. This recursive structure is the key to dynamic programming in RL."
+                        interpretation="This deceptively simple equation is the foundation of every RL update rule. It says: the value of being in a situation equals what you get right now plus the discounted value of where you end up. Q-learning, TD-learning, and the Bellman equation all derive from this single recursive identity."
+                        motivation="The recursive form allows us to compute G_t without knowing all future rewards upfront. We can update estimates incrementally as new rewards arrive — this is what makes online RL learning possible and is the basis of temporal difference (TD) methods."
+                        terms={[
+                            { term: 'G_t', name: 'Return at time t', meaning: 'Total discounted reward from step t to end of episode.', range: '\\mathbb{R}', example: 'G₃ = R₄ + γ·G₄' },
+                            { term: 'R_{t+1}', name: 'Immediate Reward', meaning: 'Reward received one step after time t.', range: '\\mathbb{R}', example: 'R₄ = +5 (reached sub-goal)' },
+                            { term: '\\gamma G_{t+1}', name: 'Discounted Future Return', meaning: 'The return from the next state, scaled down by γ. Captures all future rewards beyond t+1.', range: '\\mathbb{R}', example: 'γ=0.9, G₄=10 → γ·G₄ = 9' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Compute G₁ recursively. Rewards: R₂=3, R₃=0, R₄=6. γ=0.9.',
+                            steps: [
+                                'G₄ = R₅ = 0  (episode ends)',
+                                'G₃ = R₄ + γ·G₄ = 6 + 0.9×0 = 6',
+                                'G₂ = R₃ + γ·G₃ = 0 + 0.9×6 = 5.4',
+                                'G₁ = R₂ + γ·G₂ = 3 + 0.9×5.4 = 7.86',
+                            ],
+                            result: 'G₁ = 7.86. The +6 reward at step 4 propagates backwards through the recursion.',
+                        }}
+                    />
+
+                    <ReturnCalculatorLab />
                 </div>
             </SectionWrapper>
 
             {/* INTERACTIVE DIAGRAM */}
-            <InteractiveDiagram 
+            <InteractiveDiagram
                 title="Reward And Returns Architecture"
                 description="The concept of cumulative discounted returns."
                 chart={`graph LR
@@ -373,16 +390,16 @@ export default function Topic8_RewardAndReturns() {
 
 
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="4. Multi-Level Activities" 
+            <SectionWrapper
+                id="activity"
+                title="4. Multi-Level Activities"
                 subtitle="Calculating Cumulative Value"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <ActivityLevels 
+                <ActivityLevels
                     levels={[
                         {
                             level: 1,
@@ -460,9 +477,9 @@ export default function Topic8_RewardAndReturns() {
             </SectionWrapper>
 
             {/* SECTION 5: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="5. Project: Financial Returns" 
+            <SectionWrapper
+                id="project"
+                title="5. Project: Financial Returns"
                 subtitle="RL Math in Economics"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -494,9 +511,9 @@ export default function Topic8_RewardAndReturns() {
             </SectionWrapper>
 
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="6. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="6. Quick Check"
                 subtitle="Reward Concepts"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -515,9 +532,9 @@ export default function Topic8_RewardAndReturns() {
             </SectionWrapper>
 
             {/* SECTION 7: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="7. Virtual Lab: Discount Calculator" 
+            <SectionWrapper
+                id="lab"
+                title="7. Virtual Lab: Discount Calculator"
                 subtitle="Visualize the Future Decay"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
@@ -525,20 +542,20 @@ export default function Topic8_RewardAndReturns() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
-                <VirtualLabShell
-                    title="Return Calculator"
-                    description="Compute discounted returns for reward sequences"
-                    objective="Input a sequence of rewards and γ value. See how the discounted return G_t changes with different discount factors."
-                    badge="Interactive Lab"
-                    tips={['γ=0.99 makes the agent very far-sighted — it values future rewards almost as much as immediate ones',
-                'γ=0.1 makes the agent myopic — it mostly cares about the next step']}
-                 challenges={challenges} notebook={notebook} logs={logs}>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                        A massive treasure of 500 points awaits the agent 5 steps into the future. Adjust the discount factor ($\gamma$) to see how much that distant treasure is "worth" to the agent right now at $t=0$.
-                    </p>
-                    <ReturnCalculatorLab />
-                </VirtualLabShell>
-            
+                    <VirtualLabShell
+                        title="Return Calculator"
+                        description="Compute discounted returns for reward sequences"
+                        objective="Input a sequence of rewards and γ value. See how the discounted return G_t changes with different discount factors."
+                        badge="Interactive Lab"
+                        tips={['γ=0.99 makes the agent very far-sighted — it values future rewards almost as much as immediate ones',
+                            'γ=0.1 makes the agent myopic — it mostly cares about the next step']}
+                        challenges={challenges} notebook={notebook} logs={logs}>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            A massive treasure of 500 points awaits the agent 5 steps into the future. Adjust the discount factor ($\gamma$) to see how much that distant treasure is "worth" to the agent right now at $t=0$.
+                        </p>
+                        <ReturnCalculatorLab />
+                    </VirtualLabShell>
+
                 </div>
             </SectionWrapper>
 

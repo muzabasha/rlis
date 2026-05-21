@@ -4,11 +4,14 @@ import VirtualLabShell, { LabChallenge, NotebookEntry } from '../../components/t
 import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import {
-    motion } from 'framer-motion';
+    motion
+} from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock,
-    SymbolTable } from '../../components/topic/MathBlock';
+import {
+    MathBlock,
+    SymbolTable
+} from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -258,7 +261,7 @@ export default function Topic4_MarkovChainAnalysis() {
                 </div>
             </SectionWrapper>
 
-            
+
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
@@ -325,7 +328,7 @@ export default function Topic4_MarkovChainAnalysis() {
                 </div>
             </SectionWrapper>
 
-{/* SECTION 3: MATHEMATICAL MODELLING */}
+            {/* SECTION 3: MATHEMATICAL MODELLING */}
             <SectionWrapper
                 id="math"
                 title="3. The Math of Convergence"
@@ -335,47 +338,76 @@ export default function Topic4_MarkovChainAnalysis() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            <MathBlock
-                                formula="\pi P = \pi"
-                                label="Stationary Distribution Equation"
-                                explanation="The distribution vector π multiplied by the transition matrix P results in the exact same distribution π."
-                            />
-                            <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                                <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Layers size={16} /> Matrix Power (Pⁿ)</h5>
-                                <p className="text-xs text-slate-400 leading-relaxed">
-                                    The $(i, j)$ entry of the matrix $P^n$ gives the probability that a process starting in state $i$ will be in state $j$ exactly $n$ steps later.
-                                </p>
-                            </div>
-                        </div>
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\boldsymbol{\pi}\mathbf{P} = \boldsymbol{\pi}, \quad \sum_{i} \pi_i = 1"
+                        label="Stationary Distribution — Fixed-Point Equation"
+                        accent="blue"
+                        explanation="The row vector π is the stationary distribution if multiplying it by the transition matrix P returns the same vector π. It is the fixed point of the Markov Chain."
+                        interpretation="The stationary distribution π answers: 'In the long run, what fraction of time does the system spend in each state?' Once reached, the distribution no longer changes — like ink fully dissolved in water. For an ergodic chain, π is unique and every starting distribution converges to it."
+                        motivation="Stationary distributions are used in Google's PageRank (importance of web pages), MCMC sampling in Bayesian inference, and long-run customer behaviour modelling. Without this equation, we cannot predict the asymptotic behaviour of any Markov system."
+                        terms={[
+                            { term: '\\boldsymbol{\\pi}', name: 'Stationary Distribution', meaning: 'A row probability vector where π_i is the long-run fraction of time spent in state i. Must be non-negative and sum to 1.', range: '[0,1]^n', example: 'π = [0.667, 0.333] means 66.7% Sunny, 33.3% Rainy in the long run.' },
+                            { term: '\\mathbf{P}', name: 'Transition Matrix', meaning: 'The n×n row-stochastic matrix where P_ij = P(next state = j | current state = i).', range: '[0,1]^{n\\times n}', example: 'P = [[0.8,0.2],[0.4,0.6]] for the weather chain.' },
+                            { term: '\\boldsymbol{\\pi}\\mathbf{P}=\\boldsymbol{\\pi}', name: 'Fixed-Point Condition', meaning: 'Applying one step of the Markov Chain to π leaves it unchanged. This is the definition of stationarity.', range: '\\text{Equation}', example: '[0.667, 0.333]·[[0.8,0.2],[0.4,0.6]] = [0.667, 0.333] ✓' },
+                            { term: '\\sum_i \\pi_i = 1', name: 'Normalisation Constraint', meaning: 'The probabilities must sum to 1 — the system must be in some state at all times.', range: '\\{1\\}', example: '0.667 + 0.333 = 1.000 ✓' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Weather chain: P = [[0.8,0.2],[0.4,0.6]]. Find stationary distribution π = [π₁, π₂].',
+                            steps: [
+                                'From πP = π: 0.8π₁ + 0.4π₂ = π₁  →  −0.2π₁ + 0.4π₂ = 0',
+                                'Simplify: π₁ = 2π₂',
+                                'Normalise: π₁ + π₂ = 1  →  2π₂ + π₂ = 1  →  π₂ = 1/3',
+                                'Therefore: π₁ = 2/3 ≈ 0.667,  π₂ = 1/3 ≈ 0.333',
+                            ],
+                            result: 'π = [0.667, 0.333]. Long-run: 66.7% Sunny, 33.3% Rainy — regardless of starting state.',
+                        }}
+                    />
 
-                        <div className="space-y-6">
-                            <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
-                                <h5 className="font-bold text-slate-800 dark:text-white mb-4">Requirements for Stationarity</h5>
-                                <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400 list-disc pl-4">
-                                    <li><strong>Irreducible:</strong> You can get from any state to any other state eventually.</li>
-                                    <li><strong>Aperiodic:</strong> The system doesn't get trapped in a fixed cyclic loop.</li>
-                                    <li>If a chain is both irreducible and aperiodic, it is called <strong>Ergodic</strong>, and it is guaranteed to have a unique stationary distribution.</li>
-                                </ul>
+                    <MathBlock
+                        formula="\left(\mathbf{P}^n\right)_{ij} = \Pr(X_{t+n} = j \mid X_t = i)"
+                        label="n-Step Transition Probability — Matrix Power"
+                        accent="violet"
+                        explanation="The (i,j) entry of the matrix P raised to the power n gives the probability of being in state j exactly n steps after starting in state i."
+                        interpretation="Matrix powers are the computational engine of Markov Chain analysis. P¹ gives 1-step probabilities, P² gives 2-step, P^∞ gives the stationary distribution (all rows become identical). This is how we answer: 'If it is Sunny today, what is the probability it will be Sunny in 10 days?'"
+                        motivation="Without matrix powers, we would need to simulate millions of trajectories to estimate multi-step probabilities. The matrix power formula gives exact answers in O(n³) time using standard linear algebra libraries."
+                        terms={[
+                            { term: '\\mathbf{P}^n', name: 'n-th Matrix Power', meaning: 'The transition matrix multiplied by itself n times. Gives exact n-step transition probabilities.', range: '[0,1]^{n\\times n}', example: 'P² = P·P gives 2-step probabilities.' },
+                            { term: '(\\mathbf{P}^n)_{ij}', name: 'Matrix Entry (i,j)', meaning: 'The probability of transitioning from state i to state j in exactly n steps.', range: '[0,1]', example: '(P²)_{11} = probability of being Sunny in 2 days given Sunny today.' },
+                            { term: 'X_{t+n}', name: 'State at t+n', meaning: 'The random variable representing the state n steps in the future.', range: '\\mathcal{S}', example: 'X_{t+10} = weather 10 days from now.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'P = [[0.8,0.2],[0.4,0.6]]. Compute P² and find P(Sunny in 2 days | Sunny today).',
+                            steps: [
+                                'P² = P·P:',
+                                '(P²)₁₁ = 0.8×0.8 + 0.2×0.4 = 0.64 + 0.08 = 0.72',
+                                '(P²)₁₂ = 0.8×0.2 + 0.2×0.6 = 0.16 + 0.12 = 0.28',
+                                'P² = [[0.72, 0.28], [0.56, 0.44]]',
+                            ],
+                            result: 'P(Sunny in 2 days | Sunny today) = 0.72. As n→∞, both rows converge to [0.667, 0.333].',
+                        }}
+                    />
+
+                    <div className="grid sm:grid-cols-3 gap-4">
+                        {[
+                            { title: 'Irreducible', desc: 'Every state is reachable from every other state. No isolated groups.', icon: '🔗', color: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' },
+                            { title: 'Aperiodic', desc: 'The chain does not get trapped in a fixed cycle. GCD of return times = 1.', icon: '🔄', color: 'bg-violet-50 dark:bg-violet-900/20 border-violet-200 dark:border-violet-800' },
+                            { title: 'Ergodic', desc: 'Both irreducible AND aperiodic. Guarantees a unique stationary distribution.', icon: '✅', color: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800' },
+                        ].map(p => (
+                            <div key={p.title} className={`rounded-xl border p-4 ${p.color}`}>
+                                <div className="text-2xl mb-2">{p.icon}</div>
+                                <div className="font-bold text-sm text-slate-800 dark:text-slate-200 mb-1">{p.title}</div>
+                                <p className="text-xs text-slate-600 dark:text-slate-400">{p.desc}</p>
                             </div>
-                        </div>
+                        ))}
                     </div>
 
-                    <SymbolTable
-                        symbols={[
-                            { symbol: '\pi', meaning: 'Stationary distribution vector (a row vector of probabilities).' },
-                            { symbol: 'P', meaning: 'State transition probability matrix.' },
-                            { symbol: 'P^n', meaning: 'The transition matrix multiplied by itself n times.' },
-                            { symbol: '\sum \pi_i = 1', meaning: 'The probabilities in the distribution must sum to 1.0.' }
-                        ]}
-                    />
+                    <ConvergenceLab />
                 </div>
             </SectionWrapper>
 
             {/* INTERACTIVE DIAGRAM */}
-            <InteractiveDiagram 
+            <InteractiveDiagram
                 title="Markov Chain Analysis Architecture"
                 description="Analyzing sequence probabilities in a Markov Chain."
                 chart={`graph TD
@@ -396,7 +428,7 @@ export default function Topic4_MarkovChainAnalysis() {
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <ActivityLevels 
+                <ActivityLevels
                     levels={[
                         {
                             level: 1,
@@ -544,20 +576,20 @@ export default function Topic4_MarkovChainAnalysis() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
-                <VirtualLabShell
-                    title="Chain Convergence Simulator"
-                    description="Watch state probabilities reach steady state"
-                    objective="Run the Markov Chain forward and observe the distribution converge to the stationary distribution."
-                    badge="Interactive Lab"
-                    tips={['After ~15 steps the probabilities stop changing — this is the stationary distribution',
-                'Try starting from different initial states — they all converge to the same distribution']}
-                 challenges={challenges} notebook={notebook} logs={logs}>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                        This system starts 100% in the Sunny state. Press play to watch how the state probabilities evolve over time. Notice that after about 10-15 steps, the probabilities stop changing—they have reached the <strong>Stationary Distribution</strong>.
-                    </p>
-                    <ConvergenceLab />
-                </VirtualLabShell>
-            
+                    <VirtualLabShell
+                        title="Chain Convergence Simulator"
+                        description="Watch state probabilities reach steady state"
+                        objective="Run the Markov Chain forward and observe the distribution converge to the stationary distribution."
+                        badge="Interactive Lab"
+                        tips={['After ~15 steps the probabilities stop changing — this is the stationary distribution',
+                            'Try starting from different initial states — they all converge to the same distribution']}
+                        challenges={challenges} notebook={notebook} logs={logs}>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            This system starts 100% in the Sunny state. Press play to watch how the state probabilities evolve over time. Notice that after about 10-15 steps, the probabilities stop changing—they have reached the <strong>Stationary Distribution</strong>.
+                        </p>
+                        <ConvergenceLab />
+                    </VirtualLabShell>
+
                 </div>
             </SectionWrapper>
 

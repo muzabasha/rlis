@@ -5,11 +5,14 @@ import QuizCard from '../../components/topic/QuizCard';
 import React, { useState, useEffect } from 'react';
 import {
     motion,
-    AnimatePresence } from 'framer-motion';
+    AnimatePresence
+} from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock,
-    SymbolTable } from '../../components/topic/MathBlock';
+import {
+    MathBlock,
+    SymbolTable
+} from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -265,7 +268,7 @@ export default function Topic9_MarkovRewardProcess() {
                 </div>
             </SectionWrapper>
 
-            
+
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
@@ -332,7 +335,7 @@ export default function Topic9_MarkovRewardProcess() {
                 </div>
             </SectionWrapper>
 
-{/* SECTION 3: MATHEMATICAL MODELLING */}
+            {/* SECTION 3: MATHEMATICAL MODELLING */}
             <SectionWrapper
                 id="math"
                 title="3. The Bellman Equation for MRPs"
@@ -342,39 +345,66 @@ export default function Topic9_MarkovRewardProcess() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="p-8 bg-slate-900 rounded-[2.5rem] text-white">
-                        <h5 className="text-primary-400 font-bold mb-6 flex items-center gap-2 text-xl">
-                            <TrendingUp size={20} /> The Value Function
-                        </h5>
-                        <div className="space-y-6">
-                            <MathBlock
-                                formula="V(s) = \mathbb{E} [G_t | S_t = s]"
-                                label="Definition of State Value"
-                                explanation="The Value of state 's' is the expected return (sum of discounted rewards) starting from state 's'."
-                            />
-                            <div className="h-px bg-slate-800 my-4" />
-                            <MathBlock
-                                formula="V(s) = \mathcal{R}_s + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'} V(s')"
-                                label="Bellman Equation for MRPs"
-                                explanation="The value of the current state equals the immediate reward PLUS the discounted value of all possible next states, weighted by their transition probabilities."
-                            />
-                        </div>
-                    </div>
-
-                    <SymbolTable
-                        symbols={[
-                            { symbol: 'V(s)', meaning: 'The Value Function of state s.' },
-                            { symbol: '\mathbb{E}', meaning: 'Expected value (average over all possible random paths).' },
-                            { symbol: '\mathcal{R}_s', meaning: 'The immediate reward received upon leaving state s.' },
-                            { symbol: '\mathcal{P}_{ss\'}', meaning: 'The probability of transitioning from state s to state s\'.' }
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="V(s) = \mathbb{E}\!\left[G_t \mid S_t = s\right] = \mathcal{R}_s + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}\, V(s')"
+                        label="Bellman Equation for MRP — Value Function"
+                        accent="blue"
+                        explanation="The value of state s equals the immediate reward R_s plus the discounted expected value of all possible next states, weighted by their transition probabilities."
+                        interpretation="This is the Bellman equation for a Markov Reward Process — an MDP without actions. It says: the value of being in state s is what you get right now (R_s) plus the discounted average value of where you might end up (γ·Σ P_{ss'}·V(s')). This recursive equation can be solved as a linear system for small state spaces."
+                        motivation="The MRP Bellman equation is the simplest form of the Bellman equation — no actions, no policy choices. Understanding it builds intuition for the more complex MDP Bellman equation. It also enables policy evaluation: once we fix a policy π in an MDP, it becomes an MRP."
+                        terms={[
+                            { term: 'V(s)', name: 'State Value Function', meaning: 'Expected total discounted reward starting from state s and following the chain forever.', range: '\\mathbb{R}', example: 'V(Class)=2.5 means being in Class state is worth 2.5 expected reward.' },
+                            { term: '\\mathcal{R}_s', name: 'Immediate Reward', meaning: 'The reward received upon entering (or leaving) state s. A fixed property of the state.', range: '\\mathbb{R}', example: 'R(Class)=−2 (studying is costly), R(Pass)=+10 (passing is rewarding).' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'How much future rewards are valued relative to immediate ones.', range: '[0,1)', example: 'γ=0.9: a reward 10 steps away is worth 0.9^{10}≈0.35 of its face value.' },
+                            { term: '\\mathcal{P}_{ss\'}', name: 'Transition Probability', meaning: 'Probability of moving from state s to state s\' in one step.', range: '[0,1]', example: 'P(Facebook|Class)=0.4: 40% chance of going to Facebook from Class.' },
+                            { term: '\\sum_{s\'} \\mathcal{P}_{ss\'} V(s\')', name: 'Expected Next Value', meaning: 'Weighted average of next-state values. The "future" component of the Bellman equation.', range: '\\mathbb{R}', example: 'If P(A)=0.5,V(A)=8 and P(B)=0.5,V(B)=4: expected = 0.5×8+0.5×4=6.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Student MRP: States={Class(R=−2), Facebook(R=−1), Sleep(R=0)}. γ=0.9. P(Class→Class)=0.4, P(Class→Facebook)=0.4, P(Class→Sleep)=0.2. V(Sleep)=0 (absorbing). V(Facebook)=−1+0.9×(0.2×0+0.8×V(Facebook)).',
+                            steps: [
+                                'V(Facebook): V_F = −1 + 0.9×(0.2×0 + 0.8×V_F)',
+                                '  V_F = −1 + 0.72×V_F  →  0.28×V_F = −1  →  V_F = −3.57',
+                                'V(Class): V_C = −2 + 0.9×(0.4×V_C + 0.4×(−3.57) + 0.2×0)',
+                                '  V_C = −2 + 0.36×V_C − 1.286  →  0.64×V_C = −3.286  →  V_C = −5.13',
+                            ],
+                            result: 'V(Class)=−5.13, V(Facebook)=−3.57, V(Sleep)=0. Being in Class is worse than Facebook because it has higher cost AND leads to Facebook anyway.',
+                        }}
                     />
+
+                    <MathBlock
+                        formula="\mathbf{V} = (\mathbf{I} - \gamma\mathbf{P})^{-1}\mathbf{R}"
+                        label="MRP Bellman Equation — Matrix Form (Exact Solution)"
+                        accent="violet"
+                        explanation="The Bellman equation for all states simultaneously can be written as a linear system and solved by matrix inversion. This gives the exact value function in O(n³) time."
+                        interpretation="The matrix form V = (I−γP)⁻¹R is the closed-form solution to the MRP value function. It works because the Bellman equation for a fixed policy is a linear system of equations. For small MDPs (n<1000 states), this is the fastest exact method. For large MDPs, iterative methods (value iteration) are used instead."
+                        motivation="The matrix form reveals the deep connection between Markov chains and linear algebra. It also shows why γ<1 is necessary: if γ=1, the matrix (I−P) may be singular (non-invertible). The discount factor ensures (I−γP) is always invertible."
+                        terms={[
+                            { term: '\\mathbf{V}', name: 'Value Vector', meaning: 'Column vector of length n containing V(s) for every state s.', range: '\\mathbb{R}^n', example: 'V = [V(s₁), V(s₂), ..., V(sₙ)]ᵀ' },
+                            { term: '\\mathbf{I}', name: 'Identity Matrix', meaning: 'n×n matrix with 1s on the diagonal and 0s elsewhere.', range: '\\{0,1\\}^{n\\times n}', example: 'I₂ = [[1,0],[0,1]]' },
+                            { term: '(\\mathbf{I}-\\gamma\\mathbf{P})^{-1}', name: 'Neumann Series', meaning: 'The inverse of (I−γP). Exists and is well-defined when γ<1 because all eigenvalues of γP have magnitude < 1.', range: '\\mathbb{R}^{n\\times n}', example: '= I + γP + γ²P² + γ³P³ + ... (geometric series of matrices)' },
+                            { term: '\\mathbf{R}', name: 'Reward Vector', meaning: 'Column vector of immediate rewards R(s) for each state.', range: '\\mathbb{R}^n', example: 'R = [−2, −1, 0]ᵀ for [Class, Facebook, Sleep]' },
+                        ]}
+                        numericalExample={{
+                            setup: '2-state MRP: P=[[0.8,0.2],[0.4,0.6]], R=[5,2]ᵀ, γ=0.9.',
+                            steps: [
+                                'I − γP = [[1,0],[0,1]] − 0.9×[[0.8,0.2],[0.4,0.6]]',
+                                '       = [[1−0.72, −0.18],[−0.36, 1−0.54]]',
+                                '       = [[0.28, −0.18],[−0.36, 0.46]]',
+                                'det = 0.28×0.46 − (−0.18)×(−0.36) = 0.1288 − 0.0648 = 0.064',
+                                '(I−γP)⁻¹ = (1/0.064)×[[0.46,0.18],[0.36,0.28]]',
+                                'V = (I−γP)⁻¹·R ≈ [42.5, 26.25]ᵀ',
+                            ],
+                            result: 'V(s₁)≈42.5, V(s₂)≈26.25. State 1 is more valuable because it has higher immediate reward AND better transition dynamics.',
+                        }}
+                    />
+
+                    <MRPSimulatorLab />
                 </div>
             </SectionWrapper>
 
             {/* INTERACTIVE DIAGRAM */}
-            <InteractiveDiagram 
+            <InteractiveDiagram
                 title="Markov Reward Process Architecture"
                 description="Adding rewards to a standard Markov Chain."
                 chart={`graph LR
@@ -394,7 +424,7 @@ export default function Topic9_MarkovRewardProcess() {
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <ActivityLevels 
+                <ActivityLevels
                     levels={[
                         {
                             level: 1,
@@ -535,20 +565,20 @@ export default function Topic9_MarkovRewardProcess() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
-                <VirtualLabShell
-                    title="MRP Value Estimator"
-                    description="Estimate state values via Monte Carlo simulation"
-                    objective="Run episodes through the MRP and watch the estimated state values converge to the true values."
-                    badge="Interactive Lab"
-                    tips={['More episodes = better value estimates',
-                'The Law of Large Numbers guarantees convergence']}
-                 challenges={challenges} notebook={notebook} logs={logs}>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Hit Play to watch a passive agent transition through the "Student" MRP. Notice how negative rewards (Class, Facebook) reduce the total return until the agent hits the "Sleep" absorbing state, ending the episode.
-                    </p>
-                    <MRPSimulatorLab />
-                </VirtualLabShell>
-            
+                    <VirtualLabShell
+                        title="MRP Value Estimator"
+                        description="Estimate state values via Monte Carlo simulation"
+                        objective="Run episodes through the MRP and watch the estimated state values converge to the true values."
+                        badge="Interactive Lab"
+                        tips={['More episodes = better value estimates',
+                            'The Law of Large Numbers guarantees convergence']}
+                        challenges={challenges} notebook={notebook} logs={logs}>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            Hit Play to watch a passive agent transition through the "Student" MRP. Notice how negative rewards (Class, Facebook) reduce the total return until the agent hits the "Sleep" absorbing state, ending the episode.
+                        </p>
+                        <MRPSimulatorLab />
+                    </VirtualLabShell>
+
                 </div>
             </SectionWrapper>
 

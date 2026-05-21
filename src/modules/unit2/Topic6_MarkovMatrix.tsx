@@ -5,13 +5,16 @@ import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import {
     motion,
-    AnimatePresence } from 'framer-motion';
+    AnimatePresence
+} from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock,
-    SymbolTable } from '../../components/topic/MathBlock';
+import {
+    MathBlock,
+    SymbolTable
+} from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
-import { 
+import {
     BookOpen,
     Calculator,
     Users,
@@ -80,13 +83,13 @@ function MatrixPowerLab() {
         const num = parseFloat(val);
         const newMatrix = [...matrix];
         newMatrix[r] = [...newMatrix[r]];
-        
+
         if (!isNaN(num)) {
             newMatrix[r][c] = num;
         }
-        
+
         setMatrix(newMatrix);
-        
+
         // Validate
         let hasError = false;
         for (let i = 0; i < 2; i++) {
@@ -122,20 +125,20 @@ function MatrixPowerLab() {
     return (
         <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-8">
             <div className="flex flex-col md:flex-row gap-8 items-center">
-                
+
                 {/* Input Matrix */}
                 <div className="flex-1 space-y-4 w-full">
                     <h5 className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Transition Matrix P</h5>
                     <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 relative">
                         <div className="absolute top-0 bottom-0 left-4 w-2 border-l-2 border-t-2 border-b-2 border-slate-300 dark:border-slate-600 rounded-l-lg" />
                         <div className="absolute top-0 bottom-0 right-4 w-2 border-r-2 border-t-2 border-b-2 border-slate-300 dark:border-slate-600 rounded-r-lg" />
-                        
+
                         <div className="flex flex-col gap-4 px-8 relative z-10">
                             {matrix.map((row, i) => (
                                 <div key={i} className="flex gap-4 items-center">
-                                    <div className="text-[10px] text-slate-400 font-bold w-4 text-right">R{i+1}</div>
+                                    <div className="text-[10px] text-slate-400 font-bold w-4 text-right">R{i + 1}</div>
                                     {row.map((cell, j) => (
-                                        <input 
+                                        <input
                                             key={j}
                                             type="number"
                                             step="0.1"
@@ -163,10 +166,10 @@ function MatrixPowerLab() {
                 {/* Power Controls */}
                 <div className="flex flex-col items-center gap-2">
                     <span className="text-xs font-bold text-slate-400">Power (n)</span>
-                    <input 
-                        type="range" 
-                        min="1" max="50" 
-                        value={power} 
+                    <input
+                        type="range"
+                        min="1" max="50"
+                        value={power}
                         onChange={(e) => setPower(parseInt(e.target.value))}
                         disabled={!!error}
                         className="w-32 accent-primary-600"
@@ -180,7 +183,7 @@ function MatrixPowerLab() {
                     <div className="p-6 bg-primary-50 dark:bg-primary-900/10 rounded-2xl shadow-sm border border-primary-200 dark:border-primary-900/30 relative">
                         <div className="absolute top-0 bottom-0 left-4 w-2 border-l-2 border-t-2 border-b-2 border-primary-300 dark:border-primary-600 rounded-l-lg" />
                         <div className="absolute top-0 bottom-0 right-4 w-2 border-r-2 border-t-2 border-b-2 border-primary-300 dark:border-primary-600 rounded-r-lg" />
-                        
+
                         <div className="flex flex-col gap-4 px-8 relative z-10 text-center font-mono">
                             {resultMatrix.map((row, i) => (
                                 <div key={i} className="flex gap-4 justify-center">
@@ -196,7 +199,7 @@ function MatrixPowerLab() {
                 </div>
 
             </div>
-            
+
             <div className="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-sm text-slate-600 dark:text-slate-400 italic text-center">
                 Increase the power (n) to see how the matrix converges to the stationary distribution. When all rows become identical, the system has reached equilibrium!
             </div>
@@ -211,9 +214,9 @@ export default function Topic6_MarkovMatrix() {
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
             <TopicProgressTracker topicId="unit2-topic6_markovmatrix" />
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. The Transition Grid" 
+            <SectionWrapper
+                id="story"
+                title="1. The Transition Grid"
                 subtitle="Organizing Chaos into Rows and Columns"
                 icon={<Grid3X3 className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -265,7 +268,7 @@ export default function Topic6_MarkovMatrix() {
                 </div>
             </SectionWrapper>
 
-            
+
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
@@ -332,47 +335,71 @@ export default function Topic6_MarkovMatrix() {
                 </div>
             </SectionWrapper>
 
-{/* SECTION 3: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="3. The Stochastic Properties" 
+            {/* SECTION 3: MATHEMATICAL MODELLING */}
+            <SectionWrapper
+                id="math"
+                title="3. The Stochastic Properties"
                 subtitle="The Rules of the Matrix"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="p-8 bg-slate-900 rounded-[2.5rem] text-white">
-                        <h5 className="text-primary-400 font-bold mb-6 flex items-center gap-2 text-xl">
-                            <Grid3X3 size={20} /> The Right Stochastic Matrix
-                        </h5>
-                        <div className="grid sm:grid-cols-2 gap-8">
-                            <MathBlock 
-                                formula="\sum_{j=1}^{n} P_{ij} = 1 \quad \forall i"
-                                label="Row Sum Property"
-                                explanation="The sum of probabilities in any single row must equal exactly 1.0 (100%). You must go somewhere!"
-                            />
-                            <MathBlock 
-                                formula="P_{ij} \geq 0 \quad \forall i, j"
-                                label="Non-negativity"
-                                explanation="You cannot have a negative probability of transitioning to a state."
-                            />
-                        </div>
-                    </div>
-
-                    <SymbolTable 
-                        symbols={[
-                            { symbol: 'P', meaning: 'The Transition Matrix.' },
-                            { symbol: 'P_{ij}', meaning: 'The entry at row i, column j (Prob of moving from i to j).' },
-                            { symbol: 'n', meaning: 'The total number of states in the system.' }
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\mathbf{P} = \begin{pmatrix} P_{11} & P_{12} & \cdots & P_{1n} \\ P_{21} & P_{22} & \cdots & P_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ P_{n1} & P_{n2} & \cdots & P_{nn} \end{pmatrix}, \quad P_{ij} \geq 0,\quad \sum_{j=1}^{n} P_{ij} = 1\;\forall i"
+                        label="Right-Stochastic Transition Matrix — Full Definition"
+                        accent="blue"
+                        explanation="A Markov transition matrix P is an n×n matrix where entry P_ij is the probability of transitioning from state i to state j. Every entry must be non-negative and every row must sum to exactly 1."
+                        interpretation="The matrix P is the complete mathematical description of a Markov Chain's dynamics. Row i is a probability distribution over all possible next states when currently in state i. The 'right-stochastic' property (rows sum to 1) ensures the matrix represents a valid probability distribution at every step."
+                        motivation="The matrix form enables powerful computational tools: matrix multiplication for multi-step predictions, eigenvalue decomposition for stationary distributions, and linear algebra for policy evaluation. Without this structure, we cannot apply the rich toolkit of linear algebra to Markov systems."
+                        terms={[
+                            { term: 'P_{ij}', name: 'Transition Probability', meaning: 'Probability of moving from state i (row) to state j (column) in one step.', range: '[0,1]', example: 'P₁₂=0.2: 20% chance of going from state 1 to state 2.' },
+                            { term: 'P_{ij} \\geq 0', name: 'Non-negativity', meaning: 'Probabilities cannot be negative. Every entry must be zero or positive.', range: '[0,1]', example: 'P₂₃=−0.1 is INVALID. Probabilities are always ≥ 0.' },
+                            { term: '\\sum_j P_{ij}=1', name: 'Row-Sum Constraint', meaning: 'Each row must sum to exactly 1.0. The agent must transition to SOME state — it cannot disappear.', range: '\\{1\\}', example: 'Row 1: 0.8+0.2=1.0 ✓. Row 1: 0.6+0.6=1.2 ✗ INVALID.' },
+                            { term: 'n', name: 'Number of States', meaning: 'The dimension of the square matrix. An n-state system has an n×n transition matrix.', range: '\\mathbb{Z}^+', example: 'Weather (2 states): 2×2 matrix. Traffic light (3 states): 3×3 matrix.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Validate this 3×3 matrix: P = [[0.7, 0.2, 0.1], [0.3, 0.5, 0.2], [0.0, 0.4, 0.6]]',
+                            steps: [
+                                'Row 1: 0.7+0.2+0.1 = 1.0 ✓  All entries ≥ 0 ✓',
+                                'Row 2: 0.3+0.5+0.2 = 1.0 ✓  All entries ≥ 0 ✓',
+                                'Row 3: 0.0+0.4+0.6 = 1.0 ✓  All entries ≥ 0 ✓',
+                                'All rows sum to 1, all entries non-negative → VALID Markov Matrix',
+                            ],
+                            result: 'P is a valid right-stochastic matrix. It can be used as a Markov transition matrix.',
+                        }}
                     />
+
+                    <MathBlock
+                        formula="\mathbf{P}^{(m+n)} = \mathbf{P}^{(m)} \cdot \mathbf{P}^{(n)} \quad \text{(Chapman-Kolmogorov Equation)}"
+                        label="Chapman-Kolmogorov Equation — Matrix Composition"
+                        accent="emerald"
+                        explanation="The m+n step transition matrix equals the product of the m-step and n-step matrices. This allows computing long-range probabilities by composing shorter-range ones."
+                        interpretation="The Chapman-Kolmogorov equation is the mathematical justification for using matrix powers to compute multi-step probabilities. It says: to go from state i to state j in m+n steps, you must pass through some intermediate state k after m steps. Summing over all possible k gives the total probability."
+                        motivation="This equation is the foundation of dynamic programming in MDPs. The Bellman equation is essentially the Chapman-Kolmogorov equation applied to value functions. It allows breaking long-horizon problems into shorter sub-problems."
+                        terms={[
+                            { term: '\\mathbf{P}^{(m+n)}', name: 'm+n Step Matrix', meaning: 'Transition probabilities for exactly m+n steps.', range: '[0,1]^{n\\times n}', example: 'P^(3) = P^(1)·P^(2) = P·P².' },
+                            { term: '\\mathbf{P}^{(m)}\\cdot\\mathbf{P}^{(n)}', name: 'Matrix Product', meaning: 'Standard matrix multiplication. The (i,j) entry of the product sums over all intermediate states k.', range: '[0,1]^{n\\times n}', example: '(P·P)_ij = Σ_k P_ik · P_kj.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'P = [[0.8,0.2],[0.4,0.6]]. Verify Chapman-Kolmogorov: P^(2) = P^(1)·P^(1).',
+                            steps: [
+                                'P^(2)₁₁ = P₁₁·P₁₁ + P₁₂·P₂₁ = 0.8×0.8 + 0.2×0.4 = 0.64+0.08 = 0.72',
+                                'P^(2)₁₂ = P₁₁·P₁₂ + P₁₂·P₂₂ = 0.8×0.2 + 0.2×0.6 = 0.16+0.12 = 0.28',
+                                'P^(2) = [[0.72, 0.28], [0.56, 0.44]]',
+                                'Verify: P^(3) = P^(2)·P^(1) = [[0.688,0.312],[0.624,0.376]]',
+                            ],
+                            result: 'Chapman-Kolmogorov verified. P^(n) converges to [[0.667,0.333],[0.667,0.333]] as n→∞.',
+                        }}
+                    />
+
+                    <MatrixPowerLab />
                 </div>
             </SectionWrapper>
 
             {/* INTERACTIVE DIAGRAM */}
-            <InteractiveDiagram 
+            <InteractiveDiagram
                 title="Markov Matrix Architecture"
                 description="State transition probability matrix."
                 chart={`graph LR
@@ -384,16 +411,16 @@ export default function Topic6_MarkovMatrix() {
 
 
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="4. Multi-Level Activities" 
+            <SectionWrapper
+                id="activity"
+                title="4. Multi-Level Activities"
                 subtitle="The Rules of Stochastic Grids"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <ActivityLevels 
+                <ActivityLevels
                     levels={[
                         {
                             level: 1,
@@ -470,9 +497,9 @@ export default function Topic6_MarkovMatrix() {
             </SectionWrapper>
 
             {/* SECTION 5: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="5. Project: Traffic Light Predictor" 
+            <SectionWrapper
+                id="project"
+                title="5. Project: Traffic Light Predictor"
                 subtitle="Modeling Urban Infrastructure"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -484,11 +511,11 @@ export default function Topic6_MarkovMatrix() {
                         <h5 className="font-bold mb-2 flex items-center gap-2"><Target size={18} /> The Mission</h5>
                         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             A smart city needs to predict traffic light states. A light can be Green (1), Yellow (2), or Red (3). It is broken, so it changes randomly, but follows these rules:
-                            <br/><br/>
+                            <br /><br />
                             1. Green never goes to Red directly. It stays Green (0.4) or goes Yellow (0.6).
-                            <br/>
+                            <br />
                             2. Yellow always goes to Red (1.0).
-                            <br/>
+                            <br />
                             3. Red stays Red (0.5) or goes Green (0.5).
                         </p>
                     </div>
@@ -530,9 +557,9 @@ export default function Topic6_MarkovMatrix() {
             </SectionWrapper>
 
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="6. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="6. Quick Check"
                 subtitle="Matrix Concepts"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -551,9 +578,9 @@ export default function Topic6_MarkovMatrix() {
             </SectionWrapper>
 
             {/* SECTION 7: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="7. Virtual Lab: Matrix Power Calculator" 
+            <SectionWrapper
+                id="lab"
+                title="7. Virtual Lab: Matrix Power Calculator"
                 subtitle="Multiply to See the Future"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
@@ -561,20 +588,20 @@ export default function Topic6_MarkovMatrix() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
-                <VirtualLabShell
-                    title="Matrix Power Calculator"
-                    description="Compute n-step transition probabilities"
-                    objective="Raise the transition matrix to the power of n and observe how n-step reachability changes."
-                    badge="Interactive Lab"
-                    tips={['P^n gives you the probability of going from state i to state j in exactly n steps',
-                'As n→∞, P^n converges to the stationary distribution (for ergodic chains)']}
-                 challenges={challenges} notebook={notebook} logs={logs}>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Edit the 2x2 transition matrix below. As long as the rows sum to 1.0, you can increase the power $n$ to see the $P^n$ matrix. Notice how, at high powers, all rows become identical—revealing the Stationary Distribution!
-                    </p>
-                    <MatrixPowerLab />
-                </VirtualLabShell>
-            
+                    <VirtualLabShell
+                        title="Matrix Power Calculator"
+                        description="Compute n-step transition probabilities"
+                        objective="Raise the transition matrix to the power of n and observe how n-step reachability changes."
+                        badge="Interactive Lab"
+                        tips={['P^n gives you the probability of going from state i to state j in exactly n steps',
+                            'As n→∞, P^n converges to the stationary distribution (for ergodic chains)']}
+                        challenges={challenges} notebook={notebook} logs={logs}>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            Edit the 2x2 transition matrix below. As long as the rows sum to 1.0, you can increase the power $n$ to see the $P^n$ matrix. Notice how, at high powers, all rows become identical—revealing the Stationary Distribution!
+                        </p>
+                        <MatrixPowerLab />
+                    </VirtualLabShell>
+
                 </div>
             </SectionWrapper>
 

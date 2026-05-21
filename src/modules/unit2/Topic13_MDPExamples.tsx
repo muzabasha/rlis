@@ -5,11 +5,14 @@ import QuizCard from '../../components/topic/QuizCard';
 import React, { useState } from 'react';
 import {
     motion,
-    AnimatePresence } from 'framer-motion';
+    AnimatePresence
+} from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
-import { MathBlock,
-    SymbolTable } from '../../components/topic/MathBlock';
+import {
+    MathBlock,
+    SymbolTable
+} from '../../components/topic/MathBlock';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -162,21 +165,21 @@ function RecyclingRobotLab() {
                 <div className="flex-1 flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
                     <div className="relative w-full h-48 flex items-center justify-center">
                         {/* State High */}
-                        <motion.div 
+                        <motion.div
                             animate={{ scale: state === 'High' ? 1.2 : 0.9, opacity: state === 'High' ? 1 : 0.5 }}
                             className={`absolute left-0 w-24 h-24 rounded-full flex flex-col items-center justify-center border-4 ${state === 'High' ? 'bg-emerald-500 border-emerald-200 text-white shadow-lg shadow-emerald-500/20' : 'bg-white border-slate-200 text-slate-400'}`}
                         >
                             <span className="text-[8px] font-bold uppercase">State</span>
                             <span className="text-sm font-black">HIGH</span>
                         </motion.div>
-                        
+
                         {/* Arrow */}
                         <div className="w-12 h-px bg-slate-300 relative">
                             <div className="absolute top-1/2 left-full -translate-y-1/2 -ml-1 border-4 border-transparent border-l-slate-300" />
                         </div>
 
                         {/* State Low */}
-                        <motion.div 
+                        <motion.div
                             animate={{ scale: state === 'Low' ? 1.2 : 0.9, opacity: state === 'Low' ? 1 : 0.5 }}
                             className={`absolute right-0 w-24 h-24 rounded-full flex flex-col items-center justify-center border-4 ${state === 'Low' ? 'bg-amber-500 border-amber-200 text-white shadow-lg shadow-amber-500/20' : 'bg-white border-slate-200 text-slate-400'}`}
                         >
@@ -198,9 +201,9 @@ export default function Topic13_MDPExamples() {
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
             <TopicProgressTracker topicId="unit2-topic13_mdpexamples" />
             {/* SECTION 1: STORYTELLING */}
-            <SectionWrapper 
-                id="story" 
-                title="1. Real-World Decision Loops" 
+            <SectionWrapper
+                id="story"
+                title="1. Real-World Decision Loops"
                 subtitle="The Versatility of the MDP"
                 icon={<Briefcase className="text-blue-600" size={24} />}
                 badge="Storytelling"
@@ -252,7 +255,7 @@ export default function Topic13_MDPExamples() {
                 </div>
             </SectionWrapper>
 
-            
+
             {/* SECTION 2: MOTIVATION & APPLICATION CHALLENGE */}
             <SectionWrapper
                 id="motivation"
@@ -319,53 +322,62 @@ export default function Topic13_MDPExamples() {
                 </div>
             </SectionWrapper>
 
-{/* SECTION 3: MATHEMATICAL MODELLING */}
-            <SectionWrapper 
-                id="math" 
-                title="3. Modelling the Examples" 
+            {/* SECTION 3: MATHEMATICAL MODELLING */}
+            <SectionWrapper
+                id="math"
+                title="3. Modelling the Examples"
                 subtitle="Mapping Reality to Math"
                 icon={<Calculator className="text-primary-600" size={24} />}
                 badge="Math Modelling"
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <MathBlock 
-                        formula="\text{Recycling Robot} = \langle \{H, L\}, \{S, W, R\}, P, \mathcal{R} \rangle"
-                        label="Example 1: The Recycling Robot"
+                <div className="space-y-6">
+                    <MathBlock
+                        formula="\text{Recycling Robot MDP} = \langle \{H,L\},\;\{S,W,R\},\;\mathcal{P},\;\mathcal{R},\;\gamma \rangle"
+                        label="Example 1 — Recycling Robot (Sutton & Barto, 2019)"
                         accent="blue"
-                        explanation="A classic textbook example of a small, finite MDP."
-                        interpretation="The robot's goal is to find as many cans as possible without letting its battery die. It must balance the 'High Reward' but 'Risky' Search action with the 'Safe' Wait or Recharge actions."
-                        motivation="This example demonstrates how constraints (battery life) and objectives (cans) are perfectly captured by rewards and transitions."
+                        explanation="A mobile robot collects cans. States: High/Low battery. Actions: Search/Wait/Recharge. This classic example from the textbook illustrates all 5 MDP components."
+                        interpretation="The robot must balance the high-reward but risky Search action (drains battery) against the safe Wait action (conserves battery) and the zero-reward Recharge action (restores battery). The optimal policy depends on γ — a patient agent (high γ) will recharge more; an impatient agent (low γ) will search aggressively."
+                        motivation="The Recycling Robot is the canonical MDP example because it is small enough to solve analytically yet rich enough to illustrate all key RL concepts: stochastic transitions, reward trade-offs, and the value of long-term planning."
                         terms={[
-                            { term: '\{H, L\}', name: 'State Space', meaning: 'High Energy or Low Energy battery status.', range: '\mathcal{S}', example: 'Robot starts at H.' },
-                            { term: '\{S, W, R\}', name: 'Action Space', meaning: 'Search, Wait, or Recharge.', range: '\mathcal{A}', example: 'Robot chooses S to maximize cans.' },
+                            { term: '\\{H,L\\}', name: 'State Space', meaning: 'H = High battery, L = Low battery. Two states capture the robot\'s energy level.', range: '\\mathcal{S}', example: 'Robot starts at H (fully charged).' },
+                            { term: '\\{S,W,R\\}', name: 'Action Space', meaning: 'S=Search (find cans, drains battery), W=Wait (conserve battery, fewer cans), R=Recharge (go to dock, no cans).', range: '\\mathcal{A}', example: 'From H: can Search or Wait. From L: can Search, Wait, or Recharge.' },
+                            { term: '\\mathcal{P}', name: 'Transition Dynamics', meaning: 'P(H|H,S)=0.7, P(L|H,S)=0.3. P(H|L,R)=1.0. Stochastic — searching may drain battery.', range: '[0,1]', example: 'P(depleted|L,S)=0.1 — 10% chance of running out when searching from Low.' },
+                            { term: '\\mathcal{R}', name: 'Reward Function', meaning: 'R(H,S)=+4 (cans found), R(L,S)=+4 or −3 (if depleted), R(W)=+1, R(R)=0.', range: '\\mathbb{R}', example: 'Searching from Low: expected reward = 0.9×4 + 0.1×(−3) = 3.3.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Compute expected reward for Search from Low battery. P(survive)=0.9, r=+4; P(deplete)=0.1, r=−3.',
+                            steps: [
+                                'E[R|L,Search] = P(survive)×r_survive + P(deplete)×r_deplete',
+                                '             = 0.9×4 + 0.1×(−3)',
+                                '             = 3.6 − 0.3',
+                                '             = 3.3',
+                            ],
+                            result: 'E[R|L,Search]=3.3. Compare with Wait: E[R|L,Wait]=1.0. Search is better immediately but risks depletion.',
+                        }}
                     />
 
-                    <MathBlock 
-                        formula="\text{Inventory MDP} = \langle \mathbb{Z}_{\geq 0}, \{0, \dots, M\}, P, \mathcal{R} \rangle"
-                        label="Example 2: Inventory Management"
+                    <MathBlock
+                        formula="\text{Gridworld MDP}: \mathcal{S}=\{(r,c)\},\;\mathcal{A}=\{\uparrow,\downarrow,\leftarrow,\rightarrow\},\;\mathcal{R}(s)=\begin{cases}+10 & s=\text{goal} \\ -1 & \text{otherwise}\end{cases}"
+                        label="Example 2 — Gridworld (Standard RL Benchmark)"
                         accent="emerald"
-                        explanation="A state space representing stock levels in a warehouse."
-                        interpretation="The state is the number of items in stock. The action is how many to order. The dynamics $P$ involve random customer demand. The reward is (Sales Profit - Storage Cost)."
-                        motivation="This shows that states don't have to be 'locations'; they can be numbers representing resources."
+                        explanation="A robot navigates an n×n grid to reach a goal. States are (row,col) coordinates. Actions are the 4 cardinal directions. Reward is −1 per step (encourages efficiency) and +10 at the goal."
+                        interpretation="Gridworld is the 'Hello World' of RL. It is simple enough to solve analytically but captures all key RL challenges: sequential decisions, delayed rewards, and the need to plan multiple steps ahead. The −1 step penalty forces the agent to find the shortest path — without it, the agent might wander forever."
+                        motivation="Every RL algorithm is first tested on Gridworld. Understanding this example gives you the intuition to apply RL to any sequential decision problem. The value function for Gridworld forms a gradient pointing toward the goal — a beautiful illustration of how value propagates backwards from rewards."
                         terms={[
-                            { term: 'M', name: 'Max Capacity', meaning: 'The maximum storage limit of the warehouse.', range: '\mathbb{Z}^+', example: 'M = 500 units.' },
+                            { term: '(r,c)', name: 'Grid Coordinate State', meaning: 'Row r and column c uniquely identify each cell. An n×n grid has n² states.', range: '\\{0,...,n-1\\}^2', example: '5×5 grid: 25 states. (0,0)=top-left, (4,4)=bottom-right.' },
+                            { term: '\\{\\uparrow,\\downarrow,\\leftarrow,\\rightarrow\\}', name: 'Cardinal Actions', meaning: 'Move one cell in the chosen direction. Hitting a wall keeps the agent in place.', range: '\\mathcal{A}', example: 'From (2,3): right→(2,4), up→(1,3), into wall→stays at (2,3).' },
+                            { term: '\\mathcal{R}(s)=-1', name: 'Step Penalty', meaning: 'Every non-goal step costs −1. Incentivises the agent to reach the goal as quickly as possible.', range: '\\{-1,+10\\}', example: 'Shortest path of 6 steps: G₀ = −1−0.9−0.81−...+10×0.9⁶ ≈ 4.3.' },
                         ]}
                     />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Target size={16} /> Gridworld Standard</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            Most RL research starts with **Gridworld**. It's an MDP where states are coordinates $(x, y)$, actions are direction vectors, and rewards are usually $-1$ per step to encourage the agent to find the goal quickly.
-                        </p>
-                    </div>
+                    <RecyclingRobotLab />
                 </div>
             </SectionWrapper>
 
             {/* INTERACTIVE DIAGRAM */}
-            <InteractiveDiagram 
+            <InteractiveDiagram
                 title="M D P Examples Architecture"
                 description="Various real-world MDP examples."
                 chart={`graph TD
@@ -379,16 +391,16 @@ export default function Topic13_MDPExamples() {
 
 
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
-            <SectionWrapper 
-                id="activity" 
-                title="4. Multi-Level Activities" 
+            <SectionWrapper
+                id="activity"
+                title="4. Multi-Level Activities"
                 subtitle="The Architecture of Application"
                 icon={<Users className="text-emerald-600" size={24} />}
                 badge="Activity"
                 badgeColor="bg-emerald-100 text-emerald-700"
                 accentColor="border-emerald-500"
             >
-                <ActivityLevels 
+                <ActivityLevels
                     levels={[
                         {
                             level: 1,
@@ -465,9 +477,9 @@ export default function Topic13_MDPExamples() {
             </SectionWrapper>
 
             {/* SECTION 5: PROJECT BASED LEARNING */}
-            <SectionWrapper 
-                id="project" 
-                title="5. Project: The Logistics Optimizer" 
+            <SectionWrapper
+                id="project"
+                title="5. Project: The Logistics Optimizer"
                 subtitle="Scaling MDPs for Industry"
                 icon={<Briefcase className="text-indigo-600" size={24} />}
                 badge="PBL"
@@ -478,9 +490,9 @@ export default function Topic13_MDPExamples() {
                     <div className="card p-6 border-l-4 border-indigo-500 bg-indigo-50/30 dark:bg-indigo-900/10">
                         <h5 className="font-bold mb-2 flex items-center gap-2"><Target size={18} /> Delivery Route Planning</h5>
                         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Imagine an AI for a delivery drone. 
-                            <strong>State:</strong> Current GPS, Remaining Battery, Wind Speed. 
-                            <strong>Action:</strong> Target Velocity, Altitude. 
+                            Imagine an AI for a delivery drone.
+                            <strong>State:</strong> Current GPS, Remaining Battery, Wind Speed.
+                            <strong>Action:</strong> Target Velocity, Altitude.
                             <strong>Reward:</strong> On-time delivery bonus, penalty for crashing or low battery.
                         </p>
                     </div>
@@ -506,9 +518,9 @@ export default function Topic13_MDPExamples() {
             </SectionWrapper>
 
             {/* SECTION 6: MODEL 2 MARK QUESTIONS */}
-            <SectionWrapper 
-                id="questions" 
-                title="6. Quick Check" 
+            <SectionWrapper
+                id="questions"
+                title="6. Quick Check"
                 subtitle="Applying the Framework"
                 icon={<HelpCircle className="text-purple-600" size={24} />}
                 badge="Questions"
@@ -527,9 +539,9 @@ export default function Topic13_MDPExamples() {
             </SectionWrapper>
 
             {/* SECTION 7: LEARN BY DOING (VIRTUAL LAB) */}
-            <SectionWrapper 
-                id="lab" 
-                title="7. Virtual Lab: The Recycling Robot" 
+            <SectionWrapper
+                id="lab"
+                title="7. Virtual Lab: The Recycling Robot"
                 subtitle="Experience Stochastic Transitions"
                 icon={<FlaskConical className="text-cyan-600" size={24} />}
                 badge="Virtual Lab"
@@ -537,20 +549,20 @@ export default function Topic13_MDPExamples() {
                 accentColor="border-cyan-500"
             >
                 <div className="space-y-6">
-                <VirtualLabShell
-                    title="MDP Gallery"
-                    description="Simulate pre-built MDP examples"
-                    objective="Pick from classic MDPs (Gridworld, Cliff Walking, Mountain Car) and run Q-Learning to see how each poses unique challenges."
-                    badge="Interactive Lab"
-                    tips={['Cliff Walking has a high penalty cliff — the agent must learn to avoid it',
-                'Gridworld is the simplest — good for understanding the basics']}
-                 challenges={challenges} notebook={notebook} logs={logs}>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Play as the agent! Notice how <strong>Search</strong> from Low energy is a gamble—it might work, or it might result in a depletion penalty.
-                    </p>
-                    <RecyclingRobotLab />
-                </VirtualLabShell>
-            
+                    <VirtualLabShell
+                        title="MDP Gallery"
+                        description="Simulate pre-built MDP examples"
+                        objective="Pick from classic MDPs (Gridworld, Cliff Walking, Mountain Car) and run Q-Learning to see how each poses unique challenges."
+                        badge="Interactive Lab"
+                        tips={['Cliff Walking has a high penalty cliff — the agent must learn to avoid it',
+                            'Gridworld is the simplest — good for understanding the basics']}
+                        challenges={challenges} notebook={notebook} logs={logs}>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                            Play as the agent! Notice how <strong>Search</strong> from Low energy is a gamble—it might work, or it might result in a depletion penalty.
+                        </p>
+                        <RecyclingRobotLab />
+                    </VirtualLabShell>
+
                 </div>
             </SectionWrapper>
 
