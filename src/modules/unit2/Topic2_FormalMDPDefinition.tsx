@@ -10,6 +10,7 @@ import TopicProgressTracker from '../../components/topic/TopicProgressTracker';
 import VirtualLabShell,
     { LabChallenge,
     NotebookEntry } from '../../components/topic/VirtualLabShell';
+import InteractiveDiagram from '../../components/topic/InteractiveDiagram';
 import {
     BookOpen,
     Calculator,
@@ -344,6 +345,22 @@ export default function Topic2_FormalMDPDefinition() {
                     <TransitionMatrixExplorer />
                 </div>
             </SectionWrapper>
+
+            {/* INTERACTIVE DIAGRAM */}
+            <InteractiveDiagram
+                title="Formal MDP Loop Dynamics"
+                description="The cyclic 4-tuple interaction loop between Agent and Environment state transitions."
+                chart={`graph LR
+                    A[Agent] -->|Action: a| E[Environment]
+                    E -->|Reward: R| A
+                    E -->|Next State: s'| A
+                    classDef default fill:#1e293b,stroke:#475569,stroke-width:2px,color:#fff;
+                    classDef agent fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:#fff;
+                    classDef env fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff;
+                    class A agent;
+                    class E env;
+                `}
+            />
 
             {/* SECTION 4: ACTIVITY BASED LEARNING */}
             <SectionWrapper
