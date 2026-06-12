@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { AppState, ProgressData } from '../types';
+import { allTopics } from '../data/courseData';
 
 interface AppContextType extends AppState {
     toggleDarkMode: () => void;
@@ -38,7 +39,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
             if (saved) {
                 return { ...defaultState, ...JSON.parse(saved) };
             }
-        } catch { }
+        } catch {
+            // Ignore malformed local state and fall back to defaults.
+        }
         return defaultState;
     });
 
@@ -99,7 +102,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
     const getProgress = (topicId: string) => state.progress[topicId];
 
-    const totalTopics = 24; // total topics across all units
+    const totalTopics = allTopics.length;
     const completedCount = Object.values(state.progress).filter(p => p.completed).length;
     const totalProgress = Math.round((completedCount / totalTopics) * 100);
 

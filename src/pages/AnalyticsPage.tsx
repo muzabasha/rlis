@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BarChart3, CheckCircle2, Clock, Target, TrendingUp, Award } from 'lucide-react';
+import { BarChart3, CheckCircle2, Target, TrendingUp } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { units, allTopics } from '../data/courseData';
 import {
@@ -24,14 +24,14 @@ export default function AnalyticsPage() {
         };
     });
 
-    const coData = [
-        { co: 'CO1', score: getProgress('u1t1')?.completed ? 80 : 20 },
-        { co: 'CO2', score: 15 },
-        { co: 'CO3', score: 10 },
-        { co: 'CO4', score: 10 },
-        { co: 'CO5', score: 10 },
-        { co: 'CO6', score: 10 },
-    ];
+    const coData = ['CO1', 'CO2', 'CO3', 'CO4', 'CO5', 'CO6'].map(co => {
+        const mappedTopics = allTopics.filter(topic => topic.coMapping.includes(co));
+        const completed = mappedTopics.filter(topic => getProgress(topic.id)?.completed).length;
+        return {
+            co,
+            score: mappedTopics.length > 0 ? Math.round((completed / mappedTopics.length) * 100) : 0,
+        };
+    });
 
     const completedTopics = allTopics.filter(t => getProgress(t.id)?.completed);
 
@@ -49,7 +49,6 @@ export default function AnalyticsPage() {
                         { label: 'Overall Progress', value: `${totalProgress}%`, icon: TrendingUp, color: 'text-primary-600' },
                         { label: 'Topics Completed', value: `${completedTopics.length}/${allTopics.length}`, icon: CheckCircle2, color: 'text-emerald-600' },
                         { label: 'Units Started', value: `${unitProgress.filter(u => u.completed > 0).length}/4`, icon: Target, color: 'text-violet-600' },
-                        { label: 'Study Streak', value: '1 day', icon: Award, color: 'text-amber-600' },
                     ].map(stat => (
                         <div key={stat.label} className="card p-5 text-center">
                             <stat.icon size={24} className={`${stat.color} mx-auto mb-2`} />

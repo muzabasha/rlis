@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-import LaserPointerTrail from './LaserPointerTrail';
-import ClassroomHUD from './ClassroomHUD';
 import { useApp } from '../../context/AppContext';
 
 interface LayoutProps {
@@ -12,20 +10,20 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
     const { sidebarOpen, fontSize, projectorMode, toggleSidebar } = useApp();
-    const [previousSidebarState, setPreviousSidebarState] = useState<boolean | null>(null);
+    const previousSidebarState = useRef<boolean | null>(null);
 
     // Auto-sidebar collapse/restore on Projector Mode toggle
     useEffect(() => {
         if (projectorMode) {
-            setPreviousSidebarState(sidebarOpen);
+            previousSidebarState.current = sidebarOpen;
             if (sidebarOpen) {
                 toggleSidebar();
             }
         } else {
-            if (previousSidebarState === true && !sidebarOpen) {
+            if (previousSidebarState.current === true && !sidebarOpen) {
                 toggleSidebar();
             }
-            setPreviousSidebarState(null);
+            previousSidebarState.current = null;
         }
     }, [projectorMode]);
 
@@ -41,6 +39,16 @@ export default function Layout({ children }: LayoutProps) {
             <AnimatePresence>
                 {sidebarOpen && <Sidebar />}
             </AnimatePresence>
+            <AnimatePresence>
+                {sidebarOpen && (
+                    <button
+                        type="button"
+                        aria-label="Close course navigation"
+                        onClick={toggleSidebar}
+                        className="fixed inset-0 top-16 z-30 bg-slate-950/40 backdrop-blur-[1px] md:hidden"
+                    />
+                )}
+            </AnimatePresence>
             <main
                 className={`pt-16 transition-all duration-300 ${sidebarOpen ? 'md:ml-72' : 'ml-0'}`}
             >
@@ -48,10 +56,6 @@ export default function Layout({ children }: LayoutProps) {
                     {children}
                 </div>
             </main>
-            
-            {/* Global Classroom Presentation Aids */}
-            <LaserPointerTrail />
-            <ClassroomHUD />
         </div>
     );
 }

@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Play, Pause, RotateCcw, ChevronRight, Gauge, Settings2,
-    Info, Download, TrendingUp, Cpu, X, BookOpen, Terminal, Trophy,
-    FileSpreadsheet, Sparkles, CheckCircle, HelpCircle, Send, Award, Crown, CheckSquare, Presentation,
+    Info, Download, TrendingUp, Cpu, X, BookOpen, Terminal,
+    Sparkles, CheckCircle, HelpCircle, Send, CheckSquare, Presentation,
     Zap, Contrast, Keyboard
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
@@ -145,127 +145,21 @@ function detectUnitAndCO(title: string, customCO?: string, customLevel?: string)
 }
 
 function getDiscussionPoints(title: string): string[] {
-    const titleLower = title.toLowerCase();
-    const genericPoints = [
-        `How does the fundamental mathematical formulation of "${title}" differ when applied to continuous action spaces versus discrete state representations? Let's analyze the curse of dimensionality.`,
-        `Under what environmental conditions (stochastic, deterministic, partially observable) does "${title}" experience the highest variance in convergence rates? Debate the stability trade-offs.`,
-        `How does changing the exploration rate (e.g., epsilon or temperature parameters) affect the propagation of value updates in "${title}"? Invite students to map the trajectory propagation.`,
-        `Discuss how the Markov property is preserved or violated when designing the state spaces for "${title}" in real-world engineering systems.`,
-        `What are the computational and memory complexity bounds when scaling "${title}" to multi-agent cooperative environments? Contrast centralized training vs decentralized execution.`,
-        `Analyze the reward function structure for "${title}". How does reward shaping impact the agent's behavior, and what are the risks of reward hacking or sub-optimal loop convergence?`,
-        `How does the discount factor (gamma) influence the convergence and horizon planning under "${title}"? Debate the consequences of setting gamma to 0 vs 0.999.`,
-        `Compare the sample efficiency of "${title}" against purely supervised deep learning baselines in highly non-stationary environments.`,
-        `What diagnostic metrics (e.g., temporal difference error, value function bellman residual) should be monitored on our telemetry dashboard to verify correct learning convergence in "${title}"?`,
-        `How do human cognitive learning patterns (like Thorndike's Law of Effect or operant conditioning) align with the mathematical updates of "${title}"? Discuss biological plausibility.`
+    return [
+        `What problem does "${title}" solve better than a fixed rule-based approach?`,
+        `Which states, actions, rewards, and constraints define this problem most clearly?`,
+        `What assumptions does "${title}" make about the environment or available data?`,
+        `How would stochastic transitions change the expected outcome of this method?`,
+        `Which telemetry signal best indicates that learning is improving rather than oscillating?`,
+        `What failure mode could result from a poorly designed reward function?`,
+        `How would the result change with a shorter or longer planning horizon?`,
+        `What trade-off exists between exploration, computation cost, and solution quality?`,
+        `How could this approach be evaluated fairly against a simpler baseline?`,
+        `Where would safety, ethics, or human oversight matter in a real deployment?`,
     ];
-
-    if (titleLower.includes('root') || titleLower.includes('history') || titleLower.includes('origins')) {
-        return [
-            "How does Thorndike's biological Law of Effect map directly to modern Bellman update equations? Compare animal stimulus-response to Q-tables.",
-            "Compare classical conditioning (Pavlovian reflex) with operant conditioning (instrumental learning) in terms of computational reinforcement pathways.",
-            "Why was Arthur Samuel's self-play checkers program (1959) considered the ancestor of modern Deep RL self-play (e.g., AlphaGo)? Let's analyze value approximations.",
-            "What are the mathematical limitations of early trial-and-error learning algorithms prior to Bellman's Dynamic Programming formalization?",
-            "How does the concept of temporal difference learning draw inspiration from biological reward prediction errors in dopamine neurons?",
-            "In early roots, why did research transition from tabular behavior mappings to functional state evaluation in checkers?",
-            "Analyze the transition from early heuristic game search engines to learning-based search trees. What was the core conceptual breakthrough?",
-            "Why is reward-biased reinforcement computationally superior to pure brute-force state search in high-dimensional puzzles?",
-            "Debate how biological constraints (e.g., fatigue, sensory limits) in animal puzzle boxes correspond to hardware limits in simulated RL.",
-            "How does the convergence of animal learning speed (exponential escape decay) mirror the mathematical convergence of modern loss functions?"
-        ];
-    }
-
-    if (titleLower.includes('exploration') || titleLower.includes('exploitation') || titleLower.includes('bandit') || titleLower.includes('trade-off')) {
-        return [
-            "What is the mathematical formulation of the Exploration-Exploitation trade-off in Multi-Armed Bandits? Discuss the regret bounds.",
-            "Compare Epsilon-Greedy, UCB1 (Upper Confidence Bound), and Thompson Sampling. Which offers the tightest theoretical regret guarantees?",
-            "How does non-stationarity in the environment's reward distribution break UCB1, and how can we modify it (e.g., sliding-window UCB)?",
-            "Discuss the concept of 'optimism in the face of uncertainty'. Why is this a mathematically sound heuristic for exploration?",
-            "How does Thompson Sampling leverage Bayesian posteriors to balance exploration? Let's discuss conjugate priors.",
-            "What are the computational costs of tracking action-value uncertainty in UCB vs simple heuristic epsilon-decay?",
-            "Analyze the effect of the temperature parameter in Softmax (Boltzmann) exploration. How does it smoothly transition from exploration to exploitation?",
-            "In deep RL, how do we encourage exploration without manual epsilon-decay? Discuss entropy regularization in policy gradients.",
-            "What is 'deep exploration' (learning policies to explore multi-step trajectories) versus 'shallow exploration' (dithering actions)?",
-            "Debate a real-world scenario (e.g., clinical trials or ad placements) where excessive exploration has severe ethical or financial penalties."
-        ];
-    }
-
-    if (titleLower.includes('markov') || titleLower.includes('mdp') || titleLower.includes('mrp') || titleLower.includes('decision process')) {
-        return [
-            "Define the Markov Property formally. What does it mean for 'the future to be independent of the past, given the present'?",
-            "How does partially observable state space (POMDP) break the standard Bellman equations, and how do belief states restore the Markov property?",
-            "Contrast a Markov Chain, a Markov Reward Process (MRP), and a Markov Decision Process (MDP). Draw their state transition equations.",
-            "How does the state transition probability tensor P(s'|s,a) capture stochasticity in MDPs? Debate model-based vs model-free assumptions.",
-            "Discuss the Bellman expectation equations for MRPs. How do they express the state value as a linear system of equations?",
-            "When solving an MRP, when is direct matrix inversion (analytical solution) computationally viable, and when must we use iterative methods?",
-            "How does the addition of an action space (A) transform an MRP into an MDP? Discuss the policy concept π(a|s).",
-            "What is the mathematical definition of a 'stationary policy'? Why is it sufficient to search only for stationary optimal policies in MDPs?",
-            "How does reward shaping alter the optimal policy in an MDP? Let's discuss Ng's potential-based reward shaping theorem.",
-            "Can we model human life decisions as an MDP? Discuss states, actions, transitions, and the limits of the reward hypothesis."
-        ];
-    }
-
-    if (titleLower.includes('bellman') || titleLower.includes('value function') || titleLower.includes('optim')) {
-        return [
-            "Derive the Bellman Expectation Equation for V(s) and Q(s,a). How do they relate to each other?",
-            "What is the core difference between the Bellman Expectation Equation and the Bellman Optimality Equation?",
-            "Why is the Bellman Optimality Equation non-linear, and how does this non-linearity prevent direct analytical solutions?",
-            "Explain the concept of 'bootstrapping' in Bellman equations. How does it enable an agent to update estimates using other estimates?",
-            "Under what conditions is the Bellman operator guaranteed to be a contraction mapping (Banach Fixed-Point Theorem)? Discuss the role of gamma.",
-            "How does Value Iteration directly leverage the Bellman Optimality operator to converge to the optimal value function V*(s)?",
-            "Contrast Policy Evaluation and Policy Improvement. How does Policy Iteration alternate between these two to find π*(s)?",
-            "What is the computational complexity per iteration of Policy Iteration versus Value Iteration in large discrete MDPs?",
-            "How do we represent value functions when the state space is infinite (e.g., continuous)? Discuss parametric function approximation.",
-            "Debate: Does a universal optimal value function V*(s) exist for all cooperative multi-agent environments?"
-        ];
-    }
-
-    if (titleLower.includes('q-learning') || titleLower.includes('q-table') || titleLower.includes('sarsa') || titleLower.includes('temporal difference')) {
-        return [
-            "Explain the difference between On-Policy learning (SARSA) and Off-Policy learning (Q-learning). How does the target policy differ?",
-            "Write down the temporal difference (TD) target for SARSA and Q-learning. Highlight the action selection step.",
-            "Why is Q-learning susceptible to overestimation bias? Explain how Double Q-learning resolves this by decoupling action selection and evaluation.",
-            "How does the TD error, δ_t = R_{t+1} + γ max Q(S_{t+1}, a) - Q(S_t, A_t), serve as a learning signal? Compare it to the Bellman residual.",
-            "Under what conditions are tabular Q-learning and SARSA guaranteed to converge mathematically to the optimal Q*(s,a)?",
-            "Why does SARSA learn a safer policy than Q-learning in environments with dangerous states (e.g., the Cliff Walking environment)?",
-            "What is the difference between TD(0) (one-step prediction) and TD(lambda) (using eligibility traces)? Discuss the bias-variance trade-off.",
-            "How do we initialize Q-tables, and how does optimistic initialization encourage systematic exploration early in training?",
-            "What happens when the Q-table grows too large to fit in memory (curse of dimensionality)? Introduce Deep Q-Networks (DQN).",
-            "Debate how eligibility traces in TD learning map to biological synaptic plasticity and eligibility in biological brains."
-        ];
-    }
-
-    if (titleLower.includes('monte carlo') || titleLower.includes('sampling')) {
-        return [
-            "What makes Monte Carlo (MC) methods 'model-free'? How do they learn optimal policies without knowing transition probabilities P(s'|s,a)?",
-            "Contrast First-Visit Monte Carlo and Every-Visit Monte Carlo prediction. Which is unbiased, and which has lower mean-squared error?",
-            "Why does Monte Carlo learning suffer from high variance compared to Temporal Difference (TD) learning? Explain using sample trajectory returns.",
-            "Why must Monte Carlo methods wait until the absolute end of an episode to perform value updates? Discuss the impact on online learning.",
-            "What is the 'exploring starts' assumption in Monte Carlo control? Why is it mathematically necessary, and how does ε-greedy relax it?",
-            "Explain Off-Policy Monte Carlo control. How does Importance Sampling allow us to learn from a behavior policy different from the target policy?",
-            "Contrast ordinary importance sampling and weighted importance sampling in terms of bias, variance, and convergence limits.",
-            "Explain the GLIE property (Greedy in the Limit with Infinite Exploration). What are the requirements on exploration rates over time?",
-            "Under what environment types is Monte Carlo learning computationally superior to Dynamic Programming?",
-            "How do we apply Monte Carlo methods to non-episodic, infinite-horizon tasks without infinite delay?"
-        ];
-    }
-
-    if (titleLower.includes('agent') || titleLower.includes('architecture') || titleLower.includes('peas') || titleLower.includes('turing')) {
-        return [
-            "What is the PEAS framework for AI agent design? Define Performance Measure, Environment, Actuators, and Sensors with examples.",
-            "Contrast a Simple Reflex Agent, a Model-Based Reflex Agent, a Goal-Based Agent, and a Utility-Based Agent in terms of internal state and decision loops.",
-            "Discuss the Turing Test. What are its technological and philosophical limitations as a metric for intelligent systems?",
-            "What makes a system 'intelligent' versus a standard automated rule-based system? Debate the boundaries of autonomy.",
-            "Explain the difference between episodic and sequential environments, and how it alters the complexity of the agent's architecture.",
-            "Analyze the role of a learning element and a critic inside a general learning agent architecture as described by Russell & Norvig.",
-            "How does physical symbol systems hypothesis relate to the symbol grounding problem in modern neural AI agents?",
-            "What are the engineering challenges in deploying physical actuators vs virtual software actuators in real-time control loops?",
-            "Explain the 'complexity ladder' of agent architectures. How does deep RL serve as a bridge between simple reflex and high-level goal reasoning?",
-            "Debate the ethical and societal implications of autonomous utility-maximizing agents in public safety and infrastructure."
-        ];
-    }
-
-    return genericPoints;
 }
+
+
 
 export default function VirtualLabShell({
     title, description, objective, controls, telemetry = [],
@@ -287,7 +181,8 @@ export default function VirtualLabShell({
         toggleWashoutProtection
     } = useApp();
 
-    const [activeTab, setActiveTab] = useState<'simulation' | 'notebook' | 'terminal' | 'quests' | 'discussion'>('simulation');
+    type LabTab = 'simulation' | 'notebook' | 'terminal' | 'quests' | 'discussion';
+    const [activeTab, setActiveTab] = useState<LabTab>('simulation');
     const [showTips, setShowTips] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [showHelpModal, setShowHelpModal] = useState(false);
@@ -311,26 +206,13 @@ export default function VirtualLabShell({
         }
     });
 
-    const [localChallenges, setLocalChallenges] = useState<LabChallenge[]>(() => {
-        try {
-            const saved = localStorage.getItem(`${storageKey}_challenges`);
-            if (saved) {
-                const parsed = JSON.parse(saved) as LabChallenge[];
-                // Merge loaded state with current props to ensure compatibility
-                return challenges.map(c => {
-                    const found = parsed.find(p => p.id === c.id);
-                    return found ? { ...c, isCompleted: found.isCompleted } : c;
-                });
-            }
-        } catch {}
-        return challenges;
-    });
-
     const [localLogs, setLocalLogs] = useState<string[]>(() => {
         try {
             const saved = localStorage.getItem(`${storageKey}_logs`);
             if (saved) return JSON.parse(saved);
-        } catch {}
+        } catch {
+            // Ignore malformed local state and initialize a fresh console.
+        }
         return logs.length > 0 ? logs : [
             `🤖 [System] Initializing ${title} Experiential Simulator...`,
             `📡 [Telemetry] Connecting active variables... Connected.`,
@@ -371,21 +253,7 @@ export default function VirtualLabShell({
         });
     }, [storageKey]);
 
-    const completeChallenge = useCallback((id: string) => {
-        setLocalChallenges(prev => {
-            if (prev.some(c => c.id === id && c.isCompleted)) return prev;
-            
-            const updated = prev.map(c => c.id === id ? { ...c, isCompleted: true } : c);
-            localStorage.setItem(`${storageKey}_challenges`, JSON.stringify(updated));
-            
-            const challenge = prev.find(c => c.id === id);
-            if (challenge) {
-                addLog(`🏆 [Quest Unlocked] "${challenge.quest}" achievement completed!`);
-            }
-            
-            return updated;
-        });
-    }, [storageKey, addLog]);
+
 
     // ─── Interactive lifecycle hooks ──────────────────────────────────────────
     const handleToggleProjector = () => {
@@ -400,7 +268,6 @@ export default function VirtualLabShell({
         if (onToggleRun) {
             onToggleRun();
             addLog(isRunning ? "⏸️ Simulation paused by student." : "▶️ Simulation running in live execution loop.");
-            completeChallenge("concept_explore");
         }
     };
 
@@ -408,7 +275,6 @@ export default function VirtualLabShell({
         if (onStep) {
             onStep();
             addLog("⏭️ Executed single step telemetry transition.");
-            completeChallenge("concept_explore");
         }
     };
 
@@ -416,7 +282,6 @@ export default function VirtualLabShell({
         if (onSpeedChange) {
             onSpeedChange(newSpeed);
             addLog(`⚡ Adjusted simulation execution frequency to ${newSpeed}x speed.`);
-            completeChallenge("concept_explore");
         }
     };
 
@@ -430,7 +295,6 @@ export default function VirtualLabShell({
         // Reset local states too
         setAnswers({});
         setValidated({});
-        setLocalChallenges(challenges.map(c => ({ ...c, isCompleted: false })));
         setLocalLogs([
             `🤖 [System] Simulation state cleared. Re-initializing...`,
             `📡 [Telemetry] Re-connecting variables... Connected.`,
@@ -439,7 +303,6 @@ export default function VirtualLabShell({
         
         localStorage.removeItem(`${storageKey}_answers`);
         localStorage.removeItem(`${storageKey}_validated`);
-        localStorage.removeItem(`${storageKey}_challenges`);
         localStorage.removeItem(`${storageKey}_logs`);
     };
 
@@ -459,7 +322,7 @@ export default function VirtualLabShell({
 
             const key = e.key.toLowerCase();
 
-            // Tab Swapping: 1 - 5
+            // Tab Swapping: 1 - 3
             if (key === '1') {
                 setActiveTab('simulation');
                 addLog("📋 Presenter Hotkey: Switched view to Simulation Sandbox.");
@@ -469,16 +332,10 @@ export default function VirtualLabShell({
             } else if (key === '3') {
                 setActiveTab('terminal');
                 addLog("📋 Presenter Hotkey: Switched view to Lab Console.");
-            } else if (key === '4') {
-                setActiveTab('quests');
-                addLog("📋 Presenter Hotkey: Switched view to Quest Achievements.");
-            } else if (key === '5') {
-                setActiveTab('discussion');
-                addLog("📋 Presenter Hotkey: Switched view to Class Discussion Board.");
             }
             // Tab Cycle: ArrowRight / ArrowLeft (or PageDown / PageUp)
             else if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-                const tabs: ('simulation' | 'notebook' | 'terminal' | 'quests' | 'discussion')[] = [
+                const tabs: LabTab[] = [
                     'simulation', 'notebook', 'terminal', 'quests', 'discussion'
                 ];
                 const currentIdx = tabs.indexOf(activeTab);
@@ -487,7 +344,7 @@ export default function VirtualLabShell({
                 addLog(`📋 Presenter Hotkey: Swapped to next view (${tabs[nextIdx]}).`);
                 e.preventDefault();
             } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-                const tabs: ('simulation' | 'notebook' | 'terminal' | 'quests' | 'discussion')[] = [
+                const tabs: LabTab[] = [
                     'simulation', 'notebook', 'terminal', 'quests', 'discussion'
                 ];
                 const currentIdx = tabs.indexOf(activeTab);
@@ -575,11 +432,7 @@ export default function VirtualLabShell({
         
         addLog(`📝 Recorded observation response & validated Task ${index + 1}.`);
 
-        // Check if ALL questions are now validated
-        const allCompleted = notebook.length > 0 && notebook.every((_, i) => newValidated[i]);
-        if (allCompleted) {
-            completeChallenge("worksheet_complete");
-        }
+
     };
 
     const triggerReportDownload = (format: 'txt' | 'json' = 'txt') => {
@@ -598,11 +451,6 @@ export default function VirtualLabShell({
                 question: n.question,
                 answer: answers[i] || 'No response recorded.',
                 validated: !!validated[i]
-            })),
-            quests: localChallenges.map(c => ({
-                quest: c.quest,
-                target: c.target,
-                isCompleted: c.isCompleted
             })),
             nepAlignment: {
                 co: detectedCO.co,
@@ -654,11 +502,6 @@ Student Observation: ${answers[i] || 'No response recorded.'}
 Validated: ${validated[i] ? 'Yes' : 'No'}
 `).join('\n') : 'No guided notebook was configured for this lab.'}
 
------------------------------------------
-🏆 CHALLENGES COMPLETED
------------------------------------------
-${localChallenges.length > 0 ? localChallenges.map(c => `[${c.isCompleted ? '✓' : ' '}] ${c.quest} (${c.target})`).join('\n') : 'No challenges configured.'}
-
 =========================================
 Generated by RLIS Experiential Learning platform.
 =========================================
@@ -675,10 +518,6 @@ Generated by RLIS Experiential Learning platform.
         addLog("📥 Exported Lab Report in TXT format.");
     };
 
-    // Calculate quest progress
-    const completedQuests = localChallenges.filter(c => c.isCompleted).length;
-    const totalQuests = localChallenges.length;
-    const progressPercent = totalQuests > 0 ? (completedQuests / totalQuests) * 100 : 0;
 
     return (
         <div className={`rounded-3xl border-2 transition-all shadow-2xl overflow-hidden ${
@@ -808,28 +647,6 @@ Generated by RLIS Experiential Learning platform.
                     <Terminal size={14} />
                     Lab Console
                     <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                </button>
-                <button
-                    onClick={() => setActiveTab('quests')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 relative ${activeTab === 'quests' ? 'bg-slate-800 text-cyan-400 shadow-md border border-cyan-500/20' : 'text-slate-400 hover:bg-slate-900'}`}
-                >
-                    <Trophy size={14} />
-                    Quest Board
-                    {totalQuests > 0 && (
-                        <span className="px-1.5 py-0.5 text-[8px] bg-amber-500 text-slate-950 font-black rounded-full leading-none">
-                            {completedQuests}/{totalQuests}
-                        </span>
-                    )}
-                </button>
-                <button
-                    onClick={() => setActiveTab('discussion')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 relative ${activeTab === 'discussion' ? 'bg-slate-800 text-cyan-400 shadow-md border border-cyan-500/20' : 'text-slate-400 hover:bg-slate-900'}`}
-                >
-                    <Presentation size={14} />
-                    Class Discussion
-                    <span className="px-1.5 py-0.5 text-[8px] bg-indigo-500 text-white font-black rounded-full leading-none animate-pulse">
-                        10 Pts
-                    </span>
                 </button>
             </div>
 
@@ -1028,171 +845,7 @@ Generated by RLIS Experiential Learning platform.
                         </motion.div>
                     )}
 
-                    {activeTab === 'quests' && (
-                        <motion.div
-                            key="quests"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            className="space-y-6"
-                        >
-                            <div className="flex items-center justify-between gap-4">
-                                <div className="flex items-center gap-2">
-                                    <Trophy className="text-amber-500" size={18} />
-                                    <h4 className="font-bold text-slate-850 dark:text-white">Active Achievements & Quests</h4>
-                                </div>
-                                <span className="text-xs font-black text-amber-500 bg-amber-500/10 border border-amber-500/25 px-2.5 py-0.5 rounded-full">🏆 {completedQuests} / {totalQuests} Complete</span>
-                            </div>
 
-                            {totalQuests > 0 && (
-                                <div className="space-y-2 bg-slate-50 dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/50 dark:border-slate-800">
-                                    <div className="flex justify-between items-center text-[10px] font-black uppercase text-slate-500">
-                                        <span>Accreditation Completion Progress</span>
-                                        <span>{progressPercent.toFixed(0)}%</span>
-                                    </div>
-                                    <div className="w-full h-3 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden border border-slate-350/20">
-                                        <motion.div
-                                            className="h-full bg-gradient-to-r from-amber-400 to-yellow-500"
-                                            initial={{ width: 0 }}
-                                            animate={{ width: `${progressPercent}%` }}
-                                            transition={{ duration: 0.5 }}
-                                        />
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* NEP 2020 Competency Mapping Card */}
-                            <div className="p-5 rounded-3xl bg-gradient-to-br from-indigo-950/90 to-slate-950/95 border border-indigo-500/20 shadow-xl space-y-4">
-                                <div className="flex items-center gap-2.5">
-                                    <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                                        <Award size={18} />
-                                    </div>
-                                    <div>
-                                        <h5 className="text-xs font-black text-white uppercase tracking-wider">NEP 2020 Competency Accreditation</h5>
-                                        <p className="text-[8px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-1">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                                            Module Fully Mapped & Certified
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="grid sm:grid-cols-3 gap-4 pt-3 border-t border-indigo-500/10">
-                                    <div className="space-y-1">
-                                        <span className="text-[9px] text-slate-500 font-black uppercase">Course Outcome</span>
-                                        <div>
-                                            <span className="px-2.5 py-0.5 bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 rounded-md text-[10px] font-black uppercase tracking-wider block w-fit">
-                                                {detectedCO.co}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-1 sm:col-span-2">
-                                        <span className="text-[9px] text-slate-500 font-black uppercase">Outcome Target Description</span>
-                                        <p className="text-[11px] font-semibold text-slate-300 leading-normal">{detectedCO.coDesc}</p>
-                                    </div>
-                                </div>
-                                <div className="grid sm:grid-cols-3 gap-4 pt-3 border-t border-indigo-500/10">
-                                    <div className="space-y-1">
-                                        <span className="text-[9px] text-slate-500 font-black uppercase">Cognitive Domain</span>
-                                        <span className="px-2.5 py-0.5 bg-purple-500/20 border border-purple-500/40 text-purple-300 rounded-md text-[10px] font-black uppercase tracking-wider block w-fit">
-                                            {detectedCO.cognitiveLevel}
-                                        </span>
-                                    </div>
-                                    <div className="space-y-1 sm:col-span-2">
-                                        <span className="text-[9px] text-slate-500 font-black uppercase">NEP 2020 Pedagogy Standard</span>
-                                        <p className="text-[11px] font-semibold text-slate-350 leading-normal">
-                                            Experiential Sandbox with active telemetry, logs, and self-guided workspace.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {localChallenges.length > 0 ? (
-                                <div className="grid sm:grid-cols-2 gap-4">
-                                    {localChallenges.map((c) => (
-                                        <div
-                                            key={c.id}
-                                            className={`p-5 rounded-2xl border transition-all flex items-start gap-4 shadow-sm ${c.isCompleted ? 'bg-emerald-500/5 dark:bg-emerald-950/10 border-emerald-300/40 dark:border-emerald-900/30' : 'bg-white dark:bg-slate-850 border-slate-200/50 dark:border-slate-800'}`}
-                                        >
-                                            <div className={`p-2.5 rounded-xl ${c.isCompleted ? 'bg-emerald-500 text-slate-950' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>
-                                                <Trophy size={18} className={c.isCompleted ? 'animate-bounce' : ''} />
-                                            </div>
-                                            <div className="space-y-1">
-                                                <h5 className={`text-xs font-black ${c.isCompleted ? 'text-emerald-800 dark:text-emerald-300' : 'text-slate-800 dark:text-slate-200'}`}>{c.quest}</h5>
-                                                <span className="text-[10px] text-slate-400 font-bold block">Target: {c.target}</span>
-                                            </div>
-                                            {c.isCompleted && (
-                                                <span className="ml-auto px-2 py-0.5 bg-emerald-500 text-slate-950 text-[9px] font-black rounded-lg uppercase tracking-wider flex items-center gap-0.5">
-                                                    <CheckCircle size={10} />
-                                                    Unlocked
-                                                </span>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="text-center py-12 bg-white dark:bg-slate-850 rounded-3xl border border-slate-200/50 dark:border-slate-800 space-y-3">
-                                    <Trophy size={36} className="mx-auto text-slate-300" />
-                                    <p className="text-xs text-slate-550 font-bold">No quests configured for this lab.</p>
-                                </div>
-                            )}
-                        </motion.div>
-                    )}
-
-                    {activeTab === 'discussion' && (
-                        <motion.div
-                            key="discussion"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            className="space-y-6"
-                        >
-                            <div className="flex items-center justify-between gap-4">
-                                <div className="flex items-center gap-2">
-                                    <Presentation className="text-indigo-500" size={18} />
-                                    <h4 className="font-bold text-slate-850 dark:text-white">Classroom Discussion Board</h4>
-                                </div>
-                                <span className="text-[10px] font-black text-indigo-400 bg-indigo-500/10 border border-indigo-500/25 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                                    10 Core Debate Points
-                                </span>
-                            </div>
-
-                            <div className="p-6 rounded-3xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-900/50 dark:to-slate-900/30 border border-indigo-100 dark:border-indigo-950/30 space-y-4">
-                                <div className="flex items-start gap-4">
-                                    <div className="p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm text-2xl">
-                                        🎓
-                                    </div>
-                                    <div className="space-y-1">
-                                        <h5 className="text-sm font-black text-slate-800 dark:text-slate-100 uppercase tracking-wide">Interactive Classroom Handling Guide</h5>
-                                        <p className="text-xs font-semibold text-slate-650 dark:text-slate-400 leading-normal text-balance">
-                                            Teachers, project this screen in class to initiate dynamic brainstorming! Invite students to argue their standpoints on these 10 rigorous architectural and mathematical challenges. Encourage active questioning, peer debate, and real-world system design mapping.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* 10 Technical Discussion Points List */}
-                            <div className="grid gap-4 sm:grid-cols-1">
-                                {getDiscussionPoints(title).map((point, index) => (
-                                    <div
-                                        key={index}
-                                        className="p-5 rounded-2xl bg-white dark:bg-slate-850 border border-slate-200/50 dark:border-slate-800 hover:border-indigo-500/30 dark:hover:border-indigo-900/40 transition-all flex gap-4 items-start shadow-sm"
-                                    >
-                                        <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-500 text-xs font-black">
-                                            {index + 1}
-                                        </span>
-                                        <div className="space-y-2">
-                                            <p className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-relaxed">
-                                                {point}
-                                            </p>
-                                            <div className="flex items-center gap-1.5 text-[8px] font-black text-indigo-650 dark:text-indigo-400 uppercase tracking-wider">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                                                Interactive Debate Trigger
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    )}
                 </AnimatePresence>
             </div>
 
@@ -1351,9 +1004,7 @@ Generated by RLIS Experiential Learning platform.
                                 {([
                                     { id: 'simulation', icon: <Cpu size={14} />, label: 'Sandbox', hotkey: '1' },
                                     { id: 'notebook', icon: <BookOpen size={14} />, label: 'Workbook', hotkey: '2' },
-                                    { id: 'terminal', icon: <Terminal size={14} />, label: 'Console', hotkey: '3' },
-                                    { id: 'quests', icon: <Trophy size={14} />, label: 'Quests', hotkey: '4' },
-                                    { id: 'discussion', icon: <Presentation size={14} />, label: 'Debate', hotkey: '5' }
+                                    { id: 'terminal', icon: <Terminal size={14} />, label: 'Console', hotkey: '3' }
                                 ] as const).map((tab) => {
                                     const active = activeTab === tab.id;
                                     return (
@@ -1478,7 +1129,7 @@ Generated by RLIS Experiential Learning platform.
                                     <div className="flex gap-1">
                                         <span className="keycap keycap-light">1</span>
                                         <span className="text-slate-400">-</span>
-                                        <span className="keycap keycap-light">5</span>
+                                        <span className="keycap keycap-light">3</span>
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 dark:border-slate-850">

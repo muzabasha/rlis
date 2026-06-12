@@ -121,13 +121,6 @@ function ComingSoon({ topicTitle }: { topicTitle: string }) {
     );
 }
 
-const unitAmbientColors: Record<string, { orb1: string; orb2: string }> = {
-    unit1: { orb1: 'bg-blue-500/20 dark:bg-blue-600/15', orb2: 'bg-indigo-500/20 dark:bg-indigo-600/15' },
-    unit2: { orb1: 'bg-violet-500/20 dark:bg-violet-600/15', orb2: 'bg-purple-500/20 dark:bg-purple-600/15' },
-    unit3: { orb1: 'bg-emerald-500/20 dark:bg-emerald-600/15', orb2: 'bg-teal-500/20 dark:bg-teal-600/15' },
-    unit4: { orb1: 'bg-amber-500/20 dark:bg-amber-600/15', orb2: 'bg-orange-500/20 dark:bg-orange-600/15' },
-};
-
 export default function TopicPage() {
     const { topicId } = useParams<{ topicId: string }>();
     const navigate = useNavigate();
@@ -169,18 +162,9 @@ export default function TopicPage() {
 
     const TopicComponent = topicComponents[topicId ?? ''];
     const diffConfig = difficultyConfig[topic.difficulty];
-    const ambientColor = unitAmbientColors[unit.id] || { orb1: 'bg-blue-500/20', orb2: 'bg-indigo-500/20' };
-
     return (
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-6 min-h-screen overflow-hidden">
-            {/* Ambient Breathing Background Glows */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                <div className={`ambient-orb w-[500px] h-[500px] -top-48 -left-48 ${ambientColor.orb1}`} />
-                <div className={`ambient-orb w-[450px] h-[450px] top-[35%] -right-48 ${ambientColor.orb2}`} />
-                <div className={`ambient-orb w-[400px] h-[400px] -bottom-48 left-[15%] ${ambientColor.orb1}`} />
-            </div>
-
-            <div className="relative z-10 space-y-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 min-h-screen">
+            <div className="space-y-6">
             {/* Topic Header */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}

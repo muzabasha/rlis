@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Brain, GitBranch, Zap, Cpu, ChevronDown, ChevronRight,
-    CheckCircle2, Circle, Clock, Lock, BookOpen, BarChart3,
-    Map, FlaskConical, HelpCircle, Lightbulb, Home, Rocket, Briefcase
+    CheckCircle2, Circle, Clock, BookOpen,
+    FlaskConical, HelpCircle, Lightbulb, Rocket, Briefcase
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
@@ -21,12 +21,6 @@ const unitColors: Record<string, string> = {
     unit2: 'text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30',
     unit3: 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30',
     unit4: 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30',
-};
-
-const difficultyColor = {
-    beginner: 'bg-emerald-400',
-    intermediate: 'bg-amber-400',
-    advanced: 'bg-red-400',
 };
 
 export default function Sidebar() {
@@ -54,26 +48,6 @@ export default function Sidebar() {
             transition={{ duration: 0.3, ease: 'easeOut' }}
             className="fixed left-0 top-16 bottom-0 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 overflow-y-auto scrollbar-thin z-40 flex flex-col"
         >
-            {/* Quick Nav */}
-            <div className="p-3 border-b border-slate-200 dark:border-slate-700">
-                <div className="grid grid-cols-3 gap-1">
-                    {[
-                        { to: '/', icon: <Home size={14} />, label: 'Home' },
-                        { to: '/analytics', icon: <BarChart3 size={14} />, label: 'Analytics' },
-                        { to: '/dependency-graph', icon: <Map size={14} />, label: 'Graph' },
-                    ].map(item => (
-                        <Link
-                            key={item.to}
-                            to={item.to}
-                            className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
-                        >
-                            {item.icon}
-                            <span className="text-xs font-medium">{item.label}</span>
-                        </Link>
-                    ))}
-                </div>
-            </div>
-
             {/* Units & Topics */}
             <div className="flex-1 p-3 space-y-1">
                 <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2 mb-3">
@@ -88,7 +62,9 @@ export default function Sidebar() {
                         <div key={unit.id}>
                             {/* Unit Header */}
                             <button
+                                type="button"
                                 onClick={() => toggleUnit(unit.id)}
+                                aria-expanded={isExpanded}
                                 className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group"
                             >
                                 <span className={`p-1.5 rounded-lg ${unitColors[unit.id]}`}>
@@ -126,12 +102,13 @@ export default function Sidebar() {
                                         {unit.topics.map((topic, idx) => {
                                             const progress = getProgress(topic.id);
                                             const isActive = currentTopic === topic.id;
-                                            const isLocked = false; // All topics unlocked
 
                                             return (
                                                 <button
+                                                    type="button"
                                                     key={topic.id}
                                                     onClick={() => handleTopicClick(unit.id, topic.id)}
+                                                    aria-current={isActive ? 'page' : undefined}
                                                     className={`w-full flex items-start gap-2 px-3 py-2 rounded-lg text-left transition-all duration-150 ${isActive
                                                             ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
                                                             : 'hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
@@ -147,14 +124,11 @@ export default function Sidebar() {
                                                         )}
                                                     </div>
                                                     <div className="flex-1 min-w-0">
-                                                        <div className={`text-xs font-medium leading-snug ${isActive ? 'text-primary-700 dark:text-primary-300' : ''}`}>
-                                                            {topic.title}
-                                                        </div>
-                                                        <div className="flex items-center gap-1.5 mt-0.5">
-                                                            <div className={`w-1.5 h-1.5 rounded-full ${difficultyColor[topic.difficulty]}`} />
+                                                            <div className={`text-xs font-medium leading-snug ${isActive ? 'text-primary-700 dark:text-primary-300' : ''}`}>
+                                                                {topic.title}
+                                                            </div>
                                                             <span className="text-xs text-slate-400">{topic.duration}</span>
                                                         </div>
-                                                    </div>
                                                 </button>
                                             );
                                         })}

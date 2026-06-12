@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
     Brain, GitBranch, Zap, Cpu, ArrowRight, BookOpen,
     Target, Users, FlaskConical, BarChart3, Award, Clock,
-    CheckCircle2, Star, Lightbulb, Code2, Calculator, Briefcase, HelpCircle
+    CheckCircle2, Star, Lightbulb, Code2, Calculator, Briefcase, HelpCircle, GraduationCap
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { units, courseOutcomes } from '../data/courseData';
@@ -25,20 +25,10 @@ const features = [
     { icon: Award, title: 'NEP 2020 Aligned', desc: 'Competency-based, outcome-driven learning framework', color: 'text-cyan-500' },
 ];
 
-const container = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.1 } }
-};
-
-const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-};
-
 export default function HomePage() {
     const navigate = useNavigate();
     const { totalProgress, getProgress } = useApp();
-    const [activeUnitId, setActiveUnitId] = React.useState('unit1');
+    const [activeUnitId, setActiveUnitId] = useState('unit1');
 
     const getVisitedSections = (topicId: string) => {
         try {
@@ -67,6 +57,40 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="text-center mb-12"
             >
+                {/* Institution Logos */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 mb-8">
+                    {/* REVA University Logo */}
+                    <div className="flex items-center gap-3">
+                        <img
+                            src="/reva-logo.png"
+                            alt="REVA University"
+                            className="h-16 sm:h-20 w-auto object-contain"
+                        />
+                    </div>
+
+                    {/* SDG 4 Quality Education Logo */}
+                    <div className="flex items-center gap-3">
+                        <img
+                            src="/SDG4.png"
+                            alt="SDG 4 - Quality Education"
+                            className="h-16 sm:h-20 w-auto object-contain"
+                        />
+                    </div>
+                </div>
+
+                {/* Faculty Details */}
+                <div className="flex items-center justify-center gap-3 mb-6">
+                    <GraduationCap size={20} className="text-primary-600" />
+                    <div className="text-left">
+                        <div className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                            Dr. Syed Muzamil Basha
+                        </div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">
+                            Professor, School of Computer Science and Engineering
+                        </div>
+                    </div>
+                </div>
+
                 <div className="inline-flex items-center gap-2 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 px-4 py-2 rounded-full text-sm font-semibold mb-6">
                     <Star size={14} className="fill-current" />
                     NEP 2020 Aligned · Interactive · Classroom Optimized
@@ -116,27 +140,6 @@ export default function HomePage() {
                         <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{totalProgress}% Complete</span>
                     </div>
                 )}
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-                variants={container}
-                initial="hidden"
-                animate="show"
-                className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12"
-            >
-                {[
-                    { label: 'Units', value: units.length.toString(), icon: BookOpen, color: 'text-blue-500' },
-                    { label: 'Topics', value: units.reduce((acc, u) => acc + u.topics.length, 0).toString(), icon: Target, color: 'text-violet-500' },
-                    { label: 'Virtual Labs', value: units.reduce((acc, u) => acc + u.topics.length, 0).toString(), icon: FlaskConical, color: 'text-emerald-500' },
-                    { label: 'Activities', value: (units.reduce((acc, u) => acc + u.topics.length, 0) * 4).toString(), icon: Users, color: 'text-amber-500' },
-                ].map(stat => (
-                    <motion.div key={stat.label} variants={item} className="card p-5 text-center">
-                        <stat.icon size={24} className={`${stat.color} mx-auto mb-2`} />
-                        <div className="text-3xl font-black text-slate-900 dark:text-white">{stat.value}</div>
-                        <div className="text-sm text-slate-500 dark:text-slate-400 font-medium">{stat.label}</div>
-                    </motion.div>
-                ))}
             </motion.div>
 
             {/* Course Outcomes */}
@@ -280,12 +283,13 @@ export default function HomePage() {
                                             <Target size={12} /> {topic.coMapping.join(', ')}
                                         </span>
                                     </div>
-                                    <h3
+                                    <button
+                                        type="button"
                                         onClick={() => navigate(`/topic/${topic.id}`)}
-                                        className="text-lg font-black text-slate-800 dark:text-slate-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors cursor-pointer leading-tight mb-2 group-hover:translate-x-1 transition-transform duration-200 inline-block"
+                                        className="text-left text-lg font-black text-slate-800 dark:text-slate-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors leading-tight mb-2 group-hover:translate-x-1 duration-200 inline-block"
                                     >
                                         {topic.title}
-                                    </h3>
+                                    </button>
 
                                     {/* Sub-progress line */}
                                     <div className="flex items-center gap-3 mt-1 max-w-xs">
@@ -302,10 +306,10 @@ export default function HomePage() {
                                 </div>
 
                                 {/* Right Side: 7 Interactive Component Buttons Dock */}
-                                <div className="flex items-center gap-2.5 flex-wrap bg-slate-50/50 dark:bg-slate-900/40 p-2.5 rounded-2xl border border-slate-100 dark:border-slate-800/80">
+                                <div className="flex items-center gap-1.5 sm:gap-2.5 flex-wrap sm:flex-nowrap bg-slate-50/50 dark:bg-slate-900/40 p-2 sm:p-2.5 rounded-2xl border border-slate-100 dark:border-slate-800/80">
                                     {[
                                         { id: 'story', label: 'Story', desc: 'Storytelling Analogy', icon: BookOpen, color: 'hover:bg-blue-500 hover:text-white text-blue-500 hover:shadow-blue-500/20' },
-                                        { id: 'motivation', label: 'Motivation', desc: 'Pedagogical Focus', icon: Lightbulb, color: 'hover:bg-amber-500 hover:text-white text-amber-500 hover:shadow-amber-500/20' },
+                                        { id: 'motivation', label: 'Why', desc: 'Pedagogical Focus', icon: Lightbulb, color: 'hover:bg-amber-500 hover:text-white text-amber-500 hover:shadow-amber-500/20' },
                                         { id: 'math', label: 'Math', desc: 'Formula Breakdown', icon: Calculator, color: 'hover:bg-red-500 hover:text-white text-red-500 hover:shadow-red-500/20' },
                                         { id: 'activity', label: 'Activity', desc: '4-Level Activities', icon: Users, color: 'hover:bg-emerald-500 hover:text-white text-emerald-500 hover:shadow-emerald-500/20' },
                                         { id: 'project', label: 'Project', desc: 'PBL Sample Projects', icon: Briefcase, color: 'hover:bg-violet-500 hover:text-white text-violet-500 hover:shadow-violet-500/20' },
@@ -316,26 +320,23 @@ export default function HomePage() {
                                         const isVisited = isCompleted || visitedSections.includes(comp.id) || (comp.id === 'motivation' && visitedSections.includes('story'));
 
                                         return (
-                                            <div key={comp.id} className="group/tooltip relative">
-                                                <button
-                                                    onClick={() => navigate(`/topic/${topic.id}#${comp.id}`)}
-                                                    className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 relative ${comp.color} hover:scale-110 active:scale-95 shadow-sm hover:shadow-md ${
-                                                        isVisited
-                                                            ? 'bg-slate-100 dark:bg-slate-800 border-2 border-emerald-500/60'
-                                                            : 'bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600'
-                                                    }`}
-                                                >
-                                                    <CompIcon size={18} />
-                                                    {isVisited && (
-                                                        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-900" />
-                                                    )}
-                                                </button>
-                                                {/* Tooltip */}
-                                                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2.5 px-3 py-1.5 bg-slate-950 dark:bg-slate-900 text-white text-[11px] font-black rounded-xl opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border border-slate-800 z-30">
-                                                    <span className="block text-primary-400 font-extrabold uppercase tracking-widest text-[9px] mb-0.5">{comp.label}</span>
-                                                    <span>{comp.desc}</span>
-                                                </div>
-                                            </div>
+                                            <button
+                                                key={comp.id}
+                                                type="button"
+                                                onClick={() => navigate(`/topic/${topic.id}#${comp.id}`)}
+                                                aria-label={`Open ${comp.label} for ${topic.title}`}
+                                                className={`flex items-center gap-1 px-2 py-1.5 sm:w-10 sm:h-10 sm:justify-center sm:p-0 rounded-xl transition-all duration-300 ${comp.color} hover:scale-105 active:scale-95 shadow-sm hover:shadow-md ${
+                                                    isVisited
+                                                        ? 'bg-slate-100 dark:bg-slate-800 border-2 border-emerald-500/60'
+                                                        : 'bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600'
+                                                }`}
+                                            >
+                                                <CompIcon size={16} className="flex-shrink-0" />
+                                                <span className="text-[10px] font-bold sm:hidden">{comp.label}</span>
+                                                {isVisited && (
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0 sm:absolute sm:-top-0.5 sm:-right-0.5" />
+                                                )}
+                                            </button>
                                         );
                                     })}
                                 </div>

@@ -159,14 +159,15 @@ export default function VirtualLabPage() {
                         const themeClass = colorMap[lab.color];
 
                         return (
-                            <motion.div
+                            <motion.button
+                                type="button"
                                 key={lab.id}
                                 layout
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
                                 transition={{ duration: 0.2, delay: idx * 0.05 }}
-                                className={`flex flex-col p-6 rounded-[2rem] border-2 ${themeClass} shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group bg-white dark:bg-slate-800`}
+                                className={`w-full text-left flex flex-col p-6 rounded-[2rem] border-2 ${themeClass} shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group bg-white dark:bg-slate-800`}
                                 onClick={() => navigate(lab.route)}
                             >
                                 <div className="flex justify-between items-start mb-6">
@@ -194,11 +195,11 @@ export default function VirtualLabPage() {
                                     <span className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
                                         <BookOpen size={14} /> Unit {lab.unit}
                                     </span>
-                                    <button className="flex items-center gap-2 text-xs font-black uppercase tracking-wider hover:opacity-70 transition-opacity">
+                                    <span className="flex items-center gap-2 text-xs font-black uppercase tracking-wider group-hover:opacity-70 transition-opacity">
                                         Launch Lab <PlayCircle size={16} className="group-hover:translate-x-1 transition-transform" />
-                                    </button>
+                                    </span>
                                 </div>
-                            </motion.div>
+                            </motion.button>
                         );
                     })}
                 </AnimatePresence>

@@ -1,15 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import {
-    Brain, Moon, Sun, Monitor, Menu, X, Search,
-    BookOpen, ChevronRight, Maximize2
+    Brain, Moon, Sun, Monitor, Menu, X, Search
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
     const { darkMode, projectorMode, sidebarOpen, toggleDarkMode, toggleProjectorMode, toggleSidebar, totalProgress } = useApp();
-    const location = useLocation();
 
     return (
         <motion.header
@@ -22,6 +20,7 @@ export default function Navbar() {
                 {/* Left: Logo + Toggle */}
                 <div className="flex items-center gap-3">
                     <button
+                        type="button"
                         onClick={toggleSidebar}
                         className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
                         aria-label="Toggle sidebar"
@@ -43,17 +42,6 @@ export default function Navbar() {
                         </div>
                     </Link>
                 </div>
-
-                {/* Center: Breadcrumb */}
-                <nav className="hidden md:flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400">
-                    <Link to="/" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Home</Link>
-                    {location.pathname !== '/' && (
-                        <>
-                            <ChevronRight size={14} />
-                            <span className="text-slate-700 dark:text-slate-300 font-medium">Course</span>
-                        </>
-                    )}
-                </nav>
 
                 {/* Right: Controls */}
                 <div className="flex items-center gap-2">
@@ -79,7 +67,9 @@ export default function Navbar() {
 
                     {/* Projector mode */}
                     <button
+                        type="button"
                         onClick={toggleProjectorMode}
+                        aria-pressed={projectorMode}
                         className={`p-2 rounded-lg transition-all relative ${
                             projectorMode 
                             ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20 scale-105' 
@@ -96,7 +86,9 @@ export default function Navbar() {
 
                     {/* Dark mode */}
                     <button
+                        type="button"
                         onClick={toggleDarkMode}
+                        aria-pressed={darkMode}
                         className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
                         aria-label="Toggle dark mode"
                     >

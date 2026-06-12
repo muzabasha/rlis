@@ -27,6 +27,17 @@
     scroll-behavior: smooth;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
   body {
     @apply bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100;
     font-family: 'Inter', system-ui, sans-serif;
@@ -471,37 +482,6 @@
 /* ==========================================================================
    PREMIUM DYNAMIC STYLING & INTERACTIVE PRESENTATION CLASSES
    ========================================================================== */
-
-/* Thematic Ambient Glow Background */
-@keyframes ambient-breathe {
-  0%, 100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    opacity: 0.28;
-  }
-  33% {
-    transform: translate(6% , -8%) scale(1.12) rotate(120deg);
-    opacity: 0.38;
-  }
-  66% {
-    transform: translate(-4%, 6%) scale(0.9) rotate(240deg);
-    opacity: 0.22;
-  }
-}
-
-.ambient-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  mix-blend-mode: plus-lighter;
-  animation: ambient-breathe 22s infinite ease-in-out;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.dark .ambient-orb {
-  mix-blend-mode: screen;
-  filter: blur(130px);
-}
 
 /* Glassmorphism Evolved */
 .glass-premium {

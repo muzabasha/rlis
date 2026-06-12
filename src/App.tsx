@@ -1,5 +1,6 @@
-import React, { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Suspense } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
+import { Bot } from 'lucide-react';
 import { AppProvider } from './context/AppContext';
 import Layout from './components/layout/Layout';
 
@@ -30,10 +31,10 @@ function NotFoundPage() {
     return (
         <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
-                <div className="text-8xl mb-4">🤖</div>
-                <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">404 — Page Not Found</h1>
+                <Bot size={72} className="mx-auto mb-4 text-primary-500" aria-hidden="true" />
+                <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">404 - Page Not Found</h1>
                 <p className="text-slate-600 dark:text-slate-400 mb-6">The agent couldn't find this state in its Q-table.</p>
-                <a href="/" className="btn-primary inline-flex">Go Home</a>
+                <Link to="/" className="btn-primary inline-flex">Go Home</Link>
             </div>
         </div>
     );
