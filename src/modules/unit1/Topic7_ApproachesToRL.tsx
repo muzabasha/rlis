@@ -40,6 +40,8 @@ import {
     ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid,
     Tooltip, Legend
 } from 'recharts';
+import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
+import { getTopicData } from '../../data/topicData';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -150,6 +152,31 @@ export default function Topic7_ApproachesToRL() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
             <TopicProgressTracker topicId="unit1-topic7_approachestorl" />
+            {/* SECTION 0: PREREQUISITES */}
+            <SectionWrapper
+                id="prerequisites"
+                title="0. Prerequisites"
+                subtitle="What you should know before starting"
+                icon={<BookOpen className="text-sky-600" size={24} />}
+                badge="Prerequisites"
+                badgeColor="bg-sky-100 text-sky-700"
+                accentColor="border-sky-500"
+            >
+                <div className="space-y-3">
+                    {(() => {
+                        const data = getTopicData('unit1', 'Topic7_ApproachesToRL');
+                        if (!data) return <p className="text-sm text-slate-500">No prerequisites listed.</p>;
+                        return (
+                            <ul className="list-disc list-inside space-y-2 text-sm text-slate-700 dark:text-slate-300">
+                                {data.prerequisites.map((p, i) => (
+                                    <li key={i}>{p}</li>
+                                ))}
+                            </ul>
+                        );
+                    })()}
+                </div>
+            </SectionWrapper>
+
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper
                 id="story"
@@ -565,23 +592,93 @@ export default function Topic7_ApproachesToRL() {
                 </div>
             </SectionWrapper>
 
-            {/* FEEDBACK SECTION */}
-            <div className="bg-blue-600 rounded-[3rem] p-12 text-center text-white space-y-6 shadow-2xl shadow-blue-500/20">
-                <div className="max-w-xl mx-auto space-y-2">
-                    <h3 className="text-4xl font-black italic">Approaches Mastered!</h3>
-                    <p className="text-blue-100 text-lg">
-                        You've unlocked the three core strategies of RL. Ready to dive into the specific "Types" of algorithms that implement these?
-                    </p>
-                </div>
-                <div className="flex justify-center gap-4">
-                    <button className="px-12 py-5 bg-white text-blue-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
-                        APPROVE TOPIC
-                    </button>
-                    <button className="px-12 py-5 bg-blue-700 text-white font-black rounded-2xl hover:bg-blue-800 transition-colors">
-                        NEED CLARITY
-                    </button>
-                </div>
-            </div>
+            {/* MCQ KNOWLEDGE CHECK */}
+            <SectionWrapper
+                id="mcq"
+                title="8. Knowledge Check"
+                subtitle="10 Feedback-Based MCQs"
+                icon={<HelpCircle className="text-purple-600" size={24} />}
+                badge="MCQ Quiz"
+                badgeColor="bg-purple-100 text-purple-700"
+                accentColor="border-purple-500"
+            >
+                {(() => {
+                    const data = getTopicData('unit1', 'Topic7_ApproachesToRL');
+                    if (!data) return <p className="text-sm text-slate-500">MCQs not available.</p>;
+                    return <FeedbackMCQ questions={data.mcqs} />;
+                })()}
+            </SectionWrapper>
+
+            {/* RECAP & SKILL MAPPING */}
+            {(() => {
+                const data = getTopicData('unit1', 'Topic7_ApproachesToRL');
+                if (!data) return null;
+                return (
+                    <div className="space-y-6">
+                        {/* Recap Section */}
+                        <SectionWrapper
+                            id="recap"
+                            title="9. Topic Recap"
+                            subtitle="Key points to remember"
+                            icon={<BookOpen className="text-emerald-600" size={24} />}
+                            badge="Recap"
+                            badgeColor="bg-emerald-100 text-emerald-700"
+                            accentColor="border-emerald-500"
+                        >
+                            <ul className="space-y-2">
+                                {data.recap.map((point, i) => (
+                                    <li key={i} className="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-300">
+                                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs font-bold">{i + 1}</span>
+                                        {point}
+                                    </li>
+                                ))}
+                            </ul>
+                        </SectionWrapper>
+
+                        {/* Skill Mapping Section */}
+                        <SectionWrapper
+                            id="skills"
+                            title="10. Skill Mapping"
+                            subtitle="Competencies developed"
+                            icon={<Target className="text-indigo-600" size={24} />}
+                            badge="Skills"
+                            badgeColor="bg-indigo-100 text-indigo-700"
+                            accentColor="border-indigo-500"
+                        >
+                            <div className="grid gap-3">
+                                {data.skillMapping.map((skill, i) => (
+                                    <div key={i} className="flex items-center justify-between p-3 bg-white dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{skill.skill}</span>
+                                        <span className={`text-xs font-bold px-3 py-1 rounded-full ${
+                                            skill.level === 'Beginner' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                                            skill.level === 'Intermediate' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' :
+                                            'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                                        }`}>{skill.level}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </SectionWrapper>
+
+                        {/* Original Mastered navigation */}
+                        <div className="bg-blue-600 rounded-[3rem] p-12 text-center text-white space-y-6 shadow-2xl shadow-blue-500/20">
+                            <div className="max-w-xl mx-auto space-y-2">
+                                <h3 className="text-4xl font-black italic">Approaches Mastered!</h3>
+                                <p className="text-blue-100 text-lg">
+                                    You've unlocked the three core strategies of RL. Ready to dive into the specific "Types" of algorithms that implement these?
+                                </p>
+                            </div>
+                            <div className="flex justify-center gap-4">
+                                <button className="px-12 py-5 bg-white text-blue-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
+                                    APPROVE TOPIC
+                                </button>
+                                <button className="px-12 py-5 bg-blue-700 text-white font-black rounded-2xl hover:bg-blue-800 transition-colors">
+                                    NEED CLARITY
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })()}
         </div>
     );
 }

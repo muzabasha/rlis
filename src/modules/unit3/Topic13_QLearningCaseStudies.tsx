@@ -39,6 +39,9 @@ import {
     AlertTriangle
 } from 'lucide-react';
 
+import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
+import { getTopicData } from '../../data/topicData';
+
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
 const challenges: LabChallenge[] = [
@@ -168,6 +171,17 @@ export default function Topic13_QLearningCaseStudies() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
             <TopicProgressTracker topicId="unit3-topic13_qlearningcasestudies" />
+            {/* PREREQUISITES */}
+            <SectionWrapper id="prerequisites" title="0. Prerequisites" subtitle="What you should know before starting" icon={<BookOpen className="text-sky-600" size={24} />} badge="Prerequisites" badgeColor="bg-sky-100 text-sky-700" accentColor="border-sky-500">
+                <div className="space-y-3">
+                    {(() => {
+                        const data = getTopicData('unit3', 'Topic13_QLearningCaseStudies');
+                        if (!data) return null;
+                        return (<ul className="list-disc list-inside space-y-2 text-sm text-slate-700 dark:text-slate-300">{data.prerequisites.map((p, i) => <li key={i}>{p}</li>)}</ul>);
+                    })()}
+                </div>
+            </SectionWrapper>
+
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -510,7 +524,39 @@ export default function Topic13_QLearningCaseStudies() {
                 </div>
             </SectionWrapper>
 
-            {/* FEEDBACK SECTION */}
+            {/* MCQ KNOWLEDGE CHECK */}
+            <SectionWrapper id="mcq" title="8. Knowledge Check" subtitle="10 Feedback-Based MCQs" icon={<HelpCircle className="text-purple-600" size={24} />} badge="MCQ Quiz" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
+                {(() => {
+                    const data = getTopicData('unit3', 'Topic13_QLearningCaseStudies');
+                    if (!data) return null;
+                    return <FeedbackMCQ questions={data.mcqs} />;
+                })()}
+            </SectionWrapper>
+
+            {/* RECAP & SKILL MAPPING */}
+            {(() => {
+                const data = getTopicData('unit3', 'Topic13_QLearningCaseStudies');
+                if (!data) return null;
+                return (<React.Fragment>
+                    <SectionWrapper id="recap" title="9. Topic Recap" subtitle="Key points to remember" icon={<BookOpen className="text-emerald-600" size={24} />} badge="Recap" badgeColor="bg-emerald-100 text-emerald-700" accentColor="border-emerald-500">
+                        <ul className="space-y-2">{data.recap.map((point, i) => (
+                            <li key={i} className="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-300">
+                                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs font-bold">{i + 1}</span>{point}
+                            </li>
+                        ))}</ul>
+                    </SectionWrapper>
+                    <SectionWrapper id="skills" title="10. Skill Mapping" subtitle="Competencies developed" icon={<Target className="text-indigo-600" size={24} />} badge="Skills" badgeColor="bg-indigo-100 text-indigo-700" accentColor="border-indigo-500">
+                        <div className="grid gap-3">{data.skillMapping.map((skill, i) => (
+                            <div key={i} className="flex items-center justify-between p-3 bg-white dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{skill.skill}</span>
+                                <span className={`text-xs font-bold px-3 py-1 rounded-full ${skill.level === 'Beginner' ? 'bg-green-100 text-green-700' : skill.level === 'Intermediate' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>{skill.level}</span>
+                            </div>
+                        ))}</div>
+                    </SectionWrapper>
+                </React.Fragment>);
+            })()}
+
+            {/* Keep existing navigation buttons here */}
             <div className="bg-primary-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-primary-500/20">
                 <div className="max-w-xl mx-auto space-y-2">
                     <h3 className="text-3xl font-black italic">Unit 3 Completed!</h3>

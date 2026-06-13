@@ -42,6 +42,8 @@ import {
     CheckCircle2,
     AlertTriangle
 } from 'lucide-react';
+import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
+import { getTopicData } from '../../data/topicData';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -175,6 +177,13 @@ export default function Topic5_PEASFramework() {
     return (
         <div className="max-w-4xl mx-auto pb-20 space-y-12">
             <TopicProgressTracker topicId="unit4-topic5_peasframework" />
+
+            {/* PREREQUISITES */}
+            <SectionWrapper id="prerequisites" title="0. Prerequisites" subtitle="What you should know before starting" icon={<BookOpen className="text-sky-600" size={24} />} badge="Prerequisites" badgeColor="bg-sky-100 text-sky-700" accentColor="border-sky-500">
+                <div className="space-y-3">
+                    {(() => { const d = getTopicData('unit4', 'Topic5_PEASFramework'); if (!d) return null; return (<ul className="list-disc list-inside space-y-2 text-sm text-slate-700 dark:text-slate-300">{d.prerequisites.map((p,i) => <li key={i}>{p}</li>)}</ul>); })()}
+                </div>
+            </SectionWrapper>
             {/* SECTION 1: STORYTELLING */}
             <SectionWrapper 
                 id="story" 
@@ -476,14 +485,32 @@ export default function Topic5_PEASFramework() {
                 </div>
             </SectionWrapper>
 
+            {/* MCQ KNOWLEDGE CHECK */}
+            <SectionWrapper id="mcq" title="8. Knowledge Check" subtitle="10 Feedback-Based MCQs" icon={<HelpCircle className="text-purple-600" size={24} />} badge="MCQ Quiz" badgeColor="bg-purple-100 text-purple-700" accentColor="border-purple-500">
+                {(() => { const d = getTopicData('unit4', 'Topic5_PEASFramework'); if (!d) return null; return <FeedbackMCQ questions={d.mcqs} />; })()}
+            </SectionWrapper>
+
             {/* FEEDBACK SECTION */}
             <div className="bg-primary-600 rounded-[2.5rem] p-10 text-center text-white space-y-6 shadow-2xl shadow-primary-500/20">
-                <div className="max-w-xl mx-auto space-y-2">
-                    <h3 className="text-3xl font-black italic">PEAS Framework: Mastered!</h3>
-                    <p className="text-primary-100">
-                        You've learned how to design an agent's world. Now, let's explore the different types of brains (Agents) that inhabit these worlds.
-                    </p>
-                </div>
+                    {/* RECAP */}
+                    <div className="max-w-xl mx-auto mb-6">
+                        <h4 className="text-xl font-bold mb-3">Topic Recap</h4>
+                        {(() => { const d = getTopicData('unit4', 'Topic5_PEASFramework'); if (!d) return null; return (
+                            <ol className="text-left space-y-2 text-sm">{d.recap.map((p,i) => <li key={i} className="flex gap-2"><span className="font-bold">{i+1}.</span>{p}</li>)}</ol>
+                        ); })()}
+                    </div>
+                    {/* SKILL MAPPING */}
+                    <div className="max-w-xl mx-auto mb-6">
+                        <h4 className="text-xl font-bold mb-3">Skill Mapping</h4>
+                        {(() => { const d = getTopicData('unit4', 'Topic5_PEASFramework'); if (!d) return null; return (
+                            <div className="grid gap-2">{d.skillMapping.map((s,i) => (
+                                <div key={i} className="flex justify-between bg-white/10 rounded-xl p-3 text-sm">
+                                    <span>{s.skill}</span>
+                                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${s.level === 'Beginner' ? 'bg-green-500/20 text-green-200' : s.level === 'Intermediate' ? 'bg-amber-500/20 text-amber-200' : 'bg-red-500/20 text-red-200'}`}>{s.level}</span>
+                                </div>
+                            ))}</div>
+                        ); })()}
+                    </div>
                 <div className="flex justify-center gap-4">
                     <button className="px-10 py-4 bg-white text-primary-600 font-black rounded-2xl hover:scale-105 transition-transform shadow-xl">
                         NEXT: TYPES OF AGENTS
