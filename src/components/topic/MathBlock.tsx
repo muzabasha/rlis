@@ -61,35 +61,39 @@ function SafeInline({ math }: { math: string }) {
 }
 
 /**
- * Automatically parses mathematical terms (subscripts, superscripts, LaTeX commands,
- * function calls, and Greek letters) in plain text and renders them dynamically as SafeInline KaTeX.
+ * Applies the original math-term regex to a plain text string.
+ * Returns a string if no matches, otherwise an array of text + SafeInline elements.
  */
-function formatMathText(text: string | undefined): React.ReactNode | string {
+function formatSimpleMath(text: string, outerKey: string = ''): React.ReactNode | string {
+    const mathRegex = /(\b[a-zA-Z0-9γππαδεΦφθβλP_]+(?:_[a-zA-Z0-9+=\-{}*']+|\^[a-zA-Z0-9+=\-{}*']+)+\b|\\[a-zA-Z_]+(?:{[a-zA-Z0-9+=\-{}*']+})?|\b[QPVqv]\([a-zA-Z0-9,\s|'_^+*\-={}]+\)|[γππαδεΦφθβλ])/g;
+    const parts = text.split(mathRegex);
+    if (parts.length === 1) return text;
+    return parts.map((part, i) =>
+        i % 2 === 0 ? part : <SafeInline key={`${outerKey}m${i}`} math={part} />
+    );
+}
+
+/**
+ * Automatically parses mathematical terms (subscripts, superscripts, LaTeX commands,
+ * function calls, Greek letters) and `$...$` delimiters in plain text,
+ * rendering them dynamically as SafeInline KaTeX.
+ */
+export function formatMathText(text: string | undefined): React.ReactNode | string {
     if (!text) return '';
 
-    // Regex to capture:
-    // 1. Math terms with subscripts/superscripts (e.g. S_t, R_{t+1}, d^n)
-    // 2. LaTeX commands (e.g. \pi^*, \alpha)
-    // 3. Function representations (e.g. Q(s,a), V(s))
-    // 4. Standalone Greek letters (e.g. γ, π, ε)
-    const mathRegex = /(\b[a-zA-Z0-9γππαδεΦφθβλP_]+(?:_[a-zA-Z0-9+=\-{}*']+|\^[a-zA-Z0-9+=\-{}*']+)+\b|\\[a-zA-Z_]+(?:{[a-zA-Z0-9+=\-{}*']+})?|\b[QPVqv]\([a-zA-Z0-9,\s|'_^+*\-={}]+\)|[γππαδεΦφθβλ])/g;
-
-    const parts = text.split(mathRegex);
-    if (parts.length === 1) {
-        return text;
+    // First pass: split by $...$ delimiters
+    const dollarParts = text.split(/(\$[^$]+\$)/g);
+    if (dollarParts.length === 1) {
+        return formatSimpleMath(text);
     }
 
-    return (
-        <>
-            {parts.map((part, i) => {
-                if (i % 2 === 0) {
-                    return part;
-                } else {
-                    return <SafeInline key={i} math={part} />;
-                }
-            })}
-        </>
-    );
+    return dollarParts.map((part, i) => {
+        if (i % 2 === 1) {
+            const inner = part.slice(1, -1);
+            return <SafeInline key={`$` + i} math={inner} />;
+        }
+        return formatSimpleMath(part, `t${i}`);
+    });
 }
 
 // ─── Main MathBlock ───────────────────────────────────────────────────────────

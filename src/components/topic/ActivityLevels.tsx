@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, User, UserPlus, Presentation, Clock, Package, Target, ClipboardList, PlayCircle, CheckCircle2, Play, Check } from 'lucide-react';
+import { formatMathText } from './MathBlock';
 
 interface ActivityLevelProps {
     level: 1 | 2 | 3 | 4;
@@ -90,7 +91,7 @@ export function ActivityLevel({ level, title, objectives, instructions, inputs, 
                         <h5 className="flex items-center gap-2 text-xs font-black uppercase tracking-wider opacity-70">
                             <Target size={14} /> Objectives
                         </h5>
-                        <p className="text-sm leading-relaxed font-medium">{objectives}</p>
+                        <p className="text-sm leading-relaxed font-medium">{formatMathText(objectives)}</p>
                     </div>
 
                     <div className="space-y-3">
@@ -119,7 +120,7 @@ export function ActivityLevel({ level, title, objectives, instructions, inputs, 
                                         <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center font-bold text-[10px] transition-colors ${isStepDone ? 'bg-green-500 text-white shadow-sm' : 'bg-black/10 dark:bg-white/20 text-current'}`}>
                                             {isStepDone ? <Check size={12} /> : i + 1}
                                         </div>
-                                        <span className={`leading-relaxed ${isStepDone ? 'line-through opacity-50' : ''}`}>{inst}</span>
+                                        <span className={`leading-relaxed ${isStepDone ? 'line-through opacity-50' : ''}`}>{formatMathText(inst)}</span>
                                     </div>
                                 );
                             })}
@@ -138,7 +139,7 @@ export function ActivityLevel({ level, title, objectives, instructions, inputs, 
                         {outputs && (
                             <div className="p-4 rounded-2xl bg-white/40 dark:bg-black/10 border border-white/20">
                                 <h6 className="text-[10px] font-black uppercase tracking-widest opacity-50 mb-1">Expected Outputs</h6>
-                                <p className="text-xs font-bold">{outputs}</p>
+                                <p className="text-xs font-bold">{formatMathText(outputs)}</p>
                             </div>
                         )}
                     </div>
@@ -151,7 +152,7 @@ export function ActivityLevel({ level, title, objectives, instructions, inputs, 
                             <div className="flex flex-wrap gap-2">
                                 {rubrics.map((rub, i) => (
                                     <span key={i} className="px-3 py-1.5 rounded-xl bg-white/30 dark:bg-black/10 border border-white/10 text-[10px] font-bold">
-                                        {rub}
+                                        {formatMathText(rub)}
                                     </span>
                                 ))}
                             </div>
@@ -162,7 +163,7 @@ export function ActivityLevel({ level, title, objectives, instructions, inputs, 
                         <h5 className="flex items-center gap-2 text-xs font-black uppercase tracking-wider opacity-70 mb-2">
                             <CheckCircle2 size={14} /> Learning Outcomes
                         </h5>
-                        <p className="text-[11px] font-bold leading-relaxed">{outcomes}</p>
+                        <p className="text-[11px] font-bold leading-relaxed">{formatMathText(outcomes)}</p>
                     </div>
                 </div>
             </div>
