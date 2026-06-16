@@ -41,6 +41,7 @@ import {
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { LossCurveVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -321,6 +322,8 @@ export default function Topic13_RLvsDLvsML() {
                         }}
                     />
 
+                    <LossCurveVis type="mse" />
+
                     <MathBlock
                         formula="\mathcal{L}_{\text{DQN}}(\theta) = \mathbb{E}_{(s,a,r,s')\sim\mathcal{D}}\!\left[\Bigl(\underbrace{r + \gamma\max_{a'}Q(s',a';\theta^-)}_{\text{TD target}} - \underbrace{Q(s,a;\theta)}_{\text{current estimate}}\Bigr)^{\!2}\right]"
                         label="Deep Q-Network (DQN) Loss — TD Error Squared"
@@ -346,6 +349,8 @@ export default function Topic13_RLvsDLvsML() {
                             result: 'Q(s,a;θ) moves from 5.2 toward 6.65. After many updates, Q converges to Q*(s,a).',
                         }}
                     />
+
+                    <LossCurveVis type="dqn" label="DQN Loss Function" accent="red" />
 
                     <div className="grid lg:grid-cols-2 gap-6">
                         <AIComparisonRadar />

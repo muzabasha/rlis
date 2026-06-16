@@ -35,6 +35,7 @@ import {
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { DiscountCurveVis, RecursiveReturnVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -375,6 +376,7 @@ export default function Topic8_RewardAndReturns() {
                             result: 'G₁ = 5.31. Even with R₂=0, the agent has high return because it anticipates the +5 reward at step 3.',
                         }}
                     />
+                    <DiscountCurveVis />
 
                     <MathBlock
                         formula="G_t = R_{t+1} + \gamma\, G_{t+1}"
@@ -399,6 +401,7 @@ export default function Topic8_RewardAndReturns() {
                             result: 'G₁ = 7.86. The +6 reward at step 4 propagates backwards through the recursion.',
                         }}
                     />
+                    <RecursiveReturnVis />
 
                     <ReturnCalculatorLab />
                 </div>

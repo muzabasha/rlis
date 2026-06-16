@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { SLvsRLVis, RLTrajectoryVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -384,6 +385,7 @@ export default function Topic3_RLvsSLvsUL() {
                             result: 'θ̂ = 0.4 minimises loss. No exploration needed — the answer was in the labels.',
                         }}
                     />
+                    <SLvsRLVis />
 
                     <MathBlock
                         formula="\tau = (s_0,\, a_0,\, r_1,\, s_1,\, a_1,\, r_2,\, s_2,\, \ldots,\, s_T)"
@@ -409,6 +411,7 @@ export default function Topic3_RLvsSLvsUL() {
                             result: 'The trajectory τ gives G₀=7.019. No labels were needed — only the +10 reward at the goal.',
                         }}
                     />
+                    <RLTrajectoryVis />
 
                     {/* Objective contrast panel */}
                     <div className="grid sm:grid-cols-3 gap-4">
@@ -425,6 +428,7 @@ export default function Topic3_RLvsSLvsUL() {
                             </div>
                         ))}
                     </div>
+                    <SLvsRLVis />
                 </div>
             </SectionWrapper>
 

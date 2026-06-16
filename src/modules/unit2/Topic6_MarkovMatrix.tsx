@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { TransitionMatrixVis, ChapmanKolmogorovVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -397,6 +398,7 @@ export default function Topic6_MarkovMatrix() {
                             result: 'P is a valid right-stochastic matrix. It can be used as a Markov transition matrix.',
                         }}
                     />
+                    <TransitionMatrixVis />
 
                     <MathBlock
                         formula="\mathbf{P}^{(m+n)} = \mathbf{P}^{(m)} \cdot \mathbf{P}^{(n)} \quad \text{(Chapman-Kolmogorov Equation)}"
@@ -420,6 +422,7 @@ export default function Topic6_MarkovMatrix() {
                             result: 'Chapman-Kolmogorov verified. P^(n) converges to [[0.667,0.333],[0.667,0.333]] as n→∞.',
                         }}
                     />
+                    <ChapmanKolmogorovVis />
 
                     <MatrixPowerLab />
                 </div>

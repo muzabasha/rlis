@@ -40,6 +40,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { MarkovPropertyVis, TransitionMatrixVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -362,6 +363,8 @@ export default function Topic3_MarkovPropertyChain() {
                         }}
                     />
 
+                    <MarkovPropertyVis />
+
                     <MathBlock
                         formula="\mathbf{P} = \begin{pmatrix} P_{11} & P_{12} & \cdots & P_{1n} \\ P_{21} & P_{22} & \cdots & P_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ P_{n1} & P_{n2} & \cdots & P_{nn} \end{pmatrix}, \quad \sum_{j=1}^{n} P_{ij} = 1 \;\forall i"
                         label="Markov Transition Matrix"
@@ -385,6 +388,8 @@ export default function Topic3_MarkovPropertyChain() {
                             result: 'Regardless of starting state, the weather converges to 66.7% Sunny and 33.3% Rainy in the long run. This is the stationary distribution π where π·P = π.',
                         }}
                     />
+
+                    <TransitionMatrixVis />
 
                     <MarkovChainVisualizer />
                 </div>

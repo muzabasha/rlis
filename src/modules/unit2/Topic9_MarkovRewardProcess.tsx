@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { BellmanConvergenceVis, MRPMatrixVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -399,6 +400,8 @@ export default function Topic9_MarkovRewardProcess() {
                         }}
                     />
 
+                    <BellmanConvergenceVis formula="V(s) = \mathcal{R}_s + \gamma \sum_{s'} \mathcal{P}_{ss'} V(s')" label="MRP Bellman Equation" accent="violet" />
+
                     <MathBlock
                         formula="\mathbf{V} = (\mathbf{I} - \gamma\mathbf{P})^{-1}\mathbf{R}"
                         label="MRP Bellman Equation — Matrix Form (Exact Solution)"
@@ -425,6 +428,8 @@ export default function Topic9_MarkovRewardProcess() {
                             result: 'V(s₁)≈42.5, V(s₂)≈26.25. State 1 is more valuable because it has higher immediate reward AND better transition dynamics.',
                         }}
                     />
+
+                    <MRPMatrixVis />
 
                     <MRPSimulatorLab />
                 </div>

@@ -41,6 +41,7 @@ import {
     ResponsiveContainer, AreaChart, Area, Legend, BarChart, Bar
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
+import { SARSAQLearningVis } from '../../components/visualizers';
 import { getTopicData } from '../../data/topicData';
 
 
@@ -351,6 +352,8 @@ export default function Topic8_TypesOfRL() {
                             result: 'Q((2,3),right) updated from 5.2 → 5.21. Small positive update because the actual next action was decent.',
                         }}
                     />
+
+                    <SARSAQLearningVis />
 
                     <MathBlock
                         formula="Q(S_t,A_t) \leftarrow Q(S_t,A_t) + \alpha\!\underbrace{\bigl[R_{t+1} + \gamma\max_{a'}Q(S_{t+1},a') - Q(S_t,A_t)\bigr]}_{\delta_t^{\text{Q-learning}}}"

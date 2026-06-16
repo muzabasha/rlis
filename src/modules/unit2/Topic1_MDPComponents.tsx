@@ -38,6 +38,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { MDPTupleVis, TransitionProbVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -356,6 +357,8 @@ export default function Topic1_MDPKeyComponents() {
                         }}
                     />
 
+                    <MDPTupleVis />
+
                     <MathBlock
                         formula="\mathcal{P}(s' \mid s, a) = \Pr(S_{t+1}=s' \mid S_t=s,\, A_t=a), \quad \sum_{s'\in\mathcal{S}}\mathcal{P}(s'\mid s,a) = 1"
                         label="Transition Probability — Stochastic Dynamics"
@@ -378,6 +381,8 @@ export default function Topic1_MDPKeyComponents() {
                             result: 'Searching from High battery: 70% chance of staying High, 30% chance of draining to Low. Expected reward = 4 cans regardless of outcome.',
                         }}
                     />
+
+                    <TransitionProbVis />
                 </div>
             </SectionWrapper>
 

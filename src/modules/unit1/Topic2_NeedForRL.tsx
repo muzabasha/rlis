@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { DiscountCurveVis, RecursiveReturnVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -354,6 +355,7 @@ export default function Topic2_NeedForRL() {
                             result: 'E_π[G₀] = 6.22. The optimal policy π* is the one that achieves the highest such value across all possible trajectories.',
                         }}
                     />
+                    <DiscountCurveVis formula="\\pi^* = \\arg\\max_\\pi \\mathbb{E}_\\pi[\\sum \\gamma^t R]" accent="blue" />
 
                     <MathBlock
                         formula="G_t = R_{t+1} + \gamma G_{t+1} \quad \text{(recursive form)}"
@@ -378,6 +380,7 @@ export default function Topic2_NeedForRL() {
                             result: 'G₁ = 7.86. Notice how the +6 reward at step 4 propagates backwards through the recursion.',
                         }}
                     />
+                    <RecursiveReturnVis />
                 </div>
             </SectionWrapper>
 

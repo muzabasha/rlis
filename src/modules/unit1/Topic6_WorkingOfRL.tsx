@@ -41,6 +41,7 @@ import {
     ResponsiveContainer, AreaChart, Area, Legend, BarChart, Bar
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
+import { RLInteractionCycleVis, SetsOfRLVis } from '../../components/visualizers';
 import { getTopicData } from '../../data/topicData';
 
 
@@ -408,6 +409,8 @@ export default function Topic6_WorkingOfRL() {
                         }}
                     />
 
+                    <RLInteractionCycleVis />
+
                     <MathBlock
                         formula="S_t \in \mathcal{S},\quad A_t \in \mathcal{A}(S_t),\quad R_{t+1} \in \mathcal{R} \subset \mathbb{R}"
                         label="The Sets of RL — Formal Domains"
@@ -421,6 +424,8 @@ export default function Topic6_WorkingOfRL() {
                             { term: '\\mathcal{R}\\subset\\mathbb{R}', name: 'Reward Set', meaning: 'The set of possible reward values. Usually a bounded subset of the real numbers.', range: '\\mathbb{R}', example: '𝒮 = {−1, 0, +1, +10} for a simple grid task.' },
                         ]}
                     />
+
+                    <SetsOfRLVis />
 
                     <div className="grid lg:grid-cols-2 gap-6">
                         <RLLoopVisualizer />

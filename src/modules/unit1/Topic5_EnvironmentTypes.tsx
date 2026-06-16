@@ -41,6 +41,7 @@ import {
     ScatterChart, Scatter, ZAxis
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
+import { TransitionProbVis, ExpectedRewardVis } from '../../components/visualizers';
 import { getTopicData } from '../../data/topicData';
 
 
@@ -380,6 +381,8 @@ export default function Topic5_EnvironmentTypes() {
                         }}
                     />
 
+                    <TransitionProbVis />
+
                     <MathBlock
                         formula="\mathcal{R}(s,a) = \mathbb{E}\!\left[R_{t+1} \mid S_t=s,\, A_t=a\right] = \sum_{s'}\mathcal{P}(s'\mid s,a)\cdot r(s,a,s')"
                         label="Expected Reward Function"
@@ -402,6 +405,8 @@ export default function Topic5_EnvironmentTypes() {
                             result: 'R((2,3),right) = −0.10. Every step costs 0.1 regardless of direction slipped — the step penalty is uniform here.',
                         }}
                     />
+
+                    <ExpectedRewardVis />
 
                     <EnvironmentTuner />
                 </div>

@@ -40,6 +40,7 @@ import {
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { RewardShapingVis, CurseDimensionalityVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -358,6 +359,8 @@ export default function Topic12_ChallengesWithRL() {
                         }}
                     />
 
+                    <RewardShapingVis />
+
                     <MathBlock
                         formula="|\mathcal{S}| = d^n \quad \Longrightarrow \quad \text{Curse of Dimensionality}"
                         label="Dimensionality Curse — State Space Explosion"
@@ -381,6 +384,9 @@ export default function Topic12_ChallengesWithRL() {
                             result: 'For n>5 dimensions, tabular RL is infeasible. Deep RL (DQN) uses neural networks to approximate Q(s,a) across the entire continuous state space.',
                         }}
                     />
+
+                    <CurseDimensionalityVis />
+
                 </div>
             </SectionWrapper>
 

@@ -42,6 +42,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { RecyclingRobotVis, GridworldVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -385,6 +386,8 @@ export default function Topic13_MDPExamples() {
                         }}
                     />
 
+                    <RecyclingRobotVis />
+
                     <MathBlock
                         formula="\text{Gridworld MDP}: \mathcal{S}=\{(r,c)\},\;\mathcal{A}=\{\uparrow,\downarrow,\leftarrow,\rightarrow\},\;\mathcal{R}(s)=\begin{cases}+10 & s=\text{goal} \\ -1 & \text{otherwise}\end{cases}"
                         label="Example 2 — Gridworld (Standard RL Benchmark)"
@@ -398,6 +401,8 @@ export default function Topic13_MDPExamples() {
                             { term: '\\mathcal{R}(s)=-1', name: 'Step Penalty', meaning: 'Every non-goal step costs −1. Incentivises the agent to reach the goal as quickly as possible.', range: '\\{-1,+10\\}', example: 'Shortest path of 6 steps: G₀ = −1−0.9−0.81−...+10×0.9⁶ ≈ 4.3.' },
                         ]}
                     />
+
+                    <GridworldVis />
 
                     <RecyclingRobotLab />
                 </div>

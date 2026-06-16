@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import { RLInteractionCycleVis, DiscountCurveVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import { BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb, History, ChevronDown, ChevronUp, Play, Pause, RotateCcw, CheckCircle2, Clock, Target, AlertTriangle, TrendingUp, Briefcase, Star } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, Legend } from 'recharts';
@@ -369,6 +370,7 @@ export default function Topic1_EarlyRoots() {
                             result: 'Agent receives R_{t+1} = −0.1 and observes S_{t+1} = (0,1). Updates its Q-table entry Q((0,0), right).',
                         }}
                     />
+                    <RLInteractionCycleVis />
 
                     <MathBlock
                         formula="G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}"
@@ -394,6 +396,7 @@ export default function Topic1_EarlyRoots() {
                             result: 'G₁ = 5.31. Even though R₂=0 (no immediate reward), the agent still has high return because it anticipates the +5 reward at step 3.',
                         }}
                     />
+                    <DiscountCurveVis />
                 </div>
             </SectionWrapper>
 

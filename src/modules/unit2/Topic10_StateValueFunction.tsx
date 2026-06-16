@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { ValueDistributionVis, BellmanConvergenceVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -358,6 +359,8 @@ export default function Topic10_StateValueFunction() {
                         }}
                     />
 
+                    <ValueDistributionVis />
+
                     <MathBlock
                         formula="v_\pi(s) = \sum_{a \in \mathcal{A}} \pi(a|s) \sum_{s' \in \mathcal{S}} \mathcal{P}(s'|s,a)\Bigl[\mathcal{R}(s,a,s') + \gamma\, v_\pi(s')\Bigr]"
                         label="Bellman Expectation Equation for V_π — Expanded Form"
@@ -383,6 +386,8 @@ export default function Topic10_StateValueFunction() {
                             result: 'v_π((2,3)) = 5.915. This is the expected return from state (2,3) under the given stochastic policy.',
                         }}
                     />
+
+                    <BellmanConvergenceVis />
 
                     <GridworldValueLab />
                 </div>

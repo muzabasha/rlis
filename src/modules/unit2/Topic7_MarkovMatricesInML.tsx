@@ -34,6 +34,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { BigramMLEVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -393,6 +394,7 @@ export default function Topic7_MarkovMatricesInML() {
                             result: 'P("I love ML") ≈ 0.006 = 0.6%. The sentence is plausible but not the most common sequence.',
                         }}
                     />
+                    <BigramMLEVis />
 
                     <MathBlock
                         formula="P_{ij} = \frac{\text{Count}(w_i \to w_j)}{\displaystyle\sum_{k} \text{Count}(w_i \to w_k)} = \frac{C(w_i,\,w_j)}{C(w_i)}"
@@ -418,6 +420,7 @@ export default function Topic7_MarkovMatricesInML() {
                             result: 'The "The" row of the transition matrix: [cat=0.667, dog=0.333]. Learned purely from counting.',
                         }}
                     />
+                    <BigramMLEVis />
 
                     <TextGeneratorLab />
                 </div>

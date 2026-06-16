@@ -42,6 +42,7 @@ import {
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { MDPTupleVis, CTRVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -336,6 +337,8 @@ export default function Topic11_ApplicationsOfRL() {
                         ]}
                     />
 
+                    <MDPTupleVis />
+
                     <MathBlock
                         formula="\text{CTR}(t) = \frac{\displaystyle\sum_{i=1}^{t}\mathbf{1}[\text{click}_i]}{\displaystyle\sum_{i=1}^{t}\mathbf{1}[\text{impression}_i]}"
                         label="Recommendation System Reward — Click-Through Rate"
@@ -359,6 +362,9 @@ export default function Topic11_ApplicationsOfRL() {
                             result: 'CTR=0.40. The agent receives R=0.40 and updates Q-values to make similar recommendations more likely in similar user states.',
                         }}
                     />
+
+                    <CTRVis />
+
                 </div>
             </SectionWrapper>
 

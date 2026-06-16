@@ -41,6 +41,7 @@ import {
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { DiscountCurveVis, AdvantageVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -321,6 +322,8 @@ export default function Topic10_AdvantagesOfRL() {
                         }}
                     />
 
+                    <AdvantageVis />
+
                     <div className="grid lg:grid-cols-2 gap-6">
                         <BenefitComparisonChart />
                         <div className="space-y-3">
@@ -343,6 +346,9 @@ export default function Topic10_AdvantagesOfRL() {
                             ))}
                         </div>
                     </div>
+
+                    <DiscountCurveVis />
+
                 </div>
             </SectionWrapper>
 

@@ -40,6 +40,7 @@ import {
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { StationaryDistVis, MatrixPowerVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -391,6 +392,8 @@ export default function Topic4_MarkovChainAnalysis() {
                         }}
                     />
 
+                    <StationaryDistVis />
+
                     <MathBlock
                         formula="\left(\mathbf{P}^n\right)_{ij} = \Pr(X_{t+n} = j \mid X_t = i)"
                         label="n-Step Transition Probability — Matrix Power"
@@ -414,6 +417,8 @@ export default function Topic4_MarkovChainAnalysis() {
                             result: 'P(Sunny in 2 days | Sunny today) = 0.72. As n→∞, both rows converge to [0.667, 0.333].',
                         }}
                     />
+
+                    <MatrixPowerVis />
 
                     <div className="grid sm:grid-cols-3 gap-4">
                         {[

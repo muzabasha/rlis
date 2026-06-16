@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { MarkovModelTaxonomyVis, HMMPOMDPVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -355,6 +356,7 @@ export default function Topic5_MarkovModel() {
                             { term: '\\Omega,\\,O', name: 'Observations & Emission', meaning: 'In POMDP: Ω is the set of possible observations; O(o|s,a) is the probability of observing o in state s after action a.', range: '[0,1]', example: 'Noisy sensor: O(see_wall|near_wall,move)=0.9.' },
                         ]}
                     />
+                    <MarkovModelTaxonomyVis />
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <MathBlock
@@ -368,6 +370,7 @@ export default function Topic5_MarkovModel() {
                                 { term: '\\mathbf{O}', name: 'Emission Matrix', meaning: 'O(y|s) = probability of observing y when in hidden state s.', range: '[0,1]', example: 'O(audio_A|state_A)=0.8.' },
                             ]}
                         />
+                        <HMMPOMDPVis type="hmm" />
                         <MathBlock
                             formula="\langle \mathcal{S},\mathcal{A},\mathbf{P},\mathcal{R},\boldsymbol{\Omega},\mathbf{O} \rangle"
                             label="POMDP — Partially Observable MDP"
@@ -379,6 +382,7 @@ export default function Topic5_MarkovModel() {
                                 { term: 'b(s)', name: 'Belief State', meaning: 'Probability distribution over true states, updated after each observation using Bayes\' rule.', range: '[0,1]^{|S|}', example: 'b = [0.3, 0.5, 0.2] — 30% chance in state 1, 50% in state 2, 20% in state 3.' },
                             ]}
                         />
+                        <HMMPOMDPVis type="pomdp" />
                     </div>
 
                     <ModelTaxonomyLab />

@@ -34,6 +34,7 @@ import {
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { TransitionProbVis, ExpectedRewardVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -345,6 +346,8 @@ export default function Topic2_FormalMDPDefinition() {
                         }}
                     />
 
+                    <TransitionProbVis />
+
                     <MathBlock
                         formula="\mathcal{R}_{s}^{a} = \mathbb{E}\!\left[R_{t+1} \;\middle|\; S_t=s,\, A_t=a\right] = \sum_{s'\in\mathcal{S}}\mathcal{P}_{ss'}^{a}\cdot r(s,a,s')"
                         label="Reward Function — Expected Immediate Reward"
@@ -368,6 +371,8 @@ export default function Topic2_FormalMDPDefinition() {
                             result: 'R^{Search}_{Low} = 4.0 (or 3.3 with depletion risk). The reward function captures the expected outcome of each action.',
                         }}
                     />
+
+                    <ExpectedRewardVis />
 
                     <TransitionMatrixExplorer />
                 </div>

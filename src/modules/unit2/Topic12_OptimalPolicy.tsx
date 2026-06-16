@@ -38,6 +38,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { BellmanOptimalityVis, OptimalPolicyVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -350,6 +351,8 @@ export default function Topic12_OptimalPolicyMDP() {
                                 }}
                             />
 
+                            <BellmanOptimalityVis />
+
                             <MathBlock
                                 formula="q_*(s,a) = \sum_{s'}\mathcal{P}(s'|s,a)\Bigl[\mathcal{R}(s,a,s') + \gamma\max_{a'}q_*(s',a')\Bigr]"
                                 label="Bellman Optimality Equation for Q*(s,a)"
@@ -373,6 +376,8 @@ export default function Topic12_OptimalPolicyMDP() {
                                 }}
                             />
 
+                            <BellmanOptimalityVis label="Bellman Optimality for Q*" accent="violet" />
+
                             <MathBlock
                                 formula="\pi^*(s) = \arg\max_{a}\, q_*(s,a) = \arg\max_{a}\sum_{s'}\mathcal{P}(s'|s,a)\Bigl[\mathcal{R}(s,a,s') + \gamma\, v_*(s')\Bigr]"
                                 label="Optimal Policy — Greedy with Respect to Q*"
@@ -385,6 +390,8 @@ export default function Topic12_OptimalPolicyMDP() {
                                     { term: '\\arg\\max_a', name: 'Argmax', meaning: 'Returns the action a that achieves the maximum value, not the maximum value itself.', range: '\\mathcal{A}', example: 'argmax(Q=3,Q=9,Q=5) = action 2 (not 9).' },
                                 ]}
                             />
+
+                            <OptimalPolicyVis />
 
                             <PolicyLab />
                         </div>

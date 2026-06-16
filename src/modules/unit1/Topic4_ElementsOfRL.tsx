@@ -9,6 +9,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { SoftmaxVis, DiscountCurveVis, ValueDistributionVis, BellmanConvergenceVis, TransitionProbVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -452,6 +453,7 @@ export default function Topic4_ElementsOfRL() {
                             result: 'The stochastic policy ensures the agent explores "left" 30% of the time, preventing it from getting stuck in a local optimum.',
                         }}
                     />
+                    <SoftmaxVis formula="\\pi(a \\mid s) = \\Pr(A_t = a \\mid S_t = s)" label="Policy — The Agent's Strategy" accent="blue" />
 
                     <MathBlock
                         formula="G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots"
@@ -476,6 +478,7 @@ export default function Topic4_ElementsOfRL() {
                             result: 'G₁ = 5.31. Even with R₂=0, the agent has high return because it anticipates the +5 reward at step 3.',
                         }}
                     />
+                    <DiscountCurveVis />
 
                     <MathBlock
                         formula="v_\pi(s) = \mathbb{E}_\pi\!\left[G_t \mid S_t = s\right] = \mathbb{E}_\pi\!\left[\sum_{k=0}^{\infty}\gamma^k R_{t+k+1} \;\middle|\; S_t=s\right]"
@@ -499,6 +502,7 @@ export default function Topic4_ElementsOfRL() {
                             result: 'v_π(s₁)=9, v_π(s₂)=10, v_π(s₃)=0. The value propagates backwards from the goal.',
                         }}
                     />
+                    <ValueDistributionVis />
 
                     <div className="grid lg:grid-cols-2 gap-6">
                         <GammaExplorer />
@@ -526,6 +530,7 @@ export default function Topic4_ElementsOfRL() {
                             </div>
                         </div>
                     </div>
+                    <BellmanConvergenceVis formula="v_\\pi(s) = \\mathbb{E}_\\pi[G_t|S_t=s]" label="Value Function Overview" accent="emerald" />
                 </div>
             </SectionWrapper>
 

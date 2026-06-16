@@ -41,6 +41,7 @@ import {
     Tooltip, Legend
 } from 'recharts';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
+import { ValueDistributionVis, SoftmaxVis, ModelVis } from '../../components/visualizers';
 import { getTopicData } from '../../data/topicData';
 
 
@@ -343,6 +344,8 @@ export default function Topic7_ApproachesToRL() {
                         }}
                     />
 
+                    <ValueDistributionVis type="action-value" label="Action-Value Function Q(s,a)" accent="violet" />
+
                     <MathBlock
                         formula="\pi_\theta(a \mid s) = \frac{\exp\!\left(\theta_a^\top \phi(s)\right)}{\sum_{a'}\exp\!\left(\theta_{a'}^\top \phi(s)\right)}"
                         label="Policy-Based Approach — Softmax Policy"
@@ -367,6 +370,8 @@ export default function Topic7_ApproachesToRL() {
                         }}
                     />
 
+                    <SoftmaxVis />
+
                     <MathBlock
                         formula="\hat{s}_{t+1},\,\hat{r}_{t+1} = \mathcal{M}_\phi(s_t,\,a_t)"
                         label="Model-Based Approach — Learned Environment Model"
@@ -380,6 +385,8 @@ export default function Topic7_ApproachesToRL() {
                             { term: '\\hat{r}_{t+1}', name: 'Predicted Reward', meaning: 'The model\'s prediction of the reward that will be received.', range: '\\mathbb{R}', example: 'Model predicts r=−0.1 for a step action.' },
                         ]}
                     />
+
+                    <ModelVis />
 
                     <div className="grid lg:grid-cols-2 gap-6">
                         <ApproachComparisonChart />

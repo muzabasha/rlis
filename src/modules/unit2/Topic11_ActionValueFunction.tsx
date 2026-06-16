@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { ValueDistributionVis, BellmanConvergenceVis, VFromQVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -360,6 +361,8 @@ export default function Topic11_ActionValueFunction() {
                         }}
                     />
 
+                    <ValueDistributionVis type="action-value" label="Action-Value Function q_π(s,a)" accent="violet" />
+
                     <MathBlock 
                         formula="q_\\pi(s, a) = \\sum_{s', r} p(s', r | s, a) [r + \\gamma v_\\pi(s')]"
                         label="Recursive Relationship (Bellman)"
@@ -374,6 +377,8 @@ export default function Topic11_ActionValueFunction() {
                         ]}
                     />
 
+                    <BellmanConvergenceVis label="Recursive Q-Value Relationship" accent="violet" />
+
                     <MathBlock 
                         formula="v_\\pi(s) = \\sum_{a} \\pi(a|s) q_\\pi(s, a)"
                         label="The Connection: V from Q"
@@ -385,6 +390,8 @@ export default function Topic11_ActionValueFunction() {
                             { term: '\\pi(a|s)', name: 'Policy Probability', meaning: 'The chance of taking action a when in state s.', range: '[0, 1]', example: 'Greedy policy: 1.0 for the best action, 0 for others.' },
                         ]}
                     />
+
+                    <VFromQVis />
                 </div>
             </SectionWrapper>
 
