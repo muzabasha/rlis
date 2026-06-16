@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { BackupDiagramVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -353,6 +354,7 @@ export default function Topic7_BackupDiagram() {
                             { term: '\\xrightarrow{}', name: 'Information Transfer', meaning: 'The update step in an algorithm.', range: 't \\to t-1', example: 'Updating Q-values.' },
                         ]}
                     />
+                    <BackupDiagramVis />
                 </div>
             </SectionWrapper>
 

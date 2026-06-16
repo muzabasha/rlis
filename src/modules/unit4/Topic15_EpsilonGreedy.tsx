@@ -44,6 +44,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { EpsilonGreedyVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -341,6 +342,7 @@ export default function Topic15_EpsilonGreedy() {
                             result: 'The agent will pick "Up" 85% of the time, but will try other directions 15% of the time.',
                         }}
                     />
+                    <EpsilonGreedyVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><TrendingUp size={16} /> Epsilon Decay</h5>

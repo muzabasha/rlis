@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { OptimalPolicyVis } from '../../components/visualizers';
 import {
     BookOpen,
     Calculator,
@@ -334,6 +335,7 @@ export default function Topic5_PEASFramework() {
                             { term: 'E', name: 'Environment', meaning: 'The external world the agent operates in.', range: '-', example: 'The Global Internet.' }
                         ]}
                     />
+                    <OptimalPolicyVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Sensors vs. Percepts</h5>

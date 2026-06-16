@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { FixedVsAdaptiveVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -314,6 +315,7 @@ export default function Topic3_TraditionalVsIS() {
                             />
                         </div>
                     </div>
+                    <FixedVsAdaptiveVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Heuristic vs. Algorithmic</h5>

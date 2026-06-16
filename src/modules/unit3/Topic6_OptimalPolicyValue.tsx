@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { BellmanOptimalityVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -318,6 +319,7 @@ export default function Topic6_OptimalPolicyValue() {
                             { term: '\max_{a\'} q_*(s\', a\')', name: 'Best Future Action', meaning: 'Assuming we take the best move next.', range: '\mathbb{R}', example: 'Calculating based on perfect future play.' },
                         ]}
                     />
+                    <BellmanOptimalityVis />
                 </div>
             </SectionWrapper>
 

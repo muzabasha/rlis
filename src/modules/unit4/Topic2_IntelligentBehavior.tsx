@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { ExpectedRewardVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -329,6 +330,7 @@ export default function Topic2_IntelligentBehavior() {
                             { term: '\mathbb{E}', name: 'Expectation', meaning: 'The average result across many runs (accounting for randomness).', range: '-', example: 'Mean return over 100 episodes.' }
                         ]}
                     />
+                    <ExpectedRewardVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Rationality vs. Intelligence</h5>

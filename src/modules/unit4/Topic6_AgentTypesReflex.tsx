@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { AgentFunctionVis } from '../../components/visualizers';
 import {
     BookOpen,
     Calculator,
@@ -347,6 +348,7 @@ export default function Topic6_AgentTypesReflex() {
                             { term: '\mathcal{A}', name: 'Action Space', meaning: 'The set of all possible moves the agent can make.', range: '-', example: '{Move, Stop}.' }
                         ]}
                     />
+                    <AgentFunctionVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Reflex Logic</h5>

@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { EnvironmentVectorVis } from '../../components/visualizers';
 import {
     BookOpen,
     Calculator,
@@ -320,6 +321,7 @@ export default function Topic7_EnvironmentTypes() {
                             { term: 'D_{dyn}', name: 'Dynamism', meaning: 'If the environment can change while the agent is deliberating.', range: '{0, 1}', example: '1 for a robot navigating a crowd.' }
                         ]}
                     />
+                    <EnvironmentVectorVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Discrete vs. Continuous Math</h5>

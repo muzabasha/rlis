@@ -51,6 +51,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { RLTrajectoryVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -242,6 +243,7 @@ export default function Topic11_MCBackupDiagrams() {
                             { term: '\tau', name: 'Trajectory', meaning: 'The ordered set of experience tuples.', range: '-', example: 'Start -> Left -> -1 -> Pit -> Game Over.' }
                         ]}
                     />
+                    <RLTrajectoryVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Depth over Breadth</h5>

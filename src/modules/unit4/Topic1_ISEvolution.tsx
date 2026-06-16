@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock, SymbolTable } from '../../components/topic/MathBlock';
+import { UniversalIntelligenceVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen, Calculator, Users, HelpCircle, FlaskConical, Lightbulb,
@@ -290,6 +291,7 @@ export default function Topic1_ISEvolution() {
                             { term: '2^{-K(\mu)}', name: 'Complexity Weight', meaning: 'Occam\'s Razor: simple environments get more weight than complex ones.', range: '(0, 1]', example: 'High weight for basic physics.' }
                         ]}
                     />
+                    <UniversalIntelligenceVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Evolution of Capacity</h5>

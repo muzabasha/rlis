@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { DiscountCurveVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -325,6 +326,7 @@ export default function Topic13_QLearningCaseStudies() {
                             { term: 'G_t', name: 'Total Return', meaning: 'The target the agent is trying to maximize.', range: '\mathbb{R}', example: 'Total profit over 1 year.' },
                         ]}
                     />
+                    <DiscountCurveVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white flex items-center justify-between">
                         <div className="space-y-1">

@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { PolicyVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -309,6 +310,7 @@ export default function Topic1_PolicyInMDP() {
                             { term: 'a|s', name: 'Conditional Action', meaning: 'Taking action a given the current state is s.', range: '\mathcal{A}', example: 'Picking "Jump" given state "Obstacle".' },
                         ]}
                     />
+                    <PolicyVis />
 
                     <div className="grid lg:grid-cols-2 gap-8">
                         <div className="p-6 bg-slate-900 rounded-3xl text-white">

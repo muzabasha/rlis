@@ -46,6 +46,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { RecursiveReturnVis, ValueDistributionVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -242,6 +243,7 @@ export default function Topic10_MCIntro() {
                             { term: 'T', name: 'Terminal Time', meaning: 'The step at which the episode ends.', range: '\\mathbb{Z}^+', example: 'Game over at step 50.' },
                         ]}
                     />
+                    <RecursiveReturnVis />
 
                     <MathBlock 
                         formula="V(s) \approx \frac{1}{N(s)} \sum_{i=1}^{N(s)} G_i(s)"
@@ -265,6 +267,7 @@ export default function Topic10_MCIntro() {
                             result: 'The MC estimate for state s is 11.',
                         }}
                     />
+                    <ValueDistributionVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Sparkles size={16} /> Bias-Variance Trade-off</h5>

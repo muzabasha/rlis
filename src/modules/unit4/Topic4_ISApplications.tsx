@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { BellmanOptimalityVis } from '../../components/visualizers';
 import {
     BookOpen,
     Calculator,
@@ -337,6 +338,7 @@ export default function Topic4_ISApplications() {
                             { term: '\theta', name: 'Domain Knowledge', meaning: 'The parameters learned from industry-specific data.', range: '\mathbb{R}^n', example: 'Weights trained on cancer biopsies.' }
                         ]}
                     />
+                    <BellmanOptimalityVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Convergence of Domains</h5>

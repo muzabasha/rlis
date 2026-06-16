@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { TransitionProbVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -389,6 +390,7 @@ export default function Topic5_RecyclingRobotCase() {
                             { term: '\alpha', name: 'Retention Prob', meaning: 'Likelihood energy stays high.', range: '0 \to 1', example: '0.7 (70% chance).' },
                         ]}
                     />
+                    <TransitionProbVis />
                 </div>
             </SectionWrapper>
 

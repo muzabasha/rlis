@@ -49,6 +49,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { MCIncrementalVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -242,6 +243,7 @@ export default function Topic13_MCPrediction() {
                             { term: '[G - V(s)]', name: 'Error', meaning: 'The difference between reality and prediction.', range: '\mathbb{R}', example: 'Error = +2 (I did better than expected!).' }
                         ]}
                     />
+                    <MCIncrementalVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Constant Alpha Update</h5>

@@ -50,6 +50,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { LearningUpdateVis } from '../../components/visualizers';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -335,6 +336,7 @@ export default function Topic9_EnvironmentsDetailed() {
                             { term: '\theta', name: 'Agent Parameters', meaning: 'The internal data structure (weights/rules) that define behavior.', range: '\mathbb{R}^n', example: 'Weights in a Neural Network.' }
                         ]}
                     />
+                    <LearningUpdateVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> The Performance Element</h5>

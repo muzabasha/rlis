@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { SARSAQLearningVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -363,6 +364,7 @@ export default function Topic8_QLearningOverview() {
                             result: 'The Q-value jumped from 5 to 11.1, reflecting the high reward and good future potential discovered.',
                         }}
                     />
+                    <SARSAQLearningVis />
 
                     <div className="grid lg:grid-cols-3 gap-4">
                         <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">

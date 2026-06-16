@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { SARSAQLearningVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -299,6 +300,7 @@ export default function Topic9_QLearningTerms() {
                             { term: 's\', a\'', name: 'Successor', meaning: 'The situation and choice at the next time step.', range: '\mathcal{S}, \mathcal{A}', example: 'The landing position.' },
                         ]}
                     />
+                    <SARSAQLearningVis />
 
                     <SymbolTable symbols={[
                         { symbol: '\\alpha', meaning: 'Learning Rate — weights new vs old knowledge.', unit: '0 to 1' },

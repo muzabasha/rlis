@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { SARSAQLearningVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -353,6 +354,7 @@ export default function Topic2_QLearningIntro() {
                             { term: '\max_{a\'} Q(s\', a\')', name: 'Best Future Q', meaning: 'The estimate of the best possible reward in the next state.', range: '\mathbb{R}', example: 'Value of the best move next turn.' },
                         ]}
                     />
+                    <SARSAQLearningVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Off-Policy Learning</h5>

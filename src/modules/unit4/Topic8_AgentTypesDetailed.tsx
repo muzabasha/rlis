@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { TransitionProbVis } from '../../components/visualizers';
 import {
     BookOpen,
     Calculator,
@@ -334,6 +335,7 @@ export default function Topic8_AgentTypesDetailed() {
                             { term: 'P(s\' \mid s, a)', name: 'Transition Probability', meaning: 'The chance of action (a) in state (s) leading to state (s\').', range: '[0, 1]', example: '0.8 (80% success).' }
                         ]}
                     />
+                    <TransitionProbVis />
 
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Goal vs Utility</h5>

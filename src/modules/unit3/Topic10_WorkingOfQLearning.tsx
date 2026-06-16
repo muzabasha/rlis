@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { TDErrorVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -324,6 +325,7 @@ export default function Topic10_WorkingOfQLearning() {
                             { term: '\delta_t', name: 'TD Error', meaning: 'The correction signal at time t.', range: '\mathbb{R}', example: '+5 (pleasant surprise).' },
                         ]}
                     />
+                    <TDErrorVis />
                 </div>
             </SectionWrapper>
 

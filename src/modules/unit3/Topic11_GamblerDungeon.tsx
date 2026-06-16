@@ -10,6 +10,7 @@ import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
     SymbolTable } from '../../components/topic/MathBlock';
+import { RecursiveReturnVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
     BookOpen,
@@ -417,6 +418,7 @@ export default function Topic11_GamblerDungeon() {
                             { term: 'r', name: 'Immediate', meaning: 'The gold or lava in the next square.', range: '\mathbb{R}', example: '-50 for lava.' },
                         ]}
                     />
+                    <RecursiveReturnVis />
                 </div>
             </SectionWrapper>
 
