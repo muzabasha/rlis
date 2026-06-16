@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -137,7 +137,6 @@ export default function TopicPage() {
     React.useEffect(() => {
         if (window.location.hash) {
             const hash = window.location.hash.substring(1);
-            // Wait slightly for lazy loaded content to mount
             const timer = setTimeout(() => {
                 const el = document.getElementById(hash);
                 if (el) {
@@ -146,6 +145,24 @@ export default function TopicPage() {
             }, 400);
             return () => clearTimeout(timer);
         }
+    }, [topicId]);
+
+    // Auto-render $...$ LaTeX in topic body content via KaTeX
+    useEffect(() => {
+        const id = setTimeout(() => {
+            const el = document.getElementById('topic-content');
+            if (el) {
+                // @ts-ignore — no TS types for auto-render
+                import('katex/dist/contrib/auto-render.mjs').then(mod => {
+                    mod.default(el, {
+                        delimiters: [{ left: '$', right: '$', display: false }],
+                        ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option'],
+                        throwOnError: false,
+                    });
+                });
+            }
+        }, 100);
+        return () => clearTimeout(id);
     }, [topicId]);
 
     if (!topic || !unit) {
@@ -249,11 +266,13 @@ export default function TopicPage() {
 
             {/* Topic Content */}
             <Suspense fallback={<TopicSkeleton />}>
-                {TopicComponent ? (
-                    <TopicComponent />
-                ) : (
-                    <ComingSoon topicTitle={topic.title} />
-                )}
+                <div id="topic-content">
+                    {TopicComponent ? (
+                        <TopicComponent />
+                    ) : (
+                        <ComingSoon topicTitle={topic.title} />
+                    )}
+                </div>
             </Suspense>
 
             {/* Navigation */}
