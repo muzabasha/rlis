@@ -343,13 +343,13 @@ export default function Topic12_QLearningApplications() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="\mathcal{R}_{\text{Business}} = \text{Revenue} - \text{Cost} - \text{Penalty}"
+                        formula="\\mathcal{R}_{\\text{Business}} = \\text{Revenue} - \\text{Cost} - \\text{Penalty}"
                         label="The Business Reward Function"
                         explanation="How we translate company goals into a reward signal."
                         interpretation="The agent doesn't understand 'Brand Loyalty' or 'Efficiency'; it only understands numbers. We must carefully design R so that maximizing it achieves the actual business goal."
                         motivation="Design errors in the reward function (Reward Hacking) can lead to agents that achieve high scores but destroy the system."
                         terms={[
-                            { term: '\text{Penalty}', name: 'Risk Mitigation', meaning: 'Negative reward for unsafe or illegal actions.', range: '\mathbb{R}^-', example: '-1000 for server crash.' },
+                            { term: '\\text{Penalty}', name: 'Risk Mitigation', meaning: 'Negative reward for unsafe or illegal actions.', range: '\\mathbb{R}^-', example: '-1000 for server crash.' },
                         ]}
                     />
                     <ExpectedRewardVis />

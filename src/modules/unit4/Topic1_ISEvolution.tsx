@@ -281,14 +281,14 @@ export default function Topic1_ISEvolution() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="\Upsilon(\pi) = \sum_{\mu \in E} 2^{-K(\mu)} V_\mu^\pi"
+                        formula="\\Upsilon(\\pi) = \\sum_{\\mu \\in E} 2^{-K(\\mu)} V_\\mu^\\pi"
                         label="Universal Intelligence (\Upsilon)"
                         explanation="A formal mathematical definition of intelligence across all environments."
                         interpretation="Intelligence (\Upsilon) is the weighted sum of an agent's (\pi) ability to achieve rewards (V) across all possible environments (\mu). Complex environments are weighted less than simple ones (2^-K)."
                         motivation="This formula tells us that a truly Intelligent System isn't just good at one thing (like Chess); it's good at everything, even things it hasn't seen before."
                         terms={[
-                            { term: '\Upsilon', name: 'Intelligence', meaning: 'The capability of an agent to achieve goals in a wide range of environments.', range: '[0, 1]', example: '0.9 for a general-purpose robot.' },
-                            { term: '2^{-K(\mu)}', name: 'Complexity Weight', meaning: 'Occam\'s Razor: simple environments get more weight than complex ones.', range: '(0, 1]', example: 'High weight for basic physics.' }
+                            { term: '\\Upsilon', name: 'Intelligence', meaning: 'The capability of an agent to achieve goals in a wide range of environments.', range: '[0, 1]', example: '0.9 for a general-purpose robot.' },
+                            { term: '2^{-K(\\mu)}', name: 'Complexity Weight', meaning: 'Occam\'s Razor: simple environments get more weight than complex ones.', range: '(0, 1]', example: 'High weight for basic physics.' }
                         ]}
                     />
                     <UniversalIntelligenceVis />

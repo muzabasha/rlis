@@ -375,18 +375,18 @@ export default function Topic9_MarkovRewardProcess() {
             >
                 <div className="space-y-6">
                     <MathBlock
-                        formula="V(s) = \mathbb{E}\!\left[G_t \mid S_t = s\right] = \mathcal{R}_s + \gamma \sum_{s' \in \mathcal{S}} \mathcal{P}_{ss'}\, V(s')"
+                        formula="V(s) = \\mathbb{E}\\!\\left[G_t \\mid S_t = s\\right] = \\mathcal{R}_s + \\gamma \\sum_{s' \\in \\mathcal{S}} \\mathcal{P}_{ss'}\\, V(s')"
                         label="Bellman Equation for MRP — Value Function"
                         accent="blue"
                         explanation="The value of state s equals the immediate reward R_s plus the discounted expected value of all possible next states, weighted by their transition probabilities."
                         interpretation="This is the Bellman equation for a Markov Reward Process — an MDP without actions. It says: the value of being in state s is what you get right now (R_s) plus the discounted average value of where you might end up (γ·Σ P_{ss'}·V(s')). This recursive equation can be solved as a linear system for small state spaces."
                         motivation="The MRP Bellman equation is the simplest form of the Bellman equation — no actions, no policy choices. Understanding it builds intuition for the more complex MDP Bellman equation. It also enables policy evaluation: once we fix a policy π in an MDP, it becomes an MRP."
                         terms={[
-                            { term: 'V(s)', name: 'State Value Function', meaning: 'Expected total discounted reward starting from state s and following the chain forever.', range: '\\mathbb{R}', example: 'V(Class)=2.5 means being in Class state is worth 2.5 expected reward.' },
-                            { term: '\\mathcal{R}_s', name: 'Immediate Reward', meaning: 'The reward received upon entering (or leaving) state s. A fixed property of the state.', range: '\\mathbb{R}', example: 'R(Class)=−2 (studying is costly), R(Pass)=+10 (passing is rewarding).' },
-                            { term: '\\gamma', name: 'Discount Factor', meaning: 'How much future rewards are valued relative to immediate ones.', range: '[0,1)', example: 'γ=0.9: a reward 10 steps away is worth 0.9^{10}≈0.35 of its face value.' },
-                            { term: '\\mathcal{P}_{ss\'}', name: 'Transition Probability', meaning: 'Probability of moving from state s to state s\' in one step.', range: '[0,1]', example: 'P(Facebook|Class)=0.4: 40% chance of going to Facebook from Class.' },
-                            { term: '\\sum_{s\'} \\mathcal{P}_{ss\'} V(s\')', name: 'Expected Next Value', meaning: 'Weighted average of next-state values. The "future" component of the Bellman equation.', range: '\\mathbb{R}', example: 'If P(A)=0.5,V(A)=8 and P(B)=0.5,V(B)=4: expected = 0.5×8+0.5×4=6.' },
+                            { term: 'V(s)', name: 'State Value Function', meaning: 'Expected total discounted reward starting from state s and following the chain forever.', range: '\\\\mathbb{R}', example: 'V(Class)=2.5 means being in Class state is worth 2.5 expected reward.' },
+                            { term: '\\\\mathcal{R}_s', name: 'Immediate Reward', meaning: 'The reward received upon entering (or leaving) state s. A fixed property of the state.', range: '\\\\mathbb{R}', example: 'R(Class)=−2 (studying is costly), R(Pass)=+10 (passing is rewarding).' },
+                            { term: '\\\\gamma', name: 'Discount Factor', meaning: 'How much future rewards are valued relative to immediate ones.', range: '[0,1)', example: 'γ=0.9: a reward 10 steps away is worth 0.9^{10}≈0.35 of its face value.' },
+                            { term: '\\\\mathcal{P}_{ss\'}', name: 'Transition Probability', meaning: 'Probability of moving from state s to state s\' in one step.', range: '[0,1]', example: 'P(Facebook|Class)=0.4: 40% chance of going to Facebook from Class.' },
+                            { term: '\\\\sum_{s\'} \\\\mathcal{P}_{ss\'} V(s\')', name: 'Expected Next Value', meaning: 'Weighted average of next-state values. The "future" component of the Bellman equation.', range: '\\\\mathbb{R}', example: 'If P(A)=0.5,V(A)=8 and P(B)=0.5,V(B)=4: expected = 0.5×8+0.5×4=6.' },
                         ]}
                         numericalExample={{
                             setup: 'Student MRP: States={Class(R=−2), Facebook(R=−1), Sleep(R=0)}. γ=0.9. P(Class→Class)=0.4, P(Class→Facebook)=0.4, P(Class→Sleep)=0.2. V(Sleep)=0 (absorbing). V(Facebook)=−1+0.9×(0.2×0+0.8×V(Facebook)).',
@@ -403,17 +403,17 @@ export default function Topic9_MarkovRewardProcess() {
                     <BellmanConvergenceVis formula="V(s) = \mathcal{R}_s + \gamma \sum_{s'} \mathcal{P}_{ss'} V(s')" label="MRP Bellman Equation" accent="violet" />
 
                     <MathBlock
-                        formula="\mathbf{V} = (\mathbf{I} - \gamma\mathbf{P})^{-1}\mathbf{R}"
+                        formula="\\mathbf{V} = (\\mathbf{I} - \\gamma\\mathbf{P})^{-1}\\mathbf{R}"
                         label="MRP Bellman Equation — Matrix Form (Exact Solution)"
                         accent="violet"
                         explanation="The Bellman equation for all states simultaneously can be written as a linear system and solved by matrix inversion. This gives the exact value function in O(n³) time."
                         interpretation="The matrix form V = (I−γP)⁻¹R is the closed-form solution to the MRP value function. It works because the Bellman equation for a fixed policy is a linear system of equations. For small MDPs (n<1000 states), this is the fastest exact method. For large MDPs, iterative methods (value iteration) are used instead."
                         motivation="The matrix form reveals the deep connection between Markov chains and linear algebra. It also shows why γ<1 is necessary: if γ=1, the matrix (I−P) may be singular (non-invertible). The discount factor ensures (I−γP) is always invertible."
                         terms={[
-                            { term: '\\mathbf{V}', name: 'Value Vector', meaning: 'Column vector of length n containing V(s) for every state s.', range: '\\mathbb{R}^n', example: 'V = [V(s₁), V(s₂), ..., V(sₙ)]ᵀ' },
-                            { term: '\\mathbf{I}', name: 'Identity Matrix', meaning: 'n×n matrix with 1s on the diagonal and 0s elsewhere.', range: '\\{0,1\\}^{n\\times n}', example: 'I₂ = [[1,0],[0,1]]' },
-                            { term: '(\\mathbf{I}-\\gamma\\mathbf{P})^{-1}', name: 'Neumann Series', meaning: 'The inverse of (I−γP). Exists and is well-defined when γ<1 because all eigenvalues of γP have magnitude < 1.', range: '\\mathbb{R}^{n\\times n}', example: '= I + γP + γ²P² + γ³P³ + ... (geometric series of matrices)' },
-                            { term: '\\mathbf{R}', name: 'Reward Vector', meaning: 'Column vector of immediate rewards R(s) for each state.', range: '\\mathbb{R}^n', example: 'R = [−2, −1, 0]ᵀ for [Class, Facebook, Sleep]' },
+                            { term: '\\\\mathbf{V}', name: 'Value Vector', meaning: 'Column vector of length n containing V(s) for every state s.', range: '\\\\mathbb{R}^n', example: 'V = [V(s₁), V(s₂), ..., V(sₙ)]ᵀ' },
+                            { term: '\\\\mathbf{I}', name: 'Identity Matrix', meaning: 'n×n matrix with 1s on the diagonal and 0s elsewhere.', range: '\\\\{0,1\\\\}^{n\\\\times n}', example: 'I₂ = [[1,0],[0,1]]' },
+                            { term: '(\\\\mathbf{I}-\\\\gamma\\\\mathbf{P})^{-1}', name: 'Neumann Series', meaning: 'The inverse of (I−γP). Exists and is well-defined when γ<1 because all eigenvalues of γP have magnitude < 1.', range: '\\\\mathbb{R}^{n\\\\times n}', example: '= I + γP + γ²P² + γ³P³ + ... (geometric series of matrices)' },
+                            { term: '\\\\mathbf{R}', name: 'Reward Vector', meaning: 'Column vector of immediate rewards R(s) for each state.', range: '\\\\mathbb{R}^n', example: 'R = [−2, −1, 0]ᵀ for [Class, Facebook, Sleep]' },
                         ]}
                         numericalExample={{
                             setup: '2-state MRP: P=[[0.8,0.2],[0.4,0.6]], R=[5,2]ᵀ, γ=0.9.',

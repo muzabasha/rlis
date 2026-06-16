@@ -317,13 +317,13 @@ export default function Topic13_QLearningCaseStudies() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}"
+                        formula="G_t = \\sum_{k=0}^{\\infty} \\gamma^k R_{t+k+1}"
                         label="The Cumulative Goal (Return)"
                         explanation="Every case study boils down to maximizing this single variable: G."
                         interpretation="Whether the R represents 'Bottles Sold' or 'Megawatts Saved', the agent's math remains identical. It is always looking for the sum of future discounted rewards."
                         motivation="This mathematical abstraction is what makes RL 'General Intelligence'. The same formula that plays Mario can also manage a supply chain."
                         terms={[
-                            { term: 'G_t', name: 'Total Return', meaning: 'The target the agent is trying to maximize.', range: '\mathbb{R}', example: 'Total profit over 1 year.' },
+                            { term: 'G_t', name: 'Total Return', meaning: 'The target the agent is trying to maximize.', range: '\\mathbb{R}', example: 'Total profit over 1 year.' },
                         ]}
                     />
                     <DiscountCurveVis />

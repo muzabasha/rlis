@@ -52,7 +52,7 @@ export default function DiscountCurveVis({
             <div className="space-y-3">
                 <div className="flex gap-3 flex-wrap text-xs text-slate-600 dark:text-slate-400">
                     <span className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700/50">
-                        <InlineMath math="\gamma" /> = {gamma.toFixed(2)}
+                        <InlineMath math="\\gamma" /> = {gamma.toFixed(2)}
                     </span>
                     <span className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700/50">
                         Total Discount = {totalReturn.toFixed(3)}

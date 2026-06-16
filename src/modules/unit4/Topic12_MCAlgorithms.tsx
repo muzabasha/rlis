@@ -238,7 +238,7 @@ export default function Topic12_MCAlgorithms() {
                         <div className="space-y-4">
                             <h5 className="font-black text-[10px] text-primary-500 uppercase tracking-widest">First-Visit Rule</h5>
                             <MathBlock 
-                                formula="N(s) \leftarrow N(s) + 1 \text{ if } t = \min\{k : S_k = s\}"
+                                formula="N(s) \\leftarrow N(s) + 1 \\text{ if } t = \\min\\{k : S_k = s\\}"
                                 label="Initialization Check"
                                 explanation="Only update N(s) if this is the first time state s appears in the episode."
                                 interpretation="If we have seen S1 before in this sequence, we skip the math for this step. We only care about the very first time the agent entered S1."
@@ -249,7 +249,7 @@ export default function Topic12_MCAlgorithms() {
                         <div className="space-y-4">
                             <h5 className="font-black text-[10px] text-emerald-500 uppercase tracking-widest">Every-Visit Rule</h5>
                             <MathBlock 
-                                formula="N(S_t) \leftarrow N(S_t) + 1 \quad \forall t"
+                                formula="N(S_t) \\leftarrow N(S_t) + 1 \\quad \\forall t"
                                 label="Universal Update"
                                 explanation="Update N(s) for every single time step where the state was s."
                                 interpretation="No checks needed. If you are in S1, you update S1. Simple, aggressive, and data-efficient."

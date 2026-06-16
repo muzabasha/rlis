@@ -312,7 +312,7 @@ export default function Topic7_EnvironmentTypes() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="\mathcal{E} = \{D_{obs}, D_{sto}, D_{seq}, D_{dyn}, D_{con}, D_{mul}\}"
+                        formula="\\mathcal{E} = \\{D_{obs}, D_{sto}, D_{seq}, D_{dyn}, D_{con}, D_{mul}\\}"
                         label="The Environment Vector (\mathcal{E})"
                         explanation="The set of dimensions that define the task environment."
                         interpretation="Each dimension D is a binary or continuous scale. For example, D_obs = 1 (Fully Observable) or 0 (Partially Observable). This vector allows us to compare the difficulty of different AI tasks."

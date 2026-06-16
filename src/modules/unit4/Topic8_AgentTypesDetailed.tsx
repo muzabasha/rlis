@@ -325,14 +325,14 @@ export default function Topic8_AgentTypesDetailed() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="a^* = \arg\max_a \sum_{s'} P(s' \mid s, a) U(s')"
+                        formula="a^* = \\arg\\max_a \\sum_{s'} P(s' \\mid s, a) U(s')"
                         label="Maximum Expected Utility (MEU)"
                         explanation="The formula for a rational agent's decision-making."
                         interpretation="A utility-based agent calculates the probability (P) of ending up in a next state (s') for each action (a), and chooses the action that gives the highest average happiness (U)."
                         motivation="This is the gold standard for AI rationality. It accounts for both uncertainty (Probabilities) and preferences (Utility)."
                         terms={[
-                            { term: 'U(s\')', name: 'Utility of State', meaning: 'How desirable a specific state is.', range: '\mathbb{R}', example: 'Win = +100, Loss = -100.' },
-                            { term: 'P(s\' \mid s, a)', name: 'Transition Probability', meaning: 'The chance of action (a) in state (s) leading to state (s\').', range: '[0, 1]', example: '0.8 (80% success).' }
+                            { term: 'U(s\')', name: 'Utility of State', meaning: 'How desirable a specific state is.', range: '\\mathbb{R}', example: 'Win = +100, Loss = -100.' },
+                            { term: 'P(s\' \\mid s, a)', name: 'Transition Probability', meaning: 'The chance of action (a) in state (s) leading to state (s\').', range: '[0, 1]', example: '0.8 (80% success).' }
                         ]}
                     />
                     <TransitionProbVis />

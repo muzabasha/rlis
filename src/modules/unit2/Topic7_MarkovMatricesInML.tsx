@@ -372,16 +372,16 @@ export default function Topic7_MarkovMatricesInML() {
             >
                 <div className="space-y-6">
                     <MathBlock
-                        formula="\mathbb{P}(w_1,w_2,\ldots,w_n) \approx \prod_{i=1}^{n} \mathbb{P}(w_i \mid w_{i-1})"
+                        formula="\\mathbb{P}(w_1,w_2,\\ldots,w_n) \\approx \\prod_{i=1}^{n} \\mathbb{P}(w_i \\mid w_{i-1})"
                         label="Bigram (1st-Order Markov) Language Model"
                         accent="blue"
                         explanation="The probability of an entire word sequence is approximated by the product of consecutive word-pair transition probabilities. Each word depends only on the previous word — the Markov property applied to language."
                         interpretation="This equation is the mathematical foundation of autocomplete, spell-checkers, and early speech recognition. Instead of computing the exponentially large joint probability P(w₁,...,wₙ), we decompose it into n simple conditional probabilities. The Markov assumption makes this tractable — we only need to store an n_vocab × n_vocab transition matrix."
                         motivation="Without the Markov approximation, computing P(sentence) would require storing probabilities for every possible sequence of words — computationally infeasible. The bigram model reduces this to O(V²) storage where V is the vocabulary size, enabling practical NLP systems."
                         terms={[
-                            { term: '\\mathbb{P}(w_1,\\ldots,w_n)', name: 'Sentence Probability', meaning: 'The joint probability of the entire word sequence. Exponentially hard to compute directly.', range: '[0,1]', example: 'P("I love ML") — very small number, but computable via bigrams.' },
-                            { term: '\\prod_{i=1}^{n}', name: 'Product over words', meaning: 'Multiply the conditional probabilities for each word given the previous word. The chain rule of probability.', range: '[0,1]', example: 'P("I")×P("love"|"I")×P("ML"|"love").' },
-                            { term: '\\mathbb{P}(w_i \\mid w_{i-1})', name: 'Bigram Probability', meaning: 'Probability of word w_i given the immediately preceding word w_{i-1}. This is one entry in the transition matrix.', range: '[0,1]', example: 'P("Birthday"|"Happy") = 0.45 (very common pair).' },
+                            { term: '\\\\mathbb{P}(w_1,\\\\ldots,w_n)', name: 'Sentence Probability', meaning: 'The joint probability of the entire word sequence. Exponentially hard to compute directly.', range: '[0,1]', example: 'P("I love ML") — very small number, but computable via bigrams.' },
+                            { term: '\\\\prod_{i=1}^{n}', name: 'Product over words', meaning: 'Multiply the conditional probabilities for each word given the previous word. The chain rule of probability.', range: '[0,1]', example: 'P("I")×P("love"|"I")×P("ML"|"love").' },
+                            { term: '\\\\mathbb{P}(w_i \\\\mid w_{i-1})', name: 'Bigram Probability', meaning: 'Probability of word w_i given the immediately preceding word w_{i-1}. This is one entry in the transition matrix.', range: '[0,1]', example: 'P("Birthday"|"Happy") = 0.45 (very common pair).' },
                         ]}
                         numericalExample={{
                             setup: 'Compute P("I love ML") using bigram model. Transition probs: P("love"|"I")=0.3, P("ML"|"love")=0.4.',
@@ -397,15 +397,15 @@ export default function Topic7_MarkovMatricesInML() {
                     <BigramMLEVis />
 
                     <MathBlock
-                        formula="P_{ij} = \frac{\text{Count}(w_i \to w_j)}{\displaystyle\sum_{k} \text{Count}(w_i \to w_k)} = \frac{C(w_i,\,w_j)}{C(w_i)}"
+                        formula="P_{ij} = \\frac{\\text{Count}(w_i \\to w_j)}{\\displaystyle\\sum_{k} \\text{Count}(w_i \\to w_k)} = \\frac{C(w_i,\\,w_j)}{C(w_i)}"
                         label="Maximum Likelihood Estimation — Learning the Matrix from Data"
                         accent="violet"
                         explanation="The transition probability from word i to word j is estimated by dividing the count of the bigram (i,j) by the total count of word i in the training corpus. This is how ML 'learns' the Markov matrix."
                         interpretation="This is the bridge between data and mathematics. The machine reads millions of sentences, counts every word pair, and normalises to get probabilities. The resulting matrix encodes the statistical patterns of the language. This same principle applies to DNA sequences, stock prices, and user behaviour — any sequential data."
                         motivation="MLE is the simplest and most interpretable way to learn a Markov model. It is provably optimal (minimises KL divergence from the true distribution) given enough data. Understanding MLE is essential for understanding how all probabilistic ML models are trained."
                         terms={[
-                            { term: 'C(w_i,w_j)', name: 'Bigram Count', meaning: 'Number of times word w_j immediately follows word w_i in the training corpus.', range: '\\mathbb{Z}^+', example: 'C("Happy","Birthday") = 1,247 occurrences in 1M sentences.' },
-                            { term: 'C(w_i)', name: 'Unigram Count', meaning: 'Total number of times word w_i appears in the corpus (as the first word of any bigram).', range: '\\mathbb{Z}^+', example: 'C("Happy") = 2,800 total occurrences.' },
+                            { term: 'C(w_i,w_j)', name: 'Bigram Count', meaning: 'Number of times word w_j immediately follows word w_i in the training corpus.', range: '\\\\mathbb{Z}^+', example: 'C("Happy","Birthday") = 1,247 occurrences in 1M sentences.' },
+                            { term: 'C(w_i)', name: 'Unigram Count', meaning: 'Total number of times word w_i appears in the corpus (as the first word of any bigram).', range: '\\\\mathbb{Z}^+', example: 'C("Happy") = 2,800 total occurrences.' },
                             { term: 'P_{ij}', name: 'Learned Transition Probability', meaning: 'The MLE estimate of P(w_j|w_i). Converges to the true probability as corpus size → ∞.', range: '[0,1]', example: 'P("Birthday"|"Happy") = 1247/2800 = 0.445.' },
                         ]}
                         numericalExample={{

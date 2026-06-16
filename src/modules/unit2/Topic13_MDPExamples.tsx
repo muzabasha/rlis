@@ -362,17 +362,17 @@ export default function Topic13_MDPExamples() {
             >
                 <div className="space-y-6">
                     <MathBlock
-                        formula="\text{Recycling Robot MDP} = \langle \{H,L\},\;\{S,W,R\},\;\mathcal{P},\;\mathcal{R},\;\gamma \rangle"
+                        formula="\\text{Recycling Robot MDP} = \\langle \\{H,L\\},\\;\\{S,W,R\\},\\;\\mathcal{P},\\;\\mathcal{R},\\;\\gamma \\rangle"
                         label="Example 1 — Recycling Robot (Sutton & Barto, 2019)"
                         accent="blue"
                         explanation="A mobile robot collects cans. States: High/Low battery. Actions: Search/Wait/Recharge. This classic example from the textbook illustrates all 5 MDP components."
                         interpretation="The robot must balance the high-reward but risky Search action (drains battery) against the safe Wait action (conserves battery) and the zero-reward Recharge action (restores battery). The optimal policy depends on γ — a patient agent (high γ) will recharge more; an impatient agent (low γ) will search aggressively."
                         motivation="The Recycling Robot is the canonical MDP example because it is small enough to solve analytically yet rich enough to illustrate all key RL concepts: stochastic transitions, reward trade-offs, and the value of long-term planning."
                         terms={[
-                            { term: '\\{H,L\\}', name: 'State Space', meaning: 'H = High battery, L = Low battery. Two states capture the robot\'s energy level.', range: '\\mathcal{S}', example: 'Robot starts at H (fully charged).' },
-                            { term: '\\{S,W,R\\}', name: 'Action Space', meaning: 'S=Search (find cans, drains battery), W=Wait (conserve battery, fewer cans), R=Recharge (go to dock, no cans).', range: '\\mathcal{A}', example: 'From H: can Search or Wait. From L: can Search, Wait, or Recharge.' },
-                            { term: '\\mathcal{P}', name: 'Transition Dynamics', meaning: 'P(H|H,S)=0.7, P(L|H,S)=0.3. P(H|L,R)=1.0. Stochastic — searching may drain battery.', range: '[0,1]', example: 'P(depleted|L,S)=0.1 — 10% chance of running out when searching from Low.' },
-                            { term: '\\mathcal{R}', name: 'Reward Function', meaning: 'R(H,S)=+4 (cans found), R(L,S)=+4 or −3 (if depleted), R(W)=+1, R(R)=0.', range: '\\mathbb{R}', example: 'Searching from Low: expected reward = 0.9×4 + 0.1×(−3) = 3.3.' },
+                            { term: '\\\\{H,L\\\\}', name: 'State Space', meaning: 'H = High battery, L = Low battery. Two states capture the robot\'s energy level.', range: '\\\\mathcal{S}', example: 'Robot starts at H (fully charged).' },
+                            { term: '\\\\{S,W,R\\\\}', name: 'Action Space', meaning: 'S=Search (find cans, drains battery), W=Wait (conserve battery, fewer cans), R=Recharge (go to dock, no cans).', range: '\\\\mathcal{A}', example: 'From H: can Search or Wait. From L: can Search, Wait, or Recharge.' },
+                            { term: '\\\\mathcal{P}', name: 'Transition Dynamics', meaning: 'P(H|H,S)=0.7, P(L|H,S)=0.3. P(H|L,R)=1.0. Stochastic — searching may drain battery.', range: '[0,1]', example: 'P(depleted|L,S)=0.1 — 10% chance of running out when searching from Low.' },
+                            { term: '\\\\mathcal{R}', name: 'Reward Function', meaning: 'R(H,S)=+4 (cans found), R(L,S)=+4 or −3 (if depleted), R(W)=+1, R(R)=0.', range: '\\\\mathbb{R}', example: 'Searching from Low: expected reward = 0.9×4 + 0.1×(−3) = 3.3.' },
                         ]}
                         numericalExample={{
                             setup: 'Compute expected reward for Search from Low battery. P(survive)=0.9, r=+4; P(deplete)=0.1, r=−3.',
@@ -389,16 +389,16 @@ export default function Topic13_MDPExamples() {
                     <RecyclingRobotVis />
 
                     <MathBlock
-                        formula="\text{Gridworld MDP}: \mathcal{S}=\{(r,c)\},\;\mathcal{A}=\{\uparrow,\downarrow,\leftarrow,\rightarrow\},\;\mathcal{R}(s)=\begin{cases}+10 & s=\text{goal} \\ -1 & \text{otherwise}\end{cases}"
+                        formula="\\text{Gridworld MDP}: \\mathcal{S}=\\{(r,c)\\},\\;\\mathcal{A}=\\{\\uparrow,\\downarrow,\\leftarrow,\\rightarrow\\},\\;\\mathcal{R}(s)=\\begin{cases}+10 & s=\\text{goal} \\\\ -1 & \\text{otherwise}\\end{cases}"
                         label="Example 2 — Gridworld (Standard RL Benchmark)"
                         accent="emerald"
                         explanation="A robot navigates an n×n grid to reach a goal. States are (row,col) coordinates. Actions are the 4 cardinal directions. Reward is −1 per step (encourages efficiency) and +10 at the goal."
                         interpretation="Gridworld is the 'Hello World' of RL. It is simple enough to solve analytically but captures all key RL challenges: sequential decisions, delayed rewards, and the need to plan multiple steps ahead. The −1 step penalty forces the agent to find the shortest path — without it, the agent might wander forever."
                         motivation="Every RL algorithm is first tested on Gridworld. Understanding this example gives you the intuition to apply RL to any sequential decision problem. The value function for Gridworld forms a gradient pointing toward the goal — a beautiful illustration of how value propagates backwards from rewards."
                         terms={[
-                            { term: '(r,c)', name: 'Grid Coordinate State', meaning: 'Row r and column c uniquely identify each cell. An n×n grid has n² states.', range: '\\{0,...,n-1\\}^2', example: '5×5 grid: 25 states. (0,0)=top-left, (4,4)=bottom-right.' },
-                            { term: '\\{\\uparrow,\\downarrow,\\leftarrow,\\rightarrow\\}', name: 'Cardinal Actions', meaning: 'Move one cell in the chosen direction. Hitting a wall keeps the agent in place.', range: '\\mathcal{A}', example: 'From (2,3): right→(2,4), up→(1,3), into wall→stays at (2,3).' },
-                            { term: '\\mathcal{R}(s)=-1', name: 'Step Penalty', meaning: 'Every non-goal step costs −1. Incentivises the agent to reach the goal as quickly as possible.', range: '\\{-1,+10\\}', example: 'Shortest path of 6 steps: G₀ = −1−0.9−0.81−...+10×0.9⁶ ≈ 4.3.' },
+                            { term: '(r,c)', name: 'Grid Coordinate State', meaning: 'Row r and column c uniquely identify each cell. An n×n grid has n² states.', range: '\\\\{0,...,n-1\\\\}^2', example: '5×5 grid: 25 states. (0,0)=top-left, (4,4)=bottom-right.' },
+                            { term: '\\\\{\\\\uparrow,\\\\downarrow,\\\\leftarrow,\\\\rightarrow\\\\}', name: 'Cardinal Actions', meaning: 'Move one cell in the chosen direction. Hitting a wall keeps the agent in place.', range: '\\\\mathcal{A}', example: 'From (2,3): right→(2,4), up→(1,3), into wall→stays at (2,3).' },
+                            { term: '\\\\mathcal{R}(s)=-1', name: 'Step Penalty', meaning: 'Every non-goal step costs −1. Incentivises the agent to reach the goal as quickly as possible.', range: '\\\\{-1,+10\\\\}', example: 'Shortest path of 6 steps: G₀ = −1−0.9−0.81−...+10×0.9⁶ ≈ 4.3.' },
                         ]}
                     />
 

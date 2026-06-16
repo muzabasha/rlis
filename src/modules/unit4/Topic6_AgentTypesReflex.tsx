@@ -338,14 +338,14 @@ export default function Topic6_AgentTypesReflex() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="f: \mathcal{P}^* \to \mathcal{A}"
+                        formula="f: \\mathcal{P}^* \\to \\mathcal{A}"
                         label="The Agent Function (f)"
                         explanation="Mapping the entire history of percepts (P*) to an action (A)."
                         interpretation="The agent's internal logic is a function that looks at everything it has ever seen and decides what to do next. For a reflex agent, this function only looks at the very last P. For a model-based agent, it looks at the whole sequence."
                         motivation="This abstraction allows us to treat any agent—from a simple IF-statement to a billion-parameter neural network—as a single mathematical mapping."
                         terms={[
-                            { term: '\mathcal{P}^*', name: 'Percept History', meaning: 'The sequence of everything the agent has sensed since it was turned on.', range: '-', example: 'Last 10 frames of camera data.' },
-                            { term: '\mathcal{A}', name: 'Action Space', meaning: 'The set of all possible moves the agent can make.', range: '-', example: '{Move, Stop}.' }
+                            { term: '\\mathcal{P}^*', name: 'Percept History', meaning: 'The sequence of everything the agent has sensed since it was turned on.', range: '-', example: 'Last 10 frames of camera data.' },
+                            { term: '\\mathcal{A}', name: 'Action Space', meaning: 'The set of all possible moves the agent can make.', range: '-', example: '{Move, Stop}.' }
                         ]}
                     />
                     <AgentFunctionVis />

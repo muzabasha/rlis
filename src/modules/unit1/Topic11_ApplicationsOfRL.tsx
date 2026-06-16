@@ -323,33 +323,33 @@ export default function Topic11_ApplicationsOfRL() {
             >
                 <div className="space-y-6">
                     <MathBlock
-                        formula="\text{MDP}_{\text{app}} = \langle \mathcal{S}_{\text{app}},\;\mathcal{A}_{\text{app}},\;\mathcal{P}_{\text{app}},\;\mathcal{R}_{\text{app}},\;\gamma \rangle"
+                        formula="\\text{MDP}_{\\text{app}} = \\langle \\mathcal{S}_{\\text{app}},\\;\\mathcal{A}_{\\text{app}},\\;\\mathcal{P}_{\\text{app}},\\;\\mathcal{R}_{\\text{app}},\\;\\gamma \\rangle"
                         label="Universal MDP Template for Any Application"
                         accent="blue"
                         explanation="Every real-world RL application is an instantiation of this 5-tuple. The designer's job is to define each component for their specific domain."
                         interpretation="This template is the bridge between theory and practice. AlphaGo, ChatGPT, self-driving cars, and recommendation systems all use this same mathematical structure — they just have different definitions of S, A, P, R, and γ. Understanding this template allows you to formulate any sequential decision problem as an RL task."
                         motivation="Without this formalisation, RL remains abstract. By mapping a real problem to this tuple, we immediately know which algorithms to apply, what data to collect, and how to measure success."
                         terms={[
-                            { term: '\\mathcal{S}_{\\text{app}}', name: 'Application State Space', meaning: 'All information the agent needs to make decisions. Must be Markov — the future depends only on the current state.', range: '\\mathbb{R}^n \\text{ or finite}', example: 'Trading: S = [price, volume, RSI, portfolio_value]. Recommendation: S = [user_history, time_of_day, device].' },
-                            { term: '\\mathcal{A}_{\\text{app}}', name: 'Application Action Space', meaning: 'All decisions the agent can make. Can be discrete (buy/sell/hold) or continuous (steering angle).', range: 'Finite or \\mathbb{R}^m', example: 'Trading: A = {buy, sell, hold}. Self-driving: A = [steering ∈ [−30°,30°], throttle ∈ [0,1]].' },
-                            { term: '\\mathcal{R}_{\\text{app}}', name: 'Application Reward', meaning: 'The scalar signal that defines success. The most critical design choice — must align with the true objective.', range: '\\mathbb{R}', example: 'Trading: R = daily_profit − risk_penalty. Recommendation: R = watch_time − skip_penalty.' },
-                            { term: '\\gamma', name: 'Application Discount', meaning: 'How much the application values future rewards. High γ for long-horizon tasks (energy management); lower γ for short-horizon tasks (ad placement).', range: '[0,1)', example: 'Energy management: γ=0.99 (plan months ahead). Ad placement: γ=0.9 (plan hours ahead).' },
+                            { term: '\\\\mathcal{S}_{\\\\text{app}}', name: 'Application State Space', meaning: 'All information the agent needs to make decisions. Must be Markov — the future depends only on the current state.', range: '\\\\mathbb{R}^n \\\\text{ or finite}', example: 'Trading: S = [price, volume, RSI, portfolio_value]. Recommendation: S = [user_history, time_of_day, device].' },
+                            { term: '\\\\mathcal{A}_{\\\\text{app}}', name: 'Application Action Space', meaning: 'All decisions the agent can make. Can be discrete (buy/sell/hold) or continuous (steering angle).', range: 'Finite or \\\\mathbb{R}^m', example: 'Trading: A = {buy, sell, hold}. Self-driving: A = [steering ∈ [−30°,30°], throttle ∈ [0,1]].' },
+                            { term: '\\\\mathcal{R}_{\\\\text{app}}', name: 'Application Reward', meaning: 'The scalar signal that defines success. The most critical design choice — must align with the true objective.', range: '\\\\mathbb{R}', example: 'Trading: R = daily_profit − risk_penalty. Recommendation: R = watch_time − skip_penalty.' },
+                            { term: '\\\\gamma', name: 'Application Discount', meaning: 'How much the application values future rewards. High γ for long-horizon tasks (energy management); lower γ for short-horizon tasks (ad placement).', range: '[0,1)', example: 'Energy management: γ=0.99 (plan months ahead). Ad placement: γ=0.9 (plan hours ahead).' },
                         ]}
                     />
 
                     <MDPTupleVis />
 
                     <MathBlock
-                        formula="\text{CTR}(t) = \frac{\displaystyle\sum_{i=1}^{t}\mathbf{1}[\text{click}_i]}{\displaystyle\sum_{i=1}^{t}\mathbf{1}[\text{impression}_i]}"
+                        formula="\\text{CTR}(t) = \\frac{\\displaystyle\\sum_{i=1}^{t}\\mathbf{1}[\\text{click}_i]}{\\displaystyle\\sum_{i=1}^{t}\\mathbf{1}[\\text{impression}_i]}"
                         label="Recommendation System Reward — Click-Through Rate"
                         accent="violet"
                         explanation="CTR is the fraction of impressions that result in clicks. Used as the reward signal for recommendation RL agents (Netflix, YouTube, Amazon)."
                         interpretation="CTR is a proxy for user satisfaction. The RL agent learns to recommend content that maximises long-term CTR, not just the next click. This is why recommendation systems sometimes show you content you didn't know you wanted — the agent discovered that certain sequences of recommendations lead to higher long-term engagement."
                         motivation="CTR is measurable, immediate, and directly tied to business value. However, optimising only for CTR can lead to clickbait. Modern systems use a combination of CTR, watch time, and user ratings as a composite reward."
                         terms={[
-                            { term: '\\mathbf{1}[\\text{click}_i]', name: 'Click Indicator', meaning: 'Equals 1 if the user clicked on impression i, 0 otherwise. A binary reward signal.', range: '\\{0,1\\}', example: 'User clicked on recommended movie → 1. User scrolled past → 0.' },
-                            { term: '\\mathbf{1}[\\text{impression}_i]', name: 'Impression Indicator', meaning: 'Equals 1 if the content was shown to the user. The denominator counts total opportunities.', range: '\\{0,1\\}', example: '100 recommendations shown → 100 impressions.' },
-                            { term: '\\text{CTR}(t)', name: 'CTR at time t', meaning: 'Running click-through rate up to time t. The RL agent\'s reward signal.', range: '[0,1]', example: '30 clicks out of 100 impressions → CTR = 0.30 = 30%.' },
+                            { term: '\\\\mathbf{1}[\\\\text{click}_i]', name: 'Click Indicator', meaning: 'Equals 1 if the user clicked on impression i, 0 otherwise. A binary reward signal.', range: '\\\\{0,1\\\\}', example: 'User clicked on recommended movie → 1. User scrolled past → 0.' },
+                            { term: '\\\\mathbf{1}[\\\\text{impression}_i]', name: 'Impression Indicator', meaning: 'Equals 1 if the content was shown to the user. The denominator counts total opportunities.', range: '\\\\{0,1\\\\}', example: '100 recommendations shown → 100 impressions.' },
+                            { term: '\\\\text{CTR}(t)', name: 'CTR at time t', meaning: 'Running click-through rate up to time t. The RL agent\'s reward signal.', range: '[0,1]', example: '30 clicks out of 100 impressions → CTR = 0.30 = 30%.' },
                         ]}
                         numericalExample={{
                             setup: 'Recommendation agent. 5 recommendations shown. User clicks on items 2 and 4.',

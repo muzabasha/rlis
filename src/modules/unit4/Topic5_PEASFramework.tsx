@@ -325,13 +325,13 @@ export default function Topic5_PEASFramework() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="\pi^*(s) = \arg\max_a \mathbb{E}[P \mid S, A, E]"
+                        formula="\\pi^*(s) = \\arg\\max_a \\mathbb{E}[P \\mid S, A, E]"
                         label="The Optimal PEAS Policy (\pi^*)"
                         explanation="Choosing the action 'a' that results in the highest expected performance 'P'."
                         interpretation="The agent's 'Intelligence' is its ability to map its perceptions (S) to actions (A) that achieve the goal (P) in its world (E). The math is the same whether the agent is a chess engine or a medical bot."
                         motivation="This formula bridges the gap between hardware (Sensors/Actuators) and software (Policy/Learning)."
                         terms={[
-                            { term: 'P', name: 'Performance Measure', meaning: 'The scalar value defined by the designer to judge the agent\'s success.', range: '\mathbb{R}', example: 'Customer Satisfaction Score.' },
+                            { term: 'P', name: 'Performance Measure', meaning: 'The scalar value defined by the designer to judge the agent\'s success.', range: '\\mathbb{R}', example: 'Customer Satisfaction Score.' },
                             { term: 'E', name: 'Environment', meaning: 'The external world the agent operates in.', range: '-', example: 'The Global Internet.' }
                         ]}
                     />

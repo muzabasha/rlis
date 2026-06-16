@@ -409,13 +409,13 @@ export default function Topic11_GamblerDungeon() {
                     </div>
 
                     <MathBlock 
-                        formula="Q(s, a) \approx \mathbb{E} [r + \gamma r' + \gamma^2 r'' + \dots]"
+                        formula="Q(s, a) \\approx \\mathbb{E} [r + \\gamma r' + \\gamma^2 r'' + \\dots]"
                         label="Long-term Quality"
                         explanation="The Q-value represents the sum of all future rewards from that point."
                         interpretation="In the dungeon, the Q-value of the square right before the exit will be nearly 100, while the square before the lava will be very low."
                         motivation="This allows the agent to make 'Safe' decisions today by looking at the 'Value' of tomorrow."
                         terms={[
-                            { term: 'r', name: 'Immediate', meaning: 'The gold or lava in the next square.', range: '\mathbb{R}', example: '-50 for lava.' },
+                            { term: 'r', name: 'Immediate', meaning: 'The gold or lava in the next square.', range: '\\mathbb{R}', example: '-50 for lava.' },
                         ]}
                     />
                     <RecursiveReturnVis />

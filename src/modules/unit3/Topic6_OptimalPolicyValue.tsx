@@ -298,25 +298,25 @@ export default function Topic6_OptimalPolicyValue() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="v_*(s) = \max_{a} \sum_{s', r} p(s', r | s, a) [r + \gamma v_*(s')]"
+                        formula="v_*(s) = \\max_{a} \\sum_{s', r} p(s', r | s, a) [r + \\gamma v_*(s')]"
                         label="Bellman Optimality Equation for v*"
                         explanation="The optimal value of a state is the value of the best possible action from that state."
                         interpretation="Unlike the expectation equation (which averages over actions), the optimality equation uses the MAX operator. It assumes you will always make the perfect choice."
                         motivation="This equation defines the 'Upper Bound' of what is achievable in an MDP."
                         terms={[
-                            { term: '\max_{a}', name: 'The Optimizer', meaning: 'Picking the action that results in the highest expected return.', range: '\mathcal{A}', example: 'Choosing the path with most gold.' },
-                            { term: 'v_*(s)', name: 'Optimal State Value', meaning: 'The maximum possible value achievable from state s.', range: '\mathbb{R}', example: 'A perfect score.' },
+                            { term: '\\max_{a}', name: 'The Optimizer', meaning: 'Picking the action that results in the highest expected return.', range: '\\mathcal{A}', example: 'Choosing the path with most gold.' },
+                            { term: 'v_*(s)', name: 'Optimal State Value', meaning: 'The maximum possible value achievable from state s.', range: '\\mathbb{R}', example: 'A perfect score.' },
                         ]}
                     />
 
                     <MathBlock 
-                        formula="q_*(s, a) = \sum_{s', r} p(s', r | s, a) [r + \gamma \max_{a'} q_*(s', a')]"
+                        formula="q_*(s, a) = \\sum_{s', r} p(s', r | s, a) [r + \\gamma \\max_{a'} q_*(s', a')]"
                         label="Bellman Optimality Equation for q*"
                         explanation="The optimal value of taking action a in state s."
                         interpretation="This is the foundation of Q-Learning. It says the value of an action is the reward plus the best possible value of the next state."
                         motivation="If we know q*, we know which action to take without any extra calculation."
                         terms={[
-                            { term: '\max_{a\'} q_*(s\', a\')', name: 'Best Future Action', meaning: 'Assuming we take the best move next.', range: '\mathbb{R}', example: 'Calculating based on perfect future play.' },
+                            { term: '\\max_{a\'} q_*(s\', a\')', name: 'Best Future Action', meaning: 'Assuming we take the best move next.', range: '\\mathbb{R}', example: 'Calculating based on perfect future play.' },
                         ]}
                     />
                     <BellmanOptimalityVis />

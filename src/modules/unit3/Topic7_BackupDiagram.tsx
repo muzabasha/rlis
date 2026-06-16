@@ -345,13 +345,13 @@ export default function Topic7_BackupDiagram() {
                     </div>
 
                     <MathBlock 
-                        formula="\text{Value flow: } \text{Successor } (s') \xrightarrow{\text{Backup}} \text{Action } (a) \xrightarrow{\text{Backup}} \text{State } (s)"
+                        formula="\\text{Value flow: } \\text{Successor } (s') \\xrightarrow{\\text{Backup}} \\text{Action } (a) \\xrightarrow{\\text{Backup}} \\text{State } (s)"
                         label="The Backup Sequence"
                         explanation="How information travels up the tree."
                         interpretation="Each level of the tree represents a level of uncertainty or decision-making that must be resolved (by averaging or maximizing)."
                         motivation="This mental model helps you understand why RL algorithms converge."
                         terms={[
-                            { term: '\\xrightarrow{}', name: 'Information Transfer', meaning: 'The update step in an algorithm.', range: 't \\to t-1', example: 'Updating Q-values.' },
+                            { term: '\\\\xrightarrow{}', name: 'Information Transfer', meaning: 'The update step in an algorithm.', range: 't \\\\to t-1', example: 'Updating Q-values.' },
                         ]}
                     />
                     <BackupDiagramVis />

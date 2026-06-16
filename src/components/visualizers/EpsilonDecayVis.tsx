@@ -53,7 +53,7 @@ export default function EpsilonDecayVis({
             <div className="space-y-3">
                 <div className="flex gap-3 flex-wrap text-xs text-slate-600 dark:text-slate-400">
                     <span className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700/50">
-                        <InlineMath math="\varepsilon_{500}" /> ≈ <strong>{currentEps.toFixed(3)}</strong>
+                        <InlineMath math="\\varepsilon_{500}" /> ≈ <strong>{currentEps.toFixed(3)}</strong>
                     </span>
                     <span className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700/50">
                         Half-life ≈ <strong>{(Math.log(2) / lambda).toFixed(0)}</strong> steps
@@ -70,7 +70,7 @@ export default function EpsilonDecayVis({
                     </LineChart>
                 </ResponsiveContainer>
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                    ε decays exponentially from <InlineMath math="\varepsilon_{\max}" /> to <InlineMath math="\varepsilon_{\min}" />. Fast decay (high λ) = agent exploits sooner.
+                    ε decays exponentially from <InlineMath math="\\varepsilon_{\\max}" /> to <InlineMath math="\\varepsilon_{\\min}" />. Fast decay (high λ) = agent exploits sooner.
                     Slow decay (low λ) = agent explores longer.
                 </p>
             </div>

@@ -335,17 +335,17 @@ export default function Topic12_ChallengesWithRL() {
             >
                 <div className="space-y-6">
                     <MathBlock
-                        formula="R'(s,a,s') = R(s,a,s') + \gamma\,\Phi(s') - \Phi(s)"
+                        formula="R'(s,a,s') = R(s,a,s') + \\gamma\\,\\Phi(s') - \\Phi(s)"
                         label="Potential-Based Reward Shaping"
                         accent="amber"
                         explanation="Reward shaping adds a potential-based bonus to the original reward to provide denser feedback. The potential function Φ(s) estimates how 'good' state s is, giving the agent breadcrumbs toward the goal."
                         interpretation="Sparse rewards (only at the goal) make learning extremely slow — the agent must stumble upon the goal by chance before it can learn anything. Reward shaping adds intermediate rewards that guide the agent toward the goal without changing the optimal policy. The γΦ(s')−Φ(s) term is carefully designed to preserve policy invariance — the optimal policy under R' is the same as under R."
                         motivation="Without reward shaping, an agent in a large maze might take millions of steps before reaching the goal for the first time. With shaping, it receives positive feedback for moving closer to the goal, dramatically accelerating learning."
                         terms={[
-                            { term: "R'(s,a,s')", name: 'Shaped Reward', meaning: 'The modified reward that includes the potential-based bonus. Used for training; the original R is the true objective.', range: '\\mathbb{R}', example: "R'(near_goal, right, goal) = 10 + 0.9×0 − 8 = 2. Extra +2 for being near goal." },
-                            { term: 'R(s,a,s\')', name: 'Original Reward', meaning: 'The true reward signal. Sparse — only non-zero at the goal or key events.', range: '\\mathbb{R}', example: 'R=+10 at goal, R=0 everywhere else.' },
-                            { term: '\\Phi(s)', name: 'Potential Function', meaning: 'A state-dependent value estimating how close state s is to the goal. Higher Φ = closer to goal.', range: '\\mathbb{R}', example: 'Φ(s) = −distance_to_goal. Φ(goal)=0, Φ(start)=−10.' },
-                            { term: '\\gamma\\,\\Phi(s\')-\\Phi(s)', name: 'Shaping Bonus', meaning: 'The difference in potential between next state and current state, discounted by γ. Positive when moving toward the goal.', range: '\\mathbb{R}', example: 'Moving from distance=5 to distance=3: bonus = 0.9×(−3)−(−5) = −2.7+5 = 2.3.' },
+                            { term: "R'(s,a,s')", name: 'Shaped Reward', meaning: 'The modified reward that includes the potential-based bonus. Used for training; the original R is the true objective.', range: '\\\\mathbb{R}', example: "R'(near_goal, right, goal) = 10 + 0.9×0 − 8 = 2. Extra +2 for being near goal." },
+                            { term: 'R(s,a,s\')', name: 'Original Reward', meaning: 'The true reward signal. Sparse — only non-zero at the goal or key events.', range: '\\\\mathbb{R}', example: 'R=+10 at goal, R=0 everywhere else.' },
+                            { term: '\\\\Phi(s)', name: 'Potential Function', meaning: 'A state-dependent value estimating how close state s is to the goal. Higher Φ = closer to goal.', range: '\\\\mathbb{R}', example: 'Φ(s) = −distance_to_goal. Φ(goal)=0, Φ(start)=−10.' },
+                            { term: '\\\\gamma\\\\,\\\\Phi(s\')-\\\\Phi(s)', name: 'Shaping Bonus', meaning: 'The difference in potential between next state and current state, discounted by γ. Positive when moving toward the goal.', range: '\\\\mathbb{R}', example: 'Moving from distance=5 to distance=3: bonus = 0.9×(−3)−(−5) = −2.7+5 = 2.3.' },
                         ]}
                         numericalExample={{
                             setup: 'Maze. Φ(s) = −distance_to_goal. γ=0.9. Agent moves from s=(dist=5) to s\'=(dist=3). R(s,a,s\')=0 (not at goal yet).',
@@ -362,16 +362,16 @@ export default function Topic12_ChallengesWithRL() {
                     <RewardShapingVis />
 
                     <MathBlock
-                        formula="|\mathcal{S}| = d^n \quad \Longrightarrow \quad \text{Curse of Dimensionality}"
+                        formula="|\\mathcal{S}| = d^n \\quad \\Longrightarrow \\quad \\text{Curse of Dimensionality}"
                         label="Dimensionality Curse — State Space Explosion"
                         accent="red"
                         explanation="If each of n sensors has d possible values, the total number of states grows exponentially as d^n. This makes tabular RL (Q-tables) infeasible for real-world problems."
                         interpretation="A robot with 10 joints, each with 100 possible angles, has 100^10 = 10^20 possible states — more than the number of atoms in the observable universe. No Q-table can store this. This is why deep RL uses neural networks as function approximators: instead of storing Q(s,a) for every state, a neural network generalises across similar states."
                         motivation="Understanding the dimensionality curse explains why tabular Q-learning works for toy problems (grid worlds) but fails for real robots. It motivates the need for function approximation (DQN, PPO) and state representation learning."
                         terms={[
-                            { term: 'd', name: 'Values per Dimension', meaning: 'Number of discrete values each sensor/feature can take.', range: '\\mathbb{Z}^+', example: 'd=100: each joint angle discretised into 100 positions.' },
-                            { term: 'n', name: 'State Dimensions', meaning: 'Number of independent features/sensors in the state representation.', range: '\\mathbb{Z}^+', example: 'n=10: robot with 10 joints.' },
-                            { term: 'd^n', name: 'Total States', meaning: 'Total number of possible states. Grows exponentially with n — the curse of dimensionality.', range: '\\mathbb{Z}^+', example: 'd=100, n=10: 100^{10} = 10^{20} states. Impossible to enumerate.' },
+                            { term: 'd', name: 'Values per Dimension', meaning: 'Number of discrete values each sensor/feature can take.', range: '\\\\mathbb{Z}^+', example: 'd=100: each joint angle discretised into 100 positions.' },
+                            { term: 'n', name: 'State Dimensions', meaning: 'Number of independent features/sensors in the state representation.', range: '\\\\mathbb{Z}^+', example: 'n=10: robot with 10 joints.' },
+                            { term: 'd^n', name: 'Total States', meaning: 'Total number of possible states. Grows exponentially with n — the curse of dimensionality.', range: '\\\\mathbb{Z}^+', example: 'd=100, n=10: 100^{10} = 10^{20} states. Impossible to enumerate.' },
                         ]}
                         numericalExample={{
                             setup: 'Compare state space sizes for different problems:',

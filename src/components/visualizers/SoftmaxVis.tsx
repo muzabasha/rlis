@@ -59,7 +59,7 @@ export default function SoftmaxVis({
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-2">
-                        <p className="text-xs font-medium text-slate-600 dark:text-slate-400">Action Preference Parameters <InlineMath math="\theta_a" /></p>
+                        <p className="text-xs font-medium text-slate-600 dark:text-slate-400">Action Preference Parameters <InlineMath math="\\theta_a" /></p>
                         {thetaValues.map((v, i) => (
                             <div key={i} className="flex items-center gap-2 text-xs">
                                 <span className="w-8 text-slate-500"><InlineMath math={`\\theta_{${i + 1}}`} /></span>
@@ -105,7 +105,7 @@ export default function SoftmaxVis({
                     </div>
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                    Higher <InlineMath math="\theta_a" /> = stronger preference for action a. Low temperature (τ→0) makes policy nearly deterministic.
+                    Higher <InlineMath math="\\theta_a" /> = stronger preference for action a. Low temperature (τ→0) makes policy nearly deterministic.
                     High temperature (τ→∞) makes all actions equally probable.
                 </p>
             </div>

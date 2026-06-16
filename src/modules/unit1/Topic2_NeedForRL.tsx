@@ -331,18 +331,18 @@ export default function Topic2_NeedForRL() {
                     </p>
 
                     <MathBlock
-                        formula="\pi^* = \arg\max_{\pi}\; \mathbb{E}_{\pi}\!\left[\sum_{t=0}^{\infty} \gamma^t R_{t+1}\right]"
+                        formula="\\pi^* = \\arg\\max_{\\pi}\\; \\mathbb{E}_{\\pi}\\!\\left[\\sum_{t=0}^{\\infty} \\gamma^t R_{t+1}\\right]"
                         label="The RL Optimisation Objective"
                         accent="blue"
                         explanation="Find the policy π* that maximises the expected discounted cumulative reward starting from any state."
                         interpretation="This is the master equation of RL. It says: search over all possible policies π and pick the one that gives the highest expected total discounted reward. Every RL algorithm — Q-learning, PPO, SAC — is ultimately solving this equation."
                         motivation="Without this objective, we have no direction. A robot that only maximises the next reward will take shortcuts that destroy long-term performance. This equation forces the agent to think ahead."
                         terms={[
-                            { term: '\\pi^*', name: 'Optimal Policy', meaning: 'The best possible mapping from states to actions. Once found, the agent always knows the right action in every situation.', range: '\\mathcal{S}\\to\\mathcal{A}', example: 'In chess: π*(board_state) = "move knight to e5".' },
-                            { term: '\\arg\\max_{\\pi}', name: 'Argument of Maximum', meaning: 'Returns the policy π that achieves the highest value of the expression. We are searching over the space of all possible policies.', range: '\\text{Policy space}', example: 'Like finding which route gives the shortest travel time.' },
-                            { term: '\\mathbb{E}_{\\pi}', name: 'Expectation under π', meaning: 'Average over all possible trajectories the agent might experience when following policy π. Needed because environments can be stochastic.', range: '\\mathbb{R}', example: 'If 70% of the time action A gives +10 and 30% gives −2: E = 0.7×10 + 0.3×(−2) = 6.4.' },
-                            { term: '\\gamma^t', name: 'Discount at step t', meaning: 'Exponential decay applied to reward at step t. Makes near-term rewards more valuable than distant ones.', range: '(0,1]', example: 'γ=0.95, t=10: γ^{10}=0.60. A reward of 100 ten steps away is worth 60 now.' },
-                            { term: 'R_{t+1}', name: 'Reward at step t+1', meaning: 'Scalar feedback from the environment after the agent acts at time t.', range: '\\mathbb{R}', example: '+1 for each step closer to goal, −100 for falling off cliff.' },
+                            { term: '\\\\pi^*', name: 'Optimal Policy', meaning: 'The best possible mapping from states to actions. Once found, the agent always knows the right action in every situation.', range: '\\\\mathcal{S}\\\\to\\\\mathcal{A}', example: 'In chess: π*(board_state) = "move knight to e5".' },
+                            { term: '\\\\arg\\\\max_{\\\\pi}', name: 'Argument of Maximum', meaning: 'Returns the policy π that achieves the highest value of the expression. We are searching over the space of all possible policies.', range: '\\\\text{Policy space}', example: 'Like finding which route gives the shortest travel time.' },
+                            { term: '\\\\mathbb{E}_{\\\\pi}', name: 'Expectation under π', meaning: 'Average over all possible trajectories the agent might experience when following policy π. Needed because environments can be stochastic.', range: '\\\\mathbb{R}', example: 'If 70% of the time action A gives +10 and 30% gives −2: E = 0.7×10 + 0.3×(−2) = 6.4.' },
+                            { term: '\\\\gamma^t', name: 'Discount at step t', meaning: 'Exponential decay applied to reward at step t. Makes near-term rewards more valuable than distant ones.', range: '(0,1]', example: 'γ=0.95, t=10: γ^{10}=0.60. A reward of 100 ten steps away is worth 60 now.' },
+                            { term: 'R_{t+1}', name: 'Reward at step t+1', meaning: 'Scalar feedback from the environment after the agent acts at time t.', range: '\\\\mathbb{R}', example: '+1 for each step closer to goal, −100 for falling off cliff.' },
                         ]}
                         numericalExample={{
                             setup: 'Agent follows policy π. Rewards over 3 steps: R₁=1, R₂=4, R₃=2. γ=0.9.',
@@ -358,16 +358,16 @@ export default function Topic2_NeedForRL() {
                     <DiscountCurveVis formula="\\pi^* = \\arg\\max_\\pi \\mathbb{E}_\\pi[\\sum \\gamma^t R]" accent="blue" />
 
                     <MathBlock
-                        formula="G_t = R_{t+1} + \gamma G_{t+1} \quad \text{(recursive form)}"
+                        formula="G_t = R_{t+1} + \\gamma G_{t+1} \\quad \\text{(recursive form)}"
                         label="Recursive Return — Bellman Decomposition"
                         accent="violet"
                         explanation="The return at time t equals the immediate reward plus the discounted return from the next step. This recursive structure is the key to dynamic programming in RL."
                         interpretation="This deceptively simple equation is the foundation of every RL update rule. It says: the value of being in a situation equals what you get right now plus the discounted value of where you end up. Q-learning, TD-learning, and the Bellman equation all derive from this."
                         motivation="The recursive form allows us to compute G_t without knowing all future rewards upfront. We can update estimates incrementally as new rewards arrive — this is what makes online RL learning possible."
                         terms={[
-                            { term: 'G_t', name: 'Return at time t', meaning: 'Total discounted reward from step t to end of episode.', range: '\\mathbb{R}', example: 'G₃ = R₄ + γ·G₄' },
-                            { term: 'R_{t+1}', name: 'Immediate Reward', meaning: 'Reward received one step after time t.', range: '\\mathbb{R}', example: 'R₄ = +5 (reached sub-goal)' },
-                            { term: '\\gamma G_{t+1}', name: 'Discounted Future Return', meaning: 'The return from the next state, scaled down by γ. Captures all future rewards beyond t+1.', range: '\\mathbb{R}', example: 'γ=0.9, G₄=10 → γ·G₄ = 9' },
+                            { term: 'G_t', name: 'Return at time t', meaning: 'Total discounted reward from step t to end of episode.', range: '\\\\mathbb{R}', example: 'G₃ = R₄ + γ·G₄' },
+                            { term: 'R_{t+1}', name: 'Immediate Reward', meaning: 'Reward received one step after time t.', range: '\\\\mathbb{R}', example: 'R₄ = +5 (reached sub-goal)' },
+                            { term: '\\\\gamma G_{t+1}', name: 'Discounted Future Return', meaning: 'The return from the next state, scaled down by γ. Captures all future rewards beyond t+1.', range: '\\\\mathbb{R}', example: 'γ=0.9, G₄=10 → γ·G₄ = 9' },
                         ]}
                         numericalExample={{
                             setup: 'Compute G₁ recursively. Rewards: R₂=3, R₃=0, R₄=6. γ=0.9.',

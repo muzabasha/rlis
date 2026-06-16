@@ -234,13 +234,13 @@ export default function Topic11_MCBackupDiagrams() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="\tau = \{S_0, A_0, R_1, S_1, A_1, R_2, \dots, S_{T-1}, A_{T-1}, R_T, S_T\}"
+                        formula="\\tau = \\{S_0, A_0, R_1, S_1, A_1, R_2, \\dots, S_{T-1}, A_{T-1}, R_T, S_T\\}"
                         label="The Episode Trajectory (\tau)"
                         explanation="The formal sequence of states, actions, and rewards that make up an episode."
                         interpretation="In MC, we collect these \tau sequences. Each \tau gives us one sample of the return G. The diagram is simply a visual representation of this set \tau."
                         motivation="This formalization allows us to treat a complex interaction as a single unit of data for learning."
                         terms={[
-                            { term: '\tau', name: 'Trajectory', meaning: 'The ordered set of experience tuples.', range: '-', example: 'Start -> Left -> -1 -> Pit -> Game Over.' }
+                            { term: '\\tau', name: 'Trajectory', meaning: 'The ordered set of experience tuples.', range: '-', example: 'Start -> Left -> -1 -> Pit -> Game Over.' }
                         ]}
                     />
                     <RLTrajectoryVis />

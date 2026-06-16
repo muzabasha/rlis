@@ -154,7 +154,7 @@ export default function PolicyVis({
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                     {mode === 'deterministic'
                         ? 'Deterministic policies always pick one action. Stochastic policies sample from a probability distribution, enabling exploration.'
-                        : 'Stochastic policies use softmax over preference parameters. Higher <InlineMath math="\\theta_a" /> = higher probability for action a.'
+                        : <>Stochastic policies use softmax over preference parameters. Higher <InlineMath math="\\theta_a" /> = higher probability for action a.</>
                     }
                 </p>
             </div>

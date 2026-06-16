@@ -306,7 +306,7 @@ export default function Topic3_TraditionalVsIS() {
                         <div className="space-y-4">
                             <h5 className="font-black text-[10px] text-primary-500 uppercase tracking-widest">Intelligent</h5>
                             <MathBlock 
-                                formula="\hat{y} = f(x, \theta)"
+                                formula="\\hat{y} = f(x, \\theta)"
                                 label="Adaptive Logic"
                                 explanation="Output depends on input and learned parameters \theta."
                                 interpretation="\theta is updated via experience. The system 'tunes' itself to handle new variations of x."

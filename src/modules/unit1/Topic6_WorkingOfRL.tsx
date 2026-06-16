@@ -386,16 +386,16 @@ export default function Topic6_WorkingOfRL() {
             >
                 <div className="space-y-6">
                     <MathBlock
-                        formula="S_0,\;A_0,\;R_1,\;S_1,\;A_1,\;R_2,\;S_2,\;A_2,\;R_3,\;\ldots"
+                        formula="S_0,\\;A_0,\\;R_1,\\;S_1,\\;A_1,\\;R_2,\\;S_2,\\;A_2,\\;R_3,\\;\\ldots"
                         label="The RL Interaction Sequence"
                         accent="blue"
                         explanation="The complete history of an RL episode written as an alternating sequence of states, actions, and rewards. This sequence is the raw data from which all RL algorithms learn."
                         interpretation="Reading left to right: the agent starts in S₀, takes action A₀, receives reward R₁ and observes new state S₁, takes action A₁, receives R₂, and so on. Every RL algorithm — from simple Q-learning to complex PPO — processes this sequence to improve the agent's policy."
                         motivation="Writing the interaction as a formal sequence allows us to apply mathematical tools from probability theory and dynamic programming. Without this notation, we cannot derive update rules or prove convergence."
                         terms={[
-                            { term: 'S_t', name: 'State at time t', meaning: 'The environment\'s configuration observed by the agent at step t. Must satisfy the Markov property.', range: '\\mathcal{S}', example: 'S₀=(0,0) start, S₁=(0,1) after moving right.' },
-                            { term: 'A_t', name: 'Action at time t', meaning: 'The decision made by the agent in state S_t, sampled from policy π(·|S_t).', range: '\\mathcal{A}(S_t)', example: 'A₀=right, A₁=down.' },
-                            { term: 'R_{t+1}', name: 'Reward at t+1', meaning: 'Scalar feedback from the environment after action A_t. Subscript t+1 because it arrives one step after the action.', range: '\\mathbb{R}', example: 'R₁=−0.1 (step cost), R_T=+10 (goal reached).' },
+                            { term: 'S_t', name: 'State at time t', meaning: 'The environment\'s configuration observed by the agent at step t. Must satisfy the Markov property.', range: '\\\\mathcal{S}', example: 'S₀=(0,0) start, S₁=(0,1) after moving right.' },
+                            { term: 'A_t', name: 'Action at time t', meaning: 'The decision made by the agent in state S_t, sampled from policy π(·|S_t).', range: '\\\\mathcal{A}(S_t)', example: 'A₀=right, A₁=down.' },
+                            { term: 'R_{t+1}', name: 'Reward at t+1', meaning: 'Scalar feedback from the environment after action A_t. Subscript t+1 because it arrives one step after the action.', range: '\\\\mathbb{R}', example: 'R₁=−0.1 (step cost), R_T=+10 (goal reached).' },
                         ]}
                         numericalExample={{
                             setup: 'Robot navigating a 3×3 grid. Start=(0,0), Goal=(2,2). γ=0.9.',
@@ -412,16 +412,16 @@ export default function Topic6_WorkingOfRL() {
                     <RLInteractionCycleVis />
 
                     <MathBlock
-                        formula="S_t \in \mathcal{S},\quad A_t \in \mathcal{A}(S_t),\quad R_{t+1} \in \mathcal{R} \subset \mathbb{R}"
+                        formula="S_t \\in \\mathcal{S},\\quad A_t \\in \\mathcal{A}(S_t),\\quad R_{t+1} \\in \\mathcal{R} \\subset \\mathbb{R}"
                         label="The Sets of RL — Formal Domains"
                         accent="violet"
                         explanation="States, actions, and rewards each belong to well-defined mathematical sets. This formalisation is necessary to prove properties like convergence and optimality."
                         interpretation="This equation defines the 'type system' of RL. States live in the state space 𝒮, actions live in the action space 𝒜(s) which may depend on the current state, and rewards are real numbers. Knowing these sets determines which algorithms are applicable."
                         motivation="Without defining these sets, we cannot distinguish between discrete and continuous RL, finite and infinite MDPs, or episodic and continuing tasks — all of which require different algorithms."
                         terms={[
-                            { term: '\\mathcal{S}', name: 'State Space', meaning: 'The set of all possible states the environment can be in. Can be finite (grid world) or infinite (continuous robot state).', range: 'Finite or \\mathbb{R}^n', example: 'Grid world: 𝒮 = {(r,c) : 0≤r,c≤4} — 25 states. CartPole: 𝒮 = ℝ⁴.' },
-                            { term: '\\mathcal{A}(S_t)', name: 'Action Space', meaning: 'The set of actions available in state S_t. May vary by state (e.g., cannot move through walls).', range: 'Finite or \\mathbb{R}^m', example: 'Grid: 𝒜={up,down,left,right}. Robot arm: 𝒜=ℝ² (continuous torques).' },
-                            { term: '\\mathcal{R}\\subset\\mathbb{R}', name: 'Reward Set', meaning: 'The set of possible reward values. Usually a bounded subset of the real numbers.', range: '\\mathbb{R}', example: '𝒮 = {−1, 0, +1, +10} for a simple grid task.' },
+                            { term: '\\\\mathcal{S}', name: 'State Space', meaning: 'The set of all possible states the environment can be in. Can be finite (grid world) or infinite (continuous robot state).', range: 'Finite or \\\\mathbb{R}^n', example: 'Grid world: 𝒮 = {(r,c) : 0≤r,c≤4} — 25 states. CartPole: 𝒮 = ℝ⁴.' },
+                            { term: '\\\\mathcal{A}(S_t)', name: 'Action Space', meaning: 'The set of actions available in state S_t. May vary by state (e.g., cannot move through walls).', range: 'Finite or \\\\mathbb{R}^m', example: 'Grid: 𝒜={up,down,left,right}. Robot arm: 𝒜=ℝ² (continuous torques).' },
+                            { term: '\\\\mathcal{R}\\\\subset\\\\mathbb{R}', name: 'Reward Set', meaning: 'The set of possible reward values. Usually a bounded subset of the real numbers.', range: '\\\\mathbb{R}', example: '𝒮 = {−1, 0, +1, +10} for a simple grid task.' },
                         ]}
                     />
 

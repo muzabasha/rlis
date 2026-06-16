@@ -381,13 +381,13 @@ export default function Topic5_RecyclingRobotCase() {
                     </div>
 
                     <MathBlock 
-                        formula="p(s_{low} | s_{high}, \text{search}) = 1 - \alpha"
+                        formula="p(s_{low} | s_{high}, \\text{search}) = 1 - \\alpha"
                         label="Transition Probability"
                         explanation="The probability that searching in High energy state results in a Low energy state."
                         interpretation="$\alpha$ is the probability that the battery remains High after searching. If $\alpha=0.7$, the robot has a 30% chance of dropping to Low energy."
                         motivation="This uncertainty is what makes the policy decision interesting."
                         terms={[
-                            { term: '\alpha', name: 'Retention Prob', meaning: 'Likelihood energy stays high.', range: '0 \to 1', example: '0.7 (70% chance).' },
+                            { term: '\\alpha', name: 'Retention Prob', meaning: 'Likelihood energy stays high.', range: '0 \\to 1', example: '0.7 (70% chance).' },
                         ]}
                     />
                     <TransitionProbVis />

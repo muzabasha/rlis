@@ -334,24 +334,24 @@ export default function Topic3_DeterministicStochasticPolicy() {
                 <div className="space-y-8">
                     <div className="grid lg:grid-cols-2 gap-8">
                         <MathBlock 
-                            formula="a = \pi(s)"
+                            formula="a = \\pi(s)"
                             label="Deterministic Policy"
                             explanation="A direct mapping from state to action."
                             interpretation="There is zero randomness. If you are in state s, you will ALWAYS take action a."
                             motivation="Simplifies computation and is the goal of most 'exploitation' phases."
                             terms={[
-                                { term: 'a', name: 'Action', meaning: 'The single output of the policy.', range: '\\mathcal{A}', example: 'Move North' },
+                                { term: 'a', name: 'Action', meaning: 'The single output of the policy.', range: '\\\\mathcal{A}', example: 'Move North' },
                             ]}
                         />
 
                         <MathBlock 
-                            formula="\pi(a|s) \in [0, 1]"
+                            formula="\\pi(a|s) \\in [0, 1]"
                             label="Stochastic Policy"
                             explanation="A probability distribution over actions."
                             interpretation="You might take action A with 70% probability and action B with 30%."
                             motivation="Essential for exploration and for games where being predictable is a weakness."
                             terms={[
-                                { term: '\\pi(a|s)', name: 'Prob Density', meaning: 'The likelihood of choosing a in s.', range: '0 \\to 1', example: '0.7 for Action A' },
+                                { term: '\\\\pi(a|s)', name: 'Prob Density', meaning: 'The likelihood of choosing a in s.', range: '0 \\\\to 1', example: '0.7 for Action A' },
                             ]}
                         />
                     </div>

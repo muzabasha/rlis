@@ -290,14 +290,14 @@ export default function Topic9_QLearningTerms() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="Q(s, a) \leftarrow Q(s, a) + \alpha \underbrace{[r + \gamma \max_{a'} Q(s', a') - Q(s, a)]}_{\text{TD Error}}"
+                        formula="Q(s, a) \\leftarrow Q(s, a) + \\alpha \\underbrace{[r + \\gamma \\max_{a'} Q(s', a') - Q(s, a)]}_{\\text{TD Error}}"
                         label="The Q-Update Notation"
                         explanation="Breaking down every symbol in the learning rule."
                         interpretation="The equation is essentially: New = Old + Change. The TD Error is the 'Magnitude' of change needed."
                         motivation="By standardizing these symbols, researchers can apply Q-learning to robots, video games, and even financial markets using the same math."
                         terms={[
-                            { term: 's, a', name: 'State/Action', meaning: 'The input situation and the output choice.', range: '\mathcal{S}, \mathcal{A}', example: 'Room #5, Go Left.' },
-                            { term: 's\', a\'', name: 'Successor', meaning: 'The situation and choice at the next time step.', range: '\mathcal{S}, \mathcal{A}', example: 'The landing position.' },
+                            { term: 's, a', name: 'State/Action', meaning: 'The input situation and the output choice.', range: '\\mathcal{S}, \\mathcal{A}', example: 'Room #5, Go Left.' },
+                            { term: 's\', a\'', name: 'Successor', meaning: 'The situation and choice at the next time step.', range: '\\mathcal{S}, \\mathcal{A}', example: 'The landing position.' },
                         ]}
                     />
                     <SARSAQLearningVis />

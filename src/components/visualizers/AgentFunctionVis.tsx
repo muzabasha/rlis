@@ -121,7 +121,7 @@ export default function AgentFunctionVis({
                         className={`p-3 rounded-xl border ${stageColors.bg} min-w-[140px]`}
                     >
                         <p className={`text-[10px] font-semibold uppercase tracking-wider ${stageColors.text} mb-2 text-center`}>
-                            Percept History <InlineMath math="\mathcal{P}^*" />
+                            Percept History <InlineMath math="\\mathcal{P}^*" />
                         </p>
                         <div className="flex gap-1.5 flex-wrap justify-center">
                             {PERCEPT_POOL.map(p => {
@@ -187,7 +187,7 @@ export default function AgentFunctionVis({
                         className={`p-3 rounded-xl border ${stageColors.bg} min-w-[120px]`}
                     >
                         <p className={`text-[10px] font-semibold uppercase tracking-wider ${stageColors.text} mb-2 text-center`}>
-                            Action <InlineMath math="\mathcal{A}" />
+                            Action <InlineMath math="\\mathcal{A}" />
                         </p>
                         <motion.div
                             key={`${agentType}-${percepts.length}`}
@@ -215,7 +215,7 @@ export default function AgentFunctionVis({
                 </div>
 
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed text-center">
-                    The agent function <InlineMath math="f: \mathcal{P}^* \to \mathcal{A}" /> maps percept history to action.
+                    The agent function <InlineMath math="f: \\mathcal{P}^* \\to \\mathcal{A}" /> maps percept history to action.
                     {agentType === 'reflex' && ' Simple Reflex agents ignore history beyond the last percept.'}
                     {agentType === 'model' && ' Model-Based agents use the full percept history to decide.'}
                     {agentType === 'goal' && ' Goal-Based agents consider both history and a desired goal state.'}

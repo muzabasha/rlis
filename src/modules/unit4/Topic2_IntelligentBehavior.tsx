@@ -320,14 +320,14 @@ export default function Topic2_IntelligentBehavior() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="P(A, E) = \mathbb{E} \left[ \sum_{t=0}^{T} R(s_t, a_t) \right]"
+                        formula="P(A, E) = \\mathbb{E} \\left[ \\sum_{t=0}^{T} R(s_t, a_t) \\right]"
                         label="Performance Measure (P)"
                         explanation="The expected cumulative reward of an agent A in environment E."
                         interpretation="Intelligent behavior is measured by the agent's ability to maximize this sum. If P is high, the agent is exhibiting 'effective' intelligence for that specific goal."
                         motivation="This formula grounds the abstract concept of 'Intelligence' into a concrete number we can optimize using algorithms like Q-Learning."
                         terms={[
-                            { term: 'P', name: 'Performance', meaning: 'The total score/utility achieved by the agent.', range: '\mathbb{R}', example: 'Average score in an Atari game.' },
-                            { term: '\mathbb{E}', name: 'Expectation', meaning: 'The average result across many runs (accounting for randomness).', range: '-', example: 'Mean return over 100 episodes.' }
+                            { term: 'P', name: 'Performance', meaning: 'The total score/utility achieved by the agent.', range: '\\mathbb{R}', example: 'Average score in an Atari game.' },
+                            { term: '\\mathbb{E}', name: 'Expectation', meaning: 'The average result across many runs (accounting for randomness).', range: '-', example: 'Mean return over 100 episodes.' }
                         ]}
                     />
                     <ExpectedRewardVis />

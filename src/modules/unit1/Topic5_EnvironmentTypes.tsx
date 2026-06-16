@@ -357,7 +357,7 @@ export default function Topic5_EnvironmentTypes() {
             >
                 <div className="space-y-6">
                     <MathBlock
-                        formula="\mathcal{P}(s' \mid s, a) = \Pr(S_{t+1}=s' \mid S_t=s,\, A_t=a)"
+                        formula="\\mathcal{P}(s' \\mid s, a) = \\Pr(S_{t+1}=s' \\mid S_t=s,\\, A_t=a)"
                         label="State Transition Probability"
                         accent="blue"
                         explanation="The probability that the environment moves to state s' when the agent takes action a in state s. This single function completely defines the environment's dynamics."
@@ -365,9 +365,9 @@ export default function Topic5_EnvironmentTypes() {
                         motivation="Without P(s'|s,a), we cannot compute value functions analytically. Model-based RL algorithms learn this function; model-free algorithms bypass it entirely by learning from samples."
                         terms={[
                             { term: "\\mathcal{P}(s'\\mid s,a)", name: 'Transition Probability', meaning: 'Probability of landing in state s\' after taking action a in state s. Must sum to 1 over all s\'.', range: '[0,1]', example: 'Slippery floor: P(right|s,right)=0.8, P(up|s,right)=0.1, P(down|s,right)=0.1.' },
-                            { term: 'S_{t+1}', name: 'Next State', meaning: 'The state the environment transitions to after the action.', range: '\\mathcal{S}', example: 'After "move right" from (2,3): S_{t+1}=(2,4) with prob 0.8.' },
-                            { term: 'S_t=s', name: 'Current State', meaning: 'The state the agent is in when it takes the action.', range: '\\mathcal{S}', example: 'S_t=(2,3) — robot at row 2, column 3.' },
-                            { term: 'A_t=a', name: 'Action Taken', meaning: 'The action the agent chose in state s.', range: '\\mathcal{A}', example: 'A_t = "move right".' },
+                            { term: 'S_{t+1}', name: 'Next State', meaning: 'The state the environment transitions to after the action.', range: '\\\\mathcal{S}', example: 'After "move right" from (2,3): S_{t+1}=(2,4) with prob 0.8.' },
+                            { term: 'S_t=s', name: 'Current State', meaning: 'The state the agent is in when it takes the action.', range: '\\\\mathcal{S}', example: 'S_t=(2,3) — robot at row 2, column 3.' },
+                            { term: 'A_t=a', name: 'Action Taken', meaning: 'The action the agent chose in state s.', range: '\\\\mathcal{A}', example: 'A_t = "move right".' },
                         ]}
                         numericalExample={{
                             setup: 'Stochastic grid world. Action "right" from state (2,3). Transition probabilities:',
@@ -384,16 +384,16 @@ export default function Topic5_EnvironmentTypes() {
                     <TransitionProbVis />
 
                     <MathBlock
-                        formula="\mathcal{R}(s,a) = \mathbb{E}\!\left[R_{t+1} \mid S_t=s,\, A_t=a\right] = \sum_{s'}\mathcal{P}(s'\mid s,a)\cdot r(s,a,s')"
+                        formula="\\mathcal{R}(s,a) = \\mathbb{E}\\!\\left[R_{t+1} \\mid S_t=s,\\, A_t=a\\right] = \\sum_{s'}\\mathcal{P}(s'\\mid s,a)\\cdot r(s,a,s')"
                         label="Expected Reward Function"
                         accent="emerald"
                         explanation="The expected immediate reward for taking action a in state s, averaged over all possible next states weighted by their transition probabilities."
                         interpretation="This function tells the agent how much reward to expect on average from each (state, action) pair. In deterministic environments, R(s,a) equals the single reward received. In stochastic environments, it is a weighted average over all possible outcomes."
                         motivation="The reward function is the most critical design choice in RL. A poorly designed R(s,a) leads to reward hacking — the agent finds unintended ways to maximise reward while ignoring the actual goal."
                         terms={[
-                            { term: '\\mathcal{R}(s,a)', name: 'Expected Reward', meaning: 'Average reward for taking action a in state s, over all possible next states.', range: '\\mathbb{R}', example: 'R(near_goal, move_right) = +9.5 (usually reaches goal).' },
-                            { term: 'r(s,a,s\')', name: 'Transition Reward', meaning: 'Reward received for the specific transition from s to s\' via action a.', range: '\\mathbb{R}', example: 'r((2,3),right,(2,4))=−0.1, r((2,3),right,goal)=+10.' },
-                            { term: '\\mathcal{P}(s\'\\mid s,a)', name: 'Transition Weight', meaning: 'Probability of reaching s\', used to weight the reward r(s,a,s\').', range: '[0,1]', example: 'P=0.8 for intended direction, 0.1 for each slip direction.' },
+                            { term: '\\\\mathcal{R}(s,a)', name: 'Expected Reward', meaning: 'Average reward for taking action a in state s, over all possible next states.', range: '\\\\mathbb{R}', example: 'R(near_goal, move_right) = +9.5 (usually reaches goal).' },
+                            { term: 'r(s,a,s\')', name: 'Transition Reward', meaning: 'Reward received for the specific transition from s to s\' via action a.', range: '\\\\mathbb{R}', example: 'r((2,3),right,(2,4))=−0.1, r((2,3),right,goal)=+10.' },
+                            { term: '\\\\mathcal{P}(s\'\\\\mid s,a)', name: 'Transition Weight', meaning: 'Probability of reaching s\', used to weight the reward r(s,a,s\').', range: '[0,1]', example: 'P=0.8 for intended direction, 0.1 for each slip direction.' },
                         ]}
                         numericalExample={{
                             setup: 'Action "right" from (2,3). Transitions: (2,4) with p=0.8, r=−0.1; (1,3) with p=0.1, r=−0.1; (3,3) with p=0.1, r=−0.1.',

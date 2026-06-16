@@ -233,14 +233,14 @@ export default function Topic14_MCControl() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="\pi(s) \leftarrow \arg\max_a Q(s, a)"
+                        formula="\\pi(s) \\leftarrow \\arg\\max_a Q(s, a)"
                         label="The Policy Improvement Step"
                         explanation="Making the policy greedy with respect to the current value estimates."
                         interpretation="The agent looks at all available actions in state s and picks the one with the highest current Q-value. This 'Greedy' update is what drives the policy toward optimality."
                         motivation="This step converts the agent's knowledge (the Q-values) into actual behavior changes."
                         terms={[
-                            { term: '\arg\max_a', name: 'Argument of Maximum', meaning: 'The action (a) that results in the highest value of the following function.', range: '\mathcal{A}', example: 'If Q(Left)=5 and Q(Right)=10, argmax is Right.' },
-                            { term: 'Q(s, a)', name: 'Action-Value', meaning: 'The predicted return from taking action a in state s.', range: '\mathbb{R}', example: 'The value of hitting in Blackjack.' }
+                            { term: '\\arg\\max_a', name: 'Argument of Maximum', meaning: 'The action (a) that results in the highest value of the following function.', range: '\\mathcal{A}', example: 'If Q(Left)=5 and Q(Right)=10, argmax is Right.' },
+                            { term: 'Q(s, a)', name: 'Action-Value', meaning: 'The predicted return from taking action a in state s.', range: '\\mathbb{R}', example: 'The value of hitting in Blackjack.' }
                         ]}
                     />
                     <OptimalPolicyVis />

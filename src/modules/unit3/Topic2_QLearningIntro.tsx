@@ -343,15 +343,15 @@ export default function Topic2_QLearningIntro() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="Q(s, a) \leftarrow Q(s, a) + \alpha \left[ r + \gamma \max_{a'} Q(s', a') - Q(s, a) \right]"
+                        formula="Q(s, a) \\leftarrow Q(s, a) + \\alpha \\left[ r + \\gamma \\max_{a'} Q(s', a') - Q(s, a) \\right]"
                         label="The Q-Learning Update Rule"
                         explanation="How the agent updates its knowledge after every step."
                         interpretation="The new Q-value is the old Q-value plus a fraction (alpha) of the 'Surprise' or 'Error' (Temporal Difference)."
                         motivation="This formula allows the agent to slowly shift its estimates toward the actual rewards it observes."
                         terms={[
-                            { term: '\alpha', name: 'Learning Rate', meaning: 'How much we trust new information over old.', range: '0 \to 1', example: '0.1 = slow learning.' },
-                            { term: '\gamma', name: 'Discount Factor', meaning: 'Importance of future rewards.', range: '0 \to 1', example: '0.9 = far-sighted.' },
-                            { term: '\max_{a\'} Q(s\', a\')', name: 'Best Future Q', meaning: 'The estimate of the best possible reward in the next state.', range: '\mathbb{R}', example: 'Value of the best move next turn.' },
+                            { term: '\\alpha', name: 'Learning Rate', meaning: 'How much we trust new information over old.', range: '0 \\to 1', example: '0.1 = slow learning.' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Importance of future rewards.', range: '0 \\to 1', example: '0.9 = far-sighted.' },
+                            { term: '\\max_{a\'} Q(s\', a\')', name: 'Best Future Q', meaning: 'The estimate of the best possible reward in the next state.', range: '\\mathbb{R}', example: 'Value of the best move next turn.' },
                         ]}
                     />
                     <SARSAQLearningVis />

@@ -431,16 +431,16 @@ export default function Topic4_ElementsOfRL() {
                     </p>
 
                     <MathBlock
-                        formula="\pi(a \mid s) = \Pr(A_t = a \mid S_t = s)"
+                        formula="\\pi(a \\mid s) = \\Pr(A_t = a \\mid S_t = s)"
                         label="Policy — The Agent's Strategy"
                         accent="blue"
                         explanation="The policy π maps every state s to a probability distribution over actions. It is the complete specification of the agent's behaviour."
                         interpretation="The policy is the brain of the agent. A deterministic policy always picks the same action in a given state: π(s)=a. A stochastic policy assigns probabilities to actions, enabling exploration. The goal of RL is to find the optimal policy π* that maximises expected return."
                         motivation="Without a formal policy, we cannot write algorithms. Every RL update rule — Q-learning, REINFORCE, PPO — is ultimately computing a better policy from experience."
                         terms={[
-                            { term: '\\pi(a\\mid s)', name: 'Policy', meaning: 'Probability of taking action a when in state s. Sums to 1 over all actions.', range: '[0,1]', example: 'π(right|(2,3))=0.8, π(up|(2,3))=0.2 — mostly go right, sometimes explore up.' },
-                            { term: 'A_t', name: 'Action random variable', meaning: 'The action chosen at time t, sampled from π(·|S_t).', range: '\\mathcal{A}', example: 'A_t = "move right"' },
-                            { term: 'S_t', name: 'State random variable', meaning: 'The state observed at time t.', range: '\\mathcal{S}', example: 'S_t = (row=2, col=3)' },
+                            { term: '\\\\pi(a\\\\mid s)', name: 'Policy', meaning: 'Probability of taking action a when in state s. Sums to 1 over all actions.', range: '[0,1]', example: 'π(right|(2,3))=0.8, π(up|(2,3))=0.2 — mostly go right, sometimes explore up.' },
+                            { term: 'A_t', name: 'Action random variable', meaning: 'The action chosen at time t, sampled from π(·|S_t).', range: '\\\\mathcal{A}', example: 'A_t = "move right"' },
+                            { term: 'S_t', name: 'State random variable', meaning: 'The state observed at time t.', range: '\\\\mathcal{S}', example: 'S_t = (row=2, col=3)' },
                         ]}
                         numericalExample={{
                             setup: 'Stochastic policy in a 2-action world: π(left|s)=0.3, π(right|s)=0.7.',
@@ -456,16 +456,16 @@ export default function Topic4_ElementsOfRL() {
                     <SoftmaxVis formula="\\pi(a \\mid s) = \\Pr(A_t = a \\mid S_t = s)" label="Policy — The Agent's Strategy" accent="blue" />
 
                     <MathBlock
-                        formula="G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots"
+                        formula="G_t = \\sum_{k=0}^{\\infty} \\gamma^k R_{t+k+1} = R_{t+1} + \\gamma R_{t+2} + \\gamma^2 R_{t+3} + \\cdots"
                         label="Return — Total Discounted Reward"
                         accent="violet"
                         explanation="G_t is the total discounted reward from time t onwards. This is the quantity the agent maximises — not just the next reward, but the entire future."
                         interpretation="The return G_t is the 'score' the agent accumulates from time t to the end of the episode. The discount factor γ ensures that rewards far in the future contribute less than immediate rewards, reflecting uncertainty and the time value of reward."
                         motivation="Without G_t, we cannot define what 'good behaviour' means over time. A greedy agent maximising only R_{t+1} will sacrifice long-term success for short-term gain."
                         terms={[
-                            { term: 'G_t', name: 'Return', meaning: 'Total discounted reward from step t to end of episode. The primary quantity RL maximises.', range: '\\mathbb{R}', example: 'G₀=7.86 means the agent expects to accumulate 7.86 total reward from the start.' },
-                            { term: '\\gamma^k', name: 'Discount at step k', meaning: 'Exponential decay applied to reward k steps in the future. Ensures G_t is finite for infinite horizons.', range: '(0,1]', example: 'γ=0.9, k=5: γ⁵=0.59. A reward of 10 five steps away is worth 5.9 now.' },
-                            { term: 'R_{t+k+1}', name: 'Future Reward', meaning: 'Reward received k+1 steps after time t.', range: '\\mathbb{R}', example: 'R_{t+3} is the reward 3 steps from now.' },
+                            { term: 'G_t', name: 'Return', meaning: 'Total discounted reward from step t to end of episode. The primary quantity RL maximises.', range: '\\\\mathbb{R}', example: 'G₀=7.86 means the agent expects to accumulate 7.86 total reward from the start.' },
+                            { term: '\\\\gamma^k', name: 'Discount at step k', meaning: 'Exponential decay applied to reward k steps in the future. Ensures G_t is finite for infinite horizons.', range: '(0,1]', example: 'γ=0.9, k=5: γ⁵=0.59. A reward of 10 five steps away is worth 5.9 now.' },
+                            { term: 'R_{t+k+1}', name: 'Future Reward', meaning: 'Reward received k+1 steps after time t.', range: '\\\\mathbb{R}', example: 'R_{t+3} is the reward 3 steps from now.' },
                         ]}
                         numericalExample={{
                             setup: 'Rewards: R₁=2, R₂=0, R₃=5, R₄=1. γ=0.9. Compute G₁.',
@@ -481,16 +481,16 @@ export default function Topic4_ElementsOfRL() {
                     <DiscountCurveVis />
 
                     <MathBlock
-                        formula="v_\pi(s) = \mathbb{E}_\pi\!\left[G_t \mid S_t = s\right] = \mathbb{E}_\pi\!\left[\sum_{k=0}^{\infty}\gamma^k R_{t+k+1} \;\middle|\; S_t=s\right]"
+                        formula="v_\\pi(s) = \\mathbb{E}_\\pi\\!\\left[G_t \\mid S_t = s\\right] = \\mathbb{E}_\\pi\\!\\left[\\sum_{k=0}^{\\infty}\\gamma^k R_{t+k+1} \\;\\middle|\\; S_t=s\\right]"
                         label="State-Value Function — The Agent's Hunch"
                         accent="emerald"
                         explanation="v_π(s) is the expected return when starting in state s and following policy π. It answers: 'How good is it to be in this state?'"
                         interpretation="The value function is the agent's long-term intuition. A high v_π(s) means state s is a good place to be — the agent expects to accumulate a lot of reward from here. A low v_π(s) means the state is bad. The agent uses value functions to compare states and improve its policy."
                         motivation="Without v_π(s), the agent cannot plan. It would have to re-evaluate every possible future from scratch at each step. The value function compresses all future information into a single number per state."
                         terms={[
-                            { term: 'v_\\pi(s)', name: 'State-Value Function', meaning: 'Expected total discounted reward starting from state s, following policy π forever.', range: '\\mathbb{R}', example: 'v_π(near_goal)=9.5, v_π(start)=3.2 — being near the goal is much better.' },
-                            { term: '\\mathbb{E}_\\pi', name: 'Expectation under π', meaning: 'Average over all trajectories the agent might experience when following policy π from state s.', range: '\\mathbb{R}', example: 'If 60% of trajectories give G=10 and 40% give G=5: E[G]=0.6×10+0.4×5=8.' },
-                            { term: 'S_t = s', name: 'Conditioning on state', meaning: 'We fix the starting state to s. The expectation averages over all future randomness (stochastic transitions and stochastic policy).', range: '\\mathcal{S}', example: 'v_π((2,3)) = expected return when starting at grid position (2,3).' },
+                            { term: 'v_\\\\pi(s)', name: 'State-Value Function', meaning: 'Expected total discounted reward starting from state s, following policy π forever.', range: '\\\\mathbb{R}', example: 'v_π(near_goal)=9.5, v_π(start)=3.2 — being near the goal is much better.' },
+                            { term: '\\\\mathbb{E}_\\\\pi', name: 'Expectation under π', meaning: 'Average over all trajectories the agent might experience when following policy π from state s.', range: '\\\\mathbb{R}', example: 'If 60% of trajectories give G=10 and 40% give G=5: E[G]=0.6×10+0.4×5=8.' },
+                            { term: 'S_t = s', name: 'Conditioning on state', meaning: 'We fix the starting state to s. The expectation averages over all future randomness (stochastic transitions and stochastic policy).', range: '\\\\mathcal{S}', example: 'v_π((2,3)) = expected return when starting at grid position (2,3).' },
                         ]}
                         numericalExample={{
                             setup: '3-state chain: s₁→s₂→s₃(goal). Rewards: r(s₁→s₂)=0, r(s₂→s₃)=+10. γ=0.9. Deterministic policy: always move right.',

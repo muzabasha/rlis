@@ -232,15 +232,15 @@ export default function Topic13_MCPrediction() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="V(s) \leftarrow V(s) + \frac{1}{N(s)} [G - V(s)]"
+                        formula="V(s) \\leftarrow V(s) + \\frac{1}{N(s)} [G - V(s)]"
                         label="Incremental MC Update"
                         explanation="Updating the average value without storing every past return."
                         interpretation="The term [G - V(s)] is the 'Prediction Error'. We move the current estimate V(s) toward the actual return G by a small step size (1/N)."
                         motivation="This allows an agent to learn on-the-fly. It doesn't need a huge database of episodes; it just needs to remember the current average and the count."
                         terms={[
-                            { term: 'G', name: 'Actual Return', meaning: 'The total reward seen in the current episode.', range: '\mathbb{R}', example: 'G = 10.' },
-                            { term: 'V(s)', name: 'Estimated Value', meaning: 'The agent\'s current prediction of the reward.', range: '\mathbb{R}', example: 'V(s) = 8.' },
-                            { term: '[G - V(s)]', name: 'Error', meaning: 'The difference between reality and prediction.', range: '\mathbb{R}', example: 'Error = +2 (I did better than expected!).' }
+                            { term: 'G', name: 'Actual Return', meaning: 'The total reward seen in the current episode.', range: '\\mathbb{R}', example: 'G = 10.' },
+                            { term: 'V(s)', name: 'Estimated Value', meaning: 'The agent\'s current prediction of the reward.', range: '\\mathbb{R}', example: 'V(s) = 8.' },
+                            { term: '[G - V(s)]', name: 'Error', meaning: 'The difference between reality and prediction.', range: '\\mathbb{R}', example: 'Error = +2 (I did better than expected!).' }
                         ]}
                     />
                     <MCIncrementalVis />

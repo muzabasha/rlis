@@ -300,14 +300,14 @@ export default function Topic1_PolicyInMDP() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="\pi(a|s) = \mathbb{P}[A_t = a \mid S_t = s]"
+                        formula="\\pi(a|s) = \\mathbb{P}[A_t = a \\mid S_t = s]"
                         label="The Policy Function"
                         explanation="The probability of taking action a given that the agent is in state s."
                         interpretation="A policy completely defines the behavior of an agent. It is stationary if it does not depend on time t."
                         motivation="By treating policy as a probability distribution, we allow the agent to explore and handle uncertainty in its own decision-making process."
                         terms={[
-                            { term: '\pi', name: 'Policy', meaning: 'The mapping function from States to Actions.', range: '\mathcal{S} \to \mathcal{A}', example: 'A lookup table or a neural network.' },
-                            { term: 'a|s', name: 'Conditional Action', meaning: 'Taking action a given the current state is s.', range: '\mathcal{A}', example: 'Picking "Jump" given state "Obstacle".' },
+                            { term: '\\pi', name: 'Policy', meaning: 'The mapping function from States to Actions.', range: '\\mathcal{S} \\to \\mathcal{A}', example: 'A lookup table or a neural network.' },
+                            { term: 'a|s', name: 'Conditional Action', meaning: 'Taking action a given the current state is s.', range: '\\mathcal{A}', example: 'Picking "Jump" given state "Obstacle".' },
                         ]}
                     />
                     <PolicyVis />

@@ -339,17 +339,17 @@ export default function Topic3_MarkovPropertyChain() {
             >
                 <div className="space-y-6">
                     <MathBlock
-                        formula="\mathbb{P}\!\left[S_{t+1} \mid S_t\right] = \mathbb{P}\!\left[S_{t+1} \mid S_1,\, S_2,\, \ldots,\, S_t\right]"
+                        formula="\\mathbb{P}\\!\\left[S_{t+1} \\mid S_t\\right] = \\mathbb{P}\\!\\left[S_{t+1} \\mid S_1,\\, S_2,\\, \\ldots,\\, S_t\\right]"
                         label="The Markov Property — Conditional Independence"
                         accent="violet"
                         explanation="The probability of the next state S_{t+1} depends only on the current state S_t, not on the entire history S_1,...,S_t. The present state is a sufficient statistic for the future."
                         interpretation="This equation says: knowing the full history S_1,...,S_t gives you no more predictive power than knowing just S_t. The current state 'summarises' all relevant information from the past. This is the fundamental assumption that makes RL tractable — without it, the agent would need to store and process an ever-growing history."
                         motivation="The Markov property is what allows us to define value functions V(s) that depend only on the current state. Without it, we would need V(s_1,...,s_t) — a function of the entire history — which is computationally infeasible."
                         terms={[
-                            { term: 'S_{t+1}', name: 'Next State', meaning: 'The state the environment will be in at the next time step. This is what we are predicting.', range: '\\mathcal{S}', example: 'Tomorrow\'s weather.' },
-                            { term: 'S_t', name: 'Current State', meaning: 'The state at the present time step. Under the Markov property, this is all we need to predict S_{t+1}.', range: '\\mathcal{S}', example: 'Today\'s weather (Sunny/Rainy).' },
-                            { term: 'S_1,\\ldots,S_t', name: 'Full History', meaning: 'The complete sequence of past states. The Markov property says this provides no additional information beyond S_t alone.', range: '\\mathcal{S}^t', example: 'Weather for the past 100 days — irrelevant if we know today\'s weather.' },
-                            { term: '\\mathbb{P}[\\cdot\\mid\\cdot]', name: 'Conditional Probability', meaning: 'Probability of an event given some conditioning information. The Markov property says conditioning on S_t is equivalent to conditioning on the full history.', range: '[0,1]', example: 'P[Rain tomorrow | Sunny today] = P[Rain tomorrow | all past weather, Sunny today].' },
+                            { term: 'S_{t+1}', name: 'Next State', meaning: 'The state the environment will be in at the next time step. This is what we are predicting.', range: '\\\\mathcal{S}', example: 'Tomorrow\'s weather.' },
+                            { term: 'S_t', name: 'Current State', meaning: 'The state at the present time step. Under the Markov property, this is all we need to predict S_{t+1}.', range: '\\\\mathcal{S}', example: 'Today\'s weather (Sunny/Rainy).' },
+                            { term: 'S_1,\\\\ldots,S_t', name: 'Full History', meaning: 'The complete sequence of past states. The Markov property says this provides no additional information beyond S_t alone.', range: '\\\\mathcal{S}^t', example: 'Weather for the past 100 days — irrelevant if we know today\'s weather.' },
+                            { term: '\\\\mathbb{P}[\\\\cdot\\\\mid\\\\cdot]', name: 'Conditional Probability', meaning: 'Probability of an event given some conditioning information. The Markov property says conditioning on S_t is equivalent to conditioning on the full history.', range: '[0,1]', example: 'P[Rain tomorrow | Sunny today] = P[Rain tomorrow | all past weather, Sunny today].' },
                         ]}
                         numericalExample={{
                             setup: 'Weather Markov Chain. Transition matrix: P(Sunny|Sunny)=0.8, P(Rainy|Sunny)=0.2, P(Sunny|Rainy)=0.4, P(Rainy|Rainy)=0.6.',
@@ -366,7 +366,7 @@ export default function Topic3_MarkovPropertyChain() {
                     <MarkovPropertyVis />
 
                     <MathBlock
-                        formula="\mathbf{P} = \begin{pmatrix} P_{11} & P_{12} & \cdots & P_{1n} \\ P_{21} & P_{22} & \cdots & P_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ P_{n1} & P_{n2} & \cdots & P_{nn} \end{pmatrix}, \quad \sum_{j=1}^{n} P_{ij} = 1 \;\forall i"
+                        formula="\\mathbf{P} = \\begin{pmatrix} P_{11} & P_{12} & \\cdots & P_{1n} \\\\ P_{21} & P_{22} & \\cdots & P_{2n} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ P_{n1} & P_{n2} & \\cdots & P_{nn} \\end{pmatrix}, \\quad \\sum_{j=1}^{n} P_{ij} = 1 \\;\\forall i"
                         label="Markov Transition Matrix"
                         accent="blue"
                         explanation="The complete transition dynamics of a Markov Chain encoded as an n×n matrix. Row i gives the probability distribution over next states when currently in state i. Every row must sum to 1."
@@ -374,8 +374,8 @@ export default function Topic3_MarkovPropertyChain() {
                         motivation="The matrix form enables powerful analytical tools: eigenvalue analysis for stationary distributions, matrix powers for multi-step predictions, and linear algebra for policy evaluation. The Bellman equation for policy evaluation is a linear system that can be solved by matrix inversion."
                         terms={[
                             { term: 'P_{ij}', name: 'Matrix Entry (i,j)', meaning: 'Probability of transitioning from state i to state j in one step. Equivalent to P(s_j|s_i).', range: '[0,1]', example: 'P_{12}=0.2: 20% chance of going from state 1 to state 2.' },
-                            { term: '\\sum_j P_{ij}=1', name: 'Row-Stochastic Constraint', meaning: 'Each row must sum to 1 — the agent must transition to SOME state. This makes P a row-stochastic (or right-stochastic) matrix.', range: '\\{1\\}', example: 'Row 1: P_{11}+P_{12}=0.8+0.2=1.0 ✓' },
-                            { term: '\\mathbf{P}^n', name: 'n-Step Transition Matrix', meaning: 'The matrix power P^n gives the probability of transitioning from state i to state j in exactly n steps.', range: '[0,1]^{n\\times n}', example: 'P²_{ij} = probability of going from i to j in 2 steps.' },
+                            { term: '\\\\sum_j P_{ij}=1', name: 'Row-Stochastic Constraint', meaning: 'Each row must sum to 1 — the agent must transition to SOME state. This makes P a row-stochastic (or right-stochastic) matrix.', range: '\\\\{1\\\\}', example: 'Row 1: P_{11}+P_{12}=0.8+0.2=1.0 ✓' },
+                            { term: '\\\\mathbf{P}^n', name: 'n-Step Transition Matrix', meaning: 'The matrix power P^n gives the probability of transitioning from state i to state j in exactly n steps.', range: '[0,1]^{n\\\\times n}', example: 'P²_{ij} = probability of going from i to j in 2 steps.' },
                         ]}
                         numericalExample={{
                             setup: 'Weather Markov Chain. P = [[0.8, 0.2], [0.4, 0.6]] (Sunny=0, Rainy=1).',

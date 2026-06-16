@@ -345,8 +345,8 @@ export default function Topic11_ActionValueFunction() {
                         interpretation="The Q-value represents the total future reward 'locked' behind a specific choice. Unlike V(s), which averages over all possible actions in a state, Q(s, a) isolates the effect of a single initial decision before reverting to the standard policy."
                         motivation="This is the most important quantity in RL. If an agent knows Q(s, a) for all actions, it can simply pick the action with the highest Q-value to act optimally. This is how Q-Learning works."
                         terms={[
-                            { term: 'q_\\pi(s, a)', name: 'Action-Value', meaning: 'The "goodness" of taking action a in state s under policy \u03C0.', range: '\\mathbb{R}', example: 'q(burning_room, use_extinguisher) = +50.' },
-                            { term: 'G_t', name: 'Return', meaning: 'The discounted sum of all future rewards starting from time step t.', range: '\\mathbb{R}', example: 'G_t = R_{t+1} + \u03B3 R_{t+2} + ...' },
+                            { term: 'q_\\pi(s, a)', name: 'Action-Value', meaning: 'The "goodness" of taking action a in state s under policy \\u03C0.', range: '\\mathbb{R}', example: 'q(burning_room, use_extinguisher) = +50.' },
+                            { term: 'G_t', name: 'Return', meaning: 'The discounted sum of all future rewards starting from time step t.', range: '\\mathbb{R}', example: 'G_t = R_{t+1} + \\u03B3 R_{t+2} + ...' },
                             { term: 'A_t = a', name: 'Specific Action', meaning: 'The action being evaluated. Note that this is fixed, regardless of what the policy would normally suggest.', range: '\\mathcal{A}', example: 'Even if the policy is "Run", we can evaluate the Q-value of "Stay".' },
                         ]}
                         numericalExample={{
@@ -371,9 +371,9 @@ export default function Topic11_ActionValueFunction() {
                         interpretation="This formula connects Q and V. It says that the value of an action is the immediate feedback from the environment (r) plus the value of wherever you end up (v(s')). It's like evaluating a move in chess by looking at the immediate capture and the strength of the resulting board position."
                         motivation="This recursive form allows us to update Q-values iteratively without needing to play out the entire future every time. It's the basis for Temporal Difference (TD) learning."
                         terms={[
-                            { term: 'p(s\', r | s, a)', name: 'Dynamics', meaning: 'The probability of ending up in state s\' with reward r after taking action a in state s.', range: '[0, 1]', example: 'Slippery floor: move "Up" has 0.8 prob of success, 0.2 of sliding "Left".' },
-                            { term: 'v_\\pi(s\')', name: 'Next State Value', meaning: 'The total future reward we expect from the state we land in.', range: '\\mathbb{R}', example: 'If we land in a "Safe Zone", v(s\') is high.' },
-                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Reduces the value of future rewards compared to immediate ones.', range: '[0, 1]', example: '\u03B3=0.9 means a reward of 10 in the next state is worth 9 in the current action evaluation.' },
+                            { term: `p(s'|s,a)`, name: 'Dynamics', meaning: 'The probability of ending up in state s\' with reward r after taking action a in state s.', range: '[0, 1]', example: 'Slippery floor: move "Up" has 0.8 prob of success, 0.2 of sliding "Left".' },
+                            { term: `v_\\pi(s')`, name: 'Next State Value', meaning: 'The total future reward we expect from the state we land in.', range: '\\mathbb{R}', example: 'If we land in a "Safe Zone", v(s\') is high.' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Reduces the value of future rewards compared to immediate ones.', range: '[0, 1]', example: '\\u03B3=0.9 means a reward of 10 in the next state is worth 9 in the current action evaluation.' },
                         ]}
                     />
 

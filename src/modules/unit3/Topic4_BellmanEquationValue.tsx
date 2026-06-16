@@ -318,14 +318,14 @@ export default function Topic4_BellmanEquationValue() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="v_\pi(s) = \sum_a \pi(a|s) \sum_{s', r} p(s', r | s, a) \left[ r + \gamma v_\pi(s') \right]"
+                        formula="v_\\pi(s) = \\sum_a \\pi(a|s) \\sum_{s', r} p(s', r | s, a) \\left[ r + \\gamma v_\\pi(s') \\right]"
                         label="Bellman Expectation Equation for v_\pi"
                         explanation="The value of state s under policy π is the expected reward plus the discounted value of the next state."
                         interpretation="This is an averaging process. We look at all actions you might take (π), all states you might land in (p), and average their values."
                         motivation="This allows us to compute the value function for any fixed policy π without simulating paths."
                         terms={[
-                            { term: 'r + \gamma v_\pi(s\')', name: 'Estimated Return', meaning: 'The immediate reward plus the discounted value of where you end up.', range: '\mathbb{R}', example: 'Getting 5 points + 0.9 * (Value of next room).' },
-                            { term: '\sum \dots', name: 'Expected Value', meaning: 'The weighted average over all possibilities.', range: '\mathbb{R}', example: 'Averaging the luck of the dice.' },
+                            { term: 'r + \\gamma v_\\pi(s\')', name: 'Estimated Return', meaning: 'The immediate reward plus the discounted value of where you end up.', range: '\\mathbb{R}', example: 'Getting 5 points + 0.9 * (Value of next room).' },
+                            { term: '\\sum \\dots', name: 'Expected Value', meaning: 'The weighted average over all possibilities.', range: '\\mathbb{R}', example: 'Averaging the luck of the dice.' },
                         ]}
                     />
                     <BellmanConvergenceVis />

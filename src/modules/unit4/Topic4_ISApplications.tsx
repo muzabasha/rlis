@@ -329,13 +329,13 @@ export default function Topic4_ISApplications() {
             >
                 <div className="space-y-8">
                     <MathBlock 
-                        formula="y = \arg\max_{a} Q(s, a; \theta)"
+                        formula="y = \\arg\\max_{a} Q(s, a; \\theta)"
                         label="The Universal Decision Function"
                         explanation="How an agent chooses its next application-specific action."
                         interpretation="In Healthcare, 'a' might be a diagnosis. In Finance, 'a' might be 'Block Transaction'. In Robotics, 'a' might be 'Turn Left'. The math remains the same: pick the action that maximizes the learned value Q."
                         motivation="This unity of mathematics is why one algorithm can be applied across dozens of different industries."
                         terms={[
-                            { term: '\theta', name: 'Domain Knowledge', meaning: 'The parameters learned from industry-specific data.', range: '\mathbb{R}^n', example: 'Weights trained on cancer biopsies.' }
+                            { term: '\\theta', name: 'Domain Knowledge', meaning: 'The parameters learned from industry-specific data.', range: '\\mathbb{R}^n', example: 'Weights trained on cancer biopsies.' }
                         ]}
                     />
                     <BellmanOptimalityVis />

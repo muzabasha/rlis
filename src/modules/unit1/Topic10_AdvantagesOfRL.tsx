@@ -298,17 +298,17 @@ export default function Topic10_AdvantagesOfRL() {
             >
                 <div className="space-y-6">
                     <MathBlock
-                        formula="\pi^* = \arg\max_{\pi}\;\mathbb{E}_\pi\!\left[\sum_{t=0}^{\infty}\gamma^t R_{t+1}\;\middle|\;S_0=s_0\right]"
+                        formula="\\pi^* = \\arg\\max_{\\pi}\\;\\mathbb{E}_\\pi\\!\\left[\\sum_{t=0}^{\\infty}\\gamma^t R_{t+1}\\;\\middle|\\;S_0=s_0\\right]"
                         label="RL's Core Advantage — Global Long-Term Optimisation"
                         accent="blue"
                         explanation="RL finds the policy π* that maximises the expected total discounted reward over the entire future, not just the next step. This is the mathematical expression of RL's key advantage over rule-based and greedy systems."
                         interpretation="Traditional controllers optimise for the immediate next step (greedy). RL optimises for the entire future trajectory. This is why RL discovered the pre-emptive cooling strategy — it found that sacrificing a small immediate cost (cooling at 2 AM) leads to a much larger long-term reward (40% energy savings). No human scripted this; the mathematics of long-term optimisation discovered it."
                         motivation="The advantage of RL over rule-based systems is precisely this: rules are written by humans who think in terms of immediate cause-and-effect. RL thinks in terms of long-term consequences, discovering strategies that humans might never consider."
                         terms={[
-                            { term: '\\pi^*', name: 'Optimal Policy', meaning: 'The best possible strategy — the one that achieves the highest expected return from any starting state.', range: '\\mathcal{S}\\to\\mathcal{A}', example: 'π*(server_room_hot) = "cool now at low cost" rather than "wait until critical".' },
-                            { term: '\\mathbb{E}_\\pi', name: 'Expectation under π', meaning: 'Average over all possible futures when following policy π. Handles stochastic environments where the same action can lead to different outcomes.', range: '\\mathbb{R}', example: 'Weather is uncertain: E_π[cooling_cost] averages over all possible temperature trajectories.' },
-                            { term: '\\sum_{t=0}^{\\infty}\\gamma^t R_{t+1}', name: 'Infinite-Horizon Return', meaning: 'Sum of all future rewards, discounted by γ^t. The ∞ horizon means the agent plans for the entire future, not just a fixed window.', range: '\\mathbb{R}', example: 'Energy savings compound over months: G₀ = Σ γ^t × (savings at step t).' },
-                            { term: 'S_0=s_0', name: 'Initial State', meaning: 'The starting condition. The optimal policy must work from any starting state, not just one specific scenario.', range: '\\mathcal{S}', example: 'The policy must work whether the server room starts hot, cold, or at normal temperature.' },
+                            { term: '\\\\pi^*', name: 'Optimal Policy', meaning: 'The best possible strategy — the one that achieves the highest expected return from any starting state.', range: '\\\\mathcal{S}\\\\to\\\\mathcal{A}', example: 'π*(server_room_hot) = "cool now at low cost" rather than "wait until critical".' },
+                            { term: '\\\\mathbb{E}_\\\\pi', name: 'Expectation under π', meaning: 'Average over all possible futures when following policy π. Handles stochastic environments where the same action can lead to different outcomes.', range: '\\\\mathbb{R}', example: 'Weather is uncertain: E_π[cooling_cost] averages over all possible temperature trajectories.' },
+                            { term: '\\\\sum_{t=0}^{\\\\infty}\\\\gamma^t R_{t+1}', name: 'Infinite-Horizon Return', meaning: 'Sum of all future rewards, discounted by γ^t. The ∞ horizon means the agent plans for the entire future, not just a fixed window.', range: '\\\\mathbb{R}', example: 'Energy savings compound over months: G₀ = Σ γ^t × (savings at step t).' },
+                            { term: 'S_0=s_0', name: 'Initial State', meaning: 'The starting condition. The optimal policy must work from any starting state, not just one specific scenario.', range: '\\\\mathcal{S}', example: 'The policy must work whether the server room starts hot, cold, or at normal temperature.' },
                         ]}
                         numericalExample={{
                             setup: 'Server cooling. Two policies: Greedy (cool when T>22°C) vs RL (pre-emptive cooling at 2AM). γ=0.95. Daily costs over 3 days:',

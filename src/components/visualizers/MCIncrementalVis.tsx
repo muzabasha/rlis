@@ -111,8 +111,8 @@ export default function MCIncrementalVis({
                     </button>
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                    Each sample generates a return <InlineMath math="G \sim V^* + \mathcal{N}(0,\sigma)" /> and updates
-                    the estimate via <InlineMath math="V(s) \leftarrow V(s) + \frac{1}{N}[G - V(s)]" />.
+                    Each sample generates a return <InlineMath math="G \\sim V^* + \\mathcal{N}(0,\\sigma)" /> and updates
+                    the estimate via <InlineMath math="V(s) \\leftarrow V(s) + \\frac{1}{N}[G - V(s)]" />.
                     Over many episodes, V(s) converges to the true value.
                 </p>
             </div>

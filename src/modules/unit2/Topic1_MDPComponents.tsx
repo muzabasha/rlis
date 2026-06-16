@@ -331,18 +331,18 @@ export default function Topic1_MDPKeyComponents() {
             >
                 <div className="space-y-6">
                     <MathBlock
-                        formula="\text{MDP} = \langle \mathcal{S},\;\mathcal{A},\;\mathcal{P},\;\mathcal{R},\;\gamma \rangle"
+                        formula="\\text{MDP} = \\langle \\mathcal{S},\\;\\mathcal{A},\\;\\mathcal{P},\\;\\mathcal{R},\\;\\gamma \\rangle"
                         label="MDP — The 5-Tuple Definition"
                         accent="blue"
                         explanation="A Markov Decision Process is completely specified by these five components. Every RL problem — from game playing to robot control — is an instance of this tuple."
                         interpretation="The 5-tuple is the 'blueprint' of any RL problem. Once you define all five components, you have a complete mathematical specification that any RL algorithm can solve. The power of this formulation is its generality — the same algorithms (Q-learning, policy gradient) work for any MDP regardless of the domain."
                         motivation="Without this formal definition, we cannot prove properties like the existence of an optimal policy, convergence of algorithms, or the Bellman optimality principle. The 5-tuple is the foundation on which all of RL theory is built."
                         terms={[
-                            { term: '\\mathcal{S}', name: 'State Space', meaning: 'The complete set of all possible situations the environment can be in. Must be defined so that the Markov property holds — the current state contains all information needed for future decisions.', range: 'Finite or \\mathbb{R}^n', example: 'Grid world: 𝒮={0,...,24} (25 cells). Robot arm: 𝒮=ℝ⁶ (joint angles and velocities).' },
-                            { term: '\\mathcal{A}', name: 'Action Space', meaning: 'The complete set of decisions the agent can make. May depend on the current state (e.g., cannot move through walls).', range: 'Finite or \\mathbb{R}^m', example: 'Grid: 𝒜={up,down,left,right}. Continuous control: 𝒜=ℝ² (force vector).' },
-                            { term: '\\mathcal{P}', name: 'Transition Dynamics', meaning: 'The function P(s\'|s,a) giving the probability of transitioning to state s\' when taking action a in state s. Completely defines how the environment responds to actions.', range: '[0,1]', example: 'P(right|(2,3),right)=0.8, P(up|(2,3),right)=0.1, P(down|(2,3),right)=0.1.' },
-                            { term: '\\mathcal{R}', name: 'Reward Function', meaning: 'R(s,a) or R(s,a,s\') — the immediate scalar feedback the agent receives. The most critical design choice in any RL application.', range: '\\mathbb{R}', example: 'R(goal_state,any)=+100, R(obstacle,any)=−50, R(other,any)=−1.' },
-                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Controls the time horizon of the agent\'s planning. γ close to 1 = long-term planning; γ close to 0 = myopic. Must be < 1 for infinite-horizon MDPs to ensure finite returns.', range: '[0,1)', example: 'γ=0.99 for energy management (plan months ahead). γ=0.9 for game playing.' },
+                            { term: '\\\\mathcal{S}', name: 'State Space', meaning: 'The complete set of all possible situations the environment can be in. Must be defined so that the Markov property holds — the current state contains all information needed for future decisions.', range: 'Finite or \\\\mathbb{R}^n', example: 'Grid world: 𝒮={0,...,24} (25 cells). Robot arm: 𝒮=ℝ⁶ (joint angles and velocities).' },
+                            { term: '\\\\mathcal{A}', name: 'Action Space', meaning: 'The complete set of decisions the agent can make. May depend on the current state (e.g., cannot move through walls).', range: 'Finite or \\\\mathbb{R}^m', example: 'Grid: 𝒜={up,down,left,right}. Continuous control: 𝒜=ℝ² (force vector).' },
+                            { term: '\\\\mathcal{P}', name: 'Transition Dynamics', meaning: 'The function P(s\'|s,a) giving the probability of transitioning to state s\' when taking action a in state s. Completely defines how the environment responds to actions.', range: '[0,1]', example: 'P(right|(2,3),right)=0.8, P(up|(2,3),right)=0.1, P(down|(2,3),right)=0.1.' },
+                            { term: '\\\\mathcal{R}', name: 'Reward Function', meaning: 'R(s,a) or R(s,a,s\') — the immediate scalar feedback the agent receives. The most critical design choice in any RL application.', range: '\\\\mathbb{R}', example: 'R(goal_state,any)=+100, R(obstacle,any)=−50, R(other,any)=−1.' },
+                            { term: '\\\\gamma', name: 'Discount Factor', meaning: 'Controls the time horizon of the agent\'s planning. γ close to 1 = long-term planning; γ close to 0 = myopic. Must be < 1 for infinite-horizon MDPs to ensure finite returns.', range: '[0,1)', example: 'γ=0.99 for energy management (plan months ahead). γ=0.9 for game playing.' },
                         ]}
                         numericalExample={{
                             setup: 'Lunar Lander MDP. Define the 5-tuple:',
@@ -360,7 +360,7 @@ export default function Topic1_MDPKeyComponents() {
                     <MDPTupleVis />
 
                     <MathBlock
-                        formula="\mathcal{P}(s' \mid s, a) = \Pr(S_{t+1}=s' \mid S_t=s,\, A_t=a), \quad \sum_{s'\in\mathcal{S}}\mathcal{P}(s'\mid s,a) = 1"
+                        formula="\\mathcal{P}(s' \\mid s, a) = \\Pr(S_{t+1}=s' \\mid S_t=s,\\, A_t=a), \\quad \\sum_{s'\\in\\mathcal{S}}\\mathcal{P}(s'\\mid s,a) = 1"
                         label="Transition Probability — Stochastic Dynamics"
                         accent="violet"
                         explanation="P(s'|s,a) is the probability of the environment transitioning to state s' when the agent takes action a in state s. The sum over all possible next states must equal 1 (probability axiom)."
@@ -368,7 +368,7 @@ export default function Topic1_MDPKeyComponents() {
                         motivation="The transition function determines how hard the RL problem is. Deterministic environments are easier (no uncertainty). Stochastic environments require the agent to reason about expected values, making the problem harder but more realistic."
                         terms={[
                             { term: "\\mathcal{P}(s'\\mid s,a)", name: 'Transition Probability', meaning: 'Probability of landing in state s\' after taking action a in state s.', range: '[0,1]', example: 'P(right|(2,3),right)=0.8 — 80% chance of moving right as intended.' },
-                            { term: '\\sum_{s\'} \\mathcal{P}(s\'\\mid s,a)=1', name: 'Probability Axiom', meaning: 'The probabilities over all possible next states must sum to 1. This is a hard constraint — the environment must transition to SOME state.', range: '\\{1\\}', example: '0.8+0.1+0.1=1.0 ✓ for the slippery floor example.' },
+                            { term: '\\\\sum_{s\'} \\\\mathcal{P}(s\'\\\\mid s,a)=1', name: 'Probability Axiom', meaning: 'The probabilities over all possible next states must sum to 1. This is a hard constraint — the environment must transition to SOME state.', range: '\\\\{1\\\\}', example: '0.8+0.1+0.1=1.0 ✓ for the slippery floor example.' },
                         ]}
                         numericalExample={{
                             setup: 'Recycling robot. State: High battery. Action: Search. Transition probabilities:',
