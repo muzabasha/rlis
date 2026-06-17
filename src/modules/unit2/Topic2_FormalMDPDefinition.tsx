@@ -351,7 +351,7 @@ export default function Topic2_FormalMDPDefinition() {
                     <MathBlock
                         formula="\\mathcal{R}_{s}^{a} = \\mathbb{E}\\!\\left[R_{t+1} \\;\\middle|\\; S_t=s,\\, A_t=a\\right] = \\sum_{s'\\in\\mathcal{S}}\\mathcal{P}_{ss'}^{a}\\cdot r(s,a,s')"
                         label="Reward Function — Expected Immediate Reward"
-                        accent="emerald"
+                        accent="violet"
                         explanation="R^a_s is the expected immediate reward for taking action a in state s, averaged over all possible next states weighted by their transition probabilities."
                         interpretation="The reward function is the most critical design choice in RL. It defines what the agent is trying to achieve. A well-designed reward function leads to the desired behaviour; a poorly designed one leads to reward hacking. The expected form R^a_s = Σ P^a_{ss'} · r(s,a,s') shows that the reward is an average over all possible outcomes."
                         motivation="Using expected reward rather than per-transition reward simplifies the Bellman equation. It allows us to write the value function as v_π(s) = Σ_a π(a|s)[R^a_s + γ Σ_{s'} P^a_{ss'} v_π(s')], which is the standard form used in dynamic programming."

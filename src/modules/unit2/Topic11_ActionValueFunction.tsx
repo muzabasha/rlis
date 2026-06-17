@@ -336,7 +336,7 @@ export default function Topic11_ActionValueFunction() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="q_\\pi(s, a) = \\mathbb{E}_\\pi [G_t | S_t = s, A_t = a]"
                         label="Action-Value Definition"

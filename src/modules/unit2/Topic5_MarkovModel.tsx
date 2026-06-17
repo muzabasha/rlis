@@ -358,32 +358,33 @@ export default function Topic5_MarkovModel() {
                     />
                     <MarkovModelTaxonomyVis />
 
-                    <div className="grid sm:grid-cols-2 gap-4">
-                        <MathBlock
-                            formula="\\langle \\mathcal{S},\\,\\mathbf{P},\\,\\mathcal{Y},\\,\\mathbf{O} \\rangle"
-                            label="Hidden Markov Model (HMM)"
-                            accent="violet"
-                            explanation="Y = set of observable emissions. O = emission probability matrix O(y|s). The true state s is hidden; only observation y is visible."
-                            interpretation="In an HMM, the system evolves through hidden states (e.g., the actual word being spoken) but we only observe noisy emissions (e.g., audio waveforms). The Viterbi algorithm finds the most likely hidden state sequence given the observations."
-                            terms={[
-                                { term: '\\\\mathcal{Y}', name: 'Observation Set', meaning: 'All possible observable outputs (emissions) from the hidden states.', range: 'Finite', example: 'Speech: Y = {phoneme_1, ..., phoneme_44}.' },
-                                { term: '\\\\mathbf{O}', name: 'Emission Matrix', meaning: 'O(y|s) = probability of observing y when in hidden state s.', range: '[0,1]', example: 'O(audio_A|state_A)=0.8.' },
-                            ]}
-                        />
-                        <HMMPOMDPVis type="hmm" />
-                        <MathBlock
-                            formula="\\langle \\mathcal{S},\\mathcal{A},\\mathbf{P},\\mathcal{R},\\boldsymbol{\\Omega},\\mathbf{O} \\rangle"
-                            label="POMDP — Partially Observable MDP"
-                            accent="amber"
-                            explanation="The most general model. Adds observations Ω and emission probabilities O to the MDP tuple. The agent maintains a belief state b(s) = P(true state = s | history)."
-                            interpretation="In a POMDP, the agent cannot directly observe the true state. Instead, it maintains a belief state — a probability distribution over all possible states. Actions update both the true state (via P) and the belief state (via Bayes' rule and O). Most real-world AI problems are POMDPs."
-                            terms={[
-                                { term: '\\\\boldsymbol{\\\\Omega}', name: 'Observation Space', meaning: 'Set of all possible observations the agent can receive.', range: 'Finite or \\\\mathbb{R}^k', example: 'Robot: Ω = {wall_detected, open_space, goal_visible}.' },
-                                { term: 'b(s)', name: 'Belief State', meaning: 'Probability distribution over true states, updated after each observation using Bayes\' rule.', range: '[0,1]^{|S|}', example: 'b = [0.3, 0.5, 0.2] — 30% chance in state 1, 50% in state 2, 20% in state 3.' },
-                            ]}
-                        />
-                        <HMMPOMDPVis type="pomdp" />
-                    </div>
+                    <MathBlock
+                        formula="\\langle \\mathcal{S},\\,\\mathbf{P},\\,\\mathcal{Y},\\,\\mathbf{O} \\rangle"
+                        label="Hidden Markov Model (HMM)"
+                        accent="violet"
+                        explanation="Y = set of observable emissions. O = emission probability matrix O(y|s). The true state s is hidden; only observation y is visible."
+                        interpretation="In an HMM, the system evolves through hidden states (e.g., the actual word being spoken) but we only observe noisy emissions (e.g., audio waveforms). The Viterbi algorithm finds the most likely hidden state sequence given the observations."
+                        terms={[
+                            { term: '\\\\mathcal{Y}', name: 'Observation Set', meaning: 'All possible observable outputs (emissions) from the hidden states.', range: 'Finite', example: 'Speech: Y = {phoneme_1, ..., phoneme_44}.' },
+                            { term: '\\\\mathbf{O}', name: 'Emission Matrix', meaning: 'O(y|s) = probability of observing y when in hidden state s.', range: '[0,1]', example: 'O(audio_A|state_A)=0.8.' },
+                        ]}
+                    />
+
+                    <HMMPOMDPVis type="hmm" />
+
+                    <MathBlock
+                        formula="\\langle \\mathcal{S},\\mathcal{A},\\mathbf{P},\\mathcal{R},\\boldsymbol{\\Omega},\\mathbf{O} \\rangle"
+                        label="POMDP — Partially Observable MDP"
+                        accent="amber"
+                        explanation="The most general model. Adds observations Ω and emission probabilities O to the MDP tuple. The agent maintains a belief state b(s) = P(true state = s | history)."
+                        interpretation="In a POMDP, the agent cannot directly observe the true state. Instead, it maintains a belief state — a probability distribution over all possible states. Actions update both the true state (via P) and the belief state (via Bayes' rule and O). Most real-world AI problems are POMDPs."
+                        terms={[
+                            { term: '\\\\boldsymbol{\\\\Omega}', name: 'Observation Space', meaning: 'Set of all possible observations the agent can receive.', range: 'Finite or \\\\mathbb{R}^k', example: 'Robot: Ω = {wall_detected, open_space, goal_visible}.' },
+                            { term: 'b(s)', name: 'Belief State', meaning: 'Probability distribution over true states, updated after each observation using Bayes\' rule.', range: '[0,1]^{|S|}', example: 'b = [0.3, 0.5, 0.2] — 30% chance in state 1, 50% in state 2, 20% in state 3.' },
+                        ]}
+                    />
+
+                    <HMMPOMDPVis type="pomdp" />
 
                     <ModelTaxonomyLab />
                 </div>

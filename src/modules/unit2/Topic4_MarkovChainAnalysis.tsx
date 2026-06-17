@@ -420,20 +420,6 @@ export default function Topic4_MarkovChainAnalysis() {
 
                     <MatrixPowerVis />
 
-                    <div className="grid sm:grid-cols-3 gap-4">
-                        {[
-                            { title: 'Irreducible', desc: 'Every state is reachable from every other state. No isolated groups.', icon: '🔗', color: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' },
-                            { title: 'Aperiodic', desc: 'The chain does not get trapped in a fixed cycle. GCD of return times = 1.', icon: '🔄', color: 'bg-violet-50 dark:bg-violet-900/20 border-violet-200 dark:border-violet-800' },
-                            { title: 'Ergodic', desc: 'Both irreducible AND aperiodic. Guarantees a unique stationary distribution.', icon: '✅', color: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800' },
-                        ].map(p => (
-                            <div key={p.title} className={`rounded-xl border p-4 ${p.color}`}>
-                                <div className="text-2xl mb-2">{p.icon}</div>
-                                <div className="font-bold text-sm text-slate-800 dark:text-slate-200 mb-1">{p.title}</div>
-                                <p className="text-xs text-slate-600 dark:text-slate-400">{p.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-
                     <ConvergenceLab />
                 </div>
             </SectionWrapper>

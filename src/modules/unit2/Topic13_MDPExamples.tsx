@@ -391,7 +391,7 @@ export default function Topic13_MDPExamples() {
                     <MathBlock
                         formula="\\text{Gridworld MDP}: \\mathcal{S}=\\{(r,c)\\},\\;\\mathcal{A}=\\{\\uparrow,\\downarrow,\\leftarrow,\\rightarrow\\},\\;\\mathcal{R}(s)=\\begin{cases}+10 & s=\\text{goal} \\\\ -1 & \\text{otherwise}\\end{cases}"
                         label="Example 2 — Gridworld (Standard RL Benchmark)"
-                        accent="emerald"
+                        accent="violet"
                         explanation="A robot navigates an n×n grid to reach a goal. States are (row,col) coordinates. Actions are the 4 cardinal directions. Reward is −1 per step (encourages efficiency) and +10 at the goal."
                         interpretation="Gridworld is the 'Hello World' of RL. It is simple enough to solve analytically but captures all key RL challenges: sequential decisions, delayed rewards, and the need to plan multiple steps ahead. The −1 step penalty forces the agent to find the shortest path — without it, the agent might wander forever."
                         motivation="Every RL algorithm is first tested on Gridworld. Understanding this example gives you the intuition to apply RL to any sequential decision problem. The value function for Gridworld forms a gradient pointing toward the goal — a beautiful illustration of how value propagates backwards from rewards."

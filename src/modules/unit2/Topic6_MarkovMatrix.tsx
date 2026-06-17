@@ -403,7 +403,7 @@ export default function Topic6_MarkovMatrix() {
                     <MathBlock
                         formula="\\mathbf{P}^{(m+n)} = \\mathbf{P}^{(m)} \\cdot \\mathbf{P}^{(n)} \\quad \\text{(Chapman-Kolmogorov Equation)}"
                         label="Chapman-Kolmogorov Equation — Matrix Composition"
-                        accent="emerald"
+                        accent="violet"
                         explanation="The m+n step transition matrix equals the product of the m-step and n-step matrices. This allows computing long-range probabilities by composing shorter-range ones."
                         interpretation="The Chapman-Kolmogorov equation is the mathematical justification for using matrix powers to compute multi-step probabilities. It says: to go from state i to state j in m+n steps, you must pass through some intermediate state k after m steps. Summing over all possible k gives the total probability."
                         motivation="This equation is the foundation of dynamic programming in MDPs. The Bellman equation is essentially the Chapman-Kolmogorov equation applied to value functions. It allows breaking long-horizon problems into shorter sub-problems."

@@ -341,7 +341,7 @@ export default function Topic3_MarkovPropertyChain() {
                     <MathBlock
                         formula="\\mathbb{P}\\!\\left[S_{t+1} \\mid S_t\\right] = \\mathbb{P}\\!\\left[S_{t+1} \\mid S_1,\\, S_2,\\, \\ldots,\\, S_t\\right]"
                         label="The Markov Property — Conditional Independence"
-                        accent="violet"
+                        accent="blue"
                         explanation="The probability of the next state S_{t+1} depends only on the current state S_t, not on the entire history S_1,...,S_t. The present state is a sufficient statistic for the future."
                         interpretation="This equation says: knowing the full history S_1,...,S_t gives you no more predictive power than knowing just S_t. The current state 'summarises' all relevant information from the past. This is the fundamental assumption that makes RL tractable — without it, the agent would need to store and process an ever-growing history."
                         motivation="The Markov property is what allows us to define value functions V(s) that depend only on the current state. Without it, we would need V(s_1,...,s_t) — a function of the entire history — which is computationally infeasible."
@@ -368,7 +368,7 @@ export default function Topic3_MarkovPropertyChain() {
                     <MathBlock
                         formula="\\mathbf{P} = \\begin{pmatrix} P_{11} & P_{12} & \\cdots & P_{1n} \\\\ P_{21} & P_{22} & \\cdots & P_{2n} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ P_{n1} & P_{n2} & \\cdots & P_{nn} \\end{pmatrix}, \\quad \\sum_{j=1}^{n} P_{ij} = 1 \\;\\forall i"
                         label="Markov Transition Matrix"
-                        accent="blue"
+                        accent="violet"
                         explanation="The complete transition dynamics of a Markov Chain encoded as an n×n matrix. Row i gives the probability distribution over next states when currently in state i. Every row must sum to 1."
                         interpretation="The transition matrix P is the complete mathematical description of a Markov Chain. Multiplying the current state distribution μ_t by P gives the next distribution: μ_{t+1} = μ_t · P. Repeated multiplication P^n gives the n-step transition probabilities. As n→∞, the distribution converges to the stationary distribution π where π·P = π."
                         motivation="The matrix form enables powerful analytical tools: eigenvalue analysis for stationary distributions, matrix powers for multi-step predictions, and linear algebra for policy evaluation. The Bellman equation for policy evaluation is a linear system that can be solved by matrix inversion."
