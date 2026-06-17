@@ -347,12 +347,25 @@ export default function Topic7_BackupDiagram() {
                     <MathBlock 
                         formula="\\text{Value flow: } \\text{Successor } (s') \\xrightarrow{\\text{Backup}} \\text{Action } (a) \\xrightarrow{\\text{Backup}} \\text{State } (s)"
                         label="The Backup Sequence"
-                        explanation="How information travels up the tree."
-                        interpretation="Each level of the tree represents a level of uncertainty or decision-making that must be resolved (by averaging or maximizing)."
-                        motivation="This mental model helps you understand why RL algorithms converge."
+                        accent="emerald"
+                        explanation="How information travels up the backup tree: from leaf successor states, through action nodes, to the root state node."
+                        interpretation="Each level of the tree represents a level of uncertainty or decision-making: successor states are averaged (by environment dynamics), action nodes are maximized (by policy), and the root state receives the backed-up value. This structure makes Bellman equations visual and tractable."
+                        motivation="This mental model helps you understand why RL algorithms converge: each backup step propagates accurate value information one level up, and repeated backups eventually fill the entire value function with correct estimates."
                         terms={[
-                            { term: '\\\\xrightarrow{}', name: 'Information Transfer', meaning: 'The update step in an algorithm.', range: 't \\\\to t-1', example: 'Updating Q-values.' },
+                            { term: 's\'', name: 'Successor State', meaning: 'The leaf nodes of the tree — states reachable after one transition.', range: '\\mathcal{S}', example: 'Room B, Room C reachable from Room A.' },
+                            { term: 'a', name: 'Action Node', meaning: 'Intermediate nodes where the agent makes a decision. The max or average is taken over action nodes.', range: '\\mathcal{A}', example: 'Move North or Move East.' },
+                            { term: 's', name: 'Root State', meaning: 'The state whose value we are computing — it receives the backed-up value from its subtree.', range: '\\mathcal{S}', example: 'Room A with value v(A) = 7.0.' },
+                            { term: '\\xrightarrow{\\text{Backup}}', name: 'Information Transfer', meaning: 'The propagation of value estimates from leaves to root, one level per update step.', range: 't \\to t-1', example: 'Propagating v(s\') upward into v(s).' },
                         ]}
+                        numericalExample={{
+                            setup: 'Root state s has one action a. Action a leads to two successor states: s1 (r=2, v*=6, p=0.5) and s2 (r=5, v*=3, p=0.5). Discount \\gamma=0.9.',
+                            steps: [
+                                'Backup from s1: 0.5 * (2 + 0.9 * 6) = 0.5 * 7.4 = 3.7',
+                                'Backup from s2: 0.5 * (5 + 0.9 * 3) = 0.5 * 7.7 = 3.85',
+                                'v(s) via action a = 3.7 + 3.85 = 7.55'
+                            ],
+                            result: 'Value 7.55 is backed up from successors s1 and s2 to root state s via backup diagram.'
+                        }}
                     />
                     <BackupDiagramVis />
                 </div>

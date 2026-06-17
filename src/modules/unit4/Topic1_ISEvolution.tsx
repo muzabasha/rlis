@@ -282,14 +282,23 @@ export default function Topic1_ISEvolution() {
                 <div className="space-y-8">
                     <MathBlock 
                         formula="\\Upsilon(\\pi) = \\sum_{\\mu \\in E} 2^{-K(\\mu)} V_\\mu^\\pi"
-                        label="Universal Intelligence (\Upsilon)"
+                        label="Universal Intelligence (\\Upsilon)"
                         explanation="A formal mathematical definition of intelligence across all environments."
-                        interpretation="Intelligence (\Upsilon) is the weighted sum of an agent's (\pi) ability to achieve rewards (V) across all possible environments (\mu). Complex environments are weighted less than simple ones (2^-K)."
+                        interpretation="Intelligence (\\Upsilon) is the weighted sum of an agent's (\\pi) ability to achieve rewards (V) across all possible environments (\\mu). Complex environments are weighted less than simple ones (2^{-K})."
                         motivation="This formula tells us that a truly Intelligent System isn't just good at one thing (like Chess); it's good at everything, even things it hasn't seen before."
                         terms={[
                             { term: '\\Upsilon', name: 'Intelligence', meaning: 'The capability of an agent to achieve goals in a wide range of environments.', range: '[0, 1]', example: '0.9 for a general-purpose robot.' },
                             { term: '2^{-K(\\mu)}', name: 'Complexity Weight', meaning: 'Occam\'s Razor: simple environments get more weight than complex ones.', range: '(0, 1]', example: 'High weight for basic physics.' }
                         ]}
+                        numericalExample={{
+                            setup: 'Assume an agent \\pi operates in two environments: E_1 (simple, K(E_1)=2) and E_2 (complex, K(E_2)=5). The agent achieves value V_1 = 0.8 in E_1 and V_2 = 0.4 in E_2.',
+                            steps: [
+                                'Weight for E_1: 2^{-2} = 0.25',
+                                'Weight for E_2: 2^{-5} = 0.03125',
+                                'Intelligence sum: (0.25 \\times 0.8) + (0.03125 \\times 0.4)'
+                            ],
+                            result: '\\Upsilon(\\pi) = 0.20 + 0.0125 = 0.2125'
+                        }}
                     />
                     <UniversalIntelligenceVis />
 
@@ -301,6 +310,7 @@ export default function Topic1_ISEvolution() {
                     </div>
                 </div>
             </SectionWrapper>
+
 
             {/* INTERACTIVE DIAGRAM */}
             <InteractiveDiagram 

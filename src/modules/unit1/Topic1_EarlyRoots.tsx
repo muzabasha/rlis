@@ -347,7 +347,7 @@ export default function Topic1_EarlyRoots() {
                     </p>
 
                     <MathBlock
-                        formula="S_t,\; A_t \;\xrightarrow{\text{environment}}\; R_{t+1},\; S_{t+1}"
+                        formula="S_t,\\; A_t \\;\\xrightarrow{\\text{environment}}\\; R_{t+1},\\; S_{t+1}"
                         label="The RL Interaction Cycle"
                         accent="blue"
                         explanation="The fundamental state-action-reward-state loop where an agent interacts with an environment."

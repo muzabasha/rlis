@@ -306,9 +306,19 @@ export default function Topic1_PolicyInMDP() {
                         interpretation="A policy completely defines the behavior of an agent. It is stationary if it does not depend on time t."
                         motivation="By treating policy as a probability distribution, we allow the agent to explore and handle uncertainty in its own decision-making process."
                         terms={[
-                            { term: '\\pi', name: 'Policy', meaning: 'The mapping function from States to Actions.', range: '\\mathcal{S} \\to \\mathcal{A}', example: 'A lookup table or a neural network.' },
-                            { term: 'a|s', name: 'Conditional Action', meaning: 'Taking action a given the current state is s.', range: '\\mathcal{A}', example: 'Picking "Jump" given state "Obstacle".' },
+                            { term: '\\pi(a|s)', name: 'Policy', meaning: 'The probability of taking action a in state s.', range: '[0, 1]', example: '0.9 (90% chance).' },
+                            { term: 'A_t = a', name: 'Action', meaning: 'The action taken at time t.', range: '\\mathcal{A}', example: 'Move Right.' },
+                            { term: 'S_t = s', name: 'State', meaning: 'The state the agent is currently in.', range: '\\mathcal{S}', example: 'Position (1,1).' }
                         ]}
+                        numericalExample={{
+                            setup: 'Agent in state A can choose Left or Right.',
+                            steps: [
+                                'State S_t = A',
+                                'Policy gives probabilities: \\pi(Left|A) = 0.2, \\pi(Right|A) = 0.8',
+                                'Agent rolls a weighted die and chooses Right'
+                            ],
+                            result: 'Agent takes action Right with 80% probability based on policy \\pi.'
+                        }}
                     />
                     <PolicyVis />
 
@@ -318,7 +328,7 @@ export default function Topic1_PolicyInMDP() {
                             <p className="text-xs text-slate-400 leading-relaxed">
                                 A special case where there is no randomness. For every state, there is exactly one action with probability 1.0.
                                 <br/><br/>
-                                <span className="text-sm font-mono text-white">a = \pi(s)</span>
+                                <span className="text-sm font-mono text-white">$a = \pi(s)$</span>
                             </p>
                         </div>
                         <div className="p-6 bg-slate-900 rounded-3xl text-white">

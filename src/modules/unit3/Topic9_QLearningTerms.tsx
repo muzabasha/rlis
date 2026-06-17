@@ -292,13 +292,26 @@ export default function Topic9_QLearningTerms() {
                     <MathBlock 
                         formula="Q(s, a) \\leftarrow Q(s, a) + \\alpha \\underbrace{[r + \\gamma \\max_{a'} Q(s', a') - Q(s, a)]}_{\\text{TD Error}}"
                         label="The Q-Update Notation"
-                        explanation="Breaking down every symbol in the learning rule."
-                        interpretation="The equation is essentially: New = Old + Change. The TD Error is the 'Magnitude' of change needed."
-                        motivation="By standardizing these symbols, researchers can apply Q-learning to robots, video games, and even financial markets using the same math."
+                        accent="blue"
+                        explanation="Breaking down every symbol in the Q-Learning update rule — a complete annotation of all hyperparameters and their roles."
+                        interpretation="The equation is: New = Old + Step * Error. The TD Error is the corrective signal. If positive, the agent underestimated this action; if negative, it overestimated. The agent nudges its estimate by \u03b1 * TD Error each step."
+                        motivation="By standardizing these symbols, researchers can apply Q-Learning to robots, video games, and financial markets using the same mathematics. Mastering this notation unlocks all of modern RL literature."
                         terms={[
-                            { term: 's, a', name: 'State/Action', meaning: 'The input situation and the output choice.', range: '\\mathcal{S}, \\mathcal{A}', example: 'Room #5, Go Left.' },
-                            { term: 's\', a\'', name: 'Successor', meaning: 'The situation and choice at the next time step.', range: '\\mathcal{S}, \\mathcal{A}', example: 'The landing position.' },
+                            { term: 's, a', name: 'State / Action', meaning: 'The current state and the action taken. The Q-value we are updating.', range: '\\mathcal{S}, \\mathcal{A}', example: 'Room 5, Go Left.' },
+                            { term: 's\', a\'', name: 'Successor State / Action', meaning: 'The state and best action at the next time step.', range: '\\mathcal{S}, \\mathcal{A}', example: 'Room 6 (the landing position).' },
+                            { term: '\\alpha', name: 'Learning Rate', meaning: 'Controls how much weight new information gets vs stored estimates. High \u03b1 = fast learning but less stable.', range: '(0, 1]', example: '0.1 means keep 90% old + take 10% new.' },
+                            { term: '\\delta_t', name: 'TD Error', meaning: 'The difference between the estimated target and the current Q-value. This is the error signal that drives learning.', range: '\\mathbb{R}', example: '\u03b4 = 5 means the action was worth 5 more than expected.' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'How much the agent cares about future rewards vs now.', range: '[0, 1]', example: '0.9 = cares about future; 0.0 = myopic.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Q(s, a) = 3. Agent takes action a, gets reward r = 7, lands in s\'. In s\', best Q(s\', a\') = 9. \u03b1 = 0.3, \u03b3 = 0.9.',
+                            steps: [
+                                'TD Target = r + \\gamma * max Q(s\', a\') = 7 + 0.9 * 9 = 15.1',
+                                'TD Error = TD Target - Q(s, a) = 15.1 - 3 = 12.1',
+                                'New Q(s, a) = 3 + 0.3 * 12.1 = 6.63'
+                            ],
+                            result: 'Q-value updated from 3.0 to 6.63. Large positive TD error indicates the agent had severely underestimated this action.'
+                        }}
                     />
                     <SARSAQLearningVis />
 

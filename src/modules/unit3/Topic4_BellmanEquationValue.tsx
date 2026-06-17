@@ -320,13 +320,26 @@ export default function Topic4_BellmanEquationValue() {
                     <MathBlock 
                         formula="v_\\pi(s) = \\sum_a \\pi(a|s) \\sum_{s', r} p(s', r | s, a) \\left[ r + \\gamma v_\\pi(s') \\right]"
                         label="Bellman Expectation Equation for v_\pi"
-                        explanation="The value of state s under policy π is the expected reward plus the discounted value of the next state."
-                        interpretation="This is an averaging process. We look at all actions you might take (π), all states you might land in (p), and average their values."
-                        motivation="This allows us to compute the value function for any fixed policy π without simulating paths."
+                        accent="blue"
+                        explanation="The value of state s under policy π is the expected total return — immediate reward plus discounted value of all reachable next states."
+                        interpretation="This is an averaging process: sum over all actions you might take (weighted by π), and for each action sum over all states you might land in (weighted by p). The Bellman equation is recursive — the value of s depends on the values of successor states."
+                        motivation="This equation is the mathematical definition of how good a state is. Without it, there is no way to compare or improve policies. It is the foundation of Dynamic Programming, TD Learning, and all modern RL."
                         terms={[
-                            { term: 'r + \\gamma v_\\pi(s\')', name: 'Estimated Return', meaning: 'The immediate reward plus the discounted value of where you end up.', range: '\\mathbb{R}', example: 'Getting 5 points + 0.9 * (Value of next room).' },
-                            { term: '\\sum \\dots', name: 'Expected Value', meaning: 'The weighted average over all possibilities.', range: '\\mathbb{R}', example: 'Averaging the luck of the dice.' },
+                            { term: 'v_\\pi(s)', name: 'State Value', meaning: 'The expected return when starting in state s and following policy π forever.', range: '\\mathbb{R}', example: 'v(Room_1) = 7.3 means Room 1 is worth 7.3 points on average.' },
+                            { term: '\\pi(a|s)', name: 'Policy Probability', meaning: 'Probability of taking action a in state s under policy π.', range: '[0, 1]', example: '\\pi(Left|s) = 0.5.' },
+                            { term: 'p(s\', r | s, a)', name: 'Transition Dynamics', meaning: 'Joint probability of transitioning to state s\' and receiving reward r when taking action a in state s.', range: '[0, 1]', example: 'p(Room_2, -1 | Room_1, East) = 0.8.' },
+                            { term: 'r + \\gamma v_\\pi(s\')', name: 'Estimated Return', meaning: 'The immediate reward plus the discounted value of the next state.', range: '\\mathbb{R}', example: '-1 + 0.9 * 7.3 = 5.57.' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Controls the relative importance of future vs immediate rewards.', range: '[0,1)', example: '0.9 means a reward 1 step away is worth 90% of its face value now.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Two-state MDP: State A and State B. Policy: π(go_B | A) = 1.0. Transition: p(B, r=5 | A, go_B) = 1.0. Discount γ = 0.9. v_π(B) = 0 (terminal).',
+                            steps: [
+                                'v_π(A) = π(go_B|A) * p(B, 5|A, go_B) * [5 + 0.9 * v_π(B)]',
+                                'v_π(A) = 1.0 * 1.0 * [5 + 0.9 * 0]',
+                                'v_π(A) = 5.0'
+                            ],
+                            result: 'State A has a value of 5.0 under this deterministic policy.'
+                        }}
                     />
                     <BellmanConvergenceVis />
 

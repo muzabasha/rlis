@@ -353,6 +353,15 @@ export default function Topic2_QLearningIntro() {
                             { term: '\\gamma', name: 'Discount Factor', meaning: 'Importance of future rewards.', range: '0 \\to 1', example: '0.9 = far-sighted.' },
                             { term: '\\max_{a\'} Q(s\', a\')', name: 'Best Future Q', meaning: 'The estimate of the best possible reward in the next state.', range: '\\mathbb{R}', example: 'Value of the best move next turn.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Current Q(s, a) = 4. Agent takes action, receives reward r = 8, lands in state s\'. In s\', the best Q value is max Q(s\', a\') = 10. Learning rate \\alpha = 0.2, discount factor \\gamma = 0.9.',
+                            steps: [
+                                'Compute TD Target = r + \\gamma * max Q(s\', a\') = 8 + 0.9 * 10 = 17',
+                                'Compute TD Error = TD Target - Q(s, a) = 17 - 4 = 13',
+                                'New Q(s, a) = 4 + 0.2 * 13 = 6.6'
+                            ],
+                            result: 'Q-value updated from 4 to 6.6, capturing the newly discovered high reward.'
+                        }}
                     />
                     <SARSAQLearningVis />
 

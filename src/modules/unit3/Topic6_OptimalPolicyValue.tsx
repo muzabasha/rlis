@@ -300,24 +300,48 @@ export default function Topic6_OptimalPolicyValue() {
                     <MathBlock 
                         formula="v_*(s) = \\max_{a} \\sum_{s', r} p(s', r | s, a) [r + \\gamma v_*(s')]"
                         label="Bellman Optimality Equation for v*"
-                        explanation="The optimal value of a state is the value of the best possible action from that state."
-                        interpretation="Unlike the expectation equation (which averages over actions), the optimality equation uses the MAX operator. It assumes you will always make the perfect choice."
-                        motivation="This equation defines the 'Upper Bound' of what is achievable in an MDP."
+                        accent="blue"
+                        explanation="The optimal value of a state is the value of the best possible action from that state — assuming optimal behaviour from every future step."
+                        interpretation="Unlike the expectation equation (which averages over actions), the optimality equation uses the MAX operator. It assumes you will always make the perfect choice from state s onwards — defining the upper bound of performance."
+                        motivation="This equation defines the ceiling of what is achievable in an MDP. Finding v* is equivalent to solving the MDP. All optimal RL algorithms converge their value estimates to this equation."
                         terms={[
-                            { term: '\\max_{a}', name: 'The Optimizer', meaning: 'Picking the action that results in the highest expected return.', range: '\\mathcal{A}', example: 'Choosing the path with most gold.' },
-                            { term: 'v_*(s)', name: 'Optimal State Value', meaning: 'The maximum possible value achievable from state s.', range: '\\mathbb{R}', example: 'A perfect score.' },
+                            { term: '\\max_{a}', name: 'The Optimizer', meaning: 'Picks the action that results in the highest expected return over all actions a.', range: '\\mathcal{A}', example: 'Choosing the path that leads to the most gold.' },
+                            { term: 'v_*(s)', name: 'Optimal State Value', meaning: 'The maximum possible discounted return achievable from state s using the optimal policy.', range: '\\mathbb{R}', example: 'v*(s_goal) = 100.' },
+                            { term: 'p(s\', r | s, a)', name: 'Transition Dynamics', meaning: 'Joint probability of transitioning to s\' with reward r.', range: '[0,1]', example: 'p(left_room, -1 | curr, move_left) = 0.9.' },
+                            { term: 'r + \\gamma v_*(s\')', name: 'Optimal Future Return', meaning: 'Immediate reward plus optimally-discounted next state value.', range: '\\mathbb{R}', example: '-1 + 0.9 * 100 = 89.' },
                         ]}
+                        numericalExample={{
+                            setup: 'State s has 2 actions. Action A leads to s\' with r=2, v*(s\')=8. Action B leads to s\'\'  with r=5, v*(s\'\')=4. Discount \\gamma=0.9.',
+                            steps: [
+                                'Action A: r + \\gamma * v*(s\') = 2 + 0.9 * 8 = 9.2',
+                                'Action B: r + \\gamma * v*(s\'\') = 5 + 0.9 * 4 = 8.6',
+                                'v*(s) = max(9.2, 8.6) = 9.2'
+                            ],
+                            result: 'Optimal value is 9.2. Action A is optimal despite lower immediate reward.'
+                        }}
                     />
 
                     <MathBlock 
                         formula="q_*(s, a) = \\sum_{s', r} p(s', r | s, a) [r + \\gamma \\max_{a'} q_*(s', a')]"
                         label="Bellman Optimality Equation for q*"
-                        explanation="The optimal value of taking action a in state s."
-                        interpretation="This is the foundation of Q-Learning. It says the value of an action is the reward plus the best possible value of the next state."
-                        motivation="If we know q*, we know which action to take without any extra calculation."
+                        accent="violet"
+                        explanation="The optimal value of taking action a in state s, assuming optimal play for all future decisions."
+                        interpretation="This is the direct foundation of Q-Learning. The Q* value of an action equals the expected immediate reward plus the discounted best possible Q-value achievable from the next state."
+                        motivation="If we know q* for all state-action pairs, we immediately know the optimal policy: just pick the action with the highest Q* in each state. No model of the environment is needed."
                         terms={[
-                            { term: '\\max_{a\'} q_*(s\', a\')', name: 'Best Future Action', meaning: 'Assuming we take the best move next.', range: '\\mathbb{R}', example: 'Calculating based on perfect future play.' },
+                            { term: 'q_*(s, a)', name: 'Optimal Action Value', meaning: 'The maximum expected return from taking action a in state s and acting optimally thereafter.', range: '\\mathbb{R}', example: 'q*(start, move_right) = 95.' },
+                            { term: '\\max_{a\'} q_*(s\', a\')', name: 'Best Future Action', meaning: 'The best Q-value achievable from the next state s\' by taking any action.', range: '\\mathbb{R}', example: 'Best next-step Q = 8.0.' },
+                            { term: 'p(s\', r | s, a)', name: 'Environment Dynamics', meaning: 'Probability of outcome (s\', r) given current state s and action a.', range: '[0,1]', example: 'p = 1.0 for deterministic grids.' },
                         ]}
+                        numericalExample={{
+                            setup: 'State s, action a. Deterministic: always transitions to s\' with r = 3. In s\', best Q*(s\', a\') = 7. Discount \\gamma = 0.9.',
+                            steps: [
+                                'q*(s, a) = p(s\', r=3 | s, a) * [r + \\gamma * max q*(s\', a\')] ',
+                                'q*(s, a) = 1.0 * [3 + 0.9 * 7]',
+                                'q*(s, a) = 3 + 6.3 = 9.3'
+                            ],
+                            result: 'Optimal Q-value for action a in state s is 9.3. Greedy policy selects this action.'
+                        }}
                     />
                     <BellmanOptimalityVis />
                 </div>

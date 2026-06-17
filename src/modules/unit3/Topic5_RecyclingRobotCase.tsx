@@ -383,12 +383,25 @@ export default function Topic5_RecyclingRobotCase() {
                     <MathBlock 
                         formula="p(s_{low} | s_{high}, \\text{search}) = 1 - \\alpha"
                         label="Transition Probability"
-                        explanation="The probability that searching in High energy state results in a Low energy state."
-                        interpretation="$\alpha$ is the probability that the battery remains High after searching. If $\alpha=0.7$, the robot has a 30% chance of dropping to Low energy."
-                        motivation="This uncertainty is what makes the policy decision interesting."
+                        accent="violet"
+                        explanation="The probability that searching in High energy state results in a Low energy state — modeling battery drain during active search."
+                        interpretation="α is the probability that the battery remains High after searching. So (1-α) is the risk of dropping to Low. This stochastic transition is what makes the policy decision interesting and non-trivial."
+                        motivation="By making transitions probabilistic, we force the agent to reason about risk. A high-reward action (Search) also carries battery drain risk — this trade-off is the core of the recycling robot problem."
                         terms={[
-                            { term: '\\alpha', name: 'Retention Prob', meaning: 'Likelihood energy stays high.', range: '0 \\to 1', example: '0.7 (70% chance).' },
+                            { term: 's_{low}', name: 'Low Battery State', meaning: 'The target state (robot ended up with low battery).', range: '\\{s_{high}, s_{low}\\}', example: 'Battery drained after searching.' },
+                            { term: 's_{high}', name: 'High Battery State', meaning: 'The source state (robot starts with high battery).', range: '\\{s_{high}, s_{low}\\}', example: 'Fully charged robot.' },
+                            { term: '\\alpha', name: 'Retention Probability', meaning: 'Likelihood the battery stays High after a search action.', range: '[0, 1]', example: '0.7 means 70% chance battery stays High.' },
+                            { term: '1 - \\alpha', name: 'Drain Probability', meaning: 'Likelihood the battery drops to Low after a search action.', range: '[0, 1]', example: '0.3 means 30% chance battery drains to Low.' },
                         ]}
+                        numericalExample={{
+                            setup: 'Robot in s_high. It decides to Search. α = 0.7 (retention probability).',
+                            steps: [
+                                'p(s_high | s_high, search) = α = 0.7',
+                                'p(s_low  | s_high, search) = 1 - α = 0.3',
+                                'Robot rolls a die: 0.7 chance stays High, 0.3 chance drops to Low'
+                            ],
+                            result: 'With α=0.7, 30% of search actions result in battery drain. Policy must account for this risk.'
+                        }}
                     />
                     <TransitionProbVis />
                 </div>

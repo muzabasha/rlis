@@ -400,7 +400,7 @@ export default function Topic9_MarkovRewardProcess() {
                         }}
                     />
 
-                    <BellmanConvergenceVis formula="V(s) = \mathcal{R}_s + \gamma \sum_{s'} \mathcal{P}_{ss'} V(s')" label="MRP Bellman Equation" accent="violet" />
+                    <BellmanConvergenceVis formula="V(s) = \\mathcal{R}_s + \\gamma \\sum_{s'} \\mathcal{P}_{ss'} V(s')" label="MRP Bellman Equation" accent="violet" />
 
                     <MathBlock
                         formula="\\mathbf{V} = (\\mathbf{I} - \\gamma\\mathbf{P})^{-1}\\mathbf{R}"
