@@ -301,24 +301,20 @@ export default function Topic13_RLvsDLvsML() {
                         formula="\\mathcal{L}_{\\text{SL}}(\\theta) = \\frac{1}{N}\\sum_{i=1}^{N}\\bigl(y_i - f_\\theta(x_i)\\bigr)^2"
                         label="Supervised Learning Loss — Mean Squared Error"
                         accent="blue"
-                        explanation="SL minimises the average squared difference between predictions f_θ(x_i) and true labels y_i over N training examples. Gradient descent updates θ to reduce this loss."
-                        interpretation="This is the 'answer key' loss. Every training example has a known correct answer y_i. The model just needs to learn to reproduce those answers. The loss is always well-defined because y_i is always available. This is fundamentally different from RL where no 'correct answer' exists — only a reward signal."
-                        motivation="Understanding SL's loss function clarifies why RL is harder: in SL, the gradient ∂L/∂θ is computed from fixed labels. In RL, the 'target' itself changes as the agent learns — creating a moving target problem that makes RL training unstable."
+                        explanation="Calculates the average squared difference between predictions and actual labels."
+                        interpretation="Supervised learning minimizes this loss function on a static dataset of targets y_i and predictions f_\\theta(x_i) to fit model parameters."
+                        motivation="Contrast with reinforcement learning which evaluates actions using self-generated samples and bootstrap estimates."
                         terms={[
-                            { term: '\\\\mathcal{L}_{\\\\text{SL}}(\\\\theta)', name: 'SL Loss', meaning: 'Scalar measure of how wrong the model\'s predictions are. Minimised by gradient descent.', range: '\\\\mathbb{R}^+', example: 'L=0.05 means predictions are on average 0.22 units away from true labels.' },
-                            { term: 'y_i', name: 'True Label', meaning: 'The correct output for training example i, provided by a human annotator. The "answer key" that RL does NOT have.', range: '\\\\mathcal{Y}', example: 'y_i = "cat" (class 0) or y_i = ₹450 (house price).' },
-                            { term: 'f_\\\\theta(x_i)', name: 'Model Prediction', meaning: 'The model\'s output for input x_i, parameterised by θ (neural network weights).', range: '\\\\mathcal{Y}', example: 'f_θ(cat_image) = 0.92 (92% confidence it\'s a cat).' },
-                            { term: 'N', name: 'Dataset Size', meaning: 'Number of labeled training examples. SL needs large N; RL generates its own data through interaction.', range: '\\\\mathbb{Z}^+', example: 'ImageNet: N=1.2 million labeled images.' },
+                            { term: 'f_\\theta(x_i)', name: 'Model Prediction', meaning: 'The output predicted by the model for input features x_i.', range: 'Prediction Space', example: 'Predicted value.' },
+                            { term: 'y_i', name: 'Ground Truth Label', meaning: 'The actual target label corresponding to input features x_i.', range: 'Label Space', example: 'Actual target value.' }
                         ]}
                         numericalExample={{
-                            setup: 'Regression: predict house price. 3 examples: true=[200, 350, 500], predicted=[210, 340, 480] (in ₹k).',
+                            setup: 'Let actual target y_i = 10, model prediction f_\\theta(x_i) = 8. (N = 1)',
                             steps: [
-                                'Errors: (200−210)²=100, (350−340)²=100, (500−480)²=400',
-                                'MSE = (100+100+400)/3 = 200',
-                                'RMSE = √200 = ₹14.1k average error',
-                                'Gradient descent reduces MSE by adjusting θ.',
+                                'Prediction error = 10 - 8 = 2',
+                                'Squared error = 2^2 = 4'
                             ],
-                            result: 'MSE=200 (₹k²). Model is off by ~₹14k on average. Gradient descent will update θ to reduce this.',
+                            result: 'Loss contribution = 4'
                         }}
                     />
 
@@ -328,25 +324,22 @@ export default function Topic13_RLvsDLvsML() {
                         formula="\\mathcal{L}_{\\text{DQN}}(\\theta) = \\mathbb{E}_{(s,a,r,s')\\sim\\mathcal{D}}\\!\\left[\\Bigl(\\underbrace{r + \\gamma\\max_{a'}Q(s',a';\\theta^-)}_{\\text{TD target}} - \\underbrace{Q(s,a;\\theta)}_{\\text{current estimate}}\\Bigr)^{\\!2}\\right]"
                         label="Deep Q-Network (DQN) Loss — TD Error Squared"
                         accent="violet"
-                        explanation="DQN minimises the squared TD error between the current Q-value estimate and the TD target. The target network θ⁻ is a frozen copy of θ, updated periodically to stabilise training."
-                        interpretation="This is the RL equivalent of SL's MSE loss. But there are two critical differences: (1) The 'label' (TD target) is not fixed — it depends on Q(s',a';θ⁻) which changes as θ updates. (2) The data (s,a,r,s') is sampled from a replay buffer 𝒟, not a fixed dataset. These differences make RL training fundamentally harder than SL."
-                        motivation="DQN's loss function is the bridge between deep learning and RL. By expressing the RL objective as a differentiable loss, we can use standard backpropagation and gradient descent — the same tools used for image classification and language models."
+                        explanation="Mean squared temporal difference error for training the Deep Q-Network parameters."
+                        interpretation="Learns by adjusting current Q-value estimates Q(s, a; \\theta) towards temporal-difference targets based on stable target network weights \\theta^- and rewards r."
+                        motivation="Combines supervised deep learning loss minimization with dynamic reinforcement learning target updates."
                         terms={[
-                            { term: 'Q(s,a;\\\\theta)', name: 'Current Q-Network', meaning: 'Neural network with parameters θ that estimates Q(s,a). Updated every step by gradient descent.', range: '\\\\mathbb{R}', example: 'Q((2,3),right;θ) = 5.2 — current estimate.' },
-                            { term: 'Q(s\',a\';\\\\theta^-)', name: 'Target Q-Network', meaning: 'A frozen copy of the Q-network with parameters θ⁻, updated every C steps. Provides stable training targets.', range: '\\\\mathbb{R}', example: 'θ⁻ is copied from θ every 1000 steps. Prevents oscillation.' },
-                            { term: '\\\\mathcal{D}', name: 'Replay Buffer', meaning: 'A memory bank storing past transitions (s,a,r,s\'). Random sampling from 𝒟 breaks temporal correlations and stabilises training.', range: '\\\\text{Set of }(s,a,r,s\')', example: '𝒟 stores last 100,000 transitions. Each update samples a mini-batch of 32.' },
-                            { term: 'r + \\\\gamma\\\\max_{a\'}Q(s\',a\';\\\\theta^-)', name: 'TD Target', meaning: 'The "label" for DQN training. Unlike SL labels, this target changes as θ⁻ is updated — the moving target problem.', range: '\\\\mathbb{R}', example: 'r=−0.1, γ=0.9, max Q(s\',·;θ⁻)=7.5 → target = −0.1+6.75 = 6.65.' },
+                            { term: 'Q(s, a; \\theta)', name: 'Current Q-Network', meaning: 'Current parameterized network outputting estimated action Q-value.', range: '\\mathbb{R}', example: '9' },
+                            { term: 'Q(s\', a\'; \\theta^-)', name: 'Target Q-Network', meaning: 'Slowly updated target network parameters providing stable bootstrap values.', range: '\\mathbb{R}', example: '10' },
+                            { term: '\\mathcal{D}', name: 'Replay Buffer', meaning: 'Experience dataset storing tuples of transitions (s, a, r, s\') for training.', range: 'Buffer Space', example: 'Transition history.' }
                         ]}
                         numericalExample={{
-                            setup: 'DQN update. Transition: s=(2,3), a=right, r=−0.1, s\'=(2,4). Q(s,a;θ)=5.2. max Q(s\',·;θ⁻)=7.5. γ=0.9. α=0.001.',
+                            setup: 'Replay sample transition outputs r = 1, discount factor \\gamma = 0.9, target network max next-state Q-value = 10, and current Q-value estimate = 9.',
                             steps: [
-                                'TD target = r + γ·max Q(s\',·;θ⁻) = −0.1 + 0.9×7.5 = 6.65',
-                                'TD error  = target − Q(s,a;θ) = 6.65 − 5.2 = 1.45',
-                                'Loss = (1.45)² = 2.1025',
-                                'Gradient: ∂L/∂θ computed by backprop through Q-network',
-                                'θ ← θ − α·∂L/∂θ  (gradient descent step)',
+                                'Compute TD Target = r + \\gamma \\max Q(s\', a\'; \\theta^-) = 1 + 0.9 \\times 10 = 10',
+                                'Subtract current estimate: 10 - Q(s, a; \\theta) = 10 - 9 = 1',
+                                'Squared difference = 1^2 = 1'
                             ],
-                            result: 'Q(s,a;θ) moves from 5.2 toward 6.65. After many updates, Q converges to Q*(s,a).',
+                            result: 'DQN Loss contribution = 1'
                         }}
                     />
 

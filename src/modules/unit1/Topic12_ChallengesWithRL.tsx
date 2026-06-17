@@ -338,24 +338,25 @@ export default function Topic12_ChallengesWithRL() {
                         formula="R'(s,a,s') = R(s,a,s') + \\gamma\\,\\Phi(s') - \\Phi(s)"
                         label="Potential-Based Reward Shaping"
                         accent="amber"
-                        explanation="Reward shaping adds a potential-based bonus to the original reward to provide denser feedback. The potential function Φ(s) estimates how 'good' state s is, giving the agent breadcrumbs toward the goal."
-                        interpretation="Sparse rewards (only at the goal) make learning extremely slow — the agent must stumble upon the goal by chance before it can learn anything. Reward shaping adds intermediate rewards that guide the agent toward the goal without changing the optimal policy. The γΦ(s')−Φ(s) term is carefully designed to preserve policy invariance — the optimal policy under R' is the same as under R."
-                        motivation="Without reward shaping, an agent in a large maze might take millions of steps before reaching the goal for the first time. With shaping, it receives positive feedback for moving closer to the goal, dramatically accelerating learning."
+                        explanation="Modify a reward function by adding a potential difference without changing the optimal policy."
+                        interpretation="Allows designing intermediate, auxiliary rewards to guide agent exploration (reward shaping) while mathematically guaranteeing that the optimal policy remains invariant."
+                        motivation="Speeds up learning in sparse reward environments without introducing unwanted reward-hacking behaviors."
                         terms={[
-                            { term: "R'(s,a,s')", name: 'Shaped Reward', meaning: 'The modified reward that includes the potential-based bonus. Used for training; the original R is the true objective.', range: '\\\\mathbb{R}', example: "R'(near_goal, right, goal) = 10 + 0.9×0 − 8 = 2. Extra +2 for being near goal." },
-                            { term: 'R(s,a,s\')', name: 'Original Reward', meaning: 'The true reward signal. Sparse — only non-zero at the goal or key events.', range: '\\\\mathbb{R}', example: 'R=+10 at goal, R=0 everywhere else.' },
-                            { term: '\\\\Phi(s)', name: 'Potential Function', meaning: 'A state-dependent value estimating how close state s is to the goal. Higher Φ = closer to goal.', range: '\\\\mathbb{R}', example: 'Φ(s) = −distance_to_goal. Φ(goal)=0, Φ(start)=−10.' },
-                            { term: '\\\\gamma\\\\,\\\\Phi(s\')-\\\\Phi(s)', name: 'Shaping Bonus', meaning: 'The difference in potential between next state and current state, discounted by γ. Positive when moving toward the goal.', range: '\\\\mathbb{R}', example: 'Moving from distance=5 to distance=3: bonus = 0.9×(−3)−(−5) = −2.7+5 = 2.3.' },
+                            { term: 'R\'', name: 'Shaped Reward', meaning: 'The new reward value calculated after applying the potential.', range: '\\mathbb{R}', example: '-0.6 shaped reward.' },
+                            { term: 'R', name: 'Original Reward', meaning: 'The environment\'s original sparse reward signal.', range: '\\mathbb{R}', example: '-1 step penalty.' },
+                            { term: '\\Phi(s)', name: 'State Potential', meaning: 'Heuristic potential function value evaluating current state s.', range: '\\mathbb{R}', example: '5' },
+                            { term: '\\Phi(s\')', name: 'Next State Potential', meaning: 'Heuristic potential function value evaluating next state s\'.', range: '\\mathbb{R}', example: '6' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Discount factor determining the weight of future potentials.', range: '[0, 1]', example: '0.9' }
                         ]}
                         numericalExample={{
-                            setup: 'Maze. Φ(s) = −distance_to_goal. γ=0.9. Agent moves from s=(dist=5) to s\'=(dist=3). R(s,a,s\')=0 (not at goal yet).',
+                            setup: 'Let original reward R = -1. Choose potential values \\Phi(s) = 5, \\Phi(s\') = 6, and discount factor \\gamma = 0.9.',
                             steps: [
-                                'Φ(s)  = −5,  Φ(s\') = −3',
-                                'Shaping bonus = γ·Φ(s\') − Φ(s) = 0.9×(−3) − (−5) = −2.7 + 5 = 2.3',
-                                "R'(s,a,s') = 0 + 2.3 = 2.3",
-                                'Agent receives +2.3 for moving closer — even though the original reward was 0!',
+                                'Original Reward: R(s,a,s\') = -1',
+                                'Discounted potential of next state: \\gamma \\Phi(s\') = 0.9 \\times 6 = 5.4',
+                                'Current state potential contribution: -\\Phi(s) = -5',
+                                'Compute shaped reward: -1 + 5.4 - 5 = -0.6'
                             ],
-                            result: "R'=2.3 guides the agent toward the goal without changing the optimal policy. The agent now learns 10× faster.",
+                            result: 'Shaped Reward R\' = -0.6'
                         }}
                     />
 
@@ -365,23 +366,22 @@ export default function Topic12_ChallengesWithRL() {
                         formula="|\\mathcal{S}| = d^n \\quad \\Longrightarrow \\quad \\text{Curse of Dimensionality}"
                         label="Dimensionality Curse — State Space Explosion"
                         accent="red"
-                        explanation="If each of n sensors has d possible values, the total number of states grows exponentially as d^n. This makes tabular RL (Q-tables) infeasible for real-world problems."
-                        interpretation="A robot with 10 joints, each with 100 possible angles, has 100^10 = 10^20 possible states — more than the number of atoms in the observable universe. No Q-table can store this. This is why deep RL uses neural networks as function approximators: instead of storing Q(s,a) for every state, a neural network generalises across similar states."
-                        motivation="Understanding the dimensionality curse explains why tabular Q-learning works for toy problems (grid worlds) but fails for real robots. It motivates the need for function approximation (DQN, PPO) and state representation learning."
+                        explanation="The size of the state space grows exponentially with the number of state features or dimensions."
+                        interpretation="As the complexity or features representing states increase, tabular methods require exponential memory and samples to learn, rendering them impractical."
+                        motivation="Explains the need to transition from tabular RL methods to Deep Reinforcement Learning (using neural network function approximators)."
                         terms={[
-                            { term: 'd', name: 'Values per Dimension', meaning: 'Number of discrete values each sensor/feature can take.', range: '\\\\mathbb{Z}^+', example: 'd=100: each joint angle discretised into 100 positions.' },
-                            { term: 'n', name: 'State Dimensions', meaning: 'Number of independent features/sensors in the state representation.', range: '\\\\mathbb{Z}^+', example: 'n=10: robot with 10 joints.' },
-                            { term: 'd^n', name: 'Total States', meaning: 'Total number of possible states. Grows exponentially with n — the curse of dimensionality.', range: '\\\\mathbb{Z}^+', example: 'd=100, n=10: 100^{10} = 10^{20} states. Impossible to enumerate.' },
+                            { term: '|\\mathcal{S}|', name: 'State Space Size', meaning: 'The total number of discrete states in the environment.', range: '\\mathbb{Z}^+', example: '1,000,000 states.' },
+                            { term: 'd', name: 'Discretization Bins', meaning: 'Number of discrete levels or bins per state dimension.', range: '\\mathbb{Z}^+', example: '10 bins.' },
+                            { term: 'n', name: 'Dimensions Count', meaning: 'The number of features or variables defining the state.', range: '\\mathbb{Z}^+', example: '6 joint angles.' }
                         ]}
                         numericalExample={{
-                            setup: 'Compare state space sizes for different problems:',
+                            setup: 'A robot joint controller has n = 6 joints, each discretized into d = 10 bins.',
                             steps: [
-                                'Grid world 5×5: |S| = 25. Q-table: 25×4 = 100 entries. ✅ Feasible.',
-                                'Atari game (84×84 pixels, 3 colours): |S| = 3^{7056} ≈ 10^{3365}. ❌ Impossible.',
-                                'CartPole (4 continuous vars): |S| = ∞. ❌ Impossible without approximation.',
-                                'Solution: Neural network Q(s,a;θ) generalises across states.',
+                                'Compute size: d^n = 10^6 = 1,000,000 discrete states.',
+                                'If features increase to n = 10 joints: 10^{10} = 10,000,000,000 states.',
+                                'Exponential growth makes storing a Q-table impossible.'
                             ],
-                            result: 'For n>5 dimensions, tabular RL is infeasible. Deep RL (DQN) uses neural networks to approximate Q(s,a) across the entire continuous state space.',
+                            result: 'State Space size grows from 1 million to 10 billion states.'
                         }}
                     />
 

@@ -360,24 +360,23 @@ export default function Topic5_EnvironmentTypes() {
                         formula="\\mathcal{P}(s' \\mid s, a) = \\Pr(S_{t+1}=s' \\mid S_t=s,\\, A_t=a)"
                         label="State Transition Probability"
                         accent="blue"
-                        explanation="The probability that the environment moves to state s' when the agent takes action a in state s. This single function completely defines the environment's dynamics."
-                        interpretation="In a deterministic environment, P(s'|s,a)=1 for exactly one s' and 0 for all others. In a stochastic environment, the probability is spread across multiple next states. This function is the 'physics engine' of the MDP — it governs how the world responds to actions."
-                        motivation="Without P(s'|s,a), we cannot compute value functions analytically. Model-based RL algorithms learn this function; model-free algorithms bypass it entirely by learning from samples."
+                        explanation="Probability of transitioning to next state s' given current state s and action a."
+                        interpretation="Defines the physics engine of the environment, giving the likelihood of landing in a new state based on current state and chosen action."
+                        motivation="Necessary for computing expectations of future states in stochastic environments."
                         terms={[
-                            { term: "\\mathcal{P}(s'\\mid s,a)", name: 'Transition Probability', meaning: 'Probability of landing in state s\' after taking action a in state s. Must sum to 1 over all s\'.', range: '[0,1]', example: 'Slippery floor: P(right|s,right)=0.8, P(up|s,right)=0.1, P(down|s,right)=0.1.' },
-                            { term: 'S_{t+1}', name: 'Next State', meaning: 'The state the environment transitions to after the action.', range: '\\\\mathcal{S}', example: 'After "move right" from (2,3): S_{t+1}=(2,4) with prob 0.8.' },
-                            { term: 'S_t=s', name: 'Current State', meaning: 'The state the agent is in when it takes the action.', range: '\\\\mathcal{S}', example: 'S_t=(2,3) — robot at row 2, column 3.' },
-                            { term: 'A_t=a', name: 'Action Taken', meaning: 'The action the agent chose in state s.', range: '\\\\mathcal{A}', example: 'A_t = "move right".' },
+                            { term: '\\mathcal{P}(s\' \\mid s, a)', name: 'Transition Probability', meaning: 'The probability of landing in next state s\'.', range: '[0, 1]', example: '0.8 probability.' },
+                            { term: 'S_{t+1}', name: 'Next State Variable', meaning: 'The state at step t+1.', range: 'State Space \\mathcal{S}', example: 'Grid cell (1,2).' },
+                            { term: 'S_t', name: 'Current State Variable', meaning: 'The state at step t.', range: 'State Space \\mathcal{S}', example: 'Grid cell (1,1).' },
+                            { term: 'A_t', name: 'Action Variable', meaning: 'Action chosen at step t.', range: 'Action Space \\mathcal{A}', example: 'Move right.' }
                         ]}
                         numericalExample={{
-                            setup: 'Stochastic grid world. Action "right" from state (2,3). Transition probabilities:',
+                            setup: 'A robot tries to move forward. In a noisy environment, it succeeds with 80% probability, slips left with 10%, slips right with 10%.',
                             steps: [
-                                'P((2,4)|(2,3),right) = 0.8  → intended direction',
-                                'P((1,3)|(2,3),right) = 0.1  → slipped up',
-                                'P((3,3)|(2,3),right) = 0.1  → slipped down',
-                                'Sum = 0.8+0.1+0.1 = 1.0 ✓',
+                                '\\mathcal{P}(forward\\_cell \\mid current\\_cell, move\\_forward) = 0.8',
+                                '\\mathcal{P}(left\\_cell \\mid current\\_cell, move\\_forward) = 0.1',
+                                '\\mathcal{P}(right\\_cell \\mid current\\_cell, move\\_forward) = 0.1'
                             ],
-                            result: 'The agent intended to go right but has a 20% chance of slipping. RL must account for this stochasticity in its value estimates.',
+                            result: 'Sum of next-state probabilities = 0.8 + 0.1 + 0.1 = 1.0.'
                         }}
                     />
 
@@ -387,22 +386,22 @@ export default function Topic5_EnvironmentTypes() {
                         formula="\\mathcal{R}(s,a) = \\mathbb{E}\\!\\left[R_{t+1} \\mid S_t=s,\\, A_t=a\\right] = \\sum_{s'}\\mathcal{P}(s'\\mid s,a)\\cdot r(s,a,s')"
                         label="Expected Reward Function"
                         accent="emerald"
-                        explanation="The expected immediate reward for taking action a in state s, averaged over all possible next states weighted by their transition probabilities."
-                        interpretation="This function tells the agent how much reward to expect on average from each (state, action) pair. In deterministic environments, R(s,a) equals the single reward received. In stochastic environments, it is a weighted average over all possible outcomes."
-                        motivation="The reward function is the most critical design choice in RL. A poorly designed R(s,a) leads to reward hacking — the agent finds unintended ways to maximise reward while ignoring the actual goal."
+                        explanation="Expected reward obtained when taking action a in state s."
+                        interpretation="The average reward an agent expects to receive when executing an action, taking into account all possible next-state transitions and their probabilities."
+                        motivation="Allows calculating deterministic reward updates even when the transition outcomes are stochastic."
                         terms={[
-                            { term: '\\\\mathcal{R}(s,a)', name: 'Expected Reward', meaning: 'Average reward for taking action a in state s, over all possible next states.', range: '\\\\mathbb{R}', example: 'R(near_goal, move_right) = +9.5 (usually reaches goal).' },
-                            { term: 'r(s,a,s\')', name: 'Transition Reward', meaning: 'Reward received for the specific transition from s to s\' via action a.', range: '\\\\mathbb{R}', example: 'r((2,3),right,(2,4))=−0.1, r((2,3),right,goal)=+10.' },
-                            { term: '\\\\mathcal{P}(s\'\\\\mid s,a)', name: 'Transition Weight', meaning: 'Probability of reaching s\', used to weight the reward r(s,a,s\').', range: '[0,1]', example: 'P=0.8 for intended direction, 0.1 for each slip direction.' },
+                            { term: '\\mathcal{R}(s,a)', name: 'Expected Reward', meaning: 'Expected immediate reward value.', range: '\\mathbb{R}', example: '7.0 reward.' },
+                            { term: '\\mathcal{P}(s\'\\mid s,a)', name: 'Transition Probability', meaning: 'Probability of transitioning to state s\'.', range: '[0, 1]', example: '0.8' },
+                            { term: 'r(s,a,s\')', name: 'Transition Reward', meaning: 'Scalar reward obtained during transition from s to s\' via action a.', range: '\\mathbb{R}', example: '10' }
                         ]}
                         numericalExample={{
-                            setup: 'Action "right" from (2,3). Transitions: (2,4) with p=0.8, r=−0.1; (1,3) with p=0.1, r=−0.1; (3,3) with p=0.1, r=−0.1.',
+                            setup: 'Let action choice lead to goal (+10 reward) with 80% probability, or wall collision (-5 reward) with 20% probability.',
                             steps: [
-                                'R((2,3),right) = 0.8×(−0.1) + 0.1×(−0.1) + 0.1×(−0.1)',
-                                '              = −0.08 − 0.01 − 0.01',
-                                '              = −0.10',
+                                'Probability of goal = 0.8, reward = 10',
+                                'Probability of wall = 0.2, reward = -5',
+                                'Expected reward = 0.8 \\times 10 + 0.2 \\times (-5) = 8 - 1 = 7'
                             ],
-                            result: 'R((2,3),right) = −0.10. Every step costs 0.1 regardless of direction slipped — the step penalty is uniform here.',
+                            result: '\\mathcal{R}(s,a) = 7.0'
                         }}
                     />
 

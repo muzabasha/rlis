@@ -347,27 +347,26 @@ export default function Topic1_EarlyRoots() {
                     </p>
 
                     <MathBlock
-                        formula="S_t,\\; A_t \\;\\xrightarrow{\\text{environment}}\\; R_{t+1},\\; S_{t+1}"
+                        formula="S_t,\; A_t \;\xrightarrow{\text{environment}}\; R_{t+1},\; S_{t+1}"
                         label="The RL Interaction Cycle"
                         accent="blue"
-                        explanation="At each discrete time step t, the agent observes state S_t, selects action A_t, and the environment responds with reward R_{t+1} and new state S_{t+1}."
-                        interpretation="This is the heartbeat of every RL system. The agent and environment exchange information in a closed loop — the agent acts, the world reacts, and the agent learns from that reaction. This cycle repeats until the episode ends or the agent converges to an optimal policy."
-                        motivation="Without a formal notation for this cycle, we cannot write algorithms. This equation is the foundation on which Q-learning, policy gradients, and all modern RL algorithms are built."
+                        explanation="The fundamental state-action-reward-state loop where an agent interacts with an environment."
+                        interpretation="At time t, the agent in state S_t chooses action A_t. The environment responds by transitioning to next state S_{t+1} and emitting reward R_{t+1}."
+                        motivation="Formalizes the trial-and-error feedback loop of learning from consequences."
                         terms={[
-                            { term: 'S_t', name: 'State at time t', meaning: 'A complete description of the environment at time step t. Must satisfy the Markov property — the future depends only on the present state, not the history.', range: '\\\\mathcal{S}', example: 'In a grid world: (row=2, col=3). In Atari: last 4 frames of pixels.' },
-                            { term: 'A_t', name: 'Action at time t', meaning: 'The decision made by the agent in state S_t. Can be discrete (left/right/up/down) or continuous (force, torque).', range: '\\\\mathcal{A}(S_t)', example: 'In chess: move knight to e5. In robotics: apply 3.2 N·m torque.' },
-                            { term: 'R_{t+1}', name: 'Reward at t+1', meaning: 'A scalar feedback signal from the environment indicating how good action A_t was in state S_t. Can be positive, negative, or zero.', range: '\\\\mathbb{R}', example: '+10 for reaching goal, −1 for hitting wall, −0.1 per step (time penalty).' },
-                            { term: 'S_{t+1}', name: 'Next State', meaning: 'The new state of the environment after the agent took action A_t. Determined by the environment\'s transition dynamics P(s\'|s,a).', range: '\\\\mathcal{S}', example: 'After moving right in (2,3): new state is (2,4).' },
+                            { term: 'S_t', name: 'Current State', meaning: 'The state of the environment at time step t.', range: 'State Space \\mathcal{S}', example: 'Grid cell position (1,1).' },
+                            { term: 'A_t', name: 'Action', meaning: 'The decision made by the agent at time step t.', range: 'Action Space \\mathcal{A}', example: 'Move right.' },
+                            { term: 'R_{t+1}', name: 'Reward', meaning: 'Scalar feedback signal received after the transition.', range: '\\mathbb{R}', example: '-1 step penalty.' },
+                            { term: 'S_{t+1}', name: 'Next State', meaning: 'The state transitioned into after taking action A_t.', range: 'State Space \\mathcal{S}', example: 'Grid cell position (1,2).' }
                         ]}
                         numericalExample={{
-                            setup: 'A robot in a 5×5 grid. Current state S_t = (0,0). Action A_t = "move right".',
+                            setup: 'Gridworld agent starts at cell (1, 1) and wants to reach (1, 2).',
                             steps: [
-                                'Environment checks: is (0,1) a wall? No.',
-                                'Environment checks: is (0,1) the goal? No.',
-                                'R_{t+1} = −0.1  (step penalty to encourage efficiency)',
-                                'S_{t+1} = (0,1)  (robot moved right successfully)',
+                                'State S_t = (1, 1)',
+                                'Agent chooses Action A_t = Move Right',
+                                'Environment moves agent to next cell S_{t+1} = (1, 2) and gives reward R_{t+1} = -1'
                             ],
-                            result: 'Agent receives R_{t+1} = −0.1 and observes S_{t+1} = (0,1). Updates its Q-table entry Q((0,0), right).',
+                            result: 'Interaction tuple ((1,1), Move Right, -1, (1,2)) is generated.'
                         }}
                     />
                     <RLInteractionCycleVis />
@@ -376,24 +375,22 @@ export default function Topic1_EarlyRoots() {
                         formula="G_t = R_{t+1} + \\gamma R_{t+2} + \\gamma^2 R_{t+3} + \\cdots = \\sum_{k=0}^{\\infty} \\gamma^k R_{t+k+1}"
                         label="The Discounted Return"
                         accent="violet"
-                        explanation="G_t is the total discounted reward the agent accumulates from time step t onwards. This is what the agent ultimately tries to maximise."
-                        interpretation="The agent doesn't just care about the next reward — it cares about the sum of ALL future rewards. But future rewards are discounted by γ^k, meaning a reward k steps away is worth only γ^k of its face value. This models the real-world intuition that a reward now is worth more than the same reward later (time value of money)."
-                        motivation="Without G_t, we cannot define what 'good behaviour' means over time. A greedy agent that only maximises R_{t+1} will sacrifice long-term success for short-term gain — like a chess player who captures a pawn but loses the queen."
+                        explanation="The total accumulated discounted reward received by the agent over time."
+                        interpretation="The agent's goal is to maximize this discounted sum, prioritizing near-term rewards over distant rewards depending on the discount factor."
+                        motivation="Prevents infinite returns in infinite-horizon tasks and models the uncertainty of future outcomes."
                         terms={[
-                            { term: 'G_t', name: 'Return (Cumulative Reward)', meaning: 'Total discounted reward from time t to the end of the episode (or infinity for continuing tasks). This is the quantity the agent maximises.', range: '\\\\mathbb{R}', example: 'If rewards are [1, 2, 3] with γ=0.9: G_0 = 1 + 0.9×2 + 0.81×3 = 5.23' },
-                            { term: '\\\\gamma', name: 'Discount Factor', meaning: 'Controls how much the agent values future rewards relative to immediate ones. γ=0 → myopic (only now). γ→1 → far-sighted (all futures equal). Must be < 1 for infinite-horizon tasks to ensure G_t is finite.', range: '[0,\\\\,1)', example: 'γ=0.9: reward 10 steps away is worth 0.9^{10} ≈ 0.35 of face value.' },
-                            { term: '\\\\gamma^k', name: 'Discount at step k', meaning: 'The discount applied to a reward k steps in the future. Decays exponentially, ensuring distant rewards have diminishing influence.', range: '(0,\\\\,1]', example: 'k=5, γ=0.9: γ^5 = 0.59. So a reward of 10 five steps away is worth 5.9 now.' },
-                            { term: 'R_{t+k+1}', name: 'Future Reward', meaning: 'The reward received k+1 steps after time t. Summed over all future steps to form the return.', range: '\\\\mathbb{R}', example: 'R_{t+3} is the reward 3 steps from now.' },
+                            { term: 'G_t', name: 'Discounted Return', meaning: 'The discounted cumulative reward starting from time step t.', range: '\\mathbb{R}', example: 'G_t = 27.1' },
+                            { term: 'R_{t+k+1}', name: 'Future Reward', meaning: 'Reward received at future step t+k+1.', range: '\\mathbb{R}', example: '10' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Determines the present value of future rewards.', range: '[0, 1]', example: '0.9' }
                         ]}
                         numericalExample={{
-                            setup: 'Rewards over 4 steps: R₁=2, R₂=0, R₃=5, R₄=1. Discount γ=0.9. Calculate G₁.',
+                            setup: 'Discount factor \\gamma = 0.9, rewards = [10, 10, 10] for next 3 steps, 0 thereafter.',
                             steps: [
-                                'G₁ = R₂ + γ·R₃ + γ²·R₄',
-                                'G₁ = 0  + 0.9×5 + 0.81×1',
-                                'G₁ = 0  + 4.5   + 0.81',
-                                'G₁ = 5.31',
+                                'Step 1: R_{t+1} = 10',
+                                'Step 2: \\gamma R_{t+2} = 0.9 \\times 10 = 9',
+                                'Step 3: \\gamma^2 R_{t+3} = 0.81 \\times 10 = 8.1'
                             ],
-                            result: 'G₁ = 5.31. Even though R₂=0 (no immediate reward), the agent still has high return because it anticipates the +5 reward at step 3.',
+                            result: 'G_t = 10 + 9 + 8.1 = 27.1'
                         }}
                     />
                     <DiscountCurveVis />

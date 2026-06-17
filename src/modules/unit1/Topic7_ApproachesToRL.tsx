@@ -326,21 +326,21 @@ export default function Topic7_ApproachesToRL() {
                         formula="Q(s,a) \\approx \\mathbb{E}\\!\\left[G_t \\mid S_t=s,\\,A_t=a\\right]"
                         label="Value-Based Approach — Action-Value Function Q(s,a)"
                         accent="blue"
-                        explanation="Q(s,a) estimates the expected total discounted reward when taking action a in state s and then following the current policy. The agent acts greedily: always pick the action with the highest Q-value."
-                        interpretation="The Q-function is the 'price tag' on every (state, action) pair. A high Q(s,a) means taking action a in state s is expected to lead to a lot of future reward. Value-based methods like Q-learning and DQN learn this function and derive the policy implicitly as π(s)=argmax_a Q(s,a)."
-                        motivation="Value-based methods are stable and well-understood. They work best for discrete action spaces. The Q-function provides a complete ranking of all actions in every state, making policy extraction trivial."
+                        explanation="Approximating the expected return for taking action a in state s and following the policy thereafter."
+                        interpretation="Value-based methods do not optimize a policy directly; instead, they learn to predict how good each action is, selecting the one with the highest estimated return."
+                        motivation="Allows action selection by picking the action that maximizes the estimated Q-value."
                         terms={[
-                            { term: 'Q(s,a)', name: 'Action-Value Function', meaning: 'Expected return when taking action a in state s, then following policy π. The core object learned by Q-learning and DQN.', range: '\\\\mathbb{R}', example: 'Q((2,3),right)=7.2 means going right from (2,3) is expected to yield 7.2 total reward.' },
-                            { term: '\\\\mathbb{E}[G_t\\\\mid S_t=s,A_t=a]', name: 'Conditional Expectation', meaning: 'Average return over all possible trajectories starting with action a in state s.', range: '\\\\mathbb{R}', example: 'If 80% of trajectories give G=9 and 20% give G=1: Q=0.8×9+0.2×1=7.4.' },
+                            { term: 'Q(s,a)', name: 'Action-Value Function', meaning: 'The expected return starting from state s, taking action a.', range: '\\mathbb{R}', example: 'Q(s, a) = 100.' },
+                            { term: '\\mathbb{E}', name: 'Expectation', meaning: 'Expected value over environmental transitions.', range: 'Operator', example: 'Average trajectory return.' },
+                            { term: 'G_t', name: 'Discounted Return', meaning: 'The discounted cumulative reward variable.', range: '\\mathbb{R}', example: 'trajectory return.' }
                         ]}
                         numericalExample={{
-                            setup: 'Q-table for a 2-state, 2-action problem. After training: Q(s₁,left)=3, Q(s₁,right)=8, Q(s₂,left)=5, Q(s₂,right)=2.',
+                            setup: 'Let taking action a in state s yield expected returns of 100.',
                             steps: [
-                                'In state s₁: argmax_a Q(s₁,a) = right (Q=8 > Q=3)',
-                                'In state s₂: argmax_a Q(s₂,a) = left  (Q=5 > Q=2)',
-                                'Greedy policy: π*(s₁)=right, π*(s₂)=left',
+                                'Expected Return = 100',
+                                'Approximate Q(s,a) \\approx Expected Return'
                             ],
-                            result: 'The optimal policy is extracted directly from the Q-table by taking the argmax at each state. No separate policy network needed.',
+                            result: 'Q(s,a) = 100'
                         }}
                     />
 
@@ -350,23 +350,23 @@ export default function Topic7_ApproachesToRL() {
                         formula="\\pi_\\theta(a \\mid s) = \\frac{\\exp\\!\\left(\\theta_a^\\top \\phi(s)\\right)}{\\sum_{a'}\\exp\\!\\left(\\theta_{a'}^\\top \\phi(s)\\right)}"
                         label="Policy-Based Approach — Softmax Policy"
                         accent="violet"
-                        explanation="A parameterised stochastic policy that maps states to probability distributions over actions using a softmax function. Parameters θ are optimised directly by gradient ascent on expected return."
-                        interpretation="Instead of learning a value function and deriving the policy, policy-based methods directly parameterise π_θ and optimise θ. The softmax ensures all action probabilities are positive and sum to 1. This approach naturally handles continuous action spaces and stochastic optimal policies."
-                        motivation="Policy-based methods are essential when the action space is continuous (robot joints, steering angles) or when the optimal policy is stochastic (game theory, partially observable environments). Value-based methods cannot handle these cases directly."
+                        explanation="A parameterized policy outputting action selection probabilities based on state features."
+                        interpretation="Directly parameterizes the policy \\pi using weights \\theta, calculating exponential preferences for actions to create a valid probability distribution."
+                        motivation="Enables learning stochastic policies directly, which is useful in high-dimensional or continuous action spaces."
                         terms={[
-                            { term: '\\\\pi_\\\\theta(a\\\\mid s)', name: 'Parameterised Policy', meaning: 'Probability of taking action a in state s, controlled by parameters θ (neural network weights).', range: '[0,1]', example: 'π_θ(right|(2,3))=0.73, π_θ(up|(2,3))=0.18, π_θ(left|(2,3))=0.09.' },
-                            { term: '\\\\theta_a', name: 'Action Parameters', meaning: 'The weight vector for action a. Higher θ_a·φ(s) → higher probability of choosing a.', range: '\\\\mathbb{R}^d', example: 'θ_right = [0.5, 0.3, −0.1] for a 3-feature state.' },
-                            { term: '\\\\phi(s)', name: 'State Feature Vector', meaning: 'A vector representation of state s. Can be hand-crafted features or the output of a neural network.', range: '\\\\mathbb{R}^d', example: 'φ((2,3)) = [0.4, 0.6] (normalised row and column).' },
+                            { term: '\\theta', name: 'Policy Parameters', meaning: 'The weight vectors optimized by policy gradient algorithms.', range: '\\mathbb{R}^k', example: 'Neural network weights.' },
+                            { term: '\\phi(s)', name: 'State Features', meaning: 'The feature representation of state s.', range: '\\mathbb{R}^d', example: 'Coordinates feature vector.' },
+                            { term: '\\exp', name: 'Exponential', meaning: 'Used to ensure positive probabilities and normalize preferences.', range: 'Function', example: 'e^x.' }
                         ]}
                         numericalExample={{
-                            setup: '2 actions: left, right. θ_left·φ(s)=1.0, θ_right·φ(s)=2.0.',
+                            setup: 'Two actions available in state s. Parameter-feature products are: \\theta_1^\\top \\phi(s) = 2.0, \\theta_2^\\top \\phi(s) = 1.0.',
                             steps: [
-                                'exp(1.0) = 2.718,  exp(2.0) = 7.389',
-                                'Sum = 2.718 + 7.389 = 10.107',
-                                'π(left|s)  = 2.718/10.107 = 0.269',
-                                'π(right|s) = 7.389/10.107 = 0.731',
+                                'Numerator action 1: e^{2.0} \\approx 7.39',
+                                'Numerator action 2: e^{1.0} \\approx 2.72',
+                                'Sum of numerators = 7.39 + 2.72 = 10.11',
+                                'P(action 1) = 7.39 / 10.11 = 0.73, P(action 2) = 2.72 / 10.11 = 0.27'
                             ],
-                            result: 'The agent takes "right" 73.1% of the time and "left" 26.9% — a stochastic policy that still favours the better action.',
+                            result: '\\pi_\\theta(action 1 \\mid s) \\approx 0.73'
                         }}
                     />
 
@@ -376,14 +376,22 @@ export default function Topic7_ApproachesToRL() {
                         formula="\\hat{s}_{t+1},\\,\\hat{r}_{t+1} = \\mathcal{M}_\\phi(s_t,\\,a_t)"
                         label="Model-Based Approach — Learned Environment Model"
                         accent="amber"
-                        explanation="A learned model M_φ predicts the next state and reward given the current state and action. The agent uses this model to plan (simulate future trajectories) without interacting with the real environment."
-                        interpretation="Model-based RL builds an internal simulator of the world. The agent can 'imagine' thousands of future trajectories in its head before taking a single real action. This dramatically improves sample efficiency — the agent learns more from less real experience."
-                        motivation="Real-world RL is expensive: each interaction with a physical robot costs time and money. A learned model allows the agent to practice in simulation, then transfer the learned policy to the real world."
+                        explanation="An internal simulation model predicting next state and reward from current state and action."
+                        interpretation="Learns the environment dynamics, allowing the agent to plan by simulating transitions internally before committing to physical actions."
+                        motivation="Enables planning (like tree search) and reduces sample complexity by training on simulated transitions."
                         terms={[
-                            { term: '\\\\mathcal{M}_\\\\phi', name: 'Learned Model', meaning: 'A function (usually a neural network) that approximates the environment\'s transition and reward dynamics.', range: '\\\\mathcal{S}\\\\times\\\\mathcal{A}\\\\to\\\\mathcal{S}\\\\times\\\\mathbb{R}', example: 'A neural network trained on (s,a,s\',r) tuples from real experience.' },
-                            { term: '\\\\hat{s}_{t+1}', name: 'Predicted Next State', meaning: 'The model\'s prediction of where the environment will be after action a_t. May differ from the true S_{t+1}.', range: '\\\\mathcal{S}', example: 'Model predicts robot will be at (2,4) after moving right from (2,3).' },
-                            { term: '\\\\hat{r}_{t+1}', name: 'Predicted Reward', meaning: 'The model\'s prediction of the reward that will be received.', range: '\\\\mathbb{R}', example: 'Model predicts r=−0.1 for a step action.' },
+                            { term: '\\mathcal{M}_\\phi', name: 'Environment Model', meaning: 'A learned model predicting transitions and rewards.', range: 'Function Model', example: 'Transition neural network.' },
+                            { term: '\\hat{s}_{t+1}', name: 'Predicted State', meaning: 'The state predicted for the next step.', range: 'State Space \\mathcal{S}', example: 'Predicted cell coordinates.' },
+                            { term: '\\hat{r}_{t+1}', name: 'Predicted Reward', meaning: 'The reward predicted for the transition.', range: '\\mathbb{R}', example: 'Predicted +1.0.' }
                         ]}
+                        numericalExample={{
+                            setup: 'Model inputs S_t = 5, A_t = 1. The model has weights \\phi.',
+                            steps: [
+                                'Model takes input features of state 5 and action 1',
+                                'Model outputs predicted next state 6 and expected reward 0.5'
+                            ],
+                            result: '\\hat{s}_{t+1} = 6, \\hat{r}_{t+1} = 0.5'
+                        }}
                     />
 
                     <ModelVis />

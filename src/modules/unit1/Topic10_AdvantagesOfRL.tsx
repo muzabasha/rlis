@@ -301,24 +301,24 @@ export default function Topic10_AdvantagesOfRL() {
                         formula="\\pi^* = \\arg\\max_{\\pi}\\;\\mathbb{E}_\\pi\\!\\left[\\sum_{t=0}^{\\infty}\\gamma^t R_{t+1}\\;\\middle|\\;S_0=s_0\\right]"
                         label="RL's Core Advantage — Global Long-Term Optimisation"
                         accent="blue"
-                        explanation="RL finds the policy π* that maximises the expected total discounted reward over the entire future, not just the next step. This is the mathematical expression of RL's key advantage over rule-based and greedy systems."
-                        interpretation="Traditional controllers optimise for the immediate next step (greedy). RL optimises for the entire future trajectory. This is why RL discovered the pre-emptive cooling strategy — it found that sacrificing a small immediate cost (cooling at 2 AM) leads to a much larger long-term reward (40% energy savings). No human scripted this; the mathematics of long-term optimisation discovered it."
-                        motivation="The advantage of RL over rule-based systems is precisely this: rules are written by humans who think in terms of immediate cause-and-effect. RL thinks in terms of long-term consequences, discovering strategies that humans might never consider."
+                        explanation="Searching for the policy mapping states to actions that yields the highest expected discounted return."
+                        interpretation="The central optimization problem in RL: finding a policy \\pi^* that maximizes the expected sum of discounted future rewards, starting from an initial state s_0."
+                        motivation="Formalizes why RL can discover novel behaviors without explicit human instructions or correct labels."
                         terms={[
-                            { term: '\\\\pi^*', name: 'Optimal Policy', meaning: 'The best possible strategy — the one that achieves the highest expected return from any starting state.', range: '\\\\mathcal{S}\\\\to\\\\mathcal{A}', example: 'π*(server_room_hot) = "cool now at low cost" rather than "wait until critical".' },
-                            { term: '\\\\mathbb{E}_\\\\pi', name: 'Expectation under π', meaning: 'Average over all possible futures when following policy π. Handles stochastic environments where the same action can lead to different outcomes.', range: '\\\\mathbb{R}', example: 'Weather is uncertain: E_π[cooling_cost] averages over all possible temperature trajectories.' },
-                            { term: '\\\\sum_{t=0}^{\\\\infty}\\\\gamma^t R_{t+1}', name: 'Infinite-Horizon Return', meaning: 'Sum of all future rewards, discounted by γ^t. The ∞ horizon means the agent plans for the entire future, not just a fixed window.', range: '\\\\mathbb{R}', example: 'Energy savings compound over months: G₀ = Σ γ^t × (savings at step t).' },
-                            { term: 'S_0=s_0', name: 'Initial State', meaning: 'The starting condition. The optimal policy must work from any starting state, not just one specific scenario.', range: '\\\\mathcal{S}', example: 'The policy must work whether the server room starts hot, cold, or at normal temperature.' },
+                            { term: '\\pi^*', name: 'Optimal Policy', meaning: 'The best possible action-selection policy.', range: 'Policy Space', example: 'Optimal navigation path.' },
+                            { term: '\\arg\\max_\\pi', name: 'Argmax Policy', meaning: 'Identifies the policy maximizing the expectation argument.', range: 'Operator', example: 'Extracting the optimal policy.' },
+                            { term: '\\mathbb{E}_\\pi', name: 'Expectation', meaning: 'Expected value over environmental transitions.', range: 'Operator', example: 'Average trajectory return.' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Determines the present value of future rewards.', range: '[0, 1)', example: '0.99' },
+                            { term: 'R_{t+1}', name: 'Reward', meaning: 'Immediate scalar feedback from the environment.', range: '\\mathbb{R}', example: '+10 reward.' }
                         ]}
                         numericalExample={{
-                            setup: 'Server cooling. Two policies: Greedy (cool when T>22°C) vs RL (pre-emptive cooling at 2AM). γ=0.95. Daily costs over 3 days:',
+                            setup: 'Comparing expected returns starting from cell S_0 = A. Policy 1 gives return of 90; Policy 2 gives 98.',
                             steps: [
-                                'Greedy: costs = [₹500, ₹500, ₹500]. G₀ = 500 + 0.95×500 + 0.9025×500 = ₹1426',
-                                'RL:     costs = [₹300, ₹300, ₹300]. G₀ = 300 + 0.95×300 + 0.9025×300 = ₹856',
-                                'RL saves: ₹1426 − ₹856 = ₹570 over 3 days',
-                                'Over 1 year (365 days): RL saves ~₹69,350',
+                                'Expected Return(\\pi_1) = 90',
+                                'Expected Return(\\pi_2) = 98',
+                                'Compare: 98 > 90'
                             ],
-                            result: 'RL\'s long-term optimisation discovers the pre-emptive strategy that saves 40% — a strategy no greedy rule would find.',
+                            result: '\\pi^* = \\pi_2'
                         }}
                     />
 
