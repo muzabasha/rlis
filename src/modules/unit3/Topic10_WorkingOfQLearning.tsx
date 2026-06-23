@@ -39,6 +39,7 @@ import {
 
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -305,13 +306,13 @@ export default function Topic10_WorkingOfQLearning() {
                         <div className="space-y-1">
                             <div>{"Initialize $Q(s, a)$ arbitrarily"}</div>
                             <div><span className="text-indigo-400">Repeat</span> (for each episode):</div>
-                            <div className="pl-6">Initialize $s$</div>
+                            <div className="pl-6">Initialize <InlineMath math="s" /></div>
                             <div className="pl-6"><span className="text-indigo-400">Repeat</span> (for each step of episode):</div>
                             <div className="pl-12">{"Choose $a$ from $s$ using policy derived from $Q$ (e.g., $\epsilon$-greedy)"}</div>
                             <div className="pl-12">{"Take action $a$, observe $r, s'$"}</div>
                             <div className="pl-12">{"$Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]$"}</div>
                             <div className="pl-12">{"$s \leftarrow s'$"}</div>
-                            <div className="pl-6"><span className="text-indigo-400">until</span> $s$ is terminal</div>
+                            <div className="pl-6"><span className="text-indigo-400">until</span> <InlineMath math="s" /> is terminal</div>
                         </div>
                     </div>
 

@@ -38,6 +38,7 @@ import {
 
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -134,7 +135,7 @@ function OptimalityLab() {
                         ))}
                     </div>
                     <div className="text-center">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">State Values $V(s)$</span>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">State Values <InlineMath math="V(s)" /></span>
                         <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
                             {policyType === 'Optimal' 
                                 ? 'The highest possible values for every state.' 
@@ -200,10 +201,10 @@ export default function Topic6_OptimalPolicyValue() {
                                 Every chess move has a value. A novice sees only the next capture. A Grandmaster, however, can see which move leads to the highest probability of a win 50 moves later.
                             </p>
                             <p>
-                                In Reinforcement Learning, the **Optimal Policy** ($\pi^*$) is that Grandmaster's vision. It is the strategy that ensures the highest possible reward from <em>every single state</em> in the environment.
+                                In Reinforcement Learning, the **Optimal Policy** (<InlineMath math="\pi^*" />) is that Grandmaster's vision. It is the strategy that ensures the highest possible reward from <em>every single state</em> in the environment.
                             </p>
                             <p>
-                                When an agent finds the **Optimal Value Function** ($v^*$), it has essentially "solved" the environment. It no longer needs to worry about the future because it already knows the absolute best possible outcome it can achieve.
+                                When an agent finds the **Optimal Value Function** (<InlineMath math="v^*" />), it has essentially "solved" the environment. It no longer needs to worry about the future because it already knows the absolute best possible outcome it can achieve.
                             </p>
                         </div>
                     </div>
@@ -213,7 +214,7 @@ export default function Topic6_OptimalPolicyValue() {
                             The purpose of every RL algorithm—from Q-Learning to PPO—is to approximate the Optimal Value Function as closely as possible.
                         </InfoCard>
                         <InfoCard type="tip" title="Greedy is Good">
-                            If you have the optimal action-value function ($q^*$), the optimal policy is simple: just pick the action with the highest $q^*$ value.
+                            If you have the optimal action-value function (<InlineMath math="q^*" />), the optimal policy is simple: just pick the action with the highest <InlineMath math="q^*" /> value.
                         </InfoCard>
                     </div>
                 </div>
@@ -460,7 +461,7 @@ export default function Topic6_OptimalPolicyValue() {
                     <div className="card p-6 border-l-4 border-indigo-500 bg-indigo-50/30 dark:bg-indigo-900/10">
                         <h5 className="font-bold mb-2 flex items-center gap-2"><Target size={18} /> Deep RL Context</h5>
                         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            The game of Go has $10^{170}$ states. It is physically impossible to solve the Bellman Optimality Equation exactly for this game. AI like AlphaGo use **Deep Neural Networks** to estimate the optimal value function $v^*$, allowing them to defeat world champions.
+                            The game of Go has $10^{170}<InlineMath math=" states. It is physically impossible to solve the Bellman Optimality Equation exactly for this game. AI like AlphaGo use **Deep Neural Networks** to estimate the optimal value function " />v^*$, allowing them to defeat world champions.
                         </p>
                     </div>
 
@@ -525,7 +526,7 @@ export default function Topic6_OptimalPolicyValue() {
                 'Convergence is guaranteed when max|V_new - V_old| < threshold']}
                  challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Observe the difference between a "Suboptimal" policy and an "Optimal" policy. Notice how the state values ($V(s)$) are significantly higher when the agent makes perfect choices. 
+                        Observe the difference between a "Suboptimal" policy and an "Optimal" policy. Notice how the state values (<InlineMath math="V(s)" />) are significantly higher when the agent makes perfect choices. 
                     </p>
                     <OptimalityLab />
                 </VirtualLabShell>

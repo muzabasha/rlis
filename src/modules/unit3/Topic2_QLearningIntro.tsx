@@ -38,6 +38,7 @@ import {
 
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -125,7 +126,7 @@ function QTableLab() {
 
                     <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl space-y-4">
                         <div className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase">
-                            <span>Learning Rate ($\alpha$)</span>
+                            <span>Learning Rate (<InlineMath math="\alpha" />)</span>
                             <span className="text-primary-600">{alpha.toFixed(1)}</span>
                         </div>
                         <input 
@@ -368,7 +369,7 @@ export default function Topic2_QLearningIntro() {
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Off-Policy Learning</h5>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                            Q-Learning is "Off-Policy" because it updates its values assuming it will take the **best possible** action in the future ($\max Q$), even if the agent is currently acting randomly to explore.
+                            Q-Learning is "Off-Policy" because it updates its values assuming it will take the **best possible** action in the future (<InlineMath math="\max Q" />), even if the agent is currently acting randomly to explore.
                         </p>
                     </div>
                 </div>

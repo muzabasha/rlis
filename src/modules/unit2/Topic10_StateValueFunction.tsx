@@ -32,6 +32,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { ValueDistributionVis, BellmanConvergenceVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -242,17 +243,17 @@ export default function Topic10_StateValueFunction() {
                                 They might be down a knight, but they know that from this exact <strong>State</strong>, they have a forced checkmate in 5 moves. Therefore, the <strong>Value</strong> of that specific state is extremely high.
                             </p>
                             <p>
-                                In an MDP, the <strong>State Value Function $v_\pi(s)$</strong> is the mathematical equivalent of the Grandmaster's intuition. It tells the agent exactly how much total reward it can expect to collect from now on, starting from state $s$.
+                                In an MDP, the <strong>State Value Function <InlineMath math="v_\pi(s)" /></strong> is the mathematical equivalent of the Grandmaster's intuition. It tells the agent exactly how much total reward it can expect to collect from now on, starting from state <InlineMath math="s" />.
                             </p>
                         </div>
                     </div>
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="Subject to Behavior">
-                            The value of a chess position is only high if you actually know how to play the winning moves. The value depends entirely on your <strong>Policy ($\pi$)</strong>.
+                            The value of a chess position is only high if you actually know how to play the winning moves. The value depends entirely on your <strong>Policy (<InlineMath math="\pi" />)</strong>.
                         </InfoCard>
                         <InfoCard type="tip" title="The Subscript">
-                            This is why it is written as $v_\pi(s)$. The $\pi$ subscript reminds us: "The value of state $s$ <em>assuming we follow policy $\pi$</em>."
+                            This is why it is written as <InlineMath math="v_\pi(s)" />. The <InlineMath math="\pi" /> subscript reminds us: "The value of state <InlineMath math="s" /> <em>assuming we follow policy <InlineMath math="\pi" /></em>."
                         </InfoCard>
                     </div>
                 </div>
@@ -505,13 +506,13 @@ export default function Topic10_StateValueFunction() {
                     <div className="card p-6 border-l-4 border-indigo-500 bg-indigo-50/30 dark:bg-indigo-900/10">
                         <h5 className="font-bold mb-2 flex items-center gap-2"><Swords size={18} /> Stockfish vs AlphaZero</h5>
                         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Traditional chess engines (like early Stockfish) used hand-crafted heuristics to calculate $V(s)$. They assigned static points (Queen = 9, Pawn = 1) and added them up.
+                            Traditional chess engines (like early Stockfish) used hand-crafted heuristics to calculate <InlineMath math="V(s)" />. They assigned static points (Queen = 9, Pawn = 1) and added them up.
                         </p>
                     </div>
 
                     <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 shadow-sm">
                         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                            <strong>AlphaZero</strong> revolutionized AI by using Reinforcement Learning to learn $V(s)$ from scratch through self-play. It uses a Deep Neural Network to output a single scalar value between -1 and 1 representing $v_\pi(s)$.
+                            <strong>AlphaZero</strong> revolutionized AI by using Reinforcement Learning to learn <InlineMath math="V(s)" /> from scratch through self-play. It uses a Deep Neural Network to output a single scalar value between -1 and 1 representing <InlineMath math="v_\pi(s)" />.
                         </p>
                         <div className="p-4 bg-slate-900 rounded-xl text-center">
                             <span className="font-mono text-emerald-400 font-bold text-lg">Value Output: +0.87</span>

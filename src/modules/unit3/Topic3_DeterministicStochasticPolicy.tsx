@@ -32,6 +32,7 @@ import {
 
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -248,7 +249,7 @@ export default function Topic3_DeterministicStochasticPolicy() {
                             For any Markov Decision Process, there always exists at least one **Deterministic Optimal Policy**.
                         </InfoCard>
                         <InfoCard type="tip" title="Exploration">
-                            We often use stochastic policies (like $\epsilon$-greedy) during training to discover better paths.
+                            We often use stochastic policies (like <InlineMath math="\epsilon" />-greedy) during training to discover better paths.
                         </InfoCard>
                     </div>
                 </div>
@@ -502,7 +503,7 @@ graph LR
                     <div className="card p-6 bg-indigo-50/30 dark:bg-indigo-900/10 border-none">
                         <h5 className="font-bold mb-2 flex items-center gap-2"><Target size={18} /> The Mission</h5>
                         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            You are building a robot to sort trash. Most of the time, it should use the "Best" strategy it knows (Deterministic). But 5% of the time ($\epsilon$), it should try a random move (Stochastic) to see if there's a faster way to sort.
+                            You are building a robot to sort trash. Most of the time, it should use the "Best" strategy it knows (Deterministic). But 5% of the time (<InlineMath math="\epsilon" />), it should try a random move (Stochastic) to see if there's a faster way to sort.
                         </p>
                     </div>
 

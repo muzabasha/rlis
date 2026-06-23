@@ -36,6 +36,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { DiscountCurveVis, RecursiveReturnVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -167,8 +168,8 @@ function ReturnCalculatorLab() {
                     <thead className="text-[10px] text-slate-400 uppercase bg-slate-100 dark:bg-slate-800 rounded-t-lg">
                         <tr>
                             <th className="px-4 py-3 rounded-tl-lg">Time Step</th>
-                            <th className="px-4 py-3">Original Reward ($R$)</th>
-                            <th className="px-4 py-3">Discount ($\gamma^k$)</th>
+                            <th className="px-4 py-3">Original Reward (<InlineMath math="R" />)</th>
+                            <th className="px-4 py-3">Discount (<InlineMath math="\gamma^k" />)</th>
                             <th className="px-4 py-3 rounded-tr-lg">Present Value</th>
                         </tr>
                     </thead>
@@ -520,17 +521,17 @@ export default function Topic8_RewardAndReturns() {
                     <div className="card p-6 bg-indigo-50/30 dark:bg-indigo-900/10 border-none">
                         <h5 className="font-bold mb-2 flex items-center gap-2"><Target size={18} /> Net Present Value (NPV)</h5>
                         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            The RL equation for Return ($G_t$) is mathematically identical to the economic concept of <strong>Net Present Value</strong> used in finance.
+                            The RL equation for Return (<InlineMath math="G_t" />) is mathematically identical to the economic concept of <strong>Net Present Value</strong> used in finance.
                         </p>
                     </div>
 
                     <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100">
                         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                            If someone offers you $100 today or $100 in ten years, you take it today. Due to inflation and investment opportunities, money in the future is worth less than money now.
+                            If someone offers you <InlineMath math="100 today or " />100 in ten years, you take it today. Due to inflation and investment opportunities, money in the future is worth less than money now.
                         </p>
                         <div className="flex items-center gap-4 text-sm font-bold">
                             <div className="flex-1 p-3 bg-red-50 text-red-600 rounded-lg text-center border border-red-100">
-                                $100 in 10 years (with 5% inflation) = $61 Today
+                                <InlineMath math="100 in 10 years (with 5% inflation) = " />61 Today
                             </div>
                             <div className="flex-1 p-3 bg-emerald-50 text-emerald-600 rounded-lg text-center border border-emerald-100">
                                 {"RL Translation: $R_{t+10} = 100$, $\\gamma = 0.95$"}
@@ -581,7 +582,7 @@ export default function Topic8_RewardAndReturns() {
                             'γ=0.1 makes the agent myopic — it mostly cares about the next step']}
                         challenges={challenges} notebook={notebook} logs={logs}>
                         <p className="text-sm text-slate-600 dark:text-slate-400">
-                            A massive treasure of 500 points awaits the agent 5 steps into the future. Adjust the discount factor ($\gamma$) to see how much that distant treasure is "worth" to the agent right now at $t=0$.
+                            A massive treasure of 500 points awaits the agent 5 steps into the future. Adjust the discount factor (<InlineMath math="\gamma" />) to see how much that distant treasure is "worth" to the agent right now at <InlineMath math="t=0" />.
                         </p>
                         <ReturnCalculatorLab />
                     </VirtualLabShell>

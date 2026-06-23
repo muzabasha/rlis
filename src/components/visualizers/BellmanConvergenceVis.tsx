@@ -118,7 +118,7 @@ export default function BellmanConvergenceVis({
             <div className="space-y-3">
                 <div className="flex gap-2">
                     <button
-                        onClick={() => { if (!running) { running ? setRunning(false) : setRunning(true); } else { setRunning(false); } }}
+                        onClick={() => setRunning(!running)}
                         className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg bg-violet-500 text-white hover:bg-violet-600 transition-colors"
                     >
                         {running ? <><Pause className="w-3 h-3" /> Pause</> : <><Play className="w-3 h-3" /> Run</>}

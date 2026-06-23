@@ -45,6 +45,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { EpsilonGreedyVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -221,7 +222,7 @@ export default function Topic15_EpsilonGreedy() {
                                 But what if there's a 10/10 sushi place around the corner that you haven't tried? If you only eat pizza, you will <strong>never</strong> discover it.
                             </p>
                             <p>
-                                <strong>$\epsilon$-Greedy</strong> is like saying: "90% of the time, I'll go to my favorite pizza place. But 10% of the time, I'll roll a die and try somewhere completely random."
+                                <strong><InlineMath math="\epsilon" />-Greedy</strong> is like saying: "90% of the time, I'll go to my favorite pizza place. But 10% of the time, I'll roll a die and try somewhere completely random."
                             </p>
                             <p>
                                 In Monte Carlo methods, this is vital. Since MC learns from complete episodes, if your policy is too "greedy," it might never explore certain areas of the map, and your value estimates will be forever wrong.
@@ -347,7 +348,7 @@ export default function Topic15_EpsilonGreedy() {
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><TrendingUp size={16} /> Epsilon Decay</h5>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                            In practice, we often start with a high $\epsilon$ (e.g., 1.0) to explore everything, and then gradually <strong>decay</strong> it towards a small value (e.g., 0.01) as the agent becomes more confident in its estimates.
+                            In practice, we often start with a high <InlineMath math="\epsilon" /> (e.g., 1.0) to explore everything, and then gradually <strong>decay</strong> it towards a small value (e.g., 0.01) as the agent becomes more confident in its estimates.
                         </p>
                     </div>
                 </div>
@@ -531,7 +532,7 @@ export default function Topic15_EpsilonGreedy() {
                 'At ε=1, all actions are equally likely']}
                  challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Adjust the $\epsilon$ slider to see how the mathematical probability is distributed across actions. Watch how the "Exploration Budget" grows and shrinks.
+                        Adjust the <InlineMath math="\epsilon" /> slider to see how the mathematical probability is distributed across actions. Watch how the "Exploration Budget" grows and shrinks.
                     </p>
                     <EpsilonProbabilityVisualizer />
                 </VirtualLabShell>

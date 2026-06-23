@@ -50,6 +50,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { MCIncrementalVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -147,7 +148,7 @@ export default function Topic13_MCPrediction() {
                             Prediction = Policy Evaluation (Finding V). Control = Policy Improvement (Finding the best π).
                         </InfoCard>
                         <InfoCard type="tip" title="Stationary Policy">
-                            In MC Prediction, the policy $\pi$ must remain the same throughout the entire simulation for the average to be meaningful.
+                            In MC Prediction, the policy <InlineMath math="\pi" /> must remain the same throughout the entire simulation for the average to be meaningful.
                         </InfoCard>
                     </div>
                 </div>
@@ -248,7 +249,7 @@ export default function Topic13_MCPrediction() {
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Constant Alpha Update</h5>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                            In changing environments, we often replace $1/N(s)$ with a constant $\alpha$. This makes the agent "forget" old experience and prioritize recent samples.
+                            In changing environments, we often replace <InlineMath math="1/N(s)" /> with a constant <InlineMath math="\alpha" />. This makes the agent "forget" old experience and prioritize recent samples.
                         </p>
                     </div>
                 </div>
@@ -434,7 +435,7 @@ export default function Topic13_MCPrediction() {
                 'Compare estimates with the true value computed by Dynamic Programming']}
                  challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Select a policy and generate episode samples to see how the predicted value $V(s)$ changes. Notice how **Risky** policies cause higher variance in the short term but eventually settle.
+                        Select a policy and generate episode samples to see how the predicted value <InlineMath math="V(s)" /> changes. Notice how **Risky** policies cause higher variance in the short term but eventually settle.
                     </p>
                     <MCPredictionLab />
                 </VirtualLabShell>

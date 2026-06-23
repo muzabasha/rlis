@@ -38,6 +38,7 @@ import {
 
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -106,7 +107,7 @@ function BellmanBackupLab() {
                 
                 {/* Successor States */}
                 <div className="w-full md:w-1/2 space-y-4">
-                    <h5 className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Successor States $V(s')$</h5>
+                    <h5 className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Successor States <InlineMath math="V(s')" /></h5>
                     <div className="space-y-3">
                         {nextValues.map((v, i) => (
                             <div key={i} className="flex items-center gap-4 bg-slate-50 dark:bg-slate-900 p-3 rounded-2xl border border-slate-100">
@@ -145,7 +146,7 @@ function BellmanBackupLab() {
 
                     <div className="p-4 bg-slate-900 rounded-2xl text-white text-[10px] font-mono space-y-1 z-10">
                         <div className="text-primary-400"># The Equation:</div>
-                        <div>$V(s) = R + \gamma \sum P(s')V(s')$</div>
+                        <div><InlineMath math="V(s) = R + \gamma \sum P(s')V(s')" /></div>
                         <div>$V(s) = {reward} + {gamma} \times ({probs[0]} \cdot {nextValues[0]} + {probs[1]} \cdot {nextValues[1]} + {probs[2]} \cdot {nextValues[2]})$</div>
                     </div>
                 </div>
@@ -153,7 +154,7 @@ function BellmanBackupLab() {
 
             <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl space-y-4">
                 <div className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase">
-                    <span>Discount Factor ($\gamma$)</span>
+                    <span>Discount Factor (<InlineMath math="\gamma" />)</span>
                     <span className="text-primary-600 font-black">{gamma.toFixed(2)}</span>
                 </div>
                 <input 
@@ -525,7 +526,7 @@ export default function Topic4_BellmanEquationValue() {
                 'Iterating the Bellman equation (Value Iteration) converges to V*']}
                  challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        In this lab, you act as the Bellman Equation. You have one current state and three possible successor states ($s'_1, s'_2, s'_3$). Change the values of the next states or the discount factor to see how the "Current Value" updates automatically.
+                        In this lab, you act as the Bellman Equation. You have one current state and three possible successor states (<InlineMath math="s'_1, s'_2, s'_3" />). Change the values of the next states or the discount factor to see how the "Current Value" updates automatically.
                     </p>
                     <BellmanBackupLab />
                 </VirtualLabShell>

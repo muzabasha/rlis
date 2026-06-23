@@ -41,6 +41,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { StationaryDistVis, MatrixPowerVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -280,10 +281,10 @@ export default function Topic4_MarkovChainAnalysis() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="The Steady State">
-                            In a stationary distribution, the probability of being in a state doesn't change from step $t$ to $t+1$.
+                            In a stationary distribution, the probability of being in a state doesn't change from step <InlineMath math="t" /> to <InlineMath math="t+1" />.
                         </InfoCard>
                         <InfoCard type="tip" title="n-Step Transition">
-                            To find out where we are after $n$ steps, we multiply the transition matrix by itself $n$ times ($P^n$).
+                            To find out where we are after <InlineMath math="n" /> steps, we multiply the transition matrix by itself <InlineMath math="n" /> times (<InlineMath math="P^n" />).
                         </InfoCard>
                     </div>
                 </div>

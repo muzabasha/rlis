@@ -35,6 +35,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { TransitionProbVis, ExpectedRewardVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -130,7 +131,7 @@ function TransitionMatrixExplorer() {
                         </div>
                     ))}
                     <InfoCard type="info" title="The Probability Constraint">
-                        The sum of probabilities for all possible next states $s'$ must always equal 1.0.
+                        The sum of probabilities for all possible next states <InlineMath math="s'" /> must always equal 1.0.
                     </InfoCard>
                 </div>
 
@@ -234,7 +235,7 @@ export default function Topic2_FormalMDPDefinition() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="The Tuple Hierarchy">
-                            Some define MDP as a 4-tuple $(S, A, P, R)$, assuming $\gamma$ is external, while others use the 5-tuple $(S, A, P, R, \gamma)$.
+                            Some define MDP as a 4-tuple <InlineMath math="(S, A, P, R)" />, assuming <InlineMath math="\gamma" /> is external, while others use the 5-tuple <InlineMath math="(S, A, P, R, \gamma)" />.
                         </InfoCard>
                         <InfoCard type="tip" title="State Transitions">
                             Transitions are stochastic (probabilistic), not deterministic.

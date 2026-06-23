@@ -41,6 +41,7 @@ import {
 
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -333,14 +334,14 @@ export default function Topic7_BackupDiagram() {
                             <p className="text-xs text-slate-400">
                                 Shows the expectation over actions and next states. All branches are averaged.
                             </p>
-                            <div className="text-sm font-mono text-white">$V(s) = \sum \pi \sum p [R + \gamma V']$</div>
+                            <div className="text-sm font-mono text-white"><InlineMath math="V(s) = \sum \pi \sum p [R + \gamma V']" /></div>
                         </div>
                         <div className="p-6 bg-slate-900 rounded-3xl text-white space-y-4">
                             <h5 className="font-bold text-indigo-400 flex items-center gap-2"><Trophy size={16} /> The v* Diagram</h5>
                             <p className="text-xs text-slate-400">
                                 Shows the MAX over actions. Only the best branch contributes to the root.
                             </p>
-                            <div className="text-sm font-mono text-white">$V(s) = \max_a \sum p [R + \gamma V']$</div>
+                            <div className="text-sm font-mono text-white"><InlineMath math="V(s) = \max_a \sum p [R + \gamma V']" /></div>
                         </div>
                     </div>
 

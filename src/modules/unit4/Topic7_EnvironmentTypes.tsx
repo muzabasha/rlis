@@ -49,6 +49,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -326,7 +327,7 @@ export default function Topic7_EnvironmentTypes() {
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Discrete vs. Continuous Math</h5>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                            **Discrete** environments use Summation ($\sum$); **Continuous** environments require Integration ($\int$) and Calculus to model.
+                            **Discrete** environments use Summation (<InlineMath math="\sum" />); **Continuous** environments require Integration (<InlineMath math="\int" />) and Calculus to model.
                         </p>
                     </div>
                 </div>

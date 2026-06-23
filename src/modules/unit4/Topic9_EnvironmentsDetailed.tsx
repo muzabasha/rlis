@@ -51,6 +51,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { LearningUpdateVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -341,7 +342,7 @@ export default function Topic9_EnvironmentsDetailed() {
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> The Performance Element</h5>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                            The **Performance Element** is what actually acts in the environment. Its function is $a = \pi(s; \theta)$. The learning agent's goal is to find the best $\theta$.
+                            The **Performance Element** is what actually acts in the environment. Its function is <InlineMath math="a = \pi(s; \theta)" />. The learning agent's goal is to find the best <InlineMath math="\theta" />.
                         </p>
                     </div>
                 </div>

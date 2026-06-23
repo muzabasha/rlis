@@ -36,6 +36,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { ValueDistributionVis, BellmanConvergenceVis, VFromQVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -102,7 +103,7 @@ function ActionValueGrid() {
                         The Q-Value decision
                     </h4>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        In state $s_4$, you have 4 possible actions. Each has a different <strong>Q-Value</strong>. 
+                        In state <InlineMath math="s_4" />, you have 4 possible actions. Each has a different <strong>Q-Value</strong>. 
                         Which one would you pick?
                     </p>
                     <div className="grid grid-cols-2 gap-3">
@@ -237,10 +238,10 @@ export default function Topic11_ActionValueFunction() {
                                 Knowing "where you are" is good, but knowing "what to do" is better. 
                             </p>
                             <p>
-                                Imagine you are in a burning building. The State Value $V(s)$ might tell you that being in this room is bad (-100). But that doesn't help you escape. 
+                                Imagine you are in a burning building. The State Value <InlineMath math="V(s)" /> might tell you that being in this room is bad (-100). But that doesn't help you escape. 
                             </p>
                             <p>
-                                The <strong>Action Value Function $q_\pi(s, a)$</strong>, often called the <strong>Q-Value</strong>, tells you: "If you are in this burning room, and you take the <em>Action</em> of jumping out the window, how much reward will you get?" vs "If you take the <em>Action</em> of using the fire extinguisher?"
+                                The <strong>Action Value Function <InlineMath math="q_\pi(s, a)" /></strong>, often called the <strong>Q-Value</strong>, tells you: "If you are in this burning room, and you take the <em>Action</em> of jumping out the window, how much reward will you get?" vs "If you take the <em>Action</em> of using the fire extinguisher?"
                             </p>
                             <p>
                                 Q-values allow the agent to rank its choices. Without Q-values, the agent is like a traveler who knows they are lost but doesn't know which path to take.
@@ -250,7 +251,7 @@ export default function Topic11_ActionValueFunction() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="The Action-Value Distinction">
-                            While $V(s)$ evaluates the <strong>State</strong>, $Q(s, a)$ evaluates the <strong>Interaction</strong> between the agent and the state.
+                            While <InlineMath math="V(s)" /> evaluates the <strong>State</strong>, <InlineMath math="Q(s, a)" /> evaluates the <strong>Interaction</strong> between the agent and the state.
                         </InfoCard>
                         <InfoCard type="tip" title="Foundation of Q-Learning">
                             The "Q" in Q-Learning stands for "Quality"—representing the quality of an action in a state.

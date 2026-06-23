@@ -34,6 +34,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { TransitionMatrixVis, ChapmanKolmogorovVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -290,7 +291,7 @@ export default function Topic6_MarkovMatrix() {
                             If an environment has N states, its transition matrix will always be an N × N square.
                         </InfoCard>
                         <InfoCard type="tip" title="Rows vs Columns">
-                            Row $i$, Column $j$ tells you the probability of jumping from state $i$ to state $j$.
+                            Row <InlineMath math="i" />, Column <InlineMath math="j" /> tells you the probability of jumping from state <InlineMath math="i" /> to state <InlineMath math="j" />.
                         </InfoCard>
                     </div>
                 </div>
@@ -627,7 +628,7 @@ export default function Topic6_MarkovMatrix() {
                             'As n→∞, P^n converges to the stationary distribution (for ergodic chains)']}
                         challenges={challenges} notebook={notebook} logs={logs}>
                         <p className="text-sm text-slate-600 dark:text-slate-400">
-                            Edit the 2x2 transition matrix below. As long as the rows sum to 1.0, you can increase the power $n$ to see the $P^n$ matrix. Notice how, at high powers, all rows become identical—revealing the Stationary Distribution!
+                            Edit the 2x2 transition matrix below. As long as the rows sum to 1.0, you can increase the power <InlineMath math="n" /> to see the <InlineMath math="P^n" /> matrix. Notice how, at high powers, all rows become identical—revealing the Stationary Distribution!
                         </p>
                         <MatrixPowerLab />
                     </VirtualLabShell>

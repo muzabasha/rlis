@@ -47,6 +47,7 @@ import {
 
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -369,7 +370,7 @@ export default function Topic8_QLearningOverview() {
                     <div className="grid lg:grid-cols-3 gap-4">
                         <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
                             <h5 className="font-bold text-[10px] text-primary-500 uppercase mb-2">Model-Free</h5>
-                            <p className="text-[10px] text-slate-500">The agent doesn't need to know $p(s', r|s, a)$. It learns solely from samples.</p>
+                            <p className="text-[10px] text-slate-500">The agent doesn't need to know <InlineMath math="p(s', r|s, a)" />. It learns solely from samples.</p>
                         </div>
                         <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
                             <h5 className="font-bold text-[10px] text-emerald-500 uppercase mb-2">Off-Policy</h5>

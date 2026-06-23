@@ -36,6 +36,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { BellmanConvergenceVis, MRPMatrixVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -552,14 +553,14 @@ export default function Topic9_MarkovRewardProcess() {
 
                     <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 text-sm text-slate-600 dark:text-slate-400">
                         <p className="mb-4">
-                            Google fixed this by introducing a <strong>Discount Factor ($\gamma = 0.85$)</strong>.
+                            Google fixed this by introducing a <strong>Discount Factor (<InlineMath math="\gamma = 0.85" />)</strong>.
                         </p>
                         <ul className="list-disc pl-4 space-y-2">
-                            <li>At any given step, the web surfer has an 85% chance of following a link ($\gamma$).</li>
-                            <li>They have a 15% chance of getting bored and "teleporting" to a completely random page ($1 - \gamma$).</li>
+                            <li>At any given step, the web surfer has an 85% chance of following a link (<InlineMath math="\gamma" />).</li>
+                            <li>They have a 15% chance of getting bored and "teleporting" to a completely random page (<InlineMath math="1 - \gamma" />).</li>
                         </ul>
                         <p className="mt-4 italic font-bold text-indigo-500">
-                            By adding $\gamma$, Google transformed the internet from a standard Markov Chain into a Markov Reward Process!
+                            By adding <InlineMath math="\gamma" />, Google transformed the internet from a standard Markov Chain into a Markov Reward Process!
                         </p>
                     </div>
                 </div>

@@ -39,6 +39,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { BellmanOptimalityVis, OptimalPolicyVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -112,11 +113,11 @@ function PolicyLab() {
                         Find the Optimal Strategy
                     </h4>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Click each cell to change the agent's action. Your goal is to find the <strong>Optimal Policy ($\pi^*$)</strong> that leads every state to the Goal in the minimum steps.
+                        Click each cell to change the agent's action. Your goal is to find the <strong>Optimal Policy (<InlineMath math="\pi^*" />)</strong> that leads every state to the Goal in the minimum steps.
                     </p>
                     <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-100 dark:border-amber-900/30">
                         <p className="text-xs text-amber-800 dark:text-amber-200 font-medium">
-                            Hint: The agent starts at $s_6$ (bottom-left) and the Goal is at $s_2$ (top-right).
+                            Hint: The agent starts at <InlineMath math="s_6" /> (bottom-left) and the Goal is at <InlineMath math="s_2" /> (top-right).
                         </p>
                     </div>
                 </div>
@@ -226,7 +227,7 @@ export default function Topic12_OptimalPolicyMDP() {
                                 In every Reinforcement Learning problem, there exists a "perfect" way to behave.
                             </p>
                             <p>
-                                Think of a GPS navigation system. There might be 1,000 ways to get to your destination, but there is usually one path that is the fastest. That "Fastest Path" for every possible location is the <strong>Optimal Policy ($\pi^*$)</strong>.
+                                Think of a GPS navigation system. There might be 1,000 ways to get to your destination, but there is usually one path that is the fastest. That "Fastest Path" for every possible location is the <strong>Optimal Policy (<InlineMath math="\pi^*" />)</strong>.
                             </p>
                             <p>
                                 Finding this policy is the "Holy Grail" of RL. We don't just want a policy that works; we want the one that is mathematically impossible to beat.

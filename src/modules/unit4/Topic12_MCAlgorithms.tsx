@@ -50,6 +50,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { MCFirstEveryVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -263,7 +264,7 @@ export default function Topic12_MCAlgorithms() {
                     <div className="p-6 bg-slate-900 rounded-3xl text-white">
                         <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Convergence Reality</h5>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                            As the number of episodes $k \to \infty$, both methods are guaranteed to converge to $v_\pi(s)$. In modern deep RL, variations of Every-Visit are the most common.
+                            As the number of episodes <InlineMath math="k \to \infty" />, both methods are guaranteed to converge to <InlineMath math="v_\pi(s)" />. In modern deep RL, variations of Every-Visit are the most common.
                         </p>
                     </div>
                 </div>

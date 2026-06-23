@@ -152,7 +152,7 @@ export default function TopicPage() {
         const id = setTimeout(() => {
             const el = document.getElementById('topic-content');
             if (el) {
-                // @ts-ignore — no TS types for auto-render
+                // @ts-expect-error — no TS types for auto-render
                 import('katex/dist/contrib/auto-render.mjs').then(mod => {
                     mod.default(el, {
                         delimiters: [{ left: '$', right: '$', display: false }],

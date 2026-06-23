@@ -37,6 +37,7 @@ import {
 
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -212,7 +213,7 @@ export default function Topic1_PolicyInMDP() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="The Goal of RL">
-                            The ultimate goal of any Reinforcement Learning algorithm is to find the **Optimal Policy** ($\pi^*$).
+                            The ultimate goal of any Reinforcement Learning algorithm is to find the **Optimal Policy** (<InlineMath math="\pi^*" />).
                         </InfoCard>
                         <InfoCard type="tip" title="State-to-Action">
                             A policy is a mapping. It takes a state as input and returns an action (or a probability distribution over actions).
@@ -328,7 +329,7 @@ export default function Topic1_PolicyInMDP() {
                             <p className="text-xs text-slate-400 leading-relaxed">
                                 A special case where there is no randomness. For every state, there is exactly one action with probability 1.0.
                                 <br/><br/>
-                                <span className="text-sm font-mono text-white">$a = \pi(s)$</span>
+                                <span className="text-sm font-mono text-white"><InlineMath math="a = \pi(s)" /></span>
                             </p>
                         </div>
                         <div className="p-6 bg-slate-900 rounded-3xl text-white">

@@ -51,6 +51,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { OptimalPolicyVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -145,10 +146,10 @@ export default function Topic14_MCControl() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="The Q-Value Bridge">
-                            In MC Control, we estimate $Q(s,a)$ instead of $V(s)$. Why? Because $Q$ tells us the value of specific actions, making it easy to choose the "Greedy" best one.
+                            In MC Control, we estimate <InlineMath math="Q(s,a)" /> instead of <InlineMath math="V(s)" />. Why? Because <InlineMath math="Q" /> tells us the value of specific actions, making it easy to choose the "Greedy" best one.
                         </InfoCard>
                         <InfoCard type="tip" title="No Transition Math">
-                            Because we use $Q$ and sample experience, we still don't need a model of the environment to improve our policy.
+                            Because we use <InlineMath math="Q" /> and sample experience, we still don't need a model of the environment to improve our policy.
                         </InfoCard>
                     </div>
                 </div>
@@ -432,7 +433,7 @@ export default function Topic14_MCControl() {
                 'Run for many episodes to reach near-optimal policy']}
                  challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Adjust parameters like $\epsilon$ and $\gamma$ to see how they affect the agent's learning speed and final performance. Watch the Q-table update in real-time after each episode!
+                        Adjust parameters like <InlineMath math="\epsilon" /> and <InlineMath math="\gamma" /> to see how they affect the agent's learning speed and final performance. Watch the Q-table update in real-time after each episode!
                     </p>
                     <MonteCarloLab />
                 </VirtualLabShell>

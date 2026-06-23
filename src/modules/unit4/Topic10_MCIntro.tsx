@@ -47,6 +47,7 @@ import {
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
 import { RecursiveReturnVis, ValueDistributionVis } from '../../components/visualizers';
+import { InlineMath } from 'react-katex';
 
 
 // ─── Experiential Learning Pre-seeds for Topic Virtual Lab ──────────────────
@@ -144,7 +145,7 @@ export default function Topic10_MCIntro() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="The No-Model Edge">
-                            MC doesn't need to know how the environment works (No $p(s',r|s,a)$). It only needs to observe the results.
+                            MC doesn't need to know how the environment works (No <InlineMath math="p(s',r|s,a)" />). It only needs to observe the results.
                         </InfoCard>
                         <InfoCard type="tip" title="Episode Completion">
                             Unlike TD learning, MC <strong>must</strong> wait until the episode is over before it can learn anything.
