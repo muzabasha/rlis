@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import 'katex/dist/katex.min.css';
-import { InlineMath, BlockMath } from 'react-katex';
+import katex from 'katex';
 import { ChevronDown, ChevronUp, Info, BookOpen } from 'lucide-react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -46,7 +46,8 @@ const ACCENT_MAP = {
 
 function SafeBlock({ math }: { math: string }) {
     try {
-        return <BlockMath math={math} />;
+        const html = katex.renderToString(math, { displayMode: true, throwOnError: false });
+        return <span dangerouslySetInnerHTML={{ __html: html }} />;
     } catch {
         return <code className="text-red-500 text-sm">{math}</code>;
     }
@@ -54,7 +55,8 @@ function SafeBlock({ math }: { math: string }) {
 
 function SafeInline({ math }: { math: string }) {
     try {
-        return <InlineMath math={math} />;
+        const html = katex.renderToString(math, { displayMode: false, throwOnError: false });
+        return <span dangerouslySetInnerHTML={{ __html: html }} />;
     } catch {
         return <code className="text-red-500 text-xs">{math}</code>;
     }

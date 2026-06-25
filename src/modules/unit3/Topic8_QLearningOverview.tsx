@@ -340,7 +340,7 @@ export default function Topic8_QLearningOverview() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="Q(s, a) \\leftarrow Q(s, a) + \\alpha [r + \\gamma \\max_{a'} Q(s', a') - Q(s, a)]"
                         label="The Q-Learning Update Equation"
@@ -366,21 +366,6 @@ export default function Topic8_QLearningOverview() {
                         }}
                     />
                     <SARSAQLearningVis />
-
-                    <div className="grid lg:grid-cols-3 gap-4">
-                        <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
-                            <h5 className="font-bold text-[10px] text-primary-500 uppercase mb-2">Model-Free</h5>
-                            <p className="text-[10px] text-slate-500">The agent doesn't need to know <InlineMath math="p(s', r|s, a)" />. It learns solely from samples.</p>
-                        </div>
-                        <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
-                            <h5 className="font-bold text-[10px] text-emerald-500 uppercase mb-2">Off-Policy</h5>
-                            <p className="text-[10px] text-slate-500">The agent learns about the optimal policy while potentially following a random one.</p>
-                        </div>
-                        <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
-                            <h5 className="font-bold text-[10px] text-amber-500 uppercase mb-2">TD Learning</h5>
-                            <p className="text-[10px] text-slate-500">It updates its guesses based on other guesses (bootstrapping), not waiting for the end.</p>
-                        </div>
-                    </div>
                 </div>
             </SectionWrapper>
 

@@ -361,29 +361,11 @@ export default function Topic5_RecyclingRobotCase() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="p-6 bg-slate-900 rounded-3xl text-white space-y-4">
-                            <h5 className="font-bold text-primary-400 flex items-center gap-2"><Binary size={16} /> {"State Space $\\mathcal{S}$"}</h5>
-                            <ul className="text-xs space-y-2 text-slate-400">
-                                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> {"$s_1 = \text{High Energy}$"}</li>
-                                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-red-500" /> {"$s_2 = \text{Low Energy}$"}</li>
-                            </ul>
-                        </div>
-                        <div className="p-6 bg-slate-900 rounded-3xl text-white space-y-4">
-                            <h5 className="font-bold text-indigo-400 flex items-center gap-2"><Zap size={16} /> {"Action Space $\\mathcal{A}$"}</h5>
-                            <ul className="text-xs space-y-2 text-slate-400">
-                                <li>{"$a_1 = \text{Search}$"}</li>
-                                <li>{"$a_2 = \text{Wait}$"}</li>
-                                <li>{"$a_3 = \text{Recharge (only in Low)}$"}</li>
-                            </ul>
-                        </div>
-                    </div>
-
+                <div className="space-y-6">
                     <MathBlock 
                         formula="p(s_{low} | s_{high}, \\text{search}) = 1 - \\alpha"
                         label="Transition Probability"
-                        accent="violet"
+                        accent="blue"
                         explanation="The probability that searching in High energy state results in a Low energy state — modeling battery drain during active search."
                         interpretation="α is the probability that the battery remains High after searching. So (1-α) is the risk of dropping to Low. This stochastic transition is what makes the policy decision interesting and non-trivial."
                         motivation="By making transitions probabilistic, we force the agent to reason about risk. A high-reward action (Search) also carries battery drain risk — this trade-off is the core of the recycling robot problem."

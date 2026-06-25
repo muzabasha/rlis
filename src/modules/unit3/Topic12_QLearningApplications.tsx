@@ -341,10 +341,11 @@ export default function Topic12_QLearningApplications() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="\\mathcal{R}_{\\text{Business}} = \\text{Revenue} - \\text{Cost} - \\text{Penalty}"
                         label="The Business Reward Function"
+                        accent="blue"
                         explanation="How we translate company goals into a reward signal."
                         interpretation="The agent doesn't understand 'Brand Loyalty' or 'Efficiency'; it only understands numbers. We must carefully design R so that maximizing it achieves the actual business goal."
                         motivation="Design errors in the reward function (Reward Hacking) can lead to agents that achieve high scores but destroy the system."
@@ -353,15 +354,6 @@ export default function Topic12_QLearningApplications() {
                         ]}
                     />
                     <ExpectedRewardVis />
-
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Convergence in Practice</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            In real-world applications, we rarely use a simple table. Instead, we use **Function Approximators** (Neural Networks) to map complex states to Q-values:
-                            <br/><br/>
-                            <span className="text-sm font-mono text-white">Q(s, a; \theta) \approx Q^*(s, a)</span>
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

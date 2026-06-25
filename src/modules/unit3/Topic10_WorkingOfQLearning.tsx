@@ -300,7 +300,7 @@ export default function Topic10_WorkingOfQLearning() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <div className="p-8 bg-slate-900 rounded-[2rem] text-white space-y-6 font-mono text-xs overflow-x-auto">
                         <div className="text-primary-400"># Pseudo-code for Q-Learning</div>
                         <div className="space-y-1">
@@ -319,6 +319,7 @@ export default function Topic10_WorkingOfQLearning() {
                     <MathBlock 
                         formula="\\delta_t = r_{t+1} + \\gamma \\max_a Q(s_{t+1}, a) - Q(s_t, a_t)"
                         label="The TD Error (\delta)"
+                        accent="blue"
                         explanation="The difference between the new target and the old estimate."
                         interpretation="$\delta$ is the 'Surprise' signal. If $\delta > 0$, the action was better than expected. If $\delta < 0$, it was worse."
                         motivation="This error signal is what drives the updates in both Q-Learning and Deep Q-Networks."

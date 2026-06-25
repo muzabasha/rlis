@@ -327,28 +327,11 @@ export default function Topic7_BackupDiagram() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="p-6 bg-slate-900 rounded-3xl text-white space-y-4">
-                            <h5 className="font-bold text-primary-400 flex items-center gap-2"><Binary size={16} /> The v_pi Diagram</h5>
-                            <p className="text-xs text-slate-400">
-                                Shows the expectation over actions and next states. All branches are averaged.
-                            </p>
-                            <div className="text-sm font-mono text-white"><InlineMath math="V(s) = \sum \pi \sum p [R + \gamma V']" /></div>
-                        </div>
-                        <div className="p-6 bg-slate-900 rounded-3xl text-white space-y-4">
-                            <h5 className="font-bold text-indigo-400 flex items-center gap-2"><Trophy size={16} /> The v* Diagram</h5>
-                            <p className="text-xs text-slate-400">
-                                Shows the MAX over actions. Only the best branch contributes to the root.
-                            </p>
-                            <div className="text-sm font-mono text-white"><InlineMath math="V(s) = \max_a \sum p [R + \gamma V']" /></div>
-                        </div>
-                    </div>
-
+                <div className="space-y-6">
                     <MathBlock 
                         formula="\\text{Value flow: } \\text{Successor } (s') \\xrightarrow{\\text{Backup}} \\text{Action } (a) \\xrightarrow{\\text{Backup}} \\text{State } (s)"
                         label="The Backup Sequence"
-                        accent="emerald"
+                        accent="violet"
                         explanation="How information travels up the backup tree: from leaf successor states, through action nodes, to the root state node."
                         interpretation="Each level of the tree represents a level of uncertainty or decision-making: successor states are averaged (by environment dynamics), action nodes are maximized (by policy), and the root state receives the backed-up value. This structure makes Bellman equations visual and tractable."
                         motivation="This mental model helps you understand why RL algorithms converge: each backup step propagates accurate value information one level up, and repeated backups eventually fill the entire value function with correct estimates."

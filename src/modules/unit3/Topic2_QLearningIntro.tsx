@@ -342,10 +342,11 @@ export default function Topic2_QLearningIntro() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="Q(s, a) \\leftarrow Q(s, a) + \\alpha \\left[ r + \\gamma \\max_{a'} Q(s', a') - Q(s, a) \\right]"
                         label="The Q-Learning Update Rule"
+                        accent="blue"
                         explanation="How the agent updates its knowledge after every step."
                         interpretation="The new Q-value is the old Q-value plus a fraction (alpha) of the 'Surprise' or 'Error' (Temporal Difference)."
                         motivation="This formula allows the agent to slowly shift its estimates toward the actual rewards it observes."
@@ -365,13 +366,6 @@ export default function Topic2_QLearningIntro() {
                         }}
                     />
                     <SARSAQLearningVis />
-
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Off-Policy Learning</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            Q-Learning is "Off-Policy" because it updates its values assuming it will take the **best possible** action in the future (<InlineMath math="\max Q" />), even if the agent is currently acting randomly to explore.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

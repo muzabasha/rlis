@@ -315,10 +315,11 @@ export default function Topic13_QLearningCaseStudies() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="G_t = \\sum_{k=0}^{\\infty} \\gamma^k R_{t+k+1}"
                         label="The Cumulative Goal (Return)"
+                        accent="blue"
                         explanation="Every case study boils down to maximizing this single variable: G."
                         interpretation="Whether the R represents 'Bottles Sold' or 'Megawatts Saved', the agent's math remains identical. It is always looking for the sum of future discounted rewards."
                         motivation="This mathematical abstraction is what makes RL 'General Intelligence'. The same formula that plays Mario can also manage a supply chain."
@@ -327,16 +328,6 @@ export default function Topic13_QLearningCaseStudies() {
                         ]}
                     />
                     <DiscountCurveVis />
-
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white flex items-center justify-between">
-                        <div className="space-y-1">
-                            <h5 className="font-bold text-primary-400 text-sm flex items-center gap-2"><Binary size={16} /> Algorithm: Q-Learning</h5>
-                            <p className="text-[10px] text-slate-400 italic">"The reliable workhorse of industrial control."</p>
-                        </div>
-                        <div className="px-4 py-2 bg-primary-500/20 border border-primary-500/50 rounded-xl text-[10px] font-bold text-primary-400">
-                            Status: Production Ready
-                        </div>
-                    </div>
                 </div>
             </SectionWrapper>
 

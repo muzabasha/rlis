@@ -299,10 +299,11 @@ export default function Topic1_PolicyInMDP() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="\\pi(a|s) = \\mathbb{P}[A_t = a \\mid S_t = s]"
                         label="The Policy Function"
+                        accent="blue"
                         explanation="The probability of taking action a given that the agent is in state s."
                         interpretation="A policy completely defines the behavior of an agent. It is stationary if it does not depend on time t."
                         motivation="By treating policy as a probability distribution, we allow the agent to explore and handle uncertainty in its own decision-making process."
@@ -322,23 +323,6 @@ export default function Topic1_PolicyInMDP() {
                         }}
                     />
                     <PolicyVis />
-
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                            <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Deterministic Policy</h5>
-                            <p className="text-xs text-slate-400 leading-relaxed">
-                                A special case where there is no randomness. For every state, there is exactly one action with probability 1.0.
-                                <br/><br/>
-                                <span className="text-sm font-mono text-white"><InlineMath math="a = \pi(s)" /></span>
-                            </p>
-                        </div>
-                        <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                            <h5 className="font-bold text-indigo-400 mb-2 flex items-center gap-2"><Zap size={16} /> Stochastic Policy</h5>
-                            <p className="text-xs text-slate-400 leading-relaxed">
-                                The agent chooses actions based on probabilities. This is essential for exploration and for games where being predictable is a disadvantage.
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </SectionWrapper>
 

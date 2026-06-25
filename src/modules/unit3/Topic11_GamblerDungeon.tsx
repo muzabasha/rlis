@@ -390,27 +390,11 @@ export default function Topic11_GamblerDungeon() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="p-6 bg-slate-900 rounded-3xl text-white space-y-4">
-                            <h5 className="font-bold text-primary-400 flex items-center gap-2"><Binary size={16} /> Reward Structure</h5>
-                            <ul className="text-xs space-y-2 text-slate-400">
-                                <li className="flex justify-between"><span>Gold Cell</span> <span className="text-emerald-500">+10</span></li>
-                                <li className="flex justify-between"><span>Lava Cell</span> <span className="text-red-500">-50</span></li>
-                                <li className="flex justify-between"><span>Exit Cell</span> <span className="text-primary-400">+100</span></li>
-                            </ul>
-                        </div>
-                        <div className="p-6 bg-slate-900 rounded-3xl text-white space-y-4">
-                            <h5 className="font-bold text-indigo-400 flex items-center gap-2"><Zap size={16} /> Convergence Goal</h5>
-                            <p className="text-xs text-slate-400 leading-relaxed">
-                                {"We want $Q(s, \\text{right})$ to represent the true proximity to the exit, accounting for both the gold rewards and the risk of the lava pit."}
-                            </p>
-                        </div>
-                    </div>
-
+                <div className="space-y-6">
                     <MathBlock 
                         formula="Q(s, a) \\approx \\mathbb{E} [r + \\gamma r' + \\gamma^2 r'' + \\dots]"
                         label="Long-term Quality"
+                        accent="blue"
                         explanation="The Q-value represents the sum of all future rewards from that point."
                         interpretation="In the dungeon, the Q-value of the square right before the exit will be nearly 100, while the square before the lava will be very low."
                         motivation="This allows the agent to make 'Safe' decisions today by looking at the 'Value' of tomorrow."

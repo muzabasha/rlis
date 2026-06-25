@@ -289,7 +289,7 @@ export default function Topic9_QLearningTerms() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="Q(s, a) \\leftarrow Q(s, a) + \\alpha \\underbrace{[r + \\gamma \\max_{a'} Q(s', a') - Q(s, a)]}_{\\text{TD Error}}"
                         label="The Q-Update Notation"

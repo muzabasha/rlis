@@ -17,7 +17,8 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "react-katex": ["src/components/topic/KaTeX.tsx"]
     }
   },
   "include": ["src"],

@@ -297,7 +297,7 @@ export default function Topic6_OptimalPolicyValue() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="v_*(s) = \\max_{a} \\sum_{s', r} p(s', r | s, a) [r + \\gamma v_*(s')]"
                         label="Bellman Optimality Equation for v*"

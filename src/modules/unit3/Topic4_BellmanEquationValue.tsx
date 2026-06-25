@@ -317,7 +317,7 @@ export default function Topic4_BellmanEquationValue() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="v_\\pi(s) = \\sum_a \\pi(a|s) \\sum_{s', r} p(s', r | s, a) \\left[ r + \\gamma v_\\pi(s') \\right]"
                         label="Bellman Expectation Equation for v_\pi"
@@ -343,15 +343,6 @@ export default function Topic4_BellmanEquationValue() {
                         }}
                     />
                     <BellmanConvergenceVis />
-
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Linear System</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            For a finite MDP with N states, this equation is actually a system of **N linear equations** with N unknowns. We can solve it exactly using matrix inversion:
-                            <br/><br/>
-                            <span className="text-sm font-mono text-white">v = (I - \gamma P_\pi)^{-1} R_\pi</span>
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

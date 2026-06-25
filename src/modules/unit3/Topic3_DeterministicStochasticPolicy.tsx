@@ -332,60 +332,54 @@ export default function Topic3_DeterministicStochasticPolicy() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <MathBlock 
-                            formula="a = \\pi(s)"
-                            label="Deterministic Policy"
-                            explanation="A direct mapping from state to action — no randomness involved."
-                            interpretation="For every state s, there is exactly one action a that will always be taken. The policy is a lookup table: input = state, output = action."
-                            motivation="Simplifies computation. The goal of most exploitation phases is to converge to a deterministic optimal policy π*."
-                            accent="blue"
-                            terms={[
-                                { term: 'a', name: 'Action', meaning: 'The single, fixed output of the policy for this state.', range: '\\mathcal{A}', example: 'Move North.' },
-                                { term: '\\pi(s)', name: 'Policy Function', meaning: 'The deterministic function mapping state s directly to action a.', range: '\\mathcal{A}', example: '\\pi(s_1) = \\text{Right}.' },
-                            ]}
-                            numericalExample={{
-                                setup: 'Agent in a 4-room maze. State s = Room 1.',
-                                steps: [
-                                    'Look up policy table: \\pi(Room\_1) = Go\_East',
-                                    'Agent always takes action East in Room 1',
-                                    'No dice roll or randomness — deterministic output'
-                                ],
-                                result: 'Agent moves East from Room 1 with 100% certainty every time.'
-                            }}
-                        />
+                <div className="space-y-6">
+                    <MathBlock 
+                        formula="a = \\pi(s)"
+                        label="Deterministic Policy"
+                        explanation="A direct mapping from state to action — no randomness involved."
+                        interpretation="For every state s, there is exactly one action a that will always be taken. The policy is a lookup table: input = state, output = action."
+                        motivation="Simplifies computation. The goal of most exploitation phases is to converge to a deterministic optimal policy π*."
+                        accent="blue"
+                        terms={[
+                            { term: 'a', name: 'Action', meaning: 'The single, fixed output of the policy for this state.', range: '\\mathcal{A}', example: 'Move North.' },
+                            { term: '\\pi(s)', name: 'Policy Function', meaning: 'The deterministic function mapping state s directly to action a.', range: '\\mathcal{A}', example: '\\pi(s_1) = \\text{Right}.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'Agent in a 4-room maze. State s = Room 1.',
+                            steps: [
+                                'Look up policy table: \\pi(Room\_1) = Go\_East',
+                                'Agent always takes action East in Room 1',
+                                'No dice roll or randomness — deterministic output'
+                            ],
+                            result: 'Agent moves East from Room 1 with 100% certainty every time.'
+                        }}
+                    />
 
-                        <MathBlock 
-                            formula="\\pi(a|s) \\in [0, 1]"
-                            label="Stochastic Policy"
-                            explanation="A probability distribution over all possible actions given a state — enables exploration."
-                            interpretation="The agent doesn't always take the same action. It samples from a probability distribution, choosing action A with some probability and action B with the rest."
-                            motivation="Essential for exploration and for games where being predictable is a strategic weakness (rock-paper-scissors)."
-                            accent="violet"
-                            terms={[
-                                { term: '\\pi(a|s)', name: 'Conditional Probability', meaning: 'The likelihood of choosing action a when in state s.', range: '[0, 1]', example: '0.7 for Action A, 0.3 for Action B.' },
-                                { term: '\\sum_a \\pi(a|s) = 1', name: 'Normalization', meaning: 'All action probabilities must sum to 1 — it is a valid probability distribution.', range: '[0,1]', example: '0.7 + 0.3 = 1.0.' },
-                            ]}
-                            numericalExample={{
-                                setup: 'In state s, agent can take 3 actions: Left, Right, Stay. Stochastic policy defined as \\pi(Left|s)=0.1, \\pi(Right|s)=0.7, \\pi(Stay|s)=0.2.',
-                                steps: [
-                                    'Agent draws a random number r from uniform[0, 1]',
-                                    'If r < 0.1: take Left. If 0.1 ≤ r < 0.8: take Right. If r ≥ 0.8: Stay',
-                                    'On average across 10 steps: ~1 Left, ~7 Right, ~2 Stay'
-                                ],
-                                result: 'Agent explores different actions while still preferring Right (70% probability).'
-                            }}
-                        />
-                    </div>
                     <PolicyVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Convergence Property</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            Most RL algorithms start with a highly **Stochastic** policy (to explore everything) and gradually "narrow down" to a **Deterministic** policy as they gain confidence in the best action.
-                        </p>
-                    </div>
+                    <MathBlock 
+                        formula="\\pi(a|s) \\in [0, 1]"
+                        label="Stochastic Policy"
+                        explanation="A probability distribution over all possible actions given a state — enables exploration."
+                        interpretation="The agent doesn't always take the same action. It samples from a probability distribution, choosing action A with some probability and action B with the rest."
+                        motivation="Essential for exploration and for games where being predictable is a strategic weakness (rock-paper-scissors)."
+                        accent="violet"
+                        terms={[
+                            { term: '\\pi(a|s)', name: 'Conditional Probability', meaning: 'The likelihood of choosing action a when in state s.', range: '[0, 1]', example: '0.7 for Action A, 0.3 for Action B.' },
+                            { term: '\\sum_a \\pi(a|s) = 1', name: 'Normalization', meaning: 'All action probabilities must sum to 1 — it is a valid probability distribution.', range: '[0,1]', example: '0.7 + 0.3 = 1.0.' },
+                        ]}
+                        numericalExample={{
+                            setup: 'In state s, agent can take 3 actions: Left, Right, Stay. Stochastic policy defined as \\pi(Left|s)=0.1, \\pi(Right|s)=0.7, \\pi(Stay|s)=0.2.',
+                            steps: [
+                                'Agent draws a random number r from uniform[0, 1]',
+                                'If r < 0.1: take Left. If 0.1 ≤ r < 0.8: take Right. If r ≥ 0.8: Stay',
+                                'On average across 10 steps: ~1 Left, ~7 Right, ~2 Stay'
+                            ],
+                            result: 'Agent explores different actions while still preferring Right (70% probability).'
+                        }}
+                    />
+
+                    <PolicyVis />
                 </div>
             </SectionWrapper>
 
