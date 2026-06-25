@@ -323,10 +323,11 @@ export default function Topic5_PEASFramework() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="\\pi^*(s) = \\arg\\max_a \\mathbb{E}[P \\mid S, A, E]"
                         label="The Optimal PEAS Policy (\pi^*)"
+                        accent="blue"
                         explanation="Choosing the action 'a' that results in the highest expected performance 'P'."
                         interpretation="The agent's 'Intelligence' is its ability to map its perceptions (S) to actions (A) that achieve the goal (P) in its world (E). The math is the same whether the agent is a chess engine or a medical bot."
                         motivation="This formula bridges the gap between hardware (Sensors/Actuators) and software (Policy/Learning)."
@@ -337,12 +338,6 @@ export default function Topic5_PEASFramework() {
                     />
                     <OptimalPolicyVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Sensors vs. Percepts</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            **Sensors** are the hardware (Cameras/Microphones). **Percepts** are the actual data received (Pixels/Audio bits) at any given moment.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

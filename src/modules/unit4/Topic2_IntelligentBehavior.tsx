@@ -318,10 +318,11 @@ export default function Topic2_IntelligentBehavior() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="P(A, E) = \\mathbb{E} \\left[ \\sum_{t=0}^{T} R(s_t, a_t) \\right]"
                         label="Performance Measure (P)"
+                        accent="blue"
                         explanation="The expected cumulative reward of an agent A in environment E."
                         interpretation="Intelligent behavior is measured by the agent's ability to maximize this sum. If P is high, the agent is exhibiting 'effective' intelligence for that specific goal."
                         motivation="This formula grounds the abstract concept of 'Intelligence' into a concrete number we can optimize using algorithms like Q-Learning."
@@ -332,12 +333,6 @@ export default function Topic2_IntelligentBehavior() {
                     />
                     <ExpectedRewardVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Rationality vs. Intelligence</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            A **Rational Agent** always picks the action that maximizes its expected performance measure, given its perception history.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

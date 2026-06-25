@@ -482,7 +482,7 @@ export default function Topic4_ElementsOfRL() {
                     <MathBlock
                         formula="v_\\pi(s) = \\mathbb{E}_\\pi\\!\\left[G_t \\mid S_t = s\\right] = \\mathbb{E}_\\pi\\!\\left[\\sum_{k=0}^{\\infty}\\gamma^k R_{t+k+1} \\;\\middle|\\; S_t=s\\right]"
                         label="State-Value Function — The Agent's Hunch"
-                        accent="emerald"
+                        accent="violet"
                         explanation="Expected return when starting in state s and following policy \\pi thereafter."
                         interpretation="Measures the expected long-term value or quality of a state under the current policy."
                         motivation="Allows evaluating and comparing states to guide policy improvements."
@@ -503,33 +503,7 @@ export default function Topic4_ElementsOfRL() {
                     />
                     <ValueDistributionVis />
 
-                    <div className="grid lg:grid-cols-2 gap-6">
-                        <GammaExplorer />
-                        <div className="space-y-4">
-                            <div className="bg-slate-900 rounded-2xl p-5 text-white">
-                                <h5 className="font-bold text-amber-400 mb-3 flex items-center gap-2"><Lightbulb size={16} /> The Four Elements Summary</h5>
-                                <div className="space-y-3 text-xs">
-                                    {[
-                                        { sym: '\\pi(a|s)', name: 'Policy', desc: 'What to do in each state' },
-                                        { sym: 'G_t', name: 'Return', desc: 'Total future reward' },
-                                        { sym: 'v_\\pi(s)', name: 'Value Function', desc: 'Expected return from state s' },
-                                        { sym: '\\mathcal{P}(s\'|s,a)', name: 'Model', desc: 'Predicts next state (optional)' },
-                                    ].map(e => (
-                                        <div key={e.name} className="flex items-center gap-3 bg-slate-800/50 rounded-lg p-2">
-                                            <span className="font-mono text-primary-400 w-24 shrink-0 text-xs overflow-hidden">
-                                                <MathBlock formula={e.sym} inline />
-                                            </span>
-                                            <div>
-                                                <span className="font-bold text-white">{e.name}</span>
-                                                <span className="text-slate-400 ml-2">{e.desc}</span>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <BellmanConvergenceVis formula="v_\\pi(s) = \\mathbb{E}_\\pi[G_t|S_t=s]" label="Value Function Overview" accent="emerald" />
+                    <BellmanConvergenceVis formula="v_\\pi(s) = \\mathbb{E}_\\pi[G_t|S_t=s]" label="Value Function Overview" accent="violet" />
                 </div>
             </SectionWrapper>
 

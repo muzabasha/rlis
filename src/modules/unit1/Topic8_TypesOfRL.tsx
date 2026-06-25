@@ -331,7 +331,7 @@ export default function Topic8_TypesOfRL() {
                     <MathBlock
                         formula="Q(S_t,A_t) \\leftarrow Q(S_t,A_t) + \\alpha\\!\\underbrace{\\bigl[R_{t+1} + \\gamma\\, Q(S_{t+1},A_{t+1}) - Q(S_t,A_t)\\bigr]}_{\\delta_t^{\\text{SARSA}}}"
                         label="SARSA — On-Policy TD Update"
-                        accent="emerald"
+                        accent="violet"
                         explanation="Update the action-value function based on the actual next action taken by the agent's policy."
                         interpretation="SARSA learns the value of the action-value function on-policy by using the actual trajectory tuple (S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1})."
                         motivation="Necessary for safe online learning, as it evaluates the actual path taken by the agent including exploratory mistakes."

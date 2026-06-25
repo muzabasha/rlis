@@ -345,32 +345,7 @@ export default function Topic13_RLvsDLvsML() {
 
                     <LossCurveVis type="dqn" label="DQN Loss Function" accent="red" />
 
-                    <div className="grid lg:grid-cols-2 gap-6">
-                        <AIComparisonRadar />
-                        <div className="space-y-3">
-                            <h5 className="font-bold text-slate-800 dark:text-white text-sm">Key Mathematical Differences</h5>
-                            <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
-                                <table className="w-full text-xs">
-                                    <thead><tr className="bg-slate-100 dark:bg-slate-800">
-                                        {['Property', 'ML/DL', 'RL'].map(h => <th key={h} className="text-left p-2 font-semibold text-slate-600 dark:text-slate-300">{h}</th>)}
-                                    </tr></thead>
-                                    <tbody>
-                                        {[
-                                            ['Objective', 'Min loss L(θ)', 'Max E[G_t]'],
-                                            ['Training data', 'Fixed dataset 𝒟', 'Self-generated τ'],
-                                            ['Labels', 'Fixed y_i', 'Moving target r+γQ'],
-                                            ['Feedback', 'Instructive (correct answer)', 'Evaluative (reward)'],
-                                            ['Convergence', 'Guaranteed (convex)', 'Not guaranteed'],
-                                        ].map((row, i) => (
-                                            <tr key={i} className="border-t border-slate-100 dark:border-slate-800">
-                                                {row.map((cell, j) => <td key={j} className={`p-2 ${j === 0 ? 'font-semibold text-slate-700 dark:text-slate-300' : 'text-slate-500 dark:text-slate-400'}`}>{cell}</td>)}
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </SectionWrapper>
 

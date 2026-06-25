@@ -327,10 +327,11 @@ export default function Topic4_ISApplications() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="y = \\arg\\max_{a} Q(s, a; \\theta)"
                         label="The Universal Decision Function"
+                        accent="blue"
                         explanation="How an agent chooses its next application-specific action."
                         interpretation="In Healthcare, 'a' might be a diagnosis. In Finance, 'a' might be 'Block Transaction'. In Robotics, 'a' might be 'Turn Left'. The math remains the same: pick the action that maximizes the learned value Q."
                         motivation="This unity of mathematics is why one algorithm can be applied across dozens of different industries."
@@ -340,12 +341,6 @@ export default function Topic4_ISApplications() {
                     />
                     <BellmanOptimalityVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Convergence of Domains</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            We are moving toward **Foundation Models**—single intelligent systems that can perform tasks in many different domains simultaneously.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

@@ -396,22 +396,7 @@ export default function Topic7_ApproachesToRL() {
 
                     <ModelVis />
 
-                    <div className="grid lg:grid-cols-2 gap-6">
-                        <ApproachComparisonChart />
-                        <div className="space-y-3">
-                            <h5 className="font-bold text-slate-800 dark:text-white text-sm">When to Use Each Approach</h5>
-                            {[
-                                { approach: 'Value-Based (Q-learning, DQN)', when: 'Discrete action spaces, stable environments, when interpretability matters.' },
-                                { approach: 'Policy-Based (REINFORCE, PPO)', when: 'Continuous actions, stochastic optimal policies, high-dimensional action spaces.' },
-                                { approach: 'Model-Based (Dyna-Q, AlphaZero)', when: 'Sample efficiency is critical, simulation is cheap, environment is learnable.' },
-                            ].map(p => (
-                                <div key={p.approach} className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200 dark:border-slate-700">
-                                    <p className="text-xs font-bold text-primary-600 dark:text-primary-400 mb-1">{p.approach}</p>
-                                    <p className="text-xs text-slate-600 dark:text-slate-400">{p.when}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    
                 </div>
             </SectionWrapper>
 

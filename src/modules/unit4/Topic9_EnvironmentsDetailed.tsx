@@ -325,10 +325,11 @@ export default function Topic9_EnvironmentsDetailed() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="\\theta_{t+1} = \\theta_t + \\alpha \\cdot \\text{Feedback}(P_t, \\text{Critic})"
                         label="The Learning Update (\theta)"
+                        accent="blue"
                         explanation="How the agent's internal parameters evolve over time."
                         interpretation="The agent's 'Knowledge' (\theta) is updated by a small step (\alpha) based on the feedback from the Critic. If the Feedback is positive, the current strategy is reinforced. If negative, it's corrected."
                         motivation="This formula is the mathematical engine of all Reinforcement Learning. It's how experience is converted into intelligence."
@@ -339,12 +340,6 @@ export default function Topic9_EnvironmentsDetailed() {
                     />
                     <LearningUpdateVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> The Performance Element</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            The **Performance Element** is what actually acts in the environment. Its function is <InlineMath math="a = \pi(s; \theta)" />. The learning agent's goal is to find the best <InlineMath math="\theta" />.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

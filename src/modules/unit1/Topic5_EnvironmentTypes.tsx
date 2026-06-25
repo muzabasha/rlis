@@ -385,7 +385,7 @@ export default function Topic5_EnvironmentTypes() {
                     <MathBlock
                         formula="\\mathcal{R}(s,a) = \\mathbb{E}\\!\\left[R_{t+1} \\mid S_t=s,\\, A_t=a\\right] = \\sum_{s'}\\mathcal{P}(s'\\mid s,a)\\cdot r(s,a,s')"
                         label="Expected Reward Function"
-                        accent="emerald"
+                        accent="violet"
                         explanation="Expected reward obtained when taking action a in state s."
                         interpretation="The average reward an agent expects to receive when executing an action, taking into account all possible next-state transitions and their probabilities."
                         motivation="Allows calculating deterministic reward updates even when the transition outcomes are stochastic."

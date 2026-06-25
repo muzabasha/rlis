@@ -382,7 +382,7 @@ export default function Topic12_OptimalPolicyMDP() {
                             <MathBlock
                                 formula="\\pi^*(s) = \\arg\\max_{a}\\, q_*(s,a) = \\arg\\max_{a}\\sum_{s'}\\mathcal{P}(s'|s,a)\\Bigl[\\mathcal{R}(s,a,s') + \\gamma\\, v_*(s')\\Bigr]"
                                 label="Optimal Policy — Greedy with Respect to Q*"
-                                accent="emerald"
+                                accent="violet"
                                 explanation="The optimal policy always takes the action with the highest Q* value. It is deterministic and greedy with respect to the optimal value function."
                                 interpretation="Once Q* is known, the optimal policy is trivially extracted by taking the argmax at each state. This is a deterministic policy — no randomness needed. The optimal policy is unique (up to ties) for any finite MDP. This is the end goal of all RL algorithms."
                                 motivation="This equation shows that the hard part of RL is learning Q* — once that is done, the optimal policy is free. This is why Q-learning focuses entirely on learning Q* rather than directly learning π*."

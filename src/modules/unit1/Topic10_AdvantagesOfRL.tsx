@@ -324,28 +324,7 @@ export default function Topic10_AdvantagesOfRL() {
 
                     <AdvantageVis />
 
-                    <div className="grid lg:grid-cols-2 gap-6">
-                        <BenefitComparisonChart />
-                        <div className="space-y-3">
-                            <h5 className="font-bold text-slate-800 dark:text-white text-sm">Key Advantages — Formalised</h5>
-                            {[
-                                { adv: 'No Labeled Data', eq: 'R_{t+1} \\in \\mathbb{R}', desc: 'Only a scalar reward signal needed — no human annotation of every state.' },
-                                { adv: 'Handles Uncertainty', eq: '\\mathbb{E}_\\pi[G_t]', desc: 'Expectation over stochastic transitions — works in noisy real-world environments.' },
-                                { adv: 'Discovers Novel Strategies', eq: '\\arg\\max_\\pi', desc: 'Searches over all possible policies — finds strategies humans never considered.' },
-                                { adv: 'Adapts Over Time', eq: 'Q_{t+1} \\leftarrow Q_t + \\alpha\\delta_t', desc: 'Continuously updates estimates as the environment changes.' },
-                            ].map(a => (
-                                <div key={a.adv} className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200 dark:border-slate-700 flex items-start gap-3">
-                                    <span className="text-xs font-mono text-primary-600 dark:text-primary-400 shrink-0 mt-0.5">
-                                        <MathBlock formula={a.eq} inline />
-                                    </span>
-                                    <div>
-                                        <p className="text-xs font-bold text-slate-700 dark:text-slate-300">{a.adv}</p>
-                                        <p className="text-xs text-slate-500 dark:text-slate-400">{a.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    
 
                     <DiscountCurveVis />
 

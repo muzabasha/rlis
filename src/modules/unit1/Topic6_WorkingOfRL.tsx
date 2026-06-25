@@ -435,22 +435,7 @@ export default function Topic6_WorkingOfRL() {
 
                     <SetsOfRLVis />
 
-                    <div className="grid lg:grid-cols-2 gap-6">
-                        <RLLoopVisualizer />
-                        <div className="space-y-3">
-                            <h5 className="font-bold text-slate-800 dark:text-white text-sm">Key Properties of the Interaction</h5>
-                            {[
-                                { prop: 'Markov Property', desc: 'P(S_{t+1}|S_t,A_t) = P(S_{t+1}|S_0,...,S_t,A_0,...,A_t). The future depends only on the present state, not the full history.' },
-                                { prop: 'Stationarity', desc: 'The transition dynamics P(s\'|s,a) and reward R(s,a) do not change over time. The same action in the same state always has the same distribution of outcomes.' },
-                                { prop: 'Causality', desc: 'R_{t+1} and S_{t+1} are caused by A_t and S_t. The agent\'s action at time t affects the world at time t+1, not before.' },
-                            ].map(p => (
-                                <div key={p.prop} className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200 dark:border-slate-700">
-                                    <p className="text-xs font-bold text-primary-600 dark:text-primary-400 mb-1">{p.prop}</p>
-                                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{p.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    
                 </div>
             </SectionWrapper>
 

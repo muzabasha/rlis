@@ -318,7 +318,7 @@ export default function Topic15_EpsilonGreedy() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula={"\\pi(a|s) = \\begin{cases} 1 - \\epsilon + \\frac{\\epsilon}{|\\mathcal{A}(s)|} & \\text{if } a = a^* \\\\ \\frac{\\epsilon}{|\\mathcal{A}(s)|} & \\text{if } a \\neq a^* \\end{cases}"}
                         label="Epsilon-Greedy Probability Distribution"
@@ -345,12 +345,6 @@ export default function Topic15_EpsilonGreedy() {
                     />
                     <EpsilonGreedyVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><TrendingUp size={16} /> Epsilon Decay</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            In practice, we often start with a high <InlineMath math="\epsilon" /> (e.g., 1.0) to explore everything, and then gradually <strong>decay</strong> it towards a small value (e.g., 0.01) as the agent becomes more confident in its estimates.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

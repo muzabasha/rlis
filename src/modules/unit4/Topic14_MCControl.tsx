@@ -232,10 +232,11 @@ export default function Topic14_MCControl() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="\\pi(s) \\leftarrow \\arg\\max_a Q(s, a)"
                         label="The Policy Improvement Step"
+                        accent="blue"
                         explanation="Making the policy greedy with respect to the current value estimates."
                         interpretation="The agent looks at all available actions in state s and picks the one with the highest current Q-value. This 'Greedy' update is what drives the policy toward optimality."
                         motivation="This step converts the agent's knowledge (the Q-values) into actual behavior changes."
@@ -246,13 +247,6 @@ export default function Topic14_MCControl() {
                     />
                     <OptimalPolicyVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> The Evaluation Update</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            Before improvement, we must update: <br/>
-                            <span className="font-mono text-sm">{"$Q(s,a) \\leftarrow Q(s,a) + \\frac{1}{N(s,a)}[G - Q(s,a)]$"}</span>
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

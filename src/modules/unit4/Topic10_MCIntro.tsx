@@ -231,7 +231,7 @@ export default function Topic10_MCIntro() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="G_t = R_{t+1} + \\gamma R_{t+2} + \\gamma^2 R_{t+3} + \\cdots + \\gamma^{T-t-1} R_T"
                         label="The Cumulative Return"
@@ -270,12 +270,6 @@ export default function Topic10_MCIntro() {
                     />
                     <ValueDistributionVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Sparkles size={16} /> Bias-Variance Trade-off</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            MC is <strong>Unbiased</strong> because it uses the actual return G_t. However, it has <strong>High Variance</strong> because G_t depends on many random actions and environment transitions throughout the entire episode.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

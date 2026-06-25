@@ -311,10 +311,11 @@ export default function Topic7_EnvironmentTypes() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="\\mathcal{E} = \\{D_{obs}, D_{sto}, D_{seq}, D_{dyn}, D_{con}, D_{mul}\\}"
                         label="The Environment Vector (\mathcal{E})"
+                        accent="blue"
                         explanation="The set of dimensions that define the task environment."
                         interpretation="Each dimension D is a binary or continuous scale. For example, D_obs = 1 (Fully Observable) or 0 (Partially Observable). This vector allows us to compare the difficulty of different AI tasks."
                         motivation="By quantifying the environment, we can choose the mathematical framework (e.g., MDP for stochastic/sequential worlds) that best fits the problem."
@@ -324,12 +325,6 @@ export default function Topic7_EnvironmentTypes() {
                     />
                     <EnvironmentVectorVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Discrete vs. Continuous Math</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            **Discrete** environments use Summation (<InlineMath math="\sum" />); **Continuous** environments require Integration (<InlineMath math="\int" />) and Calculus to model.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

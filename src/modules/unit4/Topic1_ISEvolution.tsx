@@ -279,10 +279,11 @@ export default function Topic1_ISEvolution() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="\\Upsilon(\\pi) = \\sum_{\\mu \\in E} 2^{-K(\\mu)} V_\\mu^\\pi"
                         label="Universal Intelligence (\\Upsilon)"
+                        accent="blue"
                         explanation="A formal mathematical definition of intelligence across all environments."
                         interpretation="Intelligence (\\Upsilon) is the weighted sum of an agent's (\\pi) ability to achieve rewards (V) across all possible environments (\\mu). Complex environments are weighted less than simple ones (2^{-K})."
                         motivation="This formula tells us that a truly Intelligent System isn't just good at one thing (like Chess); it's good at everything, even things it hasn't seen before."
@@ -302,12 +303,6 @@ export default function Topic1_ISEvolution() {
                     />
                     <UniversalIntelligenceVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Evolution of Capacity</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            Historically, we measure evolution through the **Turing Test** (Behavioral) and now through **Cross-Domain Generalization** (Capability).
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

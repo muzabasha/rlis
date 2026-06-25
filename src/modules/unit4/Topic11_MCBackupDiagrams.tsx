@@ -232,10 +232,11 @@ export default function Topic11_MCBackupDiagrams() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="\\tau = \\{S_0, A_0, R_1, S_1, A_1, R_2, \\dots, S_{T-1}, A_{T-1}, R_T, S_T\\}"
                         label="The Episode Trajectory (\tau)"
+                        accent="blue"
                         explanation="The formal sequence of states, actions, and rewards that make up an episode."
                         interpretation="In MC, we collect these \tau sequences. Each \tau gives us one sample of the return G. The diagram is simply a visual representation of this set \tau."
                         motivation="This formalization allows us to treat a complex interaction as a single unit of data for learning."
@@ -245,12 +246,6 @@ export default function Topic11_MCBackupDiagrams() {
                     />
                     <RLTrajectoryVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Depth over Breadth</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            MC backups are "Deep" (all the way to T) but "Narrow" (one sample). DP backups are "Shallow" (one step) but "Wide" (all samples).
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

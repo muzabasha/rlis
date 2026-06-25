@@ -390,7 +390,7 @@ export default function Topic3_RLvsSLvsUL() {
                     <MathBlock
                         formula="\\tau = (s_0,\\, a_0,\\, r_1,\\, s_1,\\, a_1,\\, r_2,\\, s_2,\\, \\ldots,\\, s_T)"
                         label="RL Trajectory — Self-Generated Experience"
-                        accent="emerald"
+                        accent="violet"
                         explanation="The chronological sequence of states, actions, and rewards representing a single episode."
                         interpretation="RL operates on trajectories of highly correlated states and actions generated dynamically by the agent's policy."
                         motivation="Shows that RL data is sequential and violates the independent and identically distributed (i.i.d.) assumptions of SL."
@@ -412,22 +412,7 @@ export default function Topic3_RLvsSLvsUL() {
                     />
                     <RLTrajectoryVis />
 
-                    {/* Objective contrast panel */}
-                    <div className="grid sm:grid-cols-3 gap-4">
-                        {[
-                            { label: 'Supervised Learning', obj: '\\min_{\\theta}\\,\\mathcal{L}(f_\\theta(x),y)', color: 'border-blue-400 bg-blue-50 dark:bg-blue-900/20', badge: 'text-blue-700 dark:text-blue-300' },
-                            { label: 'Unsupervised Learning', obj: '\\min_{\\mu}\\sum_i\\|x_i-\\mu_{c(i)}\\|^2', color: 'border-violet-400 bg-violet-50 dark:bg-violet-900/20', badge: 'text-violet-700 dark:text-violet-300' },
-                            { label: 'Reinforcement Learning', obj: '\\max_{\\pi}\\,\\mathbb{E}[G_t]', color: 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/20', badge: 'text-emerald-700 dark:text-emerald-300' },
-                        ].map(p => (
-                            <div key={p.label} className={`rounded-2xl border-l-4 ${p.color} p-4`}>
-                                <p className={`text-xs font-bold uppercase tracking-wider mb-3 ${p.badge}`}>{p.label}</p>
-                                <div className="overflow-x-auto flex justify-center py-1">
-                                    <span className="text-sm"><MathBlock formula={p.obj} accent="blue" /></span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <SLvsRLVis />
+                    
                 </div>
             </SectionWrapper>
 

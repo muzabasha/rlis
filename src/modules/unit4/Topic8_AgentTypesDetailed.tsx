@@ -323,10 +323,11 @@ export default function Topic8_AgentTypesDetailed() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="a^* = \\arg\\max_a \\sum_{s'} P(s' \\mid s, a) U(s')"
                         label="Maximum Expected Utility (MEU)"
+                        accent="blue"
                         explanation="The formula for a rational agent's decision-making."
                         interpretation="A utility-based agent calculates the probability (P) of ending up in a next state (s') for each action (a), and chooses the action that gives the highest average happiness (U)."
                         motivation="This is the gold standard for AI rationality. It accounts for both uncertainty (Probabilities) and preferences (Utility)."
@@ -337,12 +338,6 @@ export default function Topic8_AgentTypesDetailed() {
                     />
                     <TransitionProbVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Goal vs Utility</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            A **Goal** is binary (Success/Failure). **Utility** is continuous (How successful?).
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

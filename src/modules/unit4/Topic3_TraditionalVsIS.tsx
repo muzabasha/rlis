@@ -290,39 +290,26 @@ export default function Topic3_TraditionalVsIS() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-4">
-                            <h5 className="font-black text-[10px] text-slate-400 uppercase tracking-widest">Traditional</h5>
-                            <MathBlock 
-                                formula="y = f(x)"
-                                label="Fixed Logic"
-                                explanation="Output is a direct result of input and static rules."
-                                interpretation="f is hard-coded. If x is slightly outside the domain of f, the system breaks."
-                                motivation="Perfect for accounting, banking, and compilers."
-                                terms={[]}
-                            />
-                        </div>
-                        <div className="space-y-4">
-                            <h5 className="font-black text-[10px] text-primary-500 uppercase tracking-widest">Intelligent</h5>
-                            <MathBlock 
-                                formula="\\hat{y} = f(x, \\theta)"
-                                label="Adaptive Logic"
-                                explanation="Output depends on input and learned parameters \theta."
-                                interpretation="\theta is updated via experience. The system 'tunes' itself to handle new variations of x."
-                                motivation="Perfect for vision, speech, and robotics."
-                                terms={[]}
-                            />
-                        </div>
-                    </div>
+                <div className="space-y-6">
+                    <MathBlock 
+                        formula="y = f(x)"
+                        label="Fixed Logic"
+                        accent="blue"
+                        explanation="Output is a direct result of input and static rules."
+                        interpretation="f is hard-coded. If x is slightly outside the domain of f, the system breaks."
+                        motivation="Perfect for accounting, banking, and compilers."
+                        terms={[]}
+                    />
+                    <MathBlock 
+                        formula="\\hat{y} = f(x, \\theta)"
+                        label="Adaptive Logic"
+                        accent="violet"
+                        explanation="Output depends on input and learned parameters \theta."
+                        interpretation="\theta is updated via experience. The system 'tunes' itself to handle new variations of x."
+                        motivation="Perfect for vision, speech, and robotics."
+                        terms={[]}
+                    />
                     <FixedVsAdaptiveVis />
-
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Heuristic vs. Algorithmic</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            Traditional systems use **Algorithms** (guaranteed steps). Intelligent systems often use **Heuristics** (best-guess based on experience) to solve problems that are too complex for direct calculation.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

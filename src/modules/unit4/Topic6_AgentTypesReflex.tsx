@@ -336,10 +336,11 @@ export default function Topic6_AgentTypesReflex() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="f: \\mathcal{P}^* \\to \\mathcal{A}"
                         label="The Agent Function (f)"
+                        accent="blue"
                         explanation="Mapping the entire history of percepts (P*) to an action (A)."
                         interpretation="The agent's internal logic is a function that looks at everything it has ever seen and decides what to do next. For a reflex agent, this function only looks at the very last P. For a model-based agent, it looks at the whole sequence."
                         motivation="This abstraction allows us to treat any agent—from a simple IF-statement to a billion-parameter neural network—as a single mathematical mapping."
@@ -350,13 +351,6 @@ export default function Topic6_AgentTypesReflex() {
                     />
                     <AgentFunctionVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Reflex Logic</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            For a Simple Reflex Agent, the function simplifies to: <br/>
-                            <span className="text-sm font-mono text-white">f(p_t) = a_t</span>
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

@@ -234,39 +234,26 @@ export default function Topic12_MCAlgorithms() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                        <div className="space-y-4">
-                            <h5 className="font-black text-[10px] text-primary-500 uppercase tracking-widest">First-Visit Rule</h5>
-                            <MathBlock 
-                                formula="N(s) \\leftarrow N(s) + 1 \\text{ if } t = \\min\\{k : S_k = s\\}"
-                                label="Initialization Check"
-                                explanation="Only update N(s) if this is the first time state s appears in the episode."
-                                interpretation="If we have seen S1 before in this sequence, we skip the math for this step. We only care about the very first time the agent entered S1."
-                                motivation="Ensures each update is based on a 'fresh' look at the return from that state."
-                                terms={[]}
-                            />
-                        </div>
-                        <div className="space-y-4">
-                            <h5 className="font-black text-[10px] text-emerald-500 uppercase tracking-widest">Every-Visit Rule</h5>
-                            <MathBlock 
-                                formula="N(S_t) \\leftarrow N(S_t) + 1 \\quad \\forall t"
-                                label="Universal Update"
-                                explanation="Update N(s) for every single time step where the state was s."
-                                interpretation="No checks needed. If you are in S1, you update S1. Simple, aggressive, and data-efficient."
-                                motivation="Maximizes the amount of learning done from every second of experience."
-                                terms={[]}
-                            />
-                        </div>
-                    </div>
+                <div className="space-y-6">
+                    <MathBlock 
+                        formula="N(s) \\leftarrow N(s) + 1 \\text{ if } t = \\min\\{k : S_k = s\\}"
+                        label="Initialization Check"
+                        accent="blue"
+                        explanation="Only update N(s) if this is the first time state s appears in the episode."
+                        interpretation="If we have seen S1 before in this sequence, we skip the math for this step. We only care about the very first time the agent entered S1."
+                        motivation="Ensures each update is based on a 'fresh' look at the return from that state."
+                        terms={[]}
+                    />
+                    <MathBlock 
+                        formula="N(S_t) \\leftarrow N(S_t) + 1 \\quad \\forall t"
+                        label="Universal Update"
+                        accent="violet"
+                        explanation="Update N(s) for every single time step where the state was s."
+                        interpretation="No checks needed. If you are in S1, you update S1. Simple, aggressive, and data-efficient."
+                        motivation="Maximizes the amount of learning done from every second of experience."
+                        terms={[]}
+                    />
                     <MCFirstEveryVis />
-
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Convergence Reality</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            As the number of episodes <InlineMath math="k \to \infty" />, both methods are guaranteed to converge to <InlineMath math="v_\pi(s)" />. In modern deep RL, variations of Every-Visit are the most common.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 

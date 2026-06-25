@@ -231,10 +231,11 @@ export default function Topic13_MCPrediction() {
                 badgeColor="bg-primary-100 text-primary-700"
                 accentColor="border-primary-500"
             >
-                <div className="space-y-8">
+                <div className="space-y-6">
                     <MathBlock 
                         formula="V(s) \\leftarrow V(s) + \\frac{1}{N(s)} [G - V(s)]"
                         label="Incremental MC Update"
+                        accent="blue"
                         explanation="Updating the average value without storing every past return."
                         interpretation="The term [G - V(s)] is the 'Prediction Error'. We move the current estimate V(s) toward the actual return G by a small step size (1/N)."
                         motivation="This allows an agent to learn on-the-fly. It doesn't need a huge database of episodes; it just needs to remember the current average and the count."
@@ -246,12 +247,6 @@ export default function Topic13_MCPrediction() {
                     />
                     <MCIncrementalVis />
 
-                    <div className="p-6 bg-slate-900 rounded-3xl text-white">
-                        <h5 className="font-bold text-primary-400 mb-2 flex items-center gap-2"><Binary size={16} /> Constant Alpha Update</h5>
-                        <p className="text-xs text-slate-400 leading-relaxed">
-                            In changing environments, we often replace <InlineMath math="1/N(s)" /> with a constant <InlineMath math="\alpha" />. This makes the agent "forget" old experience and prioritize recent samples.
-                        </p>
-                    </div>
                 </div>
             </SectionWrapper>
 
