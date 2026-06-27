@@ -176,7 +176,7 @@ function MatrixPowerLab() {
                         value={power}
                         onChange={(e) => setPower(parseInt(e.target.value))}
                         disabled={!!error}
-                        className="w-32 accent-primary-600"
+                        className="w-32 h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-primary-600"
                     />
                     <div className="text-xl font-black text-primary-600 bg-primary-50 px-4 py-2 rounded-xl">n = {power}</div>
                 </div>

@@ -77,13 +77,13 @@ export default function VFromQVis({
                                 <td className="p-1">
                                     <input type="range" min={0} max={20} step={0.5} value={d.q}
                                         onChange={e => updateQ(i, parseFloat(e.target.value))}
-                                        className="w-full h-1.5 accent-violet-500" />
+                                        className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-violet-500" />
                                     <span className="text-center block">{d.q.toFixed(1)}</span>
                                 </td>
                                 <td className="p-1">
                                     <input type="range" min={0} max={1} step={0.05} value={d.pi}
                                         onChange={e => updatePolicy(i, parseFloat(e.target.value))}
-                                        className="w-full h-1.5 accent-blue-500" />
+                                        className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-blue-500" />
                                     <span className="text-center block">{d.pi.toFixed(2)}</span>
                                 </td>
                                 <td className="p-1 text-center font-bold text-violet-600 dark:text-violet-400">{d.weighted.toFixed(2)}</td>

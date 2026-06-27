@@ -109,7 +109,7 @@ function EpsilonProbabilityVisualizer() {
                         <input 
                             type="range" min="0" max="1" step="0.01" value={epsilon} 
                             onChange={(e) => setEpsilon(parseFloat(e.target.value))}
-                            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                            className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-primary-600"
                         />
                         <div className="flex justify-between text-[10px] text-slate-400 font-bold uppercase tracking-widest">
                             <span>Pure Greedy (ε=0)</span>

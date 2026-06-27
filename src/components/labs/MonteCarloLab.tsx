@@ -223,7 +223,7 @@ export default function MonteCarloLab() {
                                 <input 
                                     type="range" min="0" max="1" step="0.05" value={epsilon}
                                     onChange={(e) => setEpsilon(parseFloat(e.target.value))}
-                                    className="w-full accent-primary-600"
+                                    className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-primary-600"
                                 />
                                 <p className="text-[10px] text-slate-400 leading-tight">Controls the trade-off between trying new paths and following best-known routes.</p>
                             </div>
@@ -236,7 +236,7 @@ export default function MonteCarloLab() {
                                 <input 
                                     type="range" min="0" max="1" step="0.01" value={gamma}
                                     onChange={(e) => setGamma(parseFloat(e.target.value))}
-                                    className="w-full accent-primary-600"
+                                    className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-primary-600"
                                 />
                                 <p className="text-[10px] text-slate-400 leading-tight">Determines how much the agent cares about future rewards vs immediate ones.</p>
                             </div>
@@ -249,7 +249,7 @@ export default function MonteCarloLab() {
                                 <input 
                                     type="range" min="10" max="1000" step="10" value={speed}
                                     onChange={(e) => setSpeed(parseInt(e.target.value))}
-                                    className="w-full accent-amber-500"
+                                    className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-amber-500"
                                 />
                             </div>
                         </div>

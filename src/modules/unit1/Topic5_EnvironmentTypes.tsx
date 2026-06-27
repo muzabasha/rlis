@@ -124,7 +124,7 @@ function EnvironmentTuner() {
                         <input
                             type="range" min="0" max="1" step="0.1" value={stochasticity}
                             onChange={(e) => setStochasticity(parseFloat(e.target.value))}
-                            className="w-full accent-cyan-600"
+                            className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-cyan-600"
                         />
                         <div className="flex justify-between text-[10px] text-slate-400">
                             <span>Deterministic</span>
@@ -143,7 +143,7 @@ function EnvironmentTuner() {
                         <input
                             type="range" min="0" max="1" step="0.1" value={observability}
                             onChange={(e) => setObservability(parseFloat(e.target.value))}
-                            className="w-full accent-indigo-600"
+                            className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-indigo-600"
                         />
                         <div className="flex justify-between text-[10px] text-slate-400">
                             <span>Partially (PO-MDP)</span>

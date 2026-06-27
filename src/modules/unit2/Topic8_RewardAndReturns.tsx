@@ -121,7 +121,7 @@ function ReturnCalculatorLab() {
                                 step="0.05"
                                 value={gamma}
                                 onChange={(e) => setGamma(parseFloat(e.target.value))}
-                                className="w-full accent-primary-600"
+                                className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-primary-600"
                             />
                             <div className="flex justify-between text-[10px] font-bold text-slate-400">
                                 <span>0 (Myopic / Greedy)</span>

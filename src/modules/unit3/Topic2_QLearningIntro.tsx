@@ -133,7 +133,7 @@ function QTableLab() {
                             type="range" min="0.1" max="1.0" step="0.1" 
                             value={alpha} 
                             onChange={(e) => setAlpha(parseFloat(e.target.value))}
-                            className="w-full accent-primary-600"
+                            className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-primary-600"
                         />
                     </div>
 

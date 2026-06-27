@@ -106,7 +106,7 @@ function TermSensitivityLab() {
                         type="range" min="0" max="1" step="0.1" 
                         value={alpha} 
                         onChange={(e) => setAlpha(parseFloat(e.target.value))}
-                        className="w-full accent-primary-600"
+                        className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-primary-600"
                     />
                     <div className="p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-[10px] font-bold text-center">
                         {alpha < 0.3 ? '🐢 Slow & Stable (Cautious)' : alpha > 0.7 ? '⚡ Fast & Volatile (Impulsive)' : '⚖️ Balanced Learning'}
@@ -129,7 +129,7 @@ function TermSensitivityLab() {
                         type="range" min="0" max="1" step="0.05" 
                         value={gamma} 
                         onChange={(e) => setGamma(parseFloat(e.target.value))}
-                        className="w-full accent-indigo-600"
+                        className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-indigo-600"
                     />
                     <div className="p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 text-[10px] font-bold text-center">
                         {gamma < 0.5 ? '🍗 Shortsighted (Instant Gratification)' : gamma > 0.9 ? '🔭 Farsighted (Long-term Strategy)' : '🏢 Corporate Planner'}

@@ -87,7 +87,7 @@ export default function OptimalPolicyVis({
                                 step={0.5}
                                 value={q}
                                 onChange={e => updateQ(i, parseFloat(e.target.value))}
-                                className="w-full h-1.5 accent-emerald-500 my-1"
+                                className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-emerald-500 my-1"
                             />
                             <div className="text-sm font-bold text-slate-700 dark:text-slate-300">{q.toFixed(1)}</div>
                         </div>

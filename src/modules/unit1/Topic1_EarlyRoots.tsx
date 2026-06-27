@@ -86,12 +86,12 @@ function PuzzleBoxLab() {
             <div className="grid sm:grid-cols-3 gap-4">
                 <div>
                     <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Reward Probability = {rewardProb}</label>
-                    <input type="range" min="0.1" max="0.99" step="0.05" value={rewardProb} onChange={e => { setRewardProb(parseFloat(e.target.value)); reset(); }} className="w-full accent-cyan-600" />
+                    <input type="range" min="0.1" max="0.99" step="0.05" value={rewardProb} onChange={e => { setRewardProb(parseFloat(e.target.value)); reset(); }} className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-cyan-600" />
                     <div className="flex justify-between text-xs text-slate-400 mt-1"><span>Hard (0.1)</span><span>Easy (0.99)</span></div>
                 </div>
                 <div>
                     <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Speed: {speed}ms/trial</label>
-                    <input type="range" min="100" max="1000" step="100" value={speed} onChange={e => setSpeed(parseInt(e.target.value))} className="w-full accent-cyan-600" />
+                    <input type="range" min="100" max="1000" step="100" value={speed} onChange={e => setSpeed(parseInt(e.target.value))} className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-slate-600 accent-cyan-600" />
                 </div>
                 <div className="flex flex-col gap-2 justify-end">
                     <button onClick={() => setRunning(r => !r)} className={`flex items-center justify-center gap-2 py-2 rounded-xl font-semibold text-sm ${running ? 'bg-amber-500 text-white' : 'bg-cyan-600 text-white'}`}>
