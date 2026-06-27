@@ -338,11 +338,11 @@ export default function Topic1_MDPKeyComponents() {
                         interpretation="The 5-tuple is the blueprint of any RL problem. Once you define all five components, you have a complete mathematical specification that any RL algorithm can solve. The power of this formulation is its generality — the same algorithms (Q-learning, policy gradient) work for any MDP regardless of the domain."
                         motivation="Without this formal definition, we cannot prove properties like the existence of an optimal policy, convergence of algorithms, or the Bellman optimality principle. The 5-tuple is the foundation on which all of RL theory is built."
                         terms={[
-                            { term: '\\\\mathcal{S}', name: 'State Space', meaning: 'All possible situations the environment can be in. Must satisfy the Markov property.', range: 'Finite or \\\\mathbb{R}^n', example: 'Grid world: 𝒮={0,...,24} (25 cells). Robot arm: 𝒮=ℝ⁶.' },
-                            { term: '\\\\mathcal{A}', name: 'Action Space', meaning: 'All decisions the agent can make. May be state-dependent.', range: 'Finite or \\\\mathbb{R}^m', example: 'Grid: 𝒜={up,down,left,right}. Continuous: 𝒜=ℝ².' },
-                            { term: '\\\\mathcal{P}', name: 'Transition Dynamics', meaning: 'P(s\'|s,a) — probability of transitioning to s\' when taking a in s.', range: '[0,1]', example: 'P(right|(2,3),right)=0.8, P(up|(2,3),right)=0.1.' },
-                            { term: '\\\\mathcal{R}', name: 'Reward Function', meaning: 'R(s,a) or R(s,a,s\') — immediate scalar feedback. Most critical design choice.', range: '\\\\mathbb{R}', example: 'R(goal)=+100, R(obstacle)=−50.' },
-                            { term: '\\\\gamma', name: 'Discount Factor', meaning: 'Controls planning horizon. γ→1 = far-sighted; γ→0 = myopic. Must be < 1 for infinite horizons.', range: '[0,1)', example: 'γ=0.99 for energy management. γ=0.9 for games.' },
+                            { term: '\\mathcal{S}', name: 'State Space', meaning: 'All possible situations the environment can be in. Must satisfy the Markov property.', range: 'Finite or \\\\mathbb{R}^n', example: 'Grid world: 𝒮={0,...,24} (25 cells). Robot arm: 𝒮=ℝ⁶.' },
+                            { term: '\\mathcal{A}', name: 'Action Space', meaning: 'All decisions the agent can make. May be state-dependent.', range: 'Finite or \\\\mathbb{R}^m', example: 'Grid: 𝒜={up,down,left,right}. Continuous: 𝒜=ℝ².' },
+                            { term: '\\mathcal{P}', name: 'Transition Dynamics', meaning: 'P(s\'|s,a) — probability of transitioning to s\' when taking a in s.', range: '[0,1]', example: 'P(right|(2,3),right)=0.8, P(up|(2,3),right)=0.1.' },
+                            { term: '\\mathcal{R}', name: 'Reward Function', meaning: 'R(s,a) or R(s,a,s\') — immediate scalar feedback. Most critical design choice.', range: '\\\\mathbb{R}', example: 'R(goal)=+100, R(obstacle)=−50.' },
+                            { term: '\\gamma', name: 'Discount Factor', meaning: 'Controls planning horizon. γ→1 = far-sighted; γ→0 = myopic. Must be < 1 for infinite horizons.', range: '[0,1)', example: 'γ=0.99 for energy management. γ=0.9 for games.' },
                         ]}
                         numericalExample={{
                             setup: 'Lunar Lander MDP. Define the 5-tuple:',
@@ -368,7 +368,7 @@ export default function Topic1_MDPKeyComponents() {
                         motivation="The transition function determines problem difficulty. Deterministic environments are easier (no uncertainty). Stochastic environments require reasoning about expected values, making the problem harder but more realistic."
                         terms={[
                             { term: "\\mathcal{P}(s'\\mid s,a)", name: 'Transition Probability', meaning: 'Probability of landing in state s\' after taking action a in state s.', range: '[0,1]', example: 'P(right|(2,3),right)=0.8.' },
-                            { term: '\\\\sum_{s\'} \\\\mathcal{P}(s\'\\\\mid s,a)=1', name: 'Probability Axiom', meaning: 'Probabilities over all next states must sum to 1.', range: '\\\\{1\\\\}', example: '0.8+0.1+0.1=1.0 ✓.' },
+                            { term: '\\sum_{s\'} \\\\mathcal{P}(s\'\\\\mid s,a)=1', name: 'Probability Axiom', meaning: 'Probabilities over all next states must sum to 1.', range: '\\\\{1\\\\}', example: '0.8+0.1+0.1=1.0 ✓.' },
                         ]}
                         numericalExample={{
                             setup: 'Recycling robot. State: High battery. Action: Search.',

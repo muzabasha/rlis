@@ -154,7 +154,7 @@ function BellmanBackupLab() {
 
             <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl space-y-4">
                 <div className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase">
-                    <span>Discount Factor (<InlineMath math="\gamma" />)</span>
+                    <span>Discount Factor (<InlineMath math="\\gamma" />)</span>
                     <span className="text-primary-600 font-black">{gamma.toFixed(2)}</span>
                 </div>
                 <input 

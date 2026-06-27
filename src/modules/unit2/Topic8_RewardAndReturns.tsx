@@ -169,7 +169,7 @@ function ReturnCalculatorLab() {
                         <tr>
                             <th className="px-4 py-3 rounded-tl-lg">Time Step</th>
                             <th className="px-4 py-3">Original Reward (<InlineMath math="R" />)</th>
-                            <th className="px-4 py-3">Discount (<InlineMath math="\gamma^k" />)</th>
+                            <th className="px-4 py-3">Discount (<InlineMath math="\\gamma^k" />)</th>
                             <th className="px-4 py-3 rounded-tr-lg">Present Value</th>
                         </tr>
                     </thead>
@@ -362,9 +362,9 @@ export default function Topic8_RewardAndReturns() {
                         motivation="Without G_t, we cannot define what 'good behaviour' means over time. A greedy agent maximising only R_{t+1} will sacrifice long-term success for short-term gain — like a chess player who captures a pawn but loses the queen three moves later."
                         terms={[
                             { term: 'G_t', name: 'Return at time t', meaning: 'Total discounted reward from step t to end of episode. The primary quantity RL maximises.', range: '\\\\mathbb{R}', example: 'G₀=7.86 means the agent expects to accumulate 7.86 total reward from the start.' },
-                            { term: '\\\\gamma^k', name: 'Discount at step k', meaning: 'Exponential decay applied to reward k steps in the future. Ensures G_t is finite for infinite horizons.', range: '(0,1]', example: 'γ=0.9, k=5: γ⁵=0.59. A reward of 10 five steps away is worth 5.9 now.' },
+                            { term: '\\gamma^k', name: 'Discount at step k', meaning: 'Exponential decay applied to reward k steps in the future. Ensures G_t is finite for infinite horizons.', range: '(0,1]', example: 'γ=0.9, k=5: γ⁵=0.59. A reward of 10 five steps away is worth 5.9 now.' },
                             { term: 'R_{t+k+1}', name: 'Future Reward', meaning: 'Reward received k+1 steps after time t. Summed over all future steps to form the return.', range: '\\\\mathbb{R}', example: 'R_{t+3} is the reward 3 steps from now.' },
-                            { term: '\\\\sum_{k=0}^{\\\\infty}', name: 'Infinite Sum', meaning: 'Sum over all future time steps. Converges to a finite value when γ<1 because γ^k→0 as k→∞.', range: '\\\\mathbb{R}', example: 'If all rewards = 1 and γ=0.9: G_t = 1/(1−0.9) = 10.' },
+                            { term: '\\sum_{k=0}^{\\infty}', name: 'Infinite Sum', meaning: 'Sum over all future time steps. Converges to a finite value when γ<1 because γ^k→0 as k→∞.', range: '\\\\mathbb{R}', example: 'If all rewards = 1 and γ=0.9: G_t = 1/(1−0.9) = 10.' },
                         ]}
                         numericalExample={{
                             setup: 'Rewards: R₁=2, R₂=0, R₃=5, R₄=1. γ=0.9. Compute G₁.',
@@ -389,7 +389,7 @@ export default function Topic8_RewardAndReturns() {
                         terms={[
                             { term: 'G_t', name: 'Return at time t', meaning: 'Total discounted reward from step t to end of episode.', range: '\\\\mathbb{R}', example: 'G₃ = R₄ + γ·G₄' },
                             { term: 'R_{t+1}', name: 'Immediate Reward', meaning: 'Reward received one step after time t.', range: '\\\\mathbb{R}', example: 'R₄ = +5 (reached sub-goal)' },
-                            { term: '\\\\gamma G_{t+1}', name: 'Discounted Future Return', meaning: 'The return from the next state, scaled down by γ. Captures all future rewards beyond t+1.', range: '\\\\mathbb{R}', example: 'γ=0.9, G₄=10 → γ·G₄ = 9' },
+                            { term: '\\gamma G_{t+1}', name: 'Discounted Future Return', meaning: 'The return from the next state, scaled down by γ. Captures all future rewards beyond t+1.', range: '\\\\mathbb{R}', example: 'γ=0.9, G₄=10 → γ·G₄ = 9' },
                         ]}
                         numericalExample={{
                             setup: 'Compute G₁ recursively. Rewards: R₂=3, R₃=0, R₄=6. γ=0.9.',
@@ -534,7 +534,7 @@ export default function Topic8_RewardAndReturns() {
                                 {'$'}100 in 10 years (with 5% inflation) = {'$'}61 Today
                             </div>
                             <div className="flex-1 p-3 bg-emerald-50 text-emerald-600 rounded-lg text-center border border-emerald-100">
-                                RL Translation: <InlineMath math="R_{t+10} = 100" />, <InlineMath math="\gamma = 0.95" />
+                                RL Translation: <InlineMath math="R_{t+10} = 100" />, <InlineMath math="\\gamma = 0.95" />
                             </div>
                         </div>
                     </div>
@@ -582,7 +582,7 @@ export default function Topic8_RewardAndReturns() {
                             'γ=0.1 makes the agent myopic — it mostly cares about the next step']}
                         challenges={challenges} notebook={notebook} logs={logs}>
                         <p className="text-sm text-slate-600 dark:text-slate-400">
-                            A massive treasure of 500 points awaits the agent 5 steps into the future. Adjust the discount factor (<InlineMath math="\gamma" />) to see how much that distant treasure is "worth" to the agent right now at <InlineMath math="t=0" />.
+                            A massive treasure of 500 points awaits the agent 5 steps into the future. Adjust the discount factor (<InlineMath math="\\gamma" />) to see how much that distant treasure is "worth" to the agent right now at <InlineMath math="t=0" />.
                         </p>
                         <ReturnCalculatorLab />
                     </VirtualLabShell>

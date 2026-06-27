@@ -349,11 +349,11 @@ export default function Topic5_MarkovModel() {
                         interpretation="This progression shows how the mathematical formalism scales with real-world complexity. A simple weather model needs only ⟨S,P⟩. A chess-playing agent needs ⟨S,A,P,R,γ⟩. A self-driving car with noisy sensors needs the full POMDP tuple. Understanding this hierarchy helps you choose the right model for any problem."
                         motivation="Knowing which tuple to use determines which algorithms are applicable. MC → analytical solutions. MDP → dynamic programming, Q-learning. POMDP → belief-state methods, particle filters. Choosing the wrong model leads to either over-engineering or under-performance."
                         terms={[
-                            { term: '\\\\mathcal{S}', name: 'State Space', meaning: 'Set of all possible states. Present in all four models.', range: 'Finite or \\\\mathbb{R}^n', example: 'Weather: {Sunny, Rainy}. Chess: all board configurations.' },
-                            { term: '\\\\mathbf{P}', name: 'Transition Matrix', meaning: 'Probability of state transitions. Present in all four models.', range: '[0,1]^{|S|\\\\times|S|}', example: 'P(Rainy|Sunny)=0.2.' },
-                            { term: '\\\\mathcal{A}', name: 'Action Space', meaning: 'Set of decisions the agent can make. Added in MDP and POMDP.', range: 'Finite or \\\\mathbb{R}^m', example: 'Robot: {move_left, move_right, stop}.' },
-                            { term: '\\\\mathcal{R}', name: 'Reward Function', meaning: 'Scalar feedback signal. Added in MDP and POMDP to define the objective.', range: '\\\\mathbb{R}', example: 'R(goal_state)=+100, R(obstacle)=−50.' },
-                            { term: '\\\\Omega,\\\\,O', name: 'Observations & Emission', meaning: 'In POMDP: Ω is the set of possible observations; O(o|s,a) is the probability of observing o in state s after action a.', range: '[0,1]', example: 'Noisy sensor: O(see_wall|near_wall,move)=0.9.' },
+                            { term: '\\mathcal{S}', name: 'State Space', meaning: 'Set of all possible states. Present in all four models.', range: 'Finite or \\\\mathbb{R}^n', example: 'Weather: {Sunny, Rainy}. Chess: all board configurations.' },
+                            { term: '\\mathbf{P}', name: 'Transition Matrix', meaning: 'Probability of state transitions. Present in all four models.', range: '[0,1]^{|S|\\\\times|S|}', example: 'P(Rainy|Sunny)=0.2.' },
+                            { term: '\\mathcal{A}', name: 'Action Space', meaning: 'Set of decisions the agent can make. Added in MDP and POMDP.', range: 'Finite or \\\\mathbb{R}^m', example: 'Robot: {move_left, move_right, stop}.' },
+                            { term: '\\mathcal{R}', name: 'Reward Function', meaning: 'Scalar feedback signal. Added in MDP and POMDP to define the objective.', range: '\\\\mathbb{R}', example: 'R(goal_state)=+100, R(obstacle)=−50.' },
+                            { term: '\\Omega,\\,O', name: 'Observations & Emission', meaning: 'In POMDP: Ω is the set of possible observations; O(o|s,a) is the probability of observing o in state s after action a.', range: '[0,1]', example: 'Noisy sensor: O(see_wall|near_wall,move)=0.9.' },
                         ]}
                     />
                     <MarkovModelTaxonomyVis />
@@ -365,8 +365,8 @@ export default function Topic5_MarkovModel() {
                         explanation="Y = set of observable emissions. O = emission probability matrix O(y|s). The true state s is hidden; only observation y is visible."
                         interpretation="In an HMM, the system evolves through hidden states (e.g., the actual word being spoken) but we only observe noisy emissions (e.g., audio waveforms). The Viterbi algorithm finds the most likely hidden state sequence given the observations."
                         terms={[
-                            { term: '\\\\mathcal{Y}', name: 'Observation Set', meaning: 'All possible observable outputs (emissions) from the hidden states.', range: 'Finite', example: 'Speech: Y = {phoneme_1, ..., phoneme_44}.' },
-                            { term: '\\\\mathbf{O}', name: 'Emission Matrix', meaning: 'O(y|s) = probability of observing y when in hidden state s.', range: '[0,1]', example: 'O(audio_A|state_A)=0.8.' },
+                            { term: '\\mathcal{Y}', name: 'Observation Set', meaning: 'All possible observable outputs (emissions) from the hidden states.', range: 'Finite', example: 'Speech: Y = {phoneme_1, ..., phoneme_44}.' },
+                            { term: '\\mathbf{O}', name: 'Emission Matrix', meaning: 'O(y|s) = probability of observing y when in hidden state s.', range: '[0,1]', example: 'O(audio_A|state_A)=0.8.' },
                         ]}
                     />
 
@@ -379,7 +379,7 @@ export default function Topic5_MarkovModel() {
                         explanation="The most general model. Adds observations Ω and emission probabilities O to the MDP tuple. The agent maintains a belief state b(s) = P(true state = s | history)."
                         interpretation="In a POMDP, the agent cannot directly observe the true state. Instead, it maintains a belief state — a probability distribution over all possible states. Actions update both the true state (via P) and the belief state (via Bayes' rule and O). Most real-world AI problems are POMDPs."
                         terms={[
-                            { term: '\\\\boldsymbol{\\\\Omega}', name: 'Observation Space', meaning: 'Set of all possible observations the agent can receive.', range: 'Finite or \\\\mathbb{R}^k', example: 'Robot: Ω = {wall_detected, open_space, goal_visible}.' },
+                            { term: '\\boldsymbol{\\Omega}', name: 'Observation Space', meaning: 'Set of all possible observations the agent can receive.', range: 'Finite or \\\\mathbb{R}^k', example: 'Robot: Ω = {wall_detected, open_space, goal_visible}.' },
                             { term: 'b(s)', name: 'Belief State', meaning: 'Probability distribution over true states, updated after each observation using Bayes\' rule.', range: '[0,1]^{|S|}', example: 'b = [0.3, 0.5, 0.2] — 30% chance in state 1, 50% in state 2, 20% in state 3.' },
                         ]}
                     />

@@ -222,7 +222,7 @@ export default function Topic15_EpsilonGreedy() {
                                 But what if there's a 10/10 sushi place around the corner that you haven't tried? If you only eat pizza, you will <strong>never</strong> discover it.
                             </p>
                             <p>
-                                <strong><InlineMath math="\epsilon" />-Greedy</strong> is like saying: "90% of the time, I'll go to my favorite pizza place. But 10% of the time, I'll roll a die and try somewhere completely random."
+                                <strong><InlineMath math="\\epsilon" />-Greedy</strong> is like saying: "90% of the time, I'll go to my favorite pizza place. But 10% of the time, I'll roll a die and try somewhere completely random."
                             </p>
                             <p>
                                 In Monte Carlo methods, this is vital. Since MC learns from complete episodes, if your policy is too "greedy," it might never explore certain areas of the map, and your value estimates will be forever wrong.
@@ -232,7 +232,7 @@ export default function Topic15_EpsilonGreedy() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="Always a Chance">
-                            In an ε-greedy policy, every possible action has a probability <InlineMath math="\geq \frac{\epsilon}{|\mathcal{A}|}" />. No action is ever completely ignored.
+                            In an ε-greedy policy, every possible action has a probability <InlineMath math="\\geq \\frac{\\epsilon}{|\\mathcal{A}|}" />. No action is ever completely ignored.
                         </InfoCard>
                         <InfoCard type="tip" title="Policy Improvement">
                             Moving from a random policy to an ε-greedy policy is the first step in <strong>Control</strong>—learning how to actually behave better.
@@ -526,7 +526,7 @@ export default function Topic15_EpsilonGreedy() {
                 'At ε=1, all actions are equally likely']}
                  challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Adjust the <InlineMath math="\epsilon" /> slider to see how the mathematical probability is distributed across actions. Watch how the "Exploration Budget" grows and shrinks.
+                        Adjust the <InlineMath math="\\epsilon" /> slider to see how the mathematical probability is distributed across actions. Watch how the "Exploration Budget" grows and shrinks.
                     </p>
                     <EpsilonProbabilityVisualizer />
                 </VirtualLabShell>

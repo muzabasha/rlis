@@ -148,7 +148,7 @@ export default function Topic13_MCPrediction() {
                             Prediction = Policy Evaluation (Finding V). Control = Policy Improvement (Finding the best π).
                         </InfoCard>
                         <InfoCard type="tip" title="Stationary Policy">
-                            In MC Prediction, the policy <InlineMath math="\pi" /> must remain the same throughout the entire simulation for the average to be meaningful.
+                            In MC Prediction, the policy <InlineMath math="\\pi" /> must remain the same throughout the entire simulation for the average to be meaningful.
                         </InfoCard>
                     </div>
                 </div>

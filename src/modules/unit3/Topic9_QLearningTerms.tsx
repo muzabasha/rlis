@@ -95,7 +95,7 @@ function TermSensitivityLab() {
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-2">
                             <Settings size={18} className="text-primary-500" />
-                            <span className="text-xs font-black uppercase text-slate-400 tracking-widest">Alpha (<InlineMath math="\alpha" />)</span>
+                            <span className="text-xs font-black uppercase text-slate-400 tracking-widest">Alpha (<InlineMath math="\\alpha" />)</span>
                         </div>
                         <span className="text-xl font-black text-primary-600">{alpha.toFixed(1)}</span>
                     </div>
@@ -118,7 +118,7 @@ function TermSensitivityLab() {
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-2">
                             <TrendingUp size={18} className="text-indigo-500" />
-                            <span className="text-xs font-black uppercase text-slate-400 tracking-widest">Gamma (<InlineMath math="\gamma" />)</span>
+                            <span className="text-xs font-black uppercase text-slate-400 tracking-widest">Gamma (<InlineMath math="\\gamma" />)</span>
                         </div>
                         <span className="text-xl font-black text-indigo-600">{gamma.toFixed(2)}</span>
                     </div>
@@ -196,7 +196,7 @@ export default function Topic9_QLearningTerms() {
                                 Why? Because their "Learning DNA"—their **Hyperparameters**—are different.
                             </p>
                             <p>
-                                **Alpha (<InlineMath math="\alpha" />)** determines how quickly the agent trusts new experiences. **Gamma (<InlineMath math="\gamma" />)** determines if the agent is a "living for the moment" gambler or a "strategic planner" for the future. Understanding these terms is the difference between a failing agent and a world-champion AI.
+                                **Alpha (<InlineMath math="\\alpha" />)** determines how quickly the agent trusts new experiences. **Gamma (<InlineMath math="\\gamma" />)** determines if the agent is a "living for the moment" gambler or a "strategic planner" for the future. Understanding these terms is the difference between a failing agent and a world-champion AI.
                             </p>
                         </div>
                     </div>

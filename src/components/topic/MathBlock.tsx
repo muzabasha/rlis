@@ -125,7 +125,7 @@ export function MathBlock({
             {label && (
                 <div className={`px-4 pt-3 pb-1 flex items-center gap-2`}>
                     <BookOpen size={13} className={c.label} />
-                    <span className={`text-xs font-bold uppercase tracking-widest ${c.label}`}>{label}</span>
+                    <span className={`text-xs font-bold uppercase tracking-widest ${c.label}`}>{formatMathText(label)}</span>
                 </div>
             )}
 

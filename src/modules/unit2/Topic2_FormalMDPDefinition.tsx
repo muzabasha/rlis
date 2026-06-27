@@ -235,7 +235,7 @@ export default function Topic2_FormalMDPDefinition() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="The Tuple Hierarchy">
-                            Some define MDP as a 4-tuple <InlineMath math="(S, A, P, R)" />, assuming <InlineMath math="\gamma" /> is external, while others use the 5-tuple <InlineMath math="(S, A, P, R, \gamma)" />.
+                            Some define MDP as a 4-tuple <InlineMath math="(S, A, P, R)" />, assuming <InlineMath math="\\gamma" /> is external, while others use the 5-tuple <InlineMath math="(S, A, P, R, \\gamma)" />.
                         </InfoCard>
                         <InfoCard type="tip" title="State Transitions">
                             Transitions are stochastic (probabilistic), not deterministic.
@@ -330,7 +330,7 @@ export default function Topic2_FormalMDPDefinition() {
                         interpretation="This is the same transition probability P(s'|s,a) written in a more compact matrix notation. For each action a, we get a matrix P^a where entry (s,s') gives the probability of transitioning from s to s'. This matrix form is useful for analytical solutions and policy evaluation via linear algebra."
                         motivation="The matrix notation allows us to write the Bellman equation as a linear system: v = R + γP^π v, which can be solved by matrix inversion for small MDPs. This is the foundation of policy evaluation in dynamic programming."
                         terms={[
-                            { term: '\\\\mathcal{P}_{ss\'}^{a}', name: 'Transition Matrix Entry', meaning: 'Probability of transitioning from state s to state s\' under action a. Equivalent to P(s\'|s,a).', range: '[0,1]', example: 'P^{Search}_{High,Low} = 0.3 — 30% chance of draining battery when searching.' },
+                            { term: '\\mathcal{P}_{ss\'}^{a}', name: 'Transition Matrix Entry', meaning: 'Probability of transitioning from state s to state s\' under action a. Equivalent to P(s\'|s,a).', range: '[0,1]', example: 'P^{Search}_{High,Low} = 0.3 — 30% chance of draining battery when searching.' },
                             { term: 's', name: 'Current State (row)', meaning: 'The state the agent is currently in. Indexes the row of the transition matrix.', range: '\\\\mathcal{S}', example: 's = High (battery level).' },
                             { term: "s'", name: 'Next State (column)', meaning: 'The state the environment transitions to. Indexes the column of the transition matrix.', range: '\\\\mathcal{S}', example: "s' = Low (battery drained after searching)." },
                         ]}
@@ -357,9 +357,9 @@ export default function Topic2_FormalMDPDefinition() {
                         interpretation="The reward function is the most critical design choice in RL. It defines what the agent is trying to achieve. A well-designed reward function leads to the desired behaviour; a poorly designed one leads to reward hacking. The expected form R^a_s = Σ P^a_{ss'} · r(s,a,s') shows that the reward is an average over all possible outcomes."
                         motivation="Using expected reward rather than per-transition reward simplifies the Bellman equation. It allows us to write the value function as v_π(s) = Σ_a π(a|s)[R^a_s + γ Σ_{s'} P^a_{ss'} v_π(s')], which is the standard form used in dynamic programming."
                         terms={[
-                            { term: '\\\\mathcal{R}_s^a', name: 'Expected Reward', meaning: 'Average reward for taking action a in state s, over all possible next states.', range: '\\\\mathbb{R}', example: 'R^{Search}_{High} = 4.0 cans expected per search from High battery.' },
+                            { term: '\\mathcal{R}_s^a', name: 'Expected Reward', meaning: 'Average reward for taking action a in state s, over all possible next states.', range: '\\\\mathbb{R}', example: 'R^{Search}_{High} = 4.0 cans expected per search from High battery.' },
                             { term: 'r(s,a,s\')', name: 'Per-Transition Reward', meaning: 'The specific reward received for the transition from s to s\' via action a. May differ by next state.', range: '\\\\mathbb{R}', example: 'r(Low,Search,depleted)=−3 (penalty for running out of battery).' },
-                            { term: '\\\\mathcal{P}_{ss\'}^a', name: 'Transition Weight', meaning: 'Probability of reaching s\', used to weight the per-transition reward.', range: '[0,1]', example: 'P^{Search}_{Low,depleted}=0.1 → contributes 0.1×(−3)=−0.3 to expected reward.' },
+                            { term: '\\mathcal{P}_{ss\'}^a', name: 'Transition Weight', meaning: 'Probability of reaching s\', used to weight the per-transition reward.', range: '[0,1]', example: 'P^{Search}_{Low,depleted}=0.1 → contributes 0.1×(−3)=−0.3 to expected reward.' },
                         ]}
                         numericalExample={{
                             setup: 'Recycling robot. Action: Search from Low battery. Transitions: Low→High(p=0.1,r=4), Low→Low(p=0.9,r=4), Low→depleted(p=0.0,r=−3).',

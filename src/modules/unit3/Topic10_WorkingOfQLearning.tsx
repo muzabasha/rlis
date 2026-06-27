@@ -308,7 +308,7 @@ export default function Topic10_WorkingOfQLearning() {
                             <div><span className="text-indigo-400">Repeat</span> (for each episode):</div>
                             <div className="pl-6">Initialize <InlineMath math="s" /></div>
                             <div className="pl-6"><span className="text-indigo-400">Repeat</span> (for each step of episode):</div>
-                            <div className="pl-12">Choose <InlineMath math="a" /> from <InlineMath math="s" /> using policy derived from <InlineMath math="Q" /> (e.g., <InlineMath math="\epsilon" />-greedy)</div>
+                            <div className="pl-12">Choose <InlineMath math="a" /> from <InlineMath math="s" /> using policy derived from <InlineMath math="Q" /> (e.g., <InlineMath math="\\epsilon" />-greedy)</div>
                             <div className="pl-12">Take action <InlineMath math="a" />, observe <InlineMath math="r, s'" /></div>
                             <div className="pl-12"><InlineMath math="Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]" /></div>
                             <div className="pl-12"><InlineMath math="s \leftarrow s'" /></div>

@@ -26,7 +26,7 @@ export default function QuizCard({ question, answer }: QuizCardProps) {
                 <div className={`absolute w-full h-full backface-hidden p-6 bg-white dark:bg-slate-800 rounded-2xl border-2 border-slate-200 dark:border-slate-700 shadow-sm hover:border-purple-400 dark:hover:border-purple-500 transition-colors flex flex-col justify-center items-center text-center gap-3 ${flipped ? 'pointer-events-none' : ''}`}>
                     <HelpCircle size={24} className="text-purple-500 opacity-80" />
                     <h5 className="font-bold text-slate-800 dark:text-white text-sm lg:text-base leading-relaxed">
-                        {question}
+                        {formatMathText(question)}
                     </h5>
                     <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         Click to Reveal Answer

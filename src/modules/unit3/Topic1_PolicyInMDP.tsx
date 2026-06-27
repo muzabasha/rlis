@@ -213,7 +213,7 @@ export default function Topic1_PolicyInMDP() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="The Goal of RL">
-                            The ultimate goal of any Reinforcement Learning algorithm is to find the **Optimal Policy** (<InlineMath math="\pi^*" />).
+                            The ultimate goal of any Reinforcement Learning algorithm is to find the **Optimal Policy** (<InlineMath math="\\pi^*" />).
                         </InfoCard>
                         <InfoCard type="tip" title="State-to-Action">
                             A policy is a mapping. It takes a state as input and returns an action (or a probability distribution over actions).

@@ -113,7 +113,7 @@ function PolicyLab() {
                         Find the Optimal Strategy
                     </h4>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Click each cell to change the agent's action. Your goal is to find the <strong>Optimal Policy (<InlineMath math="\pi^*" />)</strong> that leads every state to the Goal in the minimum steps.
+                        Click each cell to change the agent's action. Your goal is to find the <strong>Optimal Policy (<InlineMath math="\\pi^*" />)</strong> that leads every state to the Goal in the minimum steps.
                     </p>
                     <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-100 dark:border-amber-900/30">
                         <p className="text-xs text-amber-800 dark:text-amber-200 font-medium">
@@ -227,7 +227,7 @@ export default function Topic12_OptimalPolicyMDP() {
                                 In every Reinforcement Learning problem, there exists a "perfect" way to behave.
                             </p>
                             <p>
-                                Think of a GPS navigation system. There might be 1,000 ways to get to your destination, but there is usually one path that is the fastest. That "Fastest Path" for every possible location is the <strong>Optimal Policy (<InlineMath math="\pi^*" />)</strong>.
+                                Think of a GPS navigation system. There might be 1,000 ways to get to your destination, but there is usually one path that is the fastest. That "Fastest Path" for every possible location is the <strong>Optimal Policy (<InlineMath math="\\pi^*" />)</strong>.
                             </p>
                             <p>
                                 Finding this policy is the "Holy Grail" of RL. We don't just want a policy that works; we want the one that is mathematically impossible to beat.
@@ -336,9 +336,9 @@ export default function Topic12_OptimalPolicyMDP() {
                                 motivation="Solving this equation gives V*(s) for all states, from which the optimal policy is trivially extracted: π*(s) = argmax_a Q*(s,a). Every RL algorithm — Q-learning, value iteration, policy gradient — is ultimately trying to solve this equation."
                                 terms={[
                                     { term: 'v_*(s)', name: 'Optimal Value Function', meaning: 'The maximum expected return achievable from state s over all possible policies. The upper bound of performance.', range: '\\\\mathbb{R}', example: 'v_*(near_goal)=9.8 — the best any policy can do from this state.' },
-                                    { term: '\\\\max_a', name: 'Action Maximisation', meaning: 'Choose the single best action — the one that maximises the bracketed expression. This is the greedy operator.', range: '\\\\mathcal{A}', example: 'max(Q*(s,left)=3, Q*(s,right)=9) = 9 → choose right.' },
-                                    { term: '\\\\mathcal{P}(s\'|s,a)', name: 'Transition Probability', meaning: 'Probability of reaching state s\' when taking action a in state s.', range: '[0,1]', example: 'P(goal|near_goal,right)=0.9.' },
-                                    { term: '\\\\gamma\\\\,v_*(s\')', name: 'Discounted Optimal Future', meaning: 'The optimal value of the next state, discounted by γ. Assumes optimal behaviour from s\' onwards.', range: '\\\\mathbb{R}', example: 'γ=0.9, v_*(s\')=10 → contribution = 9.' },
+                                    { term: '\\max_a', name: 'Action Maximisation', meaning: 'Choose the single best action — the one that maximises the bracketed expression. This is the greedy operator.', range: '\\\\mathcal{A}', example: 'max(Q*(s,left)=3, Q*(s,right)=9) = 9 → choose right.' },
+                                    { term: '\\mathcal{P}(s\'|s,a)', name: 'Transition Probability', meaning: 'Probability of reaching state s\' when taking action a in state s.', range: '[0,1]', example: 'P(goal|near_goal,right)=0.9.' },
+                                    { term: '\\gamma\\,v_*(s\')', name: 'Discounted Optimal Future', meaning: 'The optimal value of the next state, discounted by γ. Assumes optimal behaviour from s\' onwards.', range: '\\\\mathbb{R}', example: 'γ=0.9, v_*(s\')=10 → contribution = 9.' },
                                 ]}
                                 numericalExample={{
                                     setup: 'State s. Two actions: a1 (r=2, leads to s\' with v_*(s\')=10) and a2 (r=5, leads to s\'\' with v_*(s\'\')=1). γ=0.9.',
@@ -363,7 +363,7 @@ export default function Topic12_OptimalPolicyMDP() {
                                 motivation="Q*(s,a) is more useful than V*(s) for practical RL because it directly tells us which action to take without needing the transition model P. Once Q* is known, π*(s) = argmax_a Q*(s,a) — no model needed."
                                 terms={[
                                     { term: 'q_*(s,a)', name: 'Optimal Action-Value', meaning: 'Best expected return when taking action a in state s, then acting optimally forever after.', range: '\\\\mathbb{R}', example: 'q_*(start,right)=9.8 — going right from start is nearly optimal.' },
-                                    { term: '\\\\max_{a\'} q_*(s\',a\')', name: 'Greedy Next Q', meaning: 'The highest Q-value achievable in the next state — assumes optimal future behaviour.', range: '\\\\mathbb{R}', example: 'max(q_*(s\',left)=4, q_*(s\',right)=7.5) = 7.5.' },
+                                    { term: '\\max_{a\'} q_*(s\',a\')', name: 'Greedy Next Q', meaning: 'The highest Q-value achievable in the next state — assumes optimal future behaviour.', range: '\\\\mathbb{R}', example: 'max(q_*(s\',left)=4, q_*(s\',right)=7.5) = 7.5.' },
                                 ]}
                                 numericalExample={{
                                     setup: 'Q-learning update. s=(2,3), a=right, r=−0.1, s\'=(2,4). max Q*(s\',·)=7.5. γ=0.9.',
@@ -387,8 +387,8 @@ export default function Topic12_OptimalPolicyMDP() {
                                 interpretation="Once Q* is known, the optimal policy is trivially extracted by taking the argmax at each state. This is a deterministic policy — no randomness needed. The optimal policy is unique (up to ties) for any finite MDP. This is the end goal of all RL algorithms."
                                 motivation="This equation shows that the hard part of RL is learning Q* — once that is done, the optimal policy is free. This is why Q-learning focuses entirely on learning Q* rather than directly learning π*."
                                 terms={[
-                                    { term: '\\\\pi^*(s)', name: 'Optimal Policy', meaning: 'The best possible action to take in state s. Deterministic and greedy with respect to Q*.', range: '\\\\mathcal{A}', example: 'π*((2,3)) = right (if Q*((2,3),right) is highest).' },
-                                    { term: '\\\\arg\\\\max_a', name: 'Argmax', meaning: 'Returns the action a that achieves the maximum value, not the maximum value itself.', range: '\\\\mathcal{A}', example: 'argmax(Q=3,Q=9,Q=5) = action 2 (not 9).' },
+                                    { term: '\\pi^*(s)', name: 'Optimal Policy', meaning: 'The best possible action to take in state s. Deterministic and greedy with respect to Q*.', range: '\\\\mathcal{A}', example: 'π*((2,3)) = right (if Q*((2,3),right) is highest).' },
+                                    { term: '\\arg\\max_a', name: 'Argmax', meaning: 'Returns the action a that achieves the maximum value, not the maximum value itself.', range: '\\\\mathcal{A}', example: 'argmax(Q=3,Q=9,Q=5) = action 2 (not 9).' },
                                 ]}
                             />
 

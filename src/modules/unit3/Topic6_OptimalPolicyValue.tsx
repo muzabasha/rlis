@@ -201,7 +201,7 @@ export default function Topic6_OptimalPolicyValue() {
                                 Every chess move has a value. A novice sees only the next capture. A Grandmaster, however, can see which move leads to the highest probability of a win 50 moves later.
                             </p>
                             <p>
-                                In Reinforcement Learning, the **Optimal Policy** (<InlineMath math="\pi^*" />) is that Grandmaster's vision. It is the strategy that ensures the highest possible reward from <em>every single state</em> in the environment.
+                                In Reinforcement Learning, the **Optimal Policy** (<InlineMath math="\\pi^*" />) is that Grandmaster's vision. It is the strategy that ensures the highest possible reward from <em>every single state</em> in the environment.
                             </p>
                             <p>
                                 When an agent finds the **Optimal Value Function** (<InlineMath math="v^*" />), it has essentially "solved" the environment. It no longer needs to worry about the future because it already knows the absolute best possible outcome it can achieve.

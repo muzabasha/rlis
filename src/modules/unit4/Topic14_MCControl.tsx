@@ -427,7 +427,7 @@ export default function Topic14_MCControl() {
                 'Run for many episodes to reach near-optimal policy']}
                  challenges={challenges} notebook={notebook} logs={logs}>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Adjust parameters like <InlineMath math="\epsilon" /> and <InlineMath math="\gamma" /> to see how they affect the agent's learning speed and final performance. Watch the Q-table update in real-time after each episode!
+                        Adjust parameters like <InlineMath math="\\epsilon" /> and <InlineMath math="\\gamma" /> to see how they affect the agent's learning speed and final performance. Watch the Q-table update in real-time after each episode!
                     </p>
                     <MonteCarloLab />
                 </VirtualLabShell>
