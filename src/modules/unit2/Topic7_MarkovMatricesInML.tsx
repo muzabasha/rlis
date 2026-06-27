@@ -404,8 +404,8 @@ export default function Topic7_MarkovMatricesInML() {
                         interpretation="This is the bridge between data and mathematics. The machine reads millions of sentences, counts every word pair, and normalises to get probabilities. The resulting matrix encodes the statistical patterns of the language. This same principle applies to DNA sequences, stock prices, and user behaviour — any sequential data."
                         motivation="MLE is the simplest and most interpretable way to learn a Markov model. It is provably optimal (minimises KL divergence from the true distribution) given enough data. Understanding MLE is essential for understanding how all probabilistic ML models are trained."
                         terms={[
-                            { term: 'C(w_i,w_j)', name: 'Bigram Count', meaning: 'Number of times word w_j immediately follows word w_i in the training corpus.', range: '\\\\mathbb{Z}^+', example: 'C("Happy","Birthday") = 1,247 occurrences in 1M sentences.' },
-                            { term: 'C(w_i)', name: 'Unigram Count', meaning: 'Total number of times word w_i appears in the corpus (as the first word of any bigram).', range: '\\\\mathbb{Z}^+', example: 'C("Happy") = 2,800 total occurrences.' },
+                            { term: 'C(w_i,w_j)', name: 'Bigram Count', meaning: 'Number of times word w_j immediately follows word w_i in the training corpus.', range: '\\mathbb{Z}^+', example: 'C("Happy","Birthday") = 1,247 occurrences in 1M sentences.' },
+                            { term: 'C(w_i)', name: 'Unigram Count', meaning: 'Total number of times word w_i appears in the corpus (as the first word of any bigram).', range: '\\mathbb{Z}^+', example: 'C("Happy") = 2,800 total occurrences.' },
                             { term: 'P_{ij}', name: 'Learned Transition Probability', meaning: 'The MLE estimate of P(w_j|w_i). Converges to the true probability as corpus size → ∞.', range: '[0,1]', example: 'P("Birthday"|"Happy") = 1247/2800 = 0.445.' },
                         ]}
                         numericalExample={{

@@ -361,10 +361,10 @@ export default function Topic8_RewardAndReturns() {
                         interpretation="The return G_t is the 'score' the agent accumulates from time t to the end of the episode. The discount factor γ encodes the agent's patience — γ=0 means only the next reward matters; γ→1 means all future rewards are equally valued. Most real-world RL uses γ=0.9 to 0.99."
                         motivation="Without G_t, we cannot define what 'good behaviour' means over time. A greedy agent maximising only R_{t+1} will sacrifice long-term success for short-term gain — like a chess player who captures a pawn but loses the queen three moves later."
                         terms={[
-                            { term: 'G_t', name: 'Return at time t', meaning: 'Total discounted reward from step t to end of episode. The primary quantity RL maximises.', range: '\\\\mathbb{R}', example: 'G₀=7.86 means the agent expects to accumulate 7.86 total reward from the start.' },
+                            { term: 'G_t', name: 'Return at time t', meaning: 'Total discounted reward from step t to end of episode. The primary quantity RL maximises.', range: '\\mathbb{R}', example: 'G₀=7.86 means the agent expects to accumulate 7.86 total reward from the start.' },
                             { term: '\\gamma^k', name: 'Discount at step k', meaning: 'Exponential decay applied to reward k steps in the future. Ensures G_t is finite for infinite horizons.', range: '(0,1]', example: 'γ=0.9, k=5: γ⁵=0.59. A reward of 10 five steps away is worth 5.9 now.' },
-                            { term: 'R_{t+k+1}', name: 'Future Reward', meaning: 'Reward received k+1 steps after time t. Summed over all future steps to form the return.', range: '\\\\mathbb{R}', example: 'R_{t+3} is the reward 3 steps from now.' },
-                            { term: '\\sum_{k=0}^{\\infty}', name: 'Infinite Sum', meaning: 'Sum over all future time steps. Converges to a finite value when γ<1 because γ^k→0 as k→∞.', range: '\\\\mathbb{R}', example: 'If all rewards = 1 and γ=0.9: G_t = 1/(1−0.9) = 10.' },
+                            { term: 'R_{t+k+1}', name: 'Future Reward', meaning: 'Reward received k+1 steps after time t. Summed over all future steps to form the return.', range: '\\mathbb{R}', example: 'R_{t+3} is the reward 3 steps from now.' },
+                            { term: '\\sum_{k=0}^{\\infty}', name: 'Infinite Sum', meaning: 'Sum over all future time steps. Converges to a finite value when γ<1 because γ^k→0 as k→∞.', range: '\\mathbb{R}', example: 'If all rewards = 1 and γ=0.9: G_t = 1/(1−0.9) = 10.' },
                         ]}
                         numericalExample={{
                             setup: 'Rewards: R₁=2, R₂=0, R₃=5, R₄=1. γ=0.9. Compute G₁.',
@@ -387,9 +387,9 @@ export default function Topic8_RewardAndReturns() {
                         interpretation="This deceptively simple equation is the foundation of every RL update rule. It says: the value of being in a situation equals what you get right now plus the discounted value of where you end up. Q-learning, TD-learning, and the Bellman equation all derive from this single recursive identity."
                         motivation="The recursive form allows us to compute G_t without knowing all future rewards upfront. We can update estimates incrementally as new rewards arrive — this is what makes online RL learning possible and is the basis of temporal difference (TD) methods."
                         terms={[
-                            { term: 'G_t', name: 'Return at time t', meaning: 'Total discounted reward from step t to end of episode.', range: '\\\\mathbb{R}', example: 'G₃ = R₄ + γ·G₄' },
-                            { term: 'R_{t+1}', name: 'Immediate Reward', meaning: 'Reward received one step after time t.', range: '\\\\mathbb{R}', example: 'R₄ = +5 (reached sub-goal)' },
-                            { term: '\\gamma G_{t+1}', name: 'Discounted Future Return', meaning: 'The return from the next state, scaled down by γ. Captures all future rewards beyond t+1.', range: '\\\\mathbb{R}', example: 'γ=0.9, G₄=10 → γ·G₄ = 9' },
+                            { term: 'G_t', name: 'Return at time t', meaning: 'Total discounted reward from step t to end of episode.', range: '\\mathbb{R}', example: 'G₃ = R₄ + γ·G₄' },
+                            { term: 'R_{t+1}', name: 'Immediate Reward', meaning: 'Reward received one step after time t.', range: '\\mathbb{R}', example: 'R₄ = +5 (reached sub-goal)' },
+                            { term: '\\gamma G_{t+1}', name: 'Discounted Future Return', meaning: 'The return from the next state, scaled down by γ. Captures all future rewards beyond t+1.', range: '\\mathbb{R}', example: 'γ=0.9, G₄=10 → γ·G₄ = 9' },
                         ]}
                         numericalExample={{
                             setup: 'Compute G₁ recursively. Rewards: R₂=3, R₃=0, R₄=6. γ=0.9.',

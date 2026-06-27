@@ -385,8 +385,8 @@ export default function Topic6_MarkovMatrix() {
                         terms={[
                             { term: 'P_{ij}', name: 'Transition Probability', meaning: 'Probability of moving from state i (row) to state j (column) in one step.', range: '[0,1]', example: 'P₁₂=0.2: 20% chance of going from state 1 to state 2.' },
                             { term: 'P_{ij} \\geq 0', name: 'Non-negativity', meaning: 'Probabilities cannot be negative. Every entry must be zero or positive.', range: '[0,1]', example: 'P₂₃=−0.1 is INVALID. Probabilities are always ≥ 0.' },
-                            { term: '\\sum_j P_{ij}=1', name: 'Row-Sum Constraint', meaning: 'Each row must sum to exactly 1.0. The agent must transition to SOME state — it cannot disappear.', range: '\\\\{1\\\\}', example: 'Row 1: 0.8+0.2=1.0 ✓. Row 1: 0.6+0.6=1.2 ✗ INVALID.' },
-                            { term: 'n', name: 'Number of States', meaning: 'The dimension of the square matrix. An n-state system has an n×n transition matrix.', range: '\\\\mathbb{Z}^+', example: 'Weather (2 states): 2×2 matrix. Traffic light (3 states): 3×3 matrix.' },
+                            { term: '\\sum_j P_{ij}=1', name: 'Row-Sum Constraint', meaning: 'Each row must sum to exactly 1.0. The agent must transition to SOME state — it cannot disappear.', range: '\\{1\\}', example: 'Row 1: 0.8+0.2=1.0 ✓. Row 1: 0.6+0.6=1.2 ✗ INVALID.' },
+                            { term: 'n', name: 'Number of States', meaning: 'The dimension of the square matrix. An n-state system has an n×n transition matrix.', range: '\\mathbb{Z}^+', example: 'Weather (2 states): 2×2 matrix. Traffic light (3 states): 3×3 matrix.' },
                         ]}
                         numericalExample={{
                             setup: 'Validate this 3×3 matrix: P = [[0.7, 0.2, 0.1], [0.3, 0.5, 0.2], [0.0, 0.4, 0.6]]',
@@ -409,8 +409,8 @@ export default function Topic6_MarkovMatrix() {
                         interpretation="The Chapman-Kolmogorov equation is the mathematical justification for using matrix powers to compute multi-step probabilities. It says: to go from state i to state j in m+n steps, you must pass through some intermediate state k after m steps. Summing over all possible k gives the total probability."
                         motivation="This equation is the foundation of dynamic programming in MDPs. The Bellman equation is essentially the Chapman-Kolmogorov equation applied to value functions. It allows breaking long-horizon problems into shorter sub-problems."
                         terms={[
-                            { term: '\\mathbf{P}^{(m+n)}', name: 'm+n Step Matrix', meaning: 'Transition probabilities for exactly m+n steps.', range: '[0,1]^{n\\\\times n}', example: 'P^(3) = P^(1)·P^(2) = P·P².' },
-                            { term: '\\mathbf{P}^{(m)}\\cdot\\mathbf{P}^{(n)}', name: 'Matrix Product', meaning: 'Standard matrix multiplication. The (i,j) entry of the product sums over all intermediate states k.', range: '[0,1]^{n\\\\times n}', example: '(P·P)_ij = Σ_k P_ik · P_kj.' },
+                            { term: '\\mathbf{P}^{(m+n)}', name: 'm+n Step Matrix', meaning: 'Transition probabilities for exactly m+n steps.', range: '[0,1]^{n\\times n}', example: 'P^(3) = P^(1)·P^(2) = P·P².' },
+                            { term: '\\mathbf{P}^{(m)}\\cdot\\mathbf{P}^{(n)}', name: 'Matrix Product', meaning: 'Standard matrix multiplication. The (i,j) entry of the product sums over all intermediate states k.', range: '[0,1]^{n\\times n}', example: '(P·P)_ij = Σ_k P_ik · P_kj.' },
                         ]}
                         numericalExample={{
                             setup: 'P = [[0.8,0.2],[0.4,0.6]]. Verify Chapman-Kolmogorov: P^(2) = P^(1)·P^(1).',

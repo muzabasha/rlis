@@ -240,8 +240,8 @@ export default function Topic10_MCIntro() {
                         interpretation="MC methods rely on the fact that G_t is a sample of the true value v(s). By collecting many such samples, the average will eventually converge to the true expected value."
                         motivation="This is the raw data used for learning in MC. Because it uses the actual rewards from the entire episode, it is an unbiased estimate of the value."
                         terms={[
-                            { term: 'G_t', name: 'Return', meaning: 'Total reward from step t to terminal step T.', range: '\\\\mathbb{R}', example: 'G = 0 + 0 + 10 = 10 (at the end).' },
-                            { term: 'T', name: 'Terminal Time', meaning: 'The step at which the episode ends.', range: '\\\\mathbb{Z}^+', example: 'Game over at step 50.' },
+                            { term: 'G_t', name: 'Return', meaning: 'Total reward from step t to terminal step T.', range: '\\mathbb{R}', example: 'G = 0 + 0 + 10 = 10 (at the end).' },
+                            { term: 'T', name: 'Terminal Time', meaning: 'The step at which the episode ends.', range: '\\mathbb{Z}^+', example: 'Game over at step 50.' },
                         ]}
                     />
                     <RecursiveReturnVis />
@@ -254,9 +254,9 @@ export default function Topic10_MCIntro() {
                         interpretation="As the number of visits N(s) goes to infinity, the average of the observed returns is guaranteed to converge to the true value v_\\pi(s). This is the Law of Large Numbers in action."
                         motivation="This allows us to learn without a model. We just keep a running count of visits and a running sum of returns."
                         terms={[
-                            { term: 'V(s)', name: 'Estimated Value', meaning: 'The current average of all returns seen from state s.', range: '\\\\mathbb{R}', example: 'V(room) = 8.5 after 10 visits.' },
-                            { term: 'N(s)', name: 'Visit Count', meaning: 'The total number of times state s has been visited across all episodes.', range: '\\\\mathbb{Z}^+', example: 'If we have played 100 games and hit this state in 20 of them, N(s)=20.' },
-                            { term: 'G_i(s)', name: 'Sample Return', meaning: 'The return received after the i-th visit to state s.', range: '\\\\mathbb{R}', example: 'On visit 3, the agent eventually got a total reward of 12.' },
+                            { term: 'V(s)', name: 'Estimated Value', meaning: 'The current average of all returns seen from state s.', range: '\\mathbb{R}', example: 'V(room) = 8.5 after 10 visits.' },
+                            { term: 'N(s)', name: 'Visit Count', meaning: 'The total number of times state s has been visited across all episodes.', range: '\\mathbb{Z}^+', example: 'If we have played 100 games and hit this state in 20 of them, N(s)=20.' },
+                            { term: 'G_i(s)', name: 'Sample Return', meaning: 'The return received after the i-th visit to state s.', range: '\\mathbb{R}', example: 'On visit 3, the agent eventually got a total reward of 12.' },
                         ]}
                         numericalExample={{
                             setup: 'State s visited in 3 episodes. Episode 1 Return: 10. Episode 2 Return: 15. Episode 3 Return: 8.',

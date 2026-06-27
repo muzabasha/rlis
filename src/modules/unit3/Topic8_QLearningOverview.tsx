@@ -349,11 +349,11 @@ export default function Topic8_QLearningOverview() {
                         interpretation="This is a 'self-correcting' formula. It compares what you *thought* the action was worth (Q(s, a)) with a new, more informed estimate (the TD Target: r + \u03B3 max Q). If the new estimate is higher, the Q-value moves up. If lower, it moves down."
                         motivation="This single line of math allows an agent to learn from the future. By using the 'max' of the next state, the agent is always looking for the best possible outcome, which eventually leads to the optimal policy."
                         terms={[
-                            { term: 'Q(s, a)', name: 'Current Estimate', meaning: 'The current value stored in the agent\'s memory for action a in state s.', range: '\\\\mathbb{R}', example: 'Q(room1, move_north) = 5.2.' },
+                            { term: 'Q(s, a)', name: 'Current Estimate', meaning: 'The current value stored in the agent\'s memory for action a in state s.', range: '\\mathbb{R}', example: 'Q(room1, move_north) = 5.2.' },
                             { term: '\\alpha', name: 'Learning Rate', meaning: 'How much the new information overrides the old. 0 = learn nothing, 1 = forget everything old.', range: '[0, 1]', example: '0.1 is a common value for stable learning.' },
-                            { term: 'r', name: 'Reward', meaning: 'The immediate reward received after taking action a.', range: '\\\\mathbb{R}', example: '+10 for reaching a goal.' },
+                            { term: 'r', name: 'Reward', meaning: 'The immediate reward received after taking action a.', range: '\\mathbb{R}', example: '+10 for reaching a goal.' },
                             { term: '\\gamma', name: 'Discount Factor', meaning: 'How much the agent cares about future rewards compared to now.', range: '[0, 1]', example: '0.9 means a future reward is worth 90% of its value today.' },
-                            { term: '\\max_{a\'} Q(s\', a\')', name: 'Best Future', meaning: 'The value of the best possible action the agent *could* take in the next state s\'.', range: '\\\\mathbb{R}', example: 'If in next state, the best action is worth 8.0, then max Q = 8.0.' },
+                            { term: '\\max_{a\'} Q(s\', a\')', name: 'Best Future', meaning: 'The value of the best possible action the agent *could* take in the next state s\'.', range: '\\mathbb{R}', example: 'If in next state, the best action is worth 8.0, then max Q = 8.0.' },
                         ]}
                         numericalExample={{
                             setup: 'Current Q(s, a) = 5. Agent takes action, gets reward r = 10, lands in state s\'. In s\', the best possible action has Q(s\', a\') = 8. \u03B1 = 0.5, \u03B3 = 0.9.',
