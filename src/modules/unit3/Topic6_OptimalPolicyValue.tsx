@@ -461,7 +461,7 @@ export default function Topic6_OptimalPolicyValue() {
                     <div className="card p-6 border-l-4 border-indigo-500 bg-indigo-50/30 dark:bg-indigo-900/10">
                         <h5 className="font-bold mb-2 flex items-center gap-2"><Target size={18} /> Deep RL Context</h5>
                         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            The game of Go has $10^{170}<InlineMath math=" states. It is physically impossible to solve the Bellman Optimality Equation exactly for this game. AI like AlphaGo use **Deep Neural Networks** to estimate the optimal value function " />v^*$, allowing them to defeat world champions.
+                            The game of Go has <InlineMath math="10^{170}" /> states. It is physically impossible to solve the Bellman Optimality Equation exactly for this game. AI like AlphaGo use <strong>Deep Neural Networks</strong> to estimate the optimal value function <InlineMath math="v_*" />, allowing them to defeat world champions.
                         </p>
                     </div>
 

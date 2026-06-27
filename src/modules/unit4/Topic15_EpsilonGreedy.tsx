@@ -102,7 +102,7 @@ function EpsilonProbabilityVisualizer() {
                         <div className="flex justify-between items-center">
                             <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
                                 <Compass size={18} className="text-primary-500" />
-                                Exploration Rate (\u03B5)
+                                Exploration Rate (ε)
                             </h4>
                             <span className="text-2xl font-black text-primary-600">{(epsilon * 100).toFixed(0)}%</span>
                         </div>
@@ -112,8 +112,8 @@ function EpsilonProbabilityVisualizer() {
                             className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
                         />
                         <div className="flex justify-between text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                            <span>Pure Greedy (\u03B5=0)</span>
-                            <span>Pure Random (\u03B5=1)</span>
+                            <span>Pure Greedy (ε=0)</span>
+                            <span>Pure Random (ε=1)</span>
                         </div>
                     </div>
 
@@ -160,7 +160,7 @@ function EpsilonProbabilityVisualizer() {
                         <div>
                             <h5 className="font-bold text-slate-800 dark:text-white">The "Soft" Policy</h5>
                             <p className="text-xs text-slate-500 leading-relaxed max-w-[200px] mx-auto mt-2">
-                                Because \u03B5 &gt; 0, every action has a <strong>non-zero</strong> chance of being picked. This is critical for Monte Carlo Control to ensure all states are visited!
+                                Because ε &gt; 0, every action has a <strong>non-zero</strong> chance of being picked. This is critical for Monte Carlo Control to ensure all states are visited!
                             </p>
                         </div>
                     </div>
@@ -232,10 +232,10 @@ export default function Topic15_EpsilonGreedy() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                         <InfoCard type="insight" title="Always a Chance">
-                            {"In an \u03B5-greedy policy, every possible action has a probability $\\geq \\frac{\\epsilon}{|\\mathcal{A}|}$. No action is ever completely ignored."}
+                            In an ε-greedy policy, every possible action has a probability <InlineMath math="\geq \frac{\epsilon}{|\mathcal{A}|}" />. No action is ever completely ignored.
                         </InfoCard>
                         <InfoCard type="tip" title="Policy Improvement">
-                            Moving from a random policy to an \u03B5-greedy policy is the first step in <strong>Control</strong>—learning how to actually behave better.
+                            Moving from a random policy to an ε-greedy policy is the first step in <strong>Control</strong>—learning how to actually behave better.
                         </InfoCard>
                     </div>
                 </div>
@@ -323,11 +323,11 @@ export default function Topic15_EpsilonGreedy() {
                         formula={"\\pi(a|s) = \\begin{cases} 1 - \\epsilon + \\frac{\\epsilon}{|\\mathcal{A}(s)|} & \\text{if } a = a^* \\\\ \\frac{\\epsilon}{|\\mathcal{A}(s)|} & \\text{if } a \\neq a^* \\end{cases}"}
                         label="Epsilon-Greedy Probability Distribution"
                         accent="blue"
-                        explanation="The formula used to calculate the probability of selecting an action under the \u03B5-greedy policy."
-                        interpretation="The 'best' action a* gets the lion's share of probability (1-\u03B5), plus its fair share of the exploration budget. All other actions share the remaining \u03B5 probability equally. This ensures the agent mostly exploits but occasionally explores."
+                        explanation="The formula used to calculate the probability of selecting an action under the ε-greedy policy."
+                        interpretation="The 'best' action a* gets the lion's share of probability (1-ε), plus its fair share of the exploration budget. All other actions share the remaining ε probability equally. This ensures the agent mostly exploits but occasionally explores."
                         motivation="Without this mathematical guarantee of exploration, Monte Carlo Control fails because it cannot satisfy the 'Assumption of Continual Exploration'. It might get stuck in a suboptimal loop forever."
                         terms={[
-                            { term: '\\u03B5', name: 'Exploration Parameter', meaning: 'The probability of choosing a random action.', range: '[0, 1]', example: '\\u03B5=0.1 means 10% exploration.' },
+                            { term: '\\epsilon', name: 'Exploration Parameter', meaning: 'The probability of choosing a random action.', range: '[0, 1]', example: '\\epsilon=0.1 means 10% exploration.' },
                             { term: '|\\\\mathcal{A}(s)|', name: 'Action Space Size', meaning: 'The number of possible actions in state s.', range: '\\\\mathbb{Z}^+', example: 'If you can move Up, Down, Left, Right, |\\\\mathcal{A}|=4.' },
                             { term: 'a^*', name: 'Greedy Action', meaning: 'The action that currently has the highest estimated Q-value.', range: '\\\\mathcal{A}', example: 'a^* = \\\\arg\\\\max_a Q(s, a).' },
                         ]}
@@ -473,7 +473,7 @@ export default function Topic15_EpsilonGreedy() {
                     </div>
 
                     <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 shadow-sm">
-                        <h6 className="font-bold text-xs mb-3 text-indigo-600 uppercase">The \u03B5-Greedy Solution:</h6>
+                        <h6 className="font-bold text-xs mb-3 text-indigo-600 uppercase">The ε-Greedy Solution:</h6>
                         <ul className="text-xs space-y-2 text-slate-500 list-disc pl-4">
                             <li>80% of recommendations are based on your history.</li>
                             <li>20% are random "wildcards" to see if your interests have changed.</li>

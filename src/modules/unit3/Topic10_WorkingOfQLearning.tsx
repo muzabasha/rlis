@@ -304,14 +304,14 @@ export default function Topic10_WorkingOfQLearning() {
                     <div className="p-8 bg-slate-900 rounded-[2rem] text-white space-y-6 font-mono text-xs overflow-x-auto">
                         <div className="text-primary-400"># Pseudo-code for Q-Learning</div>
                         <div className="space-y-1">
-                            <div>{"Initialize $Q(s, a)$ arbitrarily"}</div>
+                            <div>Initialize <InlineMath math="Q(s, a)" /> arbitrarily</div>
                             <div><span className="text-indigo-400">Repeat</span> (for each episode):</div>
                             <div className="pl-6">Initialize <InlineMath math="s" /></div>
                             <div className="pl-6"><span className="text-indigo-400">Repeat</span> (for each step of episode):</div>
-                            <div className="pl-12">{"Choose $a$ from $s$ using policy derived from $Q$ (e.g., $\epsilon$-greedy)"}</div>
-                            <div className="pl-12">{"Take action $a$, observe $r, s'$"}</div>
-                            <div className="pl-12">{"$Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]$"}</div>
-                            <div className="pl-12">{"$s \leftarrow s'$"}</div>
+                            <div className="pl-12">Choose <InlineMath math="a" /> from <InlineMath math="s" /> using policy derived from <InlineMath math="Q" /> (e.g., <InlineMath math="\epsilon" />-greedy)</div>
+                            <div className="pl-12">Take action <InlineMath math="a" />, observe <InlineMath math="r, s'" /></div>
+                            <div className="pl-12"><InlineMath math="Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]" /></div>
+                            <div className="pl-12"><InlineMath math="s \leftarrow s'" /></div>
                             <div className="pl-6"><span className="text-indigo-400">until</span> <InlineMath math="s" /> is terminal</div>
                         </div>
                     </div>

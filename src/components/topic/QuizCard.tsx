@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HelpCircle, CheckCircle2, RotateCcw } from 'lucide-react';
+import { formatMathText } from './MathBlock';
 
 interface QuizCardProps {
     question: string;
@@ -36,7 +37,7 @@ export default function QuizCard({ question, answer }: QuizCardProps) {
                 <div className="absolute w-full h-full backface-hidden p-6 bg-purple-50 dark:bg-purple-900/20 rounded-2xl border-2 border-purple-200 dark:border-purple-800 shadow-sm flex flex-col justify-center items-center text-center gap-3 rotate-x-180">
                     <CheckCircle2 size={24} className="text-emerald-500 opacity-80" />
                     <p className="text-sm lg:text-base text-purple-900 dark:text-purple-100 font-medium leading-relaxed">
-                        {answer}
+                        {formatMathText(answer)}
                     </p>
                     <span className="text-[10px] font-bold uppercase tracking-widest text-purple-400 mt-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <RotateCcw size={10} /> Click to Flip Back

@@ -42,6 +42,7 @@ import {
 } from 'lucide-react';
 import FeedbackMCQ from '../../components/topic/FeedbackMCQ';
 import { getTopicData } from '../../data/topicData';
+import { InlineMath } from 'react-katex';
 import { RecyclingRobotVis, GridworldVis } from '../../components/visualizers';
 
 
@@ -264,7 +265,7 @@ export default function Topic13_MDPExamples() {
                                 We've learned the math, but how do we apply it? The power of the Markov Decision Process is that it can describe almost any sequential decision problem.
                             </p>
                             <p>
-                                {"From a **Recycling Robot** deciding how to manage its battery, to an **Inventory Manager** deciding when to restock, to a **Doctor** deciding on a sequence of treatments—all these can be mapped to the 4-tuple $\\langle \\mathcal{S}, \\mathcal{A}, \\mathcal{P}, \\mathcal{R} \\rangle$."}
+                                From a <strong>Recycling Robot</strong> deciding how to manage its battery, to an <strong>Inventory Manager</strong> deciding when to restock, to a <strong>Doctor</strong> deciding on a sequence of treatments—all these can be mapped to the 4-tuple <InlineMath math="\langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R} \rangle" />.
                             </p>
                             <p>
                                 If you can define where the agent is (State), what it can do (Action), how the world changes (Dynamics), and what success looks like (Reward), you have an MDP.

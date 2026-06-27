@@ -256,10 +256,10 @@ export default function Topic8_RewardAndReturns() {
                                 In a famous psychological experiment, a child is offered a choice: eat one marshmallow right now, or wait 15 minutes and get two marshmallows.
                             </p>
                             <p>
-                                This is the core dilemma of Reinforcement Learning. If an agent only cares about the <strong>Immediate Reward</strong> ({"$R_{t+1}$"}), it might make greedy choices that ruin its long-term success. It might eat the one marshmallow now.
+                                This is the core dilemma of Reinforcement Learning. If an agent only cares about the <strong>Immediate Reward</strong> (<InlineMath math="R_{t+1}" />), it might make greedy choices that ruin its long-term success. It might eat the one marshmallow now.
                             </p>
                             <p>
-                                To fix this, we don't just optimize for the immediate reward. We optimize for the <strong>Return</strong> ({"$G_t$"})—the total sum of all rewards the agent expects to collect from now until the end of the game.
+                                To fix this, we don't just optimize for the immediate reward. We optimize for the <strong>Return</strong> (<InlineMath math="G_t" />)—the total sum of all rewards the agent expects to collect from now until the end of the game.
                             </p>
                         </div>
                     </div>
@@ -527,14 +527,14 @@ export default function Topic8_RewardAndReturns() {
 
                     <div className="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100">
                         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                            If someone offers you <InlineMath math="100 today or " />100 in ten years, you take it today. Due to inflation and investment opportunities, money in the future is worth less than money now.
+                            If someone offers you {'$'}100 today or {'$'}100 in ten years, you take it today. Due to inflation and investment opportunities, money in the future is worth less than money now.
                         </p>
                         <div className="flex items-center gap-4 text-sm font-bold">
                             <div className="flex-1 p-3 bg-red-50 text-red-600 rounded-lg text-center border border-red-100">
-                                <InlineMath math="100 in 10 years (with 5% inflation) = " />61 Today
+                                {'$'}100 in 10 years (with 5% inflation) = {'$'}61 Today
                             </div>
                             <div className="flex-1 p-3 bg-emerald-50 text-emerald-600 rounded-lg text-center border border-emerald-100">
-                                {"RL Translation: $R_{t+10} = 100$, $\\gamma = 0.95$"}
+                                RL Translation: <InlineMath math="R_{t+10} = 100" />, <InlineMath math="\gamma = 0.95" />
                             </div>
                         </div>
                     </div>

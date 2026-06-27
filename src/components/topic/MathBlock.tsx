@@ -67,7 +67,7 @@ function SafeInline({ math }: { math: string }) {
  * Returns a string if no matches, otherwise an array of text + SafeInline elements.
  */
 function formatSimpleMath(text: string, outerKey: string = ''): React.ReactNode | string {
-    const mathRegex = /(\b[a-zA-Z0-9γππαδεΦφθβλP_]+(?:_[a-zA-Z0-9+=\-{}*']+|\^[a-zA-Z0-9+=\-{}*']+)+\b|\\[a-zA-Z_]+(?:{[a-zA-Z0-9+=\-{}*']+})?|\b[QPVqv]\([a-zA-Z0-9,\s|'_^+*\-={}]+\)|[γππαδεΦφθβλ])/g;
+    const mathRegex = /(\b[a-zA-Z0-9γππαδεΦφθβλP_]+(?:_[a-zA-Z0-9+\-*']+|\^[a-zA-Z0-9+\-*']+|_\{[a-zA-Z0-9+\-*',]+\}|\^\{[a-zA-Z0-9+\-*',_']+\})+(?:\b|(?<=[\}]))|\\[a-zA-Z_]+(?:{[a-zA-Z0-9+=\-{}*']+})?|\b[QPVqv]\([a-zA-Z0-9,\s|'_^+*\-={}]+\)|[γππαδεΦφθβλ])/g;
     const parts = text.split(mathRegex);
     if (parts.length === 1) return text;
     return parts.map((part, i) =>
@@ -198,7 +198,7 @@ export function MathBlock({
                                                         </td>
                                                         <td className="py-2.5 px-3 font-semibold text-slate-700 dark:text-slate-300 text-xs">{t.name}</td>
                                                         <td className="py-2.5 px-3 text-slate-600 dark:text-slate-400 text-xs leading-relaxed">{formatMathText(t.meaning)}</td>
-                                                        <td className="py-2.5 px-3 text-slate-500 dark:text-slate-500 text-xs font-mono">{t.range ?? '—'}</td>
+                                                        <td className="py-2.5 px-3 text-slate-500 dark:text-slate-500 text-xs font-mono">{t.range ? formatMathText(t.range) : '—'}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>
@@ -224,17 +224,17 @@ export function MathBlock({
                             {numericalExample && (
                                 <div className="bg-slate-900 dark:bg-slate-950 rounded-xl p-4 text-sm">
                                     <p className="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Numerical Example</p>
-                                    <p className="text-slate-300 mb-3 text-xs">{numericalExample.setup}</p>
+                                    <p className="text-slate-300 mb-3 text-xs">{formatMathText(numericalExample.setup)}</p>
                                     <div className="space-y-1 font-mono text-xs">
                                         {numericalExample.steps.map((step, i) => (
                                             <div key={i} className="text-slate-400">
-                                                <span className="text-slate-600 mr-2">Step {i + 1}:</span>{step}
+                                                <span className="text-slate-600 mr-2">Step {i + 1}:</span>{formatMathText(step)}
                                             </div>
                                         ))}
                                     </div>
                                     <div className="mt-3 pt-3 border-t border-slate-700 flex items-center gap-2">
                                         <span className="text-xs font-bold text-emerald-400">Result:</span>
-                                        <span className="text-white text-xs font-mono">{numericalExample.result}</span>
+                                        <span className="text-white text-xs font-mono">{formatMathText(numericalExample.result)}</span>
                                     </div>
                                 </div>
                             )}
