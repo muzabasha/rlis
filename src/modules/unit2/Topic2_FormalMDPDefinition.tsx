@@ -332,7 +332,7 @@ export default function Topic2_FormalMDPDefinition() {
                         terms={[
                             { term: '\\mathcal{P}_{ss\'}^{a}', name: 'Transition Matrix Entry', meaning: 'Probability of transitioning from state s to state s\' under action a. Equivalent to P(s\'|s,a).', range: '[0,1]', example: 'P^{Search}_{High,Low} = 0.3 — 30% chance of draining battery when searching.' },
                             { term: 's', name: 'Current State (row)', meaning: 'The state the agent is currently in. Indexes the row of the transition matrix.', range: '\\mathcal{S}', example: 's = High (battery level).' },
-                            { term: "s'", name: 'Next State (column)', meaning: 'The state the environment transitions to. Indexes the column of the transition matrix.', range: '\\\\mathcal{S}', example: "s' = Low (battery drained after searching)." },
+                            { term: "s'", name: 'Next State (column)', meaning: 'The state the environment transitions to. Indexes the column of the transition matrix.', range: '\\mathcal{S}', example: "s' = Low (battery drained after searching)." },
                         ]}
                         numericalExample={{
                             setup: 'Recycling robot. Transition matrix P^{Search} (rows=current state, cols=next state):',

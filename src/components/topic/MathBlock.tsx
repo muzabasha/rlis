@@ -46,7 +46,7 @@ const ACCENT_MAP = {
 
 function SafeBlock({ math }: { math: string }) {
     try {
-        const html = katex.renderToString(math, { displayMode: true, throwOnError: false });
+        const html = katex.renderToString(math, { displayMode: true, throwOnError: false, strict: (code: string) => code === 'newLineInDisplayMode' ? 'ignore' : 'warn' });
         return <span dangerouslySetInnerHTML={{ __html: html }} />;
     } catch {
         return <code className="text-red-500 text-sm">{math}</code>;
@@ -55,7 +55,7 @@ function SafeBlock({ math }: { math: string }) {
 
 function SafeInline({ math }: { math: string }) {
     try {
-        const html = katex.renderToString(math, { displayMode: false, throwOnError: false });
+        const html = katex.renderToString(math, { displayMode: false, throwOnError: false, strict: (code: string) => code === 'newLineInDisplayMode' ? 'ignore' : 'warn' });
         return <span dangerouslySetInnerHTML={{ __html: html }} />;
     } catch {
         return <code className="text-red-500 text-xs">{math}</code>;
