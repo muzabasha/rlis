@@ -146,7 +146,7 @@ function BellmanBackupLab() {
 
                     <div className="p-4 bg-slate-900 rounded-2xl text-white text-[10px] font-mono space-y-1 z-10">
                         <div className="text-primary-400"># The Equation:</div>
-                        <div><InlineMath math="V(s) = R + \gamma \sum P(s')V(s')" /></div>
+                        <div><InlineMath math="V(s) = R + \\gamma \\sum P(s')V(s')" /></div>
                         <div><InlineMath math={`V(s) = ${reward} + ${gamma} \\times (${probs[0]} \\cdot ${nextValues[0]} + ${probs[1]} \\cdot ${nextValues[1]} + ${probs[2]} \\cdot ${nextValues[2]})`} /></div>
                     </div>
                 </div>

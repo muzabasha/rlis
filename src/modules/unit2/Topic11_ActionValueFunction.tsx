@@ -241,7 +241,7 @@ export default function Topic11_ActionValueFunction() {
                                 Imagine you are in a burning building. The State Value <InlineMath math="V(s)" /> might tell you that being in this room is bad (-100). But that doesn't help you escape. 
                             </p>
                             <p>
-                                The <strong>Action Value Function <InlineMath math="q_\pi(s, a)" /></strong>, often called the <strong>Q-Value</strong>, tells you: "If you are in this burning room, and you take the <em>Action</em> of jumping out the window, how much reward will you get?" vs "If you take the <em>Action</em> of using the fire extinguisher?"
+                                The <strong>Action Value Function <InlineMath math="q_\\pi(s, a)" /></strong>, often called the <strong>Q-Value</strong>, tells you: "If you are in this burning room, and you take the <em>Action</em> of jumping out the window, how much reward will you get?" vs "If you take the <em>Action</em> of using the fire extinguisher?"
                             </p>
                             <p>
                                 Q-values allow the agent to rank its choices. Without Q-values, the agent is like a traveler who knows they are lost but doesn't know which path to take.

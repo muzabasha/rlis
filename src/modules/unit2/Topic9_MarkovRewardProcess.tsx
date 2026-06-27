@@ -557,7 +557,7 @@ export default function Topic9_MarkovRewardProcess() {
                         </p>
                         <ul className="list-disc pl-4 space-y-2">
                             <li>At any given step, the web surfer has an 85% chance of following a link (<InlineMath math="\\gamma" />).</li>
-                            <li>They have a 15% chance of getting bored and "teleporting" to a completely random page (<InlineMath math="1 - \gamma" />).</li>
+                            <li>They have a 15% chance of getting bored and "teleporting" to a completely random page (<InlineMath math="1 - \\gamma" />).</li>
                         </ul>
                         <p className="mt-4 italic font-bold text-indigo-500">
                             By adding <InlineMath math="\\gamma" />, Google transformed the internet from a standard Markov Chain into a Markov Reward Process!

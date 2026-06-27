@@ -243,7 +243,7 @@ export default function Topic10_StateValueFunction() {
                                 They might be down a knight, but they know that from this exact <strong>State</strong>, they have a forced checkmate in 5 moves. Therefore, the <strong>Value</strong> of that specific state is extremely high.
                             </p>
                             <p>
-                                In an MDP, the <strong>State Value Function <InlineMath math="v_\pi(s)" /></strong> is the mathematical equivalent of the Grandmaster's intuition. It tells the agent exactly how much total reward it can expect to collect from now on, starting from state <InlineMath math="s" />.
+                                In an MDP, the <strong>State Value Function <InlineMath math="v_\\pi(s)" /></strong> is the mathematical equivalent of the Grandmaster's intuition. It tells the agent exactly how much total reward it can expect to collect from now on, starting from state <InlineMath math="s" />.
                             </p>
                         </div>
                     </div>
