@@ -320,7 +320,7 @@ export default function Topic4_BellmanEquationValue() {
                 <div className="space-y-6">
                     <MathBlock 
                         formula="v_\\pi(s) = \\sum_a \\pi(a|s) \\sum_{s', r} p(s', r | s, a) \\left[ r + \\gamma v_\\pi(s') \\right]"
-                        label="Bellman Expectation Equation for v_\pi"
+                        label="Bellman Expectation Equation for v_\\pi"
                         accent="blue"
                         explanation="The value of state s under policy π is the expected total return — immediate reward plus discounted value of all reachable next states."
                         interpretation="This is an averaging process: sum over all actions you might take (weighted by π), and for each action sum over all states you might land in (weighted by p). The Bellman equation is recursive — the value of s depends on the values of successor states."

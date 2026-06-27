@@ -318,10 +318,10 @@ export default function Topic10_WorkingOfQLearning() {
 
                     <MathBlock 
                         formula="\\delta_t = r_{t+1} + \\gamma \\max_a Q(s_{t+1}, a) - Q(s_t, a_t)"
-                        label="The TD Error (\delta)"
+                        label="The TD Error (\\delta)"
                         accent="blue"
                         explanation="The difference between the new target and the old estimate."
-                        interpretation="$\delta$ is the 'Surprise' signal. If $\delta > 0$, the action was better than expected. If $\delta < 0$, it was worse."
+                        interpretation="$\\delta$ is the 'Surprise' signal. If $\\delta > 0$, the action was better than expected. If $\\delta < 0$, it was worse."
                         motivation="This error signal is what drives the updates in both Q-Learning and Deep Q-Networks."
                         terms={[
                             { term: '\\delta_t', name: 'TD Error', meaning: 'The correction signal at time t.', range: '\\mathbb{R}', example: '+5 (pleasant surprise).' },
