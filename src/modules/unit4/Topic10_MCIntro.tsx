@@ -251,7 +251,7 @@ export default function Topic10_MCIntro() {
                         label="The MC Estimation Rule"
                         accent="violet"
                         explanation="Estimating the value of a state by averaging all the returns observed after visiting that state."
-                        interpretation="As the number of visits N(s) goes to infinity, the average of the observed returns is guaranteed to converge to the true value v_\pi(s). This is the Law of Large Numbers in action."
+                        interpretation="As the number of visits N(s) goes to infinity, the average of the observed returns is guaranteed to converge to the true value v_\\pi(s). This is the Law of Large Numbers in action."
                         motivation="This allows us to learn without a model. We just keep a running count of visits and a running sum of returns."
                         terms={[
                             { term: 'V(s)', name: 'Estimated Value', meaning: 'The current average of all returns seen from state s.', range: '\\\\mathbb{R}', example: 'V(room) = 8.5 after 10 visits.' },

@@ -328,7 +328,7 @@ export default function Topic15_EpsilonGreedy() {
                         motivation="Without this mathematical guarantee of exploration, Monte Carlo Control fails because it cannot satisfy the 'Assumption of Continual Exploration'. It might get stuck in a suboptimal loop forever."
                         terms={[
                             { term: '\\epsilon', name: 'Exploration Parameter', meaning: 'The probability of choosing a random action.', range: '[0, 1]', example: '\\epsilon=0.1 means 10% exploration.' },
-                            { term: '|\\\\mathcal{A}(s)|', name: 'Action Space Size', meaning: 'The number of possible actions in state s.', range: '\\\\mathbb{Z}^+', example: 'If you can move Up, Down, Left, Right, |\\\\mathcal{A}|=4.' },
+                            { term: '|\\mathcal{A}(s)|', name: 'Action Space Size', meaning: 'The number of possible actions in state s.', range: '\\\\mathbb{Z}^+', example: 'If you can move Up, Down, Left, Right, |\\\\mathcal{A}|=4.' },
                             { term: 'a^*', name: 'Greedy Action', meaning: 'The action that currently has the highest estimated Q-value.', range: '\\\\mathcal{A}', example: 'a^* = \\\\arg\\\\max_a Q(s, a).' },
                         ]}
                         numericalExample={{

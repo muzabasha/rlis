@@ -328,10 +328,10 @@ export default function Topic9_EnvironmentsDetailed() {
                 <div className="space-y-6">
                     <MathBlock 
                         formula="\\theta_{t+1} = \\theta_t + \\alpha \\cdot \\text{Feedback}(P_t, \\text{Critic})"
-                        label="The Learning Update (\theta)"
+                        label="The Learning Update (\\theta)"
                         accent="blue"
                         explanation="How the agent's internal parameters evolve over time."
-                        interpretation="The agent's 'Knowledge' (\theta) is updated by a small step (\alpha) based on the feedback from the Critic. If the Feedback is positive, the current strategy is reinforced. If negative, it's corrected."
+                        interpretation="The agent's 'Knowledge' (\\theta) is updated by a small step (\\alpha) based on the feedback from the Critic. If the Feedback is positive, the current strategy is reinforced. If negative, it's corrected."
                         motivation="This formula is the mathematical engine of all Reinforcement Learning. It's how experience is converted into intelligence."
                         terms={[
                             { term: '\\alpha', name: 'Learning Rate', meaning: 'How much the agent trusts new experience over old knowledge.', range: '(0, 1]', example: '0.01 for stable learning.' },

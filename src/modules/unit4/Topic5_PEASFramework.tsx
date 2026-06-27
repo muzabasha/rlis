@@ -326,7 +326,7 @@ export default function Topic5_PEASFramework() {
                 <div className="space-y-6">
                     <MathBlock 
                         formula="\\pi^*(s) = \\arg\\max_a \\mathbb{E}[P \\mid S, A, E]"
-                        label="The Optimal PEAS Policy (\pi^*)"
+                        label="The Optimal PEAS Policy (\\pi^*)"
                         accent="blue"
                         explanation="Choosing the action 'a' that results in the highest expected performance 'P'."
                         interpretation="The agent's 'Intelligence' is its ability to map its perceptions (S) to actions (A) that achieve the goal (P) in its world (E). The math is the same whether the agent is a chess engine or a medical bot."

@@ -304,8 +304,8 @@ export default function Topic3_TraditionalVsIS() {
                         formula="\\hat{y} = f(x, \\theta)"
                         label="Adaptive Logic"
                         accent="violet"
-                        explanation="Output depends on input and learned parameters \theta."
-                        interpretation="\theta is updated via experience. The system 'tunes' itself to handle new variations of x."
+                        explanation="Output depends on input and learned parameters \\theta."
+                        interpretation="\\theta is updated via experience. The system 'tunes' itself to handle new variations of x."
                         motivation="Perfect for vision, speech, and robotics."
                         terms={[]}
                     />
