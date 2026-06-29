@@ -66,13 +66,32 @@ function SafeInline({ math }: { math: string }) {
  * Applies the original math-term regex to a plain text string.
  * Returns a string if no matches, otherwise an array of text + SafeInline elements.
  */
+const GREEK_MAP: Record<string, string> = {
+    'γ': '\\gamma',
+    'π': '\\pi',
+    'α': '\\alpha',
+    'δ': '\\delta',
+    'ε': '\\varepsilon',
+    'Φ': '\\Phi',
+    'φ': '\\phi',
+    'θ': '\\theta',
+    'β': '\\beta',
+    'λ': '\\lambda'
+};
+
 function formatSimpleMath(text: string, outerKey: string = ''): React.ReactNode | string {
     const mathRegex = /(\b[a-zA-Z0-9γππαδεΦφθβλP_]+(?:_[a-zA-Z0-9+\-*']+|\^[a-zA-Z0-9+\-*']+|_\{[a-zA-Z0-9+\-*',]+\}|\^\{[a-zA-Z0-9+\-*',_']+\})+(?:\b|(?<=[\}]))|\\[a-zA-Z_]+(?:{[a-zA-Z0-9+=\-{}*']+})?|\b[QPVqv]\([a-zA-Z0-9,\s|'_^+*\-={}]+\)|[γππαδεΦφθβλ])/g;
     const parts = text.split(mathRegex);
     if (parts.length === 1) return text;
-    return parts.map((part, i) =>
-        i % 2 === 0 ? part : <SafeInline key={`${outerKey}m${i}`} math={part} />
-    );
+    return parts.map((part, i) => {
+        if (i % 2 === 0) return part;
+        let mathStr = part;
+        // Replace all literal Greek letters with their LaTeX equivalents
+        for (const [literal, latex] of Object.entries(GREEK_MAP)) {
+            mathStr = mathStr.replace(new RegExp(literal, 'g'), latex);
+        }
+        return <SafeInline key={`${outerKey}m${i}`} math={mathStr} />;
+    });
 }
 
 /**
