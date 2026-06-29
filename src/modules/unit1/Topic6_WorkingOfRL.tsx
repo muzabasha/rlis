@@ -398,13 +398,13 @@ export default function Topic6_WorkingOfRL() {
                             { term: 'R_1', name: 'First Reward', meaning: 'The first scalar reward emitted by the environment.', range: '\\mathbb{R}', example: '-1 step penalty.' }
                         ]}
                         numericalExample={{
-                            setup: 'An agent starts at state 0, takes action 1, receives reward 0, transitions to state 2, takes action 0, receives reward 10.',
+                            setup: 'An agent starts at state $0$, takes action $1$, receives reward $0$, transitions to state $2$, takes action $0$, receives reward $10$.',
                             steps: [
-                                'Start: State S_0 = 0',
-                                'Action: A_0 = 1, Reward: R_1 = 0, Next State: S_1 = 2',
-                                'Action: A_1 = 0, Reward: R_2 = 10, Next State: S_2 = 3'
+                                'Start: State $S_0 = 0$',
+                                'Action: $A_0 = 1$, Reward: $R_1 = 0$, Next State: $S_1 = 2$',
+                                'Action: $A_1 = 0$, Reward: $R_2 = 10$, Next State: $S_2 = 3$'
                             ],
-                            result: 'Interaction prefix trajectory: (0, 1, 0, 2, 0, 10, 3)'
+                            result: 'Interaction prefix trajectory: $(0, 1, 0, 2, 0, 10, 3)$'
                         }}
                     />
 
@@ -423,11 +423,11 @@ export default function Topic6_WorkingOfRL() {
                             { term: '\\mathcal{R}', name: 'Reward Space', meaning: 'The set of possible reward values, bounded within real numbers.', range: 'Subset of \\mathbb{R}', example: '{-1, 0, 100}.' }
                         ]}
                         numericalExample={{
-                            setup: 'An agent is at grid corner cell (0, 0). Movement options are limited compared to center cells.',
+                            setup: 'An agent is at grid corner cell $(0, 0)$. Movement options are limited compared to center cells.',
                             steps: [
-                                'State S_t = (0, 0)',
-                                'Available actions: \\mathcal{A}((0, 0)) = \\{down, right\\} (cannot go up or left)',
-                                'Action selected: A_t = right \\in \\mathcal{A}((0,0))'
+                                'State $S_t = (0, 0)$',
+                                'Available actions: $\\mathcal{A}((0, 0)) = \\{\\text{down}, \\text{right}\\}$ (cannot go up or left)',
+                                'Action selected: $A_t = \\text{right} \\in \\mathcal{A}((0,0))$'
                             ],
                             result: 'Action choice is mathematically valid within state constraints.'
                         }}
@@ -528,7 +528,7 @@ export default function Topic6_WorkingOfRL() {
                                 "Task: Choose a skill you recently learned (e.g., Cooking, Gaming, or a Sport).",
                                 "Write down one full loop: What was your 'Observation' (State)? What was your 'Attempt' (Action)?",
                                 "What was the 'Result' (Reward)? How did you 'Change' (Next State/Policy)?",
-                                "Self-Evaluation: Did you use high γ (long-term focus) or low γ (short-term fun)?"
+                                "Self-Evaluation: Did you use high \\gamma (long-term focus) or low \\gamma (short-term fun)?"
                             ],
                             inputs: "Personal learning memories",
                             outputs: "Individual Skill-Loop Diagram",

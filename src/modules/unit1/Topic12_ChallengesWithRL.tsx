@@ -349,14 +349,14 @@ export default function Topic12_ChallengesWithRL() {
                             { term: '\\gamma', name: 'Discount Factor', meaning: 'Discount factor determining the weight of future potentials.', range: '[0, 1]', example: '0.9' }
                         ]}
                         numericalExample={{
-                            setup: 'Let original reward R = -1. Choose potential values \\Phi(s) = 5, \\Phi(s\') = 6, and discount factor \\gamma = 0.9.',
+                            setup: 'Let original reward $R = -1$. Choose potential values $\\Phi(s) = 5$, $\\Phi(s\') = 6$, and discount factor $\\gamma = 0.9$.',
                             steps: [
-                                'Original Reward: R(s,a,s\') = -1',
-                                'Discounted potential of next state: \\gamma \\Phi(s\') = 0.9 \\times 6 = 5.4',
-                                'Current state potential contribution: -\\Phi(s) = -5',
-                                'Compute shaped reward: -1 + 5.4 - 5 = -0.6'
+                                'Original Reward: $R(s,a,s\') = -1$',
+                                'Discounted potential of next state: $\\gamma \\Phi(s\') = 0.9 \\times 6 = 5.4$',
+                                'Current state potential contribution: $-\\Phi(s) = -5$',
+                                'Compute shaped reward: $-1 + 5.4 - 5 = -0.6$'
                             ],
-                            result: 'Shaped Reward R\' = -0.6'
+                            result: 'Shaped Reward $R\' = -0.6$'
                         }}
                     />
 
@@ -375,13 +375,13 @@ export default function Topic12_ChallengesWithRL() {
                             { term: 'n', name: 'Dimensions Count', meaning: 'The number of features or variables defining the state.', range: '\\mathbb{Z}^+', example: '6 joint angles.' }
                         ]}
                         numericalExample={{
-                            setup: 'A robot joint controller has n = 6 joints, each discretized into d = 10 bins.',
+                            setup: 'A robot joint controller has $n = 6$ joints, each discretized into $d = 10$ bins.',
                             steps: [
-                                'Compute size: d^n = 10^6 = 1,000,000 discrete states.',
-                                'If features increase to n = 10 joints: 10^{10} = 10,000,000,000 states.',
+                                'Compute size: $d^n = 10^6 = 1,000,000$ discrete states.',
+                                'If features increase to $n = 10$ joints: $10^{10} = 10,000,000,000$ states.',
                                 'Exponential growth makes storing a Q-table impossible.'
                             ],
-                            result: 'State Space size grows from 1 million to 10 billion states.'
+                            result: 'State Space size grows from $1$ million to $10$ billion states.'
                         }}
                     />
 

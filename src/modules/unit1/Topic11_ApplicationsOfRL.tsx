@@ -358,11 +358,11 @@ export default function Topic11_ApplicationsOfRL() {
                         numericalExample={{
                             setup: 'An ad recommender agent shows 1000 ads (impressions) resulting in 15 user clicks.',
                             steps: [
-                                'Impressions count = 1000',
-                                'Clicks count = 15',
-                                'Divide clicks by impressions: 15 / 1000 = 0.015'
+                                'Impressions count = $1000$',
+                                'Clicks count = $15$',
+                                'Divide clicks by impressions: $15 / 1000 = 0.015$'
                             ],
-                            result: 'CTR(t) = 1.5% click-through rate.'
+                            result: '$CTR(t) = 1.5\\%$ click-through rate.'
                         }}
                     />
 

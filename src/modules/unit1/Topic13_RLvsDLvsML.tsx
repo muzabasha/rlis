@@ -309,12 +309,12 @@ export default function Topic13_RLvsDLvsML() {
                             { term: 'y_i', name: 'Ground Truth Label', meaning: 'The actual target label corresponding to input features x_i.', range: 'Label Space', example: 'Actual target value.' }
                         ]}
                         numericalExample={{
-                            setup: 'Let actual target y_i = 10, model prediction f_\\theta(x_i) = 8. (N = 1)',
+                            setup: 'Let actual target $y_i = 10$, model prediction $f_\\theta(x_i) = 8$. ($N = 1$)',
                             steps: [
-                                'Prediction error = 10 - 8 = 2',
-                                'Squared error = 2^2 = 4'
+                                'Prediction error = $10 - 8 = 2$',
+                                'Squared error = $2^2 = 4$'
                             ],
-                            result: 'Loss contribution = 4'
+                            result: 'Loss contribution = $4$'
                         }}
                     />
 
@@ -333,13 +333,13 @@ export default function Topic13_RLvsDLvsML() {
                             { term: '\\mathcal{D}', name: 'Replay Buffer', meaning: 'Experience dataset storing tuples of transitions (s, a, r, s\') for training.', range: 'Buffer Space', example: 'Transition history.' }
                         ]}
                         numericalExample={{
-                            setup: 'Replay sample transition outputs r = 1, discount factor \\gamma = 0.9, target network max next-state Q-value = 10, and current Q-value estimate = 9.',
+                            setup: 'Replay sample transition outputs $r = 1$, discount factor $\\gamma = 0.9$, target network max next-state Q-value = $10$, and current Q-value estimate = $9$.',
                             steps: [
-                                'Compute TD Target = r + \\gamma \\max Q(s\', a\'; \\theta^-) = 1 + 0.9 \\times 10 = 10',
-                                'Subtract current estimate: 10 - Q(s, a; \\theta) = 10 - 9 = 1',
-                                'Squared difference = 1^2 = 1'
+                                'Compute TD Target = $r + \\gamma \\max Q(s\', a\'; \\theta^-) = 1 + 0.9 \\times 10 = 10$',
+                                'Subtract current estimate: $10 - Q(s, a; \\theta) = 10 - 9 = 1$',
+                                'Squared difference = $1^2 = 1$'
                             ],
-                            result: 'DQN Loss contribution = 1'
+                            result: 'DQN Loss contribution = $1$'
                         }}
                     />
 

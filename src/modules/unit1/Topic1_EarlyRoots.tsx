@@ -168,8 +168,8 @@ const QA_DATA = [
     },
     {
         type: 'Numerical', q: 'If a cat takes 120, 80, 45, 20, 12 seconds to escape over 5 trials, calculate the learning rate (improvement per trial).',
-        a: 'Improvement from trial 1 to 5: 120 - 12 = 108 seconds total improvement. Average improvement per trial: 108 / 4 = 27 seconds/trial. Percentage improvement: (108/120) × 100 = 90% improvement. Alternatively, fit an exponential decay: T(n) ≈ T₀ × e^(-λn). From T(1)=120, T(5)=12: 12 = 120 × e^(-4λ) → e^(-4λ) = 0.1 → λ = ln(10)/4 ≈ 0.576. This exponential decay mirrors how Q-values converge in RL.',
-        keyPoints: ['Learning shows exponential decay pattern', 'λ = learning rate parameter', 'Same math as ε-decay in RL', 'Performance plateau is normal'],
+        a: 'Improvement from trial 1 to 5: $120 - 12 = 108$ seconds total improvement. Average improvement per trial: $108 / 4 = 27$ seconds/trial. Percentage improvement: $(108/120) \\times 100 = 90\\%$ improvement. Alternatively, fit an exponential decay: $T(n) \\approx T_0 \\times e^{-\\lambda n}$. From $T(1)=120$, $T(5)=12$: $12 = 120 \\times e^{-4\\lambda} \\to e^{-4\\lambda} = 0.1 \\to \\lambda = \\ln(10)/4 \\approx 0.576$. This exponential decay mirrors how Q-values converge in RL.',
+        keyPoints: ['Learning shows exponential decay pattern', '$\\lambda$ = learning rate parameter', 'Same math as $\\varepsilon$-decay in RL', 'Performance plateau is normal'],
         mistake: 'Using linear interpolation — learning curves are exponential, not linear.',
         tip: 'Learning curves in biology and RL both follow exponential decay: fast improvement early, slower later.'
     },
@@ -360,13 +360,13 @@ export default function Topic1_EarlyRoots() {
                             { term: 'S_{t+1}', name: 'Next State', meaning: 'The state transitioned into after taking action A_t.', range: 'State Space \\mathcal{S}', example: 'Grid cell position (1,2).' }
                         ]}
                         numericalExample={{
-                            setup: 'Gridworld agent starts at cell (1, 1) and wants to reach (1, 2).',
+                            setup: 'Gridworld agent starts at cell $(1, 1)$ and wants to reach $(1, 2)$.',
                             steps: [
-                                'State S_t = (1, 1)',
-                                'Agent chooses Action A_t = Move Right',
-                                'Environment moves agent to next cell S_{t+1} = (1, 2) and gives reward R_{t+1} = -1'
+                                'State $S_t = (1, 1)$',
+                                'Agent chooses Action $A_t = \\text{Move Right}$',
+                                'Environment moves agent to next cell $S_{t+1} = (1, 2)$ and gives reward $R_{t+1} = -1$'
                             ],
-                            result: 'Interaction tuple ((1,1), Move Right, -1, (1,2)) is generated.'
+                            result: 'Interaction tuple $((1,1), \\text{Move Right}, -1, (1,2))$ is generated.'
                         }}
                     />
                     <RLInteractionCycleVis />
@@ -384,13 +384,13 @@ export default function Topic1_EarlyRoots() {
                             { term: '\\gamma', name: 'Discount Factor', meaning: 'Determines the present value of future rewards.', range: '[0, 1]', example: '0.9' }
                         ]}
                         numericalExample={{
-                            setup: 'Discount factor \\gamma = 0.9, rewards = [10, 10, 10] for next 3 steps, 0 thereafter.',
+                            setup: 'Discount factor $\\gamma = 0.9$, rewards = $[10, 10, 10]$ for next 3 steps, 0 thereafter.',
                             steps: [
-                                'Step 1: R_{t+1} = 10',
-                                'Step 2: \\gamma R_{t+2} = 0.9 \\times 10 = 9',
-                                'Step 3: \\gamma^2 R_{t+3} = 0.81 \\times 10 = 8.1'
+                                'Step 1: $R_{t+1} = 10$',
+                                'Step 2: $\\gamma R_{t+2} = 0.9 \\times 10 = 9$',
+                                'Step 3: $\\gamma^2 R_{t+3} = 0.81 \\times 10 = 8.1$'
                             ],
-                            result: 'G_t = 10 + 9 + 8.1 = 27.1'
+                            result: '$G_t = 10 + 9 + 8.1 = 27.1$'
                         }}
                     />
                     <DiscountCurveVis />

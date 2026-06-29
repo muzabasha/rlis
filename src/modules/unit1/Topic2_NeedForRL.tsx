@@ -345,13 +345,13 @@ export default function Topic2_NeedForRL() {
                             { term: 'R_{t+1}', name: 'Reward', meaning: 'Immediate scalar feedback from the environment.', range: '\\mathbb{R}', example: '10' }
                         ]}
                         numericalExample={{
-                            setup: 'Two policies are evaluated. Policy \\pi_1 yields expected return of 45; policy \\pi_2 yields 52.',
+                            setup: 'Two policies are evaluated. Policy $\\pi_1$ yields expected return of $45$; policy $\\pi_2$ yields $52$.',
                             steps: [
-                                'Expected Return(\\pi_1) = 45',
-                                'Expected Return(\\pi_2) = 52',
-                                'Comparing values: 52 > 45'
+                                '$\\text{Expected Return}(\\pi_1) = 45$',
+                                '$\\text{Expected Return}(\\pi_2) = 52$',
+                                'Comparing values: $52 > 45$'
                             ],
-                            result: '\\pi^* = \\pi_2'
+                            result: '$\\pi^* = \\pi_2$'
                         }}
                     />
                     <DiscountCurveVis formula="\\pi^* = \\arg\\max_\\pi \\mathbb{E}_\\pi[\\sum \\gamma^t R]" accent="blue" />
@@ -370,13 +370,13 @@ export default function Topic2_NeedForRL() {
                             { term: 'G_{t+1}', name: 'Next Return', meaning: 'The return starting from time step t+1.', range: '\\mathbb{R}', example: '15' }
                         ]}
                         numericalExample={{
-                            setup: 'Immediate reward R_{t+1} = 5, discount factor \\gamma = 0.9, next-step return G_{t+1} = 15.',
+                            setup: 'Immediate reward $R_{t+1} = 5$, discount factor $\\gamma = 0.9$, next-step return $G_{t+1} = 15$.',
                             steps: [
-                                'Immediate reward: 5',
-                                'Discounted future return: 0.9 \\times 15 = 13.5',
-                                'Sum: 5 + 13.5 = 18.5'
+                                'Immediate reward: $5$',
+                                'Discounted future return: $0.9 \\times 15 = 13.5$',
+                                'Sum: $5 + 13.5 = 18.5$'
                             ],
-                            result: 'G_t = 18.5'
+                            result: '$G_t = 18.5$'
                         }}
                     />
                     <RecursiveReturnVis />

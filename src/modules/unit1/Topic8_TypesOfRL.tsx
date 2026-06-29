@@ -343,13 +343,13 @@ export default function Topic8_TypesOfRL() {
                             { term: '\\delta_t^{\\text{SARSA}}', name: 'SARSA TD Error', meaning: 'The discrepancy between the TD target and current estimate.', range: '\\mathbb{R}', example: '2.8' }
                         ]}
                         numericalExample={{
-                            setup: 'Initialize Q(S_t, A_t) = 10. Given step outputs R_{t+1} = 2, next state Q(S_{t+1}, A_{t+1}) = 12, discount factor \\gamma = 0.9, learning rate \\alpha = 0.1.',
+                            setup: 'Initialize $Q(S_t, A_t) = 10$. Given step outputs $R_{t+1} = 2$, next state $Q(S_{t+1}, A_{t+1}) = 12$, discount factor $\\gamma = 0.9$, learning rate $\\alpha = 0.1$.',
                             steps: [
-                                'Compute TD Target = R_{t+1} + \\gamma Q(S_{t+1}, A_{t+1}) = 2 + 0.9 \\times 12 = 13.8',
-                                'Compute TD Error = 13.8 - Q(S_t, A_t) = 13.8 - 10 = 3.8',
-                                'Update Q-value = 10 + 0.1 \\times 3.8 = 10.38'
+                                'Compute TD Target = $R_{t+1} + \\gamma Q(S_{t+1}, A_{t+1}) = 2 + 0.9 \\times 12 = 13.8$',
+                                'Compute TD Error = $13.8 - Q(S_t, A_t) = 13.8 - 10 = 3.8$',
+                                'Update Q-value = $10 + 0.1 \\times 3.8 = 10.38$'
                             ],
-                            result: 'New Q(S_t, A_t) = 10.38'
+                            result: 'New $Q(S_t, A_t) = 10.38$'
                         }}
                     />
 
@@ -367,13 +367,13 @@ export default function Topic8_TypesOfRL() {
                             { term: '\\delta_t^{\\text{Q-learning}}', name: 'Q-Learning TD Error', meaning: 'The discrepancy between the greedy TD target and current estimate.', range: '\\mathbb{R}', example: '5.5' }
                         ]}
                         numericalExample={{
-                            setup: 'Initialize Q(S_t, A_t) = 10. Given step outputs R_{t+1} = 2, next state maximum Q(S_{t+1}, a\') = 15, discount factor \\gamma = 0.9, learning rate \\alpha = 0.1.',
+                            setup: 'Initialize $Q(S_t, A_t) = 10$. Given step outputs $R_{t+1} = 2$, next state maximum $\\max_{a\'} Q(S_{t+1}, a\') = 15$, discount factor $\\gamma = 0.9$, learning rate $\\alpha = 0.1$.',
                             steps: [
-                                'Compute TD Target = R_{t+1} + \\gamma \\max Q(S_{t+1}, a\') = 2 + 0.9 \\times 15 = 15.5',
-                                'Compute TD Error = 15.5 - Q(S_t, A_t) = 15.5 - 10 = 5.5',
-                                'Update Q-value = 10 + 0.1 \\times 5.5 = 10.55'
+                                'Compute TD Target = $R_{t+1} + \\gamma \\max_{a\'} Q(S_{t+1}, a\') = 2 + 0.9 \\times 15 = 15.5$',
+                                'Compute TD Error = $15.5 - Q(S_t, A_t) = 15.5 - 10 = 5.5$',
+                                'Update Q-value = $10 + 0.1 \\times 5.5 = 10.55$'
                             ],
-                            result: 'New Q(S_t, A_t) = 10.55'
+                            result: 'New $Q(S_t, A_t) = 10.55$'
                         }}
                     />
                 </div>
@@ -432,7 +432,7 @@ export default function Topic8_TypesOfRL() {
                                 "Guided Calculation: Step 1 (SARSA) uses 2.0. Step 2 (Q-Learning) uses 8.0.",
                                 "Discuss: 'Why did Q-Learning update more aggressively?'"
                             ],
-                            inputs: "Q-table values and α/γ hyperparameters",
+                            inputs: "Q-table values and \\alpha/\\gamma hyperparameters",
                             outputs: "Parallel Q-update calculations on the board",
                             rubrics: ["Numerical accuracy", "Explanation of 'max' vs 'actual'", "Classroom participation"],
                             outcomes: "Students master the fundamental mathematical difference between On-policy and Off-policy logic.",

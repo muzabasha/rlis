@@ -370,13 +370,13 @@ export default function Topic5_EnvironmentTypes() {
                             { term: 'A_t', name: 'Action Variable', meaning: 'Action chosen at step t.', range: 'Action Space \\mathcal{A}', example: 'Move right.' }
                         ]}
                         numericalExample={{
-                            setup: 'A robot tries to move forward. In a noisy environment, it succeeds with 80% probability, slips left with 10%, slips right with 10%.',
+                            setup: 'A robot tries to move forward. In a noisy environment, it succeeds with $80\\%$ probability, slips left with $10\\%$, slips right with $10\\%$.',
                             steps: [
-                                '\\mathcal{P}(forward\\_cell \\mid current\\_cell, move\\_forward) = 0.8',
-                                '\\mathcal{P}(left\\_cell \\mid current\\_cell, move\\_forward) = 0.1',
-                                '\\mathcal{P}(right\\_cell \\mid current\\_cell, move\\_forward) = 0.1'
+                                '$\\mathcal{P}(\\text{forward\\_cell} \\mid \\text{current\\_cell}, \\text{move\\_forward}) = 0.8$',
+                                '$\\mathcal{P}(\\text{left\\_cell} \\mid \\text{current\\_cell}, \\text{move\\_forward}) = 0.1$',
+                                '$\\mathcal{P}(\\text{right\\_cell} \\mid \\text{current\\_cell}, \\text{move\\_forward}) = 0.1$'
                             ],
-                            result: 'Sum of next-state probabilities = 0.8 + 0.1 + 0.1 = 1.0.'
+                            result: 'Sum of next-state probabilities = $0.8 + 0.1 + 0.1 = 1.0$.'
                         }}
                     />
 
@@ -395,13 +395,13 @@ export default function Topic5_EnvironmentTypes() {
                             { term: 'r(s,a,s\')', name: 'Transition Reward', meaning: 'Scalar reward obtained during transition from s to s\' via action a.', range: '\\mathbb{R}', example: '10' }
                         ]}
                         numericalExample={{
-                            setup: 'Let action choice lead to goal (+10 reward) with 80% probability, or wall collision (-5 reward) with 20% probability.',
+                            setup: 'Let action choice lead to goal (+$10$ reward) with $80\\%$ probability, or wall collision (-$5$ reward) with $20\\%$ probability.',
                             steps: [
-                                'Probability of goal = 0.8, reward = 10',
-                                'Probability of wall = 0.2, reward = -5',
-                                'Expected reward = 0.8 \\times 10 + 0.2 \\times (-5) = 8 - 1 = 7'
+                                'Probability of goal = $0.8$, reward = $10$',
+                                'Probability of wall = $0.2$, reward = $-5$',
+                                'Expected reward = $0.8 \\times 10 + 0.2 \\times (-5) = 8 - 1 = 7$'
                             ],
-                            result: '\\mathcal{R}(s,a) = 7.0'
+                            result: '$\\mathcal{R}(s,a) = 7.0$'
                         }}
                     />
 

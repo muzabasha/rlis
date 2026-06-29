@@ -335,12 +335,12 @@ export default function Topic7_ApproachesToRL() {
                             { term: 'G_t', name: 'Discounted Return', meaning: 'The discounted cumulative reward variable.', range: '\\mathbb{R}', example: 'trajectory return.' }
                         ]}
                         numericalExample={{
-                            setup: 'Let taking action a in state s yield expected returns of 100.',
+                            setup: 'Let taking action $a$ in state $s$ yield expected returns of $100$.',
                             steps: [
-                                'Expected Return = 100',
-                                'Approximate Q(s,a) \\approx Expected Return'
+                                'Expected Return = $100$',
+                                'Approximate $Q(s,a) \\approx \\text{Expected Return}$'
                             ],
-                            result: 'Q(s,a) = 100'
+                            result: '$Q(s,a) = 100$'
                         }}
                     />
 
@@ -359,14 +359,14 @@ export default function Topic7_ApproachesToRL() {
                             { term: '\\exp', name: 'Exponential', meaning: 'Used to ensure positive probabilities and normalize preferences.', range: 'Function', example: 'e^x.' }
                         ]}
                         numericalExample={{
-                            setup: 'Two actions available in state s. Parameter-feature products are: \\theta_1^\\top \\phi(s) = 2.0, \\theta_2^\\top \\phi(s) = 1.0.',
+                            setup: 'Two actions available in state $s$. Parameter-feature products are: $\\theta_1^\\top \\phi(s) = 2.0$, $\\theta_2^\\top \\phi(s) = 1.0$.',
                             steps: [
-                                'Numerator action 1: e^{2.0} \\approx 7.39',
-                                'Numerator action 2: e^{1.0} \\approx 2.72',
-                                'Sum of numerators = 7.39 + 2.72 = 10.11',
-                                'P(action 1) = 7.39 / 10.11 = 0.73, P(action 2) = 2.72 / 10.11 = 0.27'
+                                'Numerator action 1: $e^{2.0} \\approx 7.39$',
+                                'Numerator action 2: $e^{1.0} \\approx 2.72$',
+                                'Sum of numerators = $7.39 + 2.72 = 10.11$',
+                                '$\\mathcal{P}(\\text{action } 1) = 7.39 / 10.11 = 0.73$, $\\mathcal{P}(\\text{action } 2) = 2.72 / 10.11 = 0.27$'
                             ],
-                            result: '\\pi_\\theta(action 1 \\mid s) \\approx 0.73'
+                            result: '$\\pi_\\theta(\\text{action } 1 \\mid s) \\approx 0.73$'
                         }}
                     />
 
@@ -385,12 +385,12 @@ export default function Topic7_ApproachesToRL() {
                             { term: '\\hat{r}_{t+1}', name: 'Predicted Reward', meaning: 'The reward predicted for the transition.', range: '\\mathbb{R}', example: 'Predicted +1.0.' }
                         ]}
                         numericalExample={{
-                            setup: 'Model inputs S_t = 5, A_t = 1. The model has weights \\phi.',
+                            setup: 'Model inputs $S_t = 5$, $A_t = 1$. The model has weights $\\phi$.',
                             steps: [
-                                'Model takes input features of state 5 and action 1',
-                                'Model outputs predicted next state 6 and expected reward 0.5'
+                                'Model takes input features of state $5$ and action $1$',
+                                'Model outputs predicted next state $6$ and expected reward $0.5$'
                             ],
-                            result: '\\hat{s}_{t+1} = 6, \\hat{r}_{t+1} = 0.5'
+                            result: '$\\hat{s}_{t+1} = 6, \\hat{r}_{t+1} = 0.5$'
                         }}
                     />
 

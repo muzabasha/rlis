@@ -8,7 +8,7 @@ import {
 import SectionWrapper from '../../components/topic/SectionWrapper';
 import InfoCard from '../../components/topic/InfoCard';
 import { MathBlock,
-    SymbolTable } from '../../components/topic/MathBlock';
+    SymbolTable, IM } from '../../components/topic/MathBlock';
 import { SoftmaxVis, DiscountCurveVis, ValueDistributionVis, BellmanConvergenceVis, TransitionProbVis } from '../../components/visualizers';
 import ActivityLevels from '../../components/topic/ActivityLevels';
 import {
@@ -100,7 +100,7 @@ function GammaExplorer() {
             <div className="flex justify-between items-center">
                 <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
                     <TrendingUp size={18} className="text-primary-500" />
-                    The Visionary Agent: Exploring γ (Gamma)
+                    The Visionary Agent: Exploring <IM m="\\gamma" /> (Gamma)
                 </h4>
                 <div className="px-3 py-1 bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 rounded-full text-xs font-bold">
                     Interactive
@@ -110,7 +110,7 @@ function GammaExplorer() {
             <div className="space-y-4">
                 <div className="flex flex-col gap-2">
                     <div className="flex justify-between text-sm">
-                        <span className="font-medium text-slate-600 dark:text-slate-400">Discount Factor (γ): <span className="text-primary-600 font-bold">{gamma}</span></span>
+                        <span className="font-medium text-slate-600 dark:text-slate-400">Discount Factor (<IM m="\\gamma" />): <span className="text-primary-600 font-bold">{gamma}</span></span>
                         <span className="text-xs text-slate-400 italic">
                             {gamma === 0 ? "Myopic (Only now)" : gamma === 1 ? "Infinite (All futures equal)" : gamma < 0.5 ? "Short-sighted" : "Far-sighted"}
                         </span>
@@ -445,12 +445,12 @@ export default function Topic4_ElementsOfRL() {
                         numericalExample={{
                             setup: 'A grid state with 4 actions where the agent has a high preference to move right.',
                             steps: [
-                                '\\pi(right \\mid s) = 0.8',
-                                '\\pi(left \\mid s) = 0.067',
-                                '\\pi(up \\mid s) = 0.067',
-                                '\\pi(down \\mid s) = 0.067'
+                                '$\\pi(\\text{right} \\mid s) = 0.8$',
+                                '$\\pi(\\text{left} \\mid s) = 0.067$',
+                                '$\\pi(\\text{up} \\mid s) = 0.067$',
+                                '$\\pi(\\text{down} \\mid s) = 0.067$'
                             ],
-                            result: 'Valid probability distribution summing to 1.0.'
+                            result: 'Valid probability distribution summing to $1.0$.'
                         }}
                     />
                     <SoftmaxVis formula="\\pi(a \\mid s) = \\Pr(A_t = a \\mid S_t = s)" label="Policy — The Agent's Strategy" accent="blue" />
@@ -468,13 +468,13 @@ export default function Topic4_ElementsOfRL() {
                             { term: 'R_{t+k+1}', name: 'Future Reward', meaning: 'Immediate reward received at step t+k+1.', range: '\\mathbb{R}', example: '3' }
                         ]}
                         numericalExample={{
-                            setup: 'Let discount factor \\gamma = 0.95, rewards are R_{t+1} = 1, R_{t+2} = 2, R_{t+3} = 3.',
+                            setup: 'Let discount factor $\\gamma = 0.95$, rewards are $R_{t+1} = 1$, $R_{t+2} = 2$, $R_{t+3} = 3$.',
                             steps: [
-                                'R_{t+1} = 1.0',
-                                '\\gamma R_{t+2} = 0.95 \\times 2 = 1.9',
-                                '\\gamma^2 R_{t+3} = 0.9025 \\times 3 = 2.7075'
+                                '$R_{t+1} = 1.0$',
+                                '$\\gamma R_{t+2} = 0.95 \\times 2 = 1.9$',
+                                '$\\gamma^2 R_{t+3} = 0.9025 \\times 3 = 2.7075$'
                             ],
-                            result: 'G_t = 1 + 1.9 + 2.7075 = 5.6075'
+                            result: '$G_t = 1 + 1.9 + 2.7075 = 5.6075$'
                         }}
                     />
                     <DiscountCurveVis />
@@ -492,13 +492,13 @@ export default function Topic4_ElementsOfRL() {
                             { term: 'G_t', name: 'Discounted Return', meaning: 'Discounted cumulative reward variable.', range: '\\mathbb{R}', example: 'trajectory return.' }
                         ]}
                         numericalExample={{
-                            setup: 'Starting state s = A. Expected returns under policy are 10 (50% probability) or 20 (50% probability).',
+                            setup: 'Starting state $s = A$. Expected returns under policy are $10$ ($50\\%$ probability) or $20$ ($50\\%$ probability).',
                             steps: [
-                                'Outcome 1: Return = 10, Prob = 0.5',
-                                'Outcome 2: Return = 20, Prob = 0.5',
-                                'Expected Return = 0.5 \\times 10 + 0.5 \\times 20 = 15'
+                                'Outcome 1: Return = $10$, Prob = $0.5$',
+                                'Outcome 2: Return = $20$, Prob = $0.5$',
+                                'Expected Return = $0.5 \\times 10 + 0.5 \\times 20 = 15$'
                             ],
-                            result: 'v_\\pi(A) = 15'
+                            result: '$v_\\pi(A) = 15$'
                         }}
                     />
                     <ValueDistributionVis />
@@ -538,8 +538,8 @@ export default function Topic4_ElementsOfRL() {
                             objectives: "Demonstrate how the internal 'organs' (Policy, Reward, Value, Model) and the Discount Factor (Gamma) drive agent behavior.",
                             instructions: [
                                 "Open the 'Gamma Explorer' in the Math section.",
-                                "Set γ = 0 and show that the agent only values T+1 (Raw reward).",
-                                "Set γ = 0.99 and show the 'Total Return' increase as future rewards are included.",
+                                "Set \\gamma = 0 and show that the agent only values T+1 (Raw reward).",
+                                "Set \\gamma = 0.99 and show the 'Total Return' increase as future rewards are included.",
                                 "Open the 'Agent Organ Simulator' in the Virtual Lab section.",
                                 "Toggle the 'Policy' off and show the 60% drop in performance (Agent acts randomly).",
                                 "Toggle 'Reward' off and show how the agent loses its 'Health' over time."
@@ -547,7 +547,7 @@ export default function Topic4_ElementsOfRL() {
                             inputs: "Interactive Gamma Slider and Organ Simulator",
                             outputs: "Performance Health Bar and Discounted Return Charts",
                             rubrics: ["Clarity of Gamma interpretation", "Demonstration of organ dependencies", "Student engagement"],
-                            outcomes: "Students identify the critical role of each element and the impact of the time horizon (γ).",
+                            outcomes: "Students identify the critical role of each element and the impact of the time horizon (\\gamma).",
                             time: "10 Mins",
                             materials: ["Interactive Components", "Projector"]
                         },
@@ -593,7 +593,7 @@ export default function Topic4_ElementsOfRL() {
                             instructions: [
                                 "Task: Think of your goal for the next 5 years (e.g., Graduating with Honors).",
                                 "Define your 'Reward' (Passing an exam = +10) vs your 'Value' (The cumulative benefit of the degree).",
-                                "Explain your 'Discount Factor' (γ): Do you value short-term fun (low γ) or long-term career (high γ)?",
+                                "Explain your 'Discount Factor' (\\gamma): Do you value short-term fun (low \\gamma) or long-term career (high \\gamma)?",
                                 "Identify one 'Model' of your environment: What do you predict will happen if you study 5 hours extra per week?"
                             ],
                             inputs: "Self-reflection on personal goals",
@@ -731,8 +731,8 @@ export default function Topic4_ElementsOfRL() {
                         },
                         {
                             type: 'Numerical',
-                            q: 'Calculate Return Gₜ if γ = 0.5 and the next three rewards are 10, 20, and 30.',
-                            a: 'Gₜ = 10 + (0.5 * 20) + (0.5² * 30) = 10 + 10 + 7.5 = 27.5'
+                            q: 'Calculate Return G_t if \\gamma = 0.5 and the next three rewards are 10, 20, and 30.',
+                            a: 'G_t = 10 + (0.5 * 20) + (0.5^2 * 30) = 10 + 10 + 7.5 = 27.5'
                         },
                         {
                             type: 'Application',
@@ -741,8 +741,8 @@ export default function Topic4_ElementsOfRL() {
                         },
                         {
                             type: 'Problem Solving',
-                            q: 'What happens to the agent if γ is set to 0?',
-                            a: 'The agent becomes "myopic" or short-sighted. It only cares about the immediate next reward (Rₜ₊₁) and ignores all future consequences.'
+                            q: 'What happens to the agent if \\gamma is set to 0?',
+                            a: 'The agent becomes "myopic" or short-sighted. It only cares about the immediate next reward (R_{t+1}) and ignores all future consequences.'
                         }
                     ].map((item, i) => (
                         <div key={i} className="group p-5 bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 hover:border-primary-500 transition-all cursor-pointer shadow-sm">

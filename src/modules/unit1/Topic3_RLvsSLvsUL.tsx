@@ -376,13 +376,13 @@ export default function Topic3_RLvsSLvsUL() {
                             { term: 'f_\\theta', name: 'Model Function', meaning: 'The predictive model parameterized by \\theta.', range: 'Function Space', example: 'Deep Neural Network.' }
                         ]}
                         numericalExample={{
-                            setup: 'Let model predict f_\\theta(2) = 9 for a true label y = 10, using loss function \\mathcal{L} = (y - f_\\theta(x))^2.',
+                            setup: 'Let model predict $f_\\theta(2) = 9$ for a true label $y = 10$, using loss function $\\mathcal{L} = (y - f_\\theta(x))^2$.',
                             steps: [
-                                'Prediction f_\\theta(x_i) = 9',
-                                'Actual Label y_i = 10',
-                                'Loss = (10 - 9)^2 = 1'
+                                'Prediction $f_\\theta(x_i) = 9$',
+                                'Actual Label $y_i = 10$',
+                                'Loss = $(10 - 9)^2 = 1$'
                             ],
-                            result: 'Loss contribution = 1'
+                            result: 'Loss contribution = $1$'
                         }}
                     />
                     <SLvsRLVis />
@@ -403,11 +403,11 @@ export default function Topic3_RLvsSLvsUL() {
                         numericalExample={{
                             setup: 'A robot navigates a maze starting at cell A, moves right to B, and moves up to C.',
                             steps: [
-                                'Start state s_0 = A',
-                                'Take action a_0 = right, get reward r_1 = 0, transition to s_1 = B',
-                                'Take action a_1 = up, get reward r_2 = 10, transition to s_2 = C'
+                                'Start state $s_0 = A$',
+                                'Take action $a_0 = \\text{right}$, get reward $r_1 = 0$, transition to $s_1 = B$',
+                                'Take action $a_1 = \\text{up}$, get reward $r_2 = 10$, transition to $s_2 = C$'
                             ],
-                            result: '\\tau = (A, right, 0, B, up, 10, C)'
+                            result: '$\\tau = (A, \\text{right}, 0, B, \\text{up}, 10, C)$'
                         }}
                     />
                     <RLTrajectoryVis />

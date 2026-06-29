@@ -312,13 +312,13 @@ export default function Topic10_AdvantagesOfRL() {
                             { term: 'R_{t+1}', name: 'Reward', meaning: 'Immediate scalar feedback from the environment.', range: '\\mathbb{R}', example: '+10 reward.' }
                         ]}
                         numericalExample={{
-                            setup: 'Comparing expected returns starting from cell S_0 = A. Policy 1 gives return of 90; Policy 2 gives 98.',
+                            setup: 'Comparing expected returns starting from cell $S_0 = A$. Policy 1 gives return of 90; Policy 2 gives 98.',
                             steps: [
-                                'Expected Return(\\pi_1) = 90',
-                                'Expected Return(\\pi_2) = 98',
-                                'Compare: 98 > 90'
+                                '$\\text{Expected Return}(\\pi_1) = 90$',
+                                '$\\text{Expected Return}(\\pi_2) = 98$',
+                                'Comparing values: $98 > 90$'
                             ],
-                            result: '\\pi^* = \\pi_2'
+                            result: '$\\pi^* = \\pi_2$'
                         }}
                     />
 
