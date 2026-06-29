@@ -133,7 +133,7 @@ export function ActivityLevel({ level, title, objectives, instructions, inputs, 
                         {inputs && (
                             <div className="p-4 rounded-2xl bg-white/40 dark:bg-black/10 border border-white/20">
                                 <h6 className="text-[10px] font-black uppercase tracking-widest opacity-50 mb-1">Inputs</h6>
-                                <p className="text-xs font-bold">{inputs}</p>
+                                <p className="text-xs font-bold">{formatMathText(inputs)}</p>
                             </div>
                         )}
                         {outputs && (

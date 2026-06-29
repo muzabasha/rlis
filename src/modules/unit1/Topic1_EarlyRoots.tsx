@@ -347,11 +347,11 @@ export default function Topic1_EarlyRoots() {
                     </p>
 
                     <MathBlock
-                        formula="S_t,\\; A_t \\;\\xrightarrow{\\text{environment}}\\; R_{t+1},\\; S_{t+1}"
+                        formula="S_t,\\; A_t \\xrightarrow{\\mathcal{E}}\\; R_{t+1},\\; S_{t+1}"
                         label="The RL Interaction Cycle"
                         accent="blue"
-                        explanation="The fundamental state-action-reward-state loop where an agent interacts with an environment."
-                        interpretation="At time t, the agent in state S_t chooses action A_t. The environment responds by transitioning to next state S_{t+1} and emitting reward R_{t+1}."
+                        explanation="The fundamental state-action-reward-state loop where an agent interacts with an environment $\mathcal{E}$."
+                        interpretation="At time t, the agent in state S_t chooses action A_t. The environment $\mathcal{E}$ responds by transitioning to next state S_{t+1} and emitting reward R_{t+1}."
                         motivation="Formalizes the trial-and-error feedback loop of learning from consequences."
                         terms={[
                             { term: 'S_t', name: 'Current State', meaning: 'The state of the environment at time step t.', range: 'State Space \\mathcal{S}', example: 'Grid cell position (1,1).' },
